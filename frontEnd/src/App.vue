@@ -14,7 +14,7 @@ export default {
 }
 </script>
 
-<style>
+<style lang="css">
  @import '../styles/css/bootstrap.css';
  @import '../styles/css/all.min.css';
 </style>
