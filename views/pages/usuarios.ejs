@@ -1,7 +1,101 @@
 <div id="usuarios" v-cloak>
 
-  <h1>TODO: Implement this page.</h1>
-  <p>(See also <em>assets/styles/pages/usuarios.less</em>, <em>assets/js/pages/usuarios.page.js</em>, and <em>api/controllers/view-usuarios.js</em>.)</p>
+  <div class="container">
+    <div class="row clearfix">
+      <div class="col-md-12 table-responsive">
+        <h1 class="text">Usuarios</h1>
+        <table class="table table-bordered table-hover table-sortable" id="table">
+          <thead>
+            <tr>
+              <th class="Fondo text-center">
+                Seleccionar
+              </th>
+              <th class="Fondo text-center">
+                Nombre
+              </th>
+              <th class="Fondo text-center">
+                Correo
+              </th>
+              <th class="Fondo text-center">
+                Rol
+              </th>
+              <th class="Fondo text-center">
+                Fecha
+              </th>
+              <th class="Fondo text-center">
+                  Opciones
+                </th>
+            </tr>
+          </thead>
+          <!-- Contenido de los Usuarios -->
+          <tr id='addr0' data-id="0" class="hidden">
+            <td data-name="Seleccionar">
+              <input type="checkbox" />
+            </td>
+            <td data-name="Nombre">
+              <h6 class="text-center">Luis</h6>
+            </td>
+            <td data-name="Correo">
+              <h6 class="text-center">luis123IMAGO@gmail.com</h6>
+            </td>
+            <td data-name="Rol">
+              <h6 class="text-center">Gerente</h6>
+            </td>
+            <td data-name="Fecha">
+              <h6 class="text-center">27/09/2018</h6>
+              <h6 class="text-center">6:30 p.m</h6>
+            </td>
+            <td class="col-lg-9 my-3">
 
+              <a href=""> <i class="fa fa-file" aria-hidden="true" style="color:black">Guardar</i></a>
+              <a href=""><i class="fa fa-cog" aria-hidden="true" style="color:black">Editar</i></a>
+
+            </td>
+          </tr>
+          <tr id='addr0' data-id="0" class="hidden">
+            <td data-name="Seleccionar">
+              <input type="checkbox" />
+            </td>
+            <td data-name="Nombre">
+              <h6 class="text-center">Frank</h6>
+            </td>
+            <td data-name="Correo">
+              <h6 class="text-center">frank123IMAGO@gmail.com</h6>
+            </td>
+            <td data-name="Rol">
+              <h6 class="text-center">IT</h6>
+            </td>
+            <td data-name="Fecha">
+              <h6 class="text-center">25/09/2018</h6>
+              <h6 class="text-center">9:30 a.m</h6>
+            </td>
+            <td class="col-lg-9 my-3">
+
+              <a href=""> <i class="fa fa-file" aria-hidden="true" style="color:black">Guardar</i></a>
+              <a href=""><i class="fa fa-cog" aria-hidden="true" style="color:black">Editar</i></a>
+
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div>
+    <!-- Botones -->
+    <div class="row">
+      <div class="col-lg-6 my-3">
+        <div class="pull-right">
+          <div class="">
+            <button class="btn btn-info" onclick='myCreateFunction()' type="button" id="Agregar">
+              Agregar
+            </button>
+            <a href=""><i class="fa fa-spinner" aria-hidden="true"></i></a>
+            <button class="btn btn-danger" onclick='myDeleteFunction()' type="button" id="Borrar">
+              Borrar
+            </button>
+            <a href=""><i class="fa fa-spinner" aria-hidden="true"></i></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 <%- /* Expose server-rendered data as window.SAILS_LOCALS :: */ exposeLocalsToBrowser() %>
