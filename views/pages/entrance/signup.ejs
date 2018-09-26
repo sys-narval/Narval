@@ -1,0 +1,50 @@
+<div id="signup" v-cloak>
+  <div class="container" v-if="!cloudSuccess">
+    <h1 class="text-center" v-text="modelo.titulo"></h1>
+    <div class="signup-form">
+      <p class="text-center" v-html="modelo.descripcion"></p>
+      <hr/>
+      <ajax-form action="signup" :syncing.sync="syncing" :cloud-error.sync="cloudError" @submitted="submittedForm()" :handle-parsing="handleParsingForm">
+        <div class="form-group">
+          <label for="full-name" v-text="modelo.nombre"></label>
+          <input class="form-control" id="full-name" type="text"  :class="[formErrors.fullName ? 'is-invalid' : '']" v-model.trim="formData.fullName" placeholder="Nombre completo" autocomplete="name" focus-first>
+          <div class="invalid-feedback" v-if="formErrors.fullName" v-text="modelo.errorNombre"></div>
+        </div>
+        <div class="form-group">
+          <label for="email-address" v-text="modelo.correoElectronico"></label>
+          <input class="form-control" id="email-address" type="email"  :class="[formErrors.emailAddress ? 'is-invalid' : '']" v-model.trim="formData.emailAddress" placeholder="Correo electronico" autocomplete="email">
+          <div class="invalid-feedback" v-if="formErrors.emailAddress" v-text="modelo.errorCorreo" ></div>
+        </div>
+        <div class="form-group">
+          <label for="password" v-text="modelo.contrasena"></label>
+          <input class="form-control" id="password" type="password"  :class="[formErrors.password ? 'is-invalid' : '']" v-model.trim="formData.password" placeholder="••••••••" autocomplete="new-password">
+          <div class="invalid-feedback" v-if="formErrors.password" v-text="modelo.errorContrasena"></div>
+        </div>
+        <div class="form-group">
+          <label for="confirm-password" v-text="modelo.confirmarContrasena"></label>
+          <input class="form-control" id="confirm-password" type="password"  :class="[formErrors.confirmPassword ? 'is-invalid' : '']" v-model.trim="formData.confirmPassword" placeholder="••••••••" autocomplete="new-password">
+          <div class="invalid-feedback" v-if="formErrors.confirmPassword" v-text="modelo.contrasenaNoCoincide"></div>
+        </div>
+        <div class="form-group form-check">
+          <input class="form-check-input" id="terms-agreement" type="checkbox" v-model="formData.agreed">
+          <label for="terms-agreement" class="form-check-label" :class="[formErrors.agreed ? 'text-danger' : '']" v-html="modelo.terminos"></label>
+        </div>
+        <p class="text-danger" v-if="cloudError==='emailAlreadyInUse'"><small v-html="modelo.usuarioExiste"></small></p>
+        <p class="text-danger" v-else-if="cloudError"><small v-html="modelo.errorProceso"></small></p>
+        <div class="form-group">
+          <ajax-button type="submit" :syncing="syncing" class="btn-dark btn-lg btn-block" v-text="modelo.crearCuenta"></ajax-button>
+        </div>
+      </ajax-form>
+      <p class="text-center" v-html="modelo.tieneCuenta"></p>
+    </div>
+  </div>
+  <div class="container" v-if="cloudSuccess">
+    <h1 class="text-center" v-text="modelo.verifiqueCorreo"></h1>
+    <div class="success-message">
+      <hr/>
+      <p v-html="modelo.cuentaCasiLista"></p>
+      <p v-html="modelo.irInicio"></p>
+    </div>
+  </div>
+</div>
+<%- /* Expose locals as `window.SAILS_LOCALS` :: */ exposeLocalsToBrowser() %>
