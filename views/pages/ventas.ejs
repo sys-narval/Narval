@@ -1,6 +1,6 @@
 <div id="ventas" v-cloak>
 
-  <div class="container">
+  <div class="">
     <div>
       <h1>Ventas</h1>
     </div>
@@ -16,21 +16,21 @@
               <div class="form-grup row">
                 <label class="col-sm-2 col-form-label">Encargado del evento</label>
                 <div class="col-sm-5">
-                  <label class="col-sm-2 col-form-label"> {{usuario}} </label>
+                  <label class="col-sm-2 col-form-label"> {{modelo.usuario}} </label>
                 </div>
               </div>
 
               <div class="form-grup row">
                 <label class="col-sm-2 col-form-label">Cliente</label>
                 <div class="col-sm-5">
-                  <input class="form-control" type="text" placeholder="Nombre de la empresa" v-model="txtEmpresa"
-                    v-on:focusin="poderVerEmpresas"><br>
-                  <div v-for="(empresa, index) in filteredEmpresa" :key="index">
+                  <input class="form-control" type="text" placeholder="Nombre de la empresa">
+                  <br>
+                  <!--<div v-for="(empresa, index) in modelo.filteredEmpresa" :key="index">
                     <ul v-show="verEmpresa">
-                      Nombre: {{empresa.name}} Telefono: {{empresa.telefono}} Correo:
-                      {{empresa.correo}}
+                      Nombre: {{modelo.empresa.name}} Telefono: {{modelo.empresa.telefono}} Correo:
+                      {{modelo.empresa.correo}}
                     </ul>
-                  </div>
+                  </div>-->
                 </div>
 
               </div>
@@ -38,33 +38,33 @@
               <div class="form-grup row">
                 <label class="col-sm-2 col-form-label">Contacto</label>
                 <div class="col-sm-5">
-                  <input class="form-control" type="text" placeholder="Persona de Contacto" v-model="txtCliente"
-                    v-on:focus="poderVer"><br>
-                  <div v-for="(Cliente, index) in filteredCliente" :key="index">
+                  <input class="form-control" type="text" placeholder="Persona de Contacto">
+                  <br>
+                  <!--<div v-for="(Cliente, index) in modelo.filteredCliente" :key="index">
                     <ul v-show="verClientes">
-                      Nombre: {{Cliente.name}} Telefono: {{Cliente.telefono}} Correo:
-                      {{Cliente.correo}}
+                      Nombre: {{modelo.Cliente.name}} Telefono: {{modelo.Cliente.telefono}} Correo:
+                      {{modelo.Cliente.correo}}
                     </ul>
-                  </div>
+                  </div>-->
                 </div>
               </div>
 
               <div class="form-grup row">
                 <label class="col-sm-2 col-form-label">Buscar Articulo</label>
                 <div class="col-sm-5">
-                  <input class="form-control" type="text" v-model="txtArticulo">
+                  <input class="form-control" type="text">
                 </div>
                 <div class="col-sm-5">
-                  <button type="button" class="btn btn-primary" v-on:click="poderVerArti">Buscar</button>
+                  <button type="button" class="btn btn-primary" >Buscar</button>
                 </div>
-                <div v-for="(articulo, index) in filteredArticulos" :key="index">
+                <!--<div v-for="(articulo, index) in modelo.filteredArticulos" :key="index">
                   <ul v-show="verArticulos">
-                    <button type="button" class="btn btn-primary" v-on:click="guardar (articulo)">
-                      Nombre: {{articulo.name}} Descripcion: {{articulo.descripcion}}
+                    <button type="button" class="btn btn-primary" >
+                      Nombre: {{modelo.articulo.name}} Descripcion: {{modelo.articulo.descripcion}}
                     </button>
 
                   </ul>
-                </div>
+                </div>-->
               </div>
 
             </form>
@@ -108,11 +108,11 @@
               </tr>
             </thead>
             <tbody>
-              <tr v-for="(i , msg) in articulos" :key="msg">
-                <th scope="row"> {{msg +1}} </th>
+              <!--<tr v-for="(i , modelo.msg) in modelo.articulos" :key="modelo.msg">
+                <th scope="row"> {{modelo.msg +1}} </th>
                 <td> {{i.name}} </td>
                 <td> {{i.descripcion}} </td>
-              </tr>
+              </tr>-->
 
             </tbody>
           </table>
