@@ -36,7 +36,8 @@ module.exports.routes = {
 
   'GET /inventario':         { action: 'view-inventario' },
   'GET /usuarios':           { action: 'view-usuarios' },
-  'GET /ventas':             { action: 'view-ventas' },
+  'GET /ventas':             { action: 'ventas/view-ventas' },
+  'GET /cotizaciones':       { action: 'ventas/view-cotizaciones' },
 
 
   //  ╔═╗╔═╗╦  ╔═╗╔╗╔╔╦╗╔═╗╔═╗╦╔╗╔╔╦╗╔═╗
