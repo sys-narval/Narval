@@ -1,0 +1,211 @@
+<div id="usuarios" v-cloak>
+
+  <div class="container">
+    <div class="row clearfix">
+      <div class="col-md-9 col offset-md-2 table-responsive">
+        <h1 class="text">Usuarios</h1>
+        <div class="col-lg-9 col-md-2">
+          <div class="block d-flex">
+            <input type="text" class="form-control mb-2 mr-sm-2 mb-sm-0" id="search" placeholder="Busqueda">
+            <!-- Boton de Busqueda -->
+            <button class="btn btn-main">Busqueda avanzada</button>
+          </div>
+          <br />
+        </div>
+        <table class="table table-bordered table-hover table-sortable" id="table">
+          <thead class=" text-center thead-dark">
+            <tr>
+              <th>Seleccionar</th>
+              <th>Nombre</th>
+              <th>Correo</th>
+              <th>Rol</th>
+              <th>Fecha</th>
+              <th><em class="fa fa-cog"></em></th>
+            </tr>
+          </thead>
+          <!-- Contenido de los Usuarios -->
+          <tr id='addr0' data-id="0" class="hidden">
+            <td data-name="Seleccionar">
+              <input type="checkbox" />
+            </td>
+            <td data-name="Nombre">
+              <h6 class="text-center">Luis</h6>
+            </td>
+            <td data-name="Correo">
+              <h6 class="text-center">luis123IMAGO@gmail.com</h6>
+            </td>
+            <td data-name="Rol">
+              <h6 class="text-center">Administrador</h6>
+            </td>
+            <td data-name="Fecha">
+              <h6 class="text-center">27/09/2018</h6>
+              <h6 class="text-center">6:30 p.m</h6>
+            </td>
+            <td class="col-lg-6 my-3">
+
+              <a data-toggle="modal" data-target="#ModalEditar" class="btn btn-default"><em class="fa fa-pencil">
+                  Editar</em></em></a>
+
+            </td>
+          </tr>
+          <tr id='addr0' data-id="0" class="hidden">
+            <td data-name="Seleccionar">
+              <input type="checkbox" />
+            </td>
+            <td data-name="Nombre">
+              <h6 class="text-center">Frank</h6>
+            </td>
+            <td data-name="Correo">
+              <h6 class="text-center">frank123IMAGO@gmail.com</h6>
+            </td>
+            <td data-name="Rol">
+              <h6 class="text-center">IT</h6>
+            </td>
+            <td data-name="Fecha">
+              <h6 class="text-center">25/09/2018</h6>
+              <h6 class="text-center">9:30 a.m</h6>
+            </td>
+            <td class="col-lg-6 my-3">
+
+              <a data-toggle="modal" data-target="#ModalEditar" class="btn btn-default"><em class="fa fa-pencil">
+                  Editar</em></a>
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div>
+    <!-- Botones -->
+    <div class="row">
+      <div class="col-lg-6 my-3">
+        <div class="pull-right">
+          <div class="">
+            <button data-toggle="modal" data-target="#AgregarUsuario" class="btn btn-primary" type="button" id="Agregar">
+              Agregar
+            </button>
+            <button data-toggle="modal" data-target="#ModalBorrar" class="btn btn-danger" type="button" id="Borrar">
+              Borrar
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!--Modal Agregando un Usuario-->
+<div class="modal fade" id="AgregarUsuario" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title" id="lineModalLabel">Nuevo Usuario</h3>
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+      </div>
+      <div class="modal-body">
+
+        <!-- Aqui va el contenido del modal -->
+        <form>
+          <div class="form-group">
+            <label for="ingresarNombre">Nombre</label>
+            <input type="nombre" class="form-control" id="ingresarNombre" placeholder="Nombre del Usuario">
+          </div>
+          <div class="form-group">
+            <label for="ingresarCorreo">Correo</label>
+            <input type="Correo" class="form-control" id="ingresarCorreo" placeholder="Correo">
+          </div>
+          <div class="form-group">
+            <label for="ingresarRol">Rol del Usuario</label>
+            <select name="Rol">
+              <option>Administrador</option>
+              <option>Secretario</option>
+              <option>TI</option>
+              <option>Vendedor</option>
+              <option>Bodega</option>
+            </select>
+          </div>
+          <button type="button" id="Guardar" class="btn btn-primary btn-hover-green" data-action="Guardar" role="button"
+            data-dismiss="modal">Guardar</button>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <div class="btn-group-justified" role="group" aria-label="group button">
+          <div class="" role="group">
+            <button type="button" class="btn btn-default" data-dismiss="modal" role="button">Cancelar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!--Modal Editando un Usuario-->
+<div class="modal fade" id="ModalEditar" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+        <h3 class="modal-title" id="lineModalLabel">Editando Usuario</h3>
+      </div>
+      <div class="modal-body">
+
+        <!-- Aqui va el contenido del modal -->
+        <form>
+          <div class="form-group">
+            <label for="ingresarNombre">Nombre</label>
+            <input type="nombre" class="form-control" id="ingresarNombre" placeholder="Nombre del Usuario">
+          </div>
+          <div class="form-group">
+            <label for="ingresarCorreo">Correo</label>
+            <input type="Correo" class="form-control" id="ingresarCorreo" placeholder="Correo">
+          </div>
+          <div class="form-group">
+            <label for="ingresarRol">Rol del Usuario</label>
+            <select name="Rol">
+              <option>Administrador</option>
+              <option>Secretario</option>
+              <option>TI</option>
+              <option>Vendedor</option>
+              <option>Bodega</option>
+            </select>
+          </div>
+          <button type="button" id="Guardar" class="btn btn-primary btn-hover-green" data-action="Guardar" role="button"
+            data-dismiss="modal">Guardar</button>
+        </form>
+
+      </div>
+      <div class="modal-footer">
+        <div class="btn-group-justified" role="group" aria-label="group button">
+          <div class="" role="group">
+            <button type="button" class="btn btn-default" data-dismiss="modal" role="button">Cancelar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!--Modal Borrar un Usuario-->
+<div class="modal fade" id="ModalBorrar" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+        <h6 class="modal-title" id="AdvertenciaBorrado">¿Está seguro que desea borrar este Usuario?</h6>
+      </div>
+      <div class="modal-body">
+        <!-- Aqui va el contenido del modal -->
+        <div class="row">
+          <div class="col-lg-6 my-3">
+            <div class="pull-right">
+              <div class="">
+                <button class="btn btn-primary" type="button" id="Aceptar" data-dismiss="modal">
+                  Aceptar
+                </button>
+                <button class="btn btn-danger" type="button" id="Borrar" data-dismiss="modal">
+                  Cancelar
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<%- /* Expose server-rendered data as window.SAILS_LOCALS :: */ exposeLocalsToBrowser() %>
