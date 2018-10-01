@@ -1,129 +1,206 @@
 <div id="ventas" v-cloak>
 
-  <div class="">
-    <div>
+  <div class="container">
+    <div class="container">
       <h1>Ventas</h1>
     </div>
-
-    <div class="row">
+    <form action="">
       <div class="col">
 
-      </div>
-      <div class="col-8">
         <div class="row">
-          <div class="col-7">
-            <form action="">
-              <div class="form-grup row">
-                <label class="col-sm-2 col-form-label">Encargado del evento</label>
-                <div class="col-sm-5">
-                  <label class="col-sm-2 col-form-label"> {{modelo.usuario}} </label>
-                </div>
-              </div>
+          <div class="form-group col">
+            <label for="usuario">Encargado del evento</label>
+            <input id="usuario" class="form-control" type="text" v-bind:value="modelo.usuario" disabled>
+          </div>
 
-              <div class="form-grup row">
-                <label class="col-sm-2 col-form-label">Cliente</label>
-                <div class="col-sm-5">
-                  <input class="form-control" type="text" placeholder="Nombre de la empresa">
-                  <br>
-                  <!--<div v-for="(empresa, index) in modelo.filteredEmpresa" :key="index">
+          <div class="form-group col">
+            <label>Cliente</label>
+            <div>
+              <input class="form-control" type="text" placeholder="Nombre de la empresa">
+              <br>
+              <!--<div v-for="(empresa, index) in modelo.filteredEmpresa" :key="index">
                     <ul v-show="verEmpresa">
                       Nombre: {{modelo.empresa.name}} Telefono: {{modelo.empresa.telefono}} Correo:
                       {{modelo.empresa.correo}}
                     </ul>
                   </div>-->
-                </div>
+            </div>
 
-              </div>
+          </div>
+        </div>
 
-              <div class="form-grup row">
-                <label class="col-sm-2 col-form-label">Contacto</label>
-                <div class="col-sm-5">
-                  <input class="form-control" type="text" placeholder="Persona de Contacto">
-                  <br>
-                  <!--<div v-for="(Cliente, index) in modelo.filteredCliente" :key="index">
+        <div class="row">
+          <div class="form-group col">
+            <label>Contacto</label>
+            <div class=>
+              <input class="form-control" type="text" placeholder="Persona de Contacto">
+              <br>
+              <!--<div v-for="(Cliente, index) in modelo.filteredCliente" :key="index">
                     <ul v-show="verClientes">
                       Nombre: {{modelo.Cliente.name}} Telefono: {{modelo.Cliente.telefono}} Correo:
                       {{modelo.Cliente.correo}}
                     </ul>
                   </div>-->
-                </div>
-              </div>
-
-              <div class="form-grup row">
-                <label class="col-sm-2 col-form-label">Buscar Articulo</label>
-                <div class="col-sm-5">
-                  <input class="form-control" type="text">
-                </div>
-                <div class="col-sm-5">
-                  <button type="button" class="btn btn-primary" >Buscar</button>
-                </div>
-                <!--<div v-for="(articulo, index) in modelo.filteredArticulos" :key="index">
-                  <ul v-show="verArticulos">
-                    <button type="button" class="btn btn-primary" >
-                      Nombre: {{modelo.articulo.name}} Descripcion: {{modelo.articulo.descripcion}}
-                    </button>
-
-                  </ul>
-                </div>-->
-              </div>
-
-            </form>
+            </div>
           </div>
 
-          <div class="col">
-            <form>
-              <div class="form-grup row">
-                <label class="col-sm-2 col-form-label">Fecha del evento</label>
-                <div class="col-sm-5">
-                  <input class="form-control" type="date"> <br>
-                </div>
-              </div>
-
-              <div class="form-grup row">
-                <label class="col-sm-2 col-form-label">Fecha de Montaje</label>
-                <div class="col-sm-5">
-                  <input class="form-control" type="date"> <br>
-                </div>
-              </div>
-
-              <div class="form-grup row">
-                <label class="col-sm-2 col-form-label">Fin del evento</label>
-                <div class="col-sm-5">
-                  <input class="form-control" type="date"> <br>
-                </div>
-              </div>
-            </form>
-
+          <div class="form-group col">
+            <label>Lugar del evento</label>
+            <div>
+              <input class="form-control" type="text" placeholder="Lugar del evento">
+              <br>
+              <!--<div v-for="(Cliente, index) in modelo.filteredCliente" :key="index">
+                                  <ul v-show="verClientes">
+                                    Nombre: {{modelo.Cliente.name}} Telefono: {{modelo.Cliente.telefono}} Correo:
+                                    {{modelo.Cliente.correo}}
+                                  </ul>
+                                </div>-->
+            </div>
           </div>
 
         </div>
 
-        <div>
+        <div class="row">
+          <div class="form-group col">
+            <label>Servicio/Proyecto </label>
+            <div>
+
+              <div class="form-check">
+                <label class="form-check-label">
+                  <input type="checkbox" class="form-check-input">
+                  Servicio diseño
+                </label>
+              </div>
+              <div class="form-check">
+                <label class="form-check-label">
+                  <input type="checkbox" class="form-check-input">
+                  Servicio de montaje
+                </label>
+              </div>
+              <br>
+              <label class="form-check-label">Descripcion de los servicios </label>
+              <textarea class="form-control" id="exampleTextarea" rows="3" placeholder="Descripcion"></textarea>
+              <br>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="form-group col">
+            <label class="col-form-label">Fecha del evento</label>
+            <input class="form-control" type="date">
+          </div>
+
+          <div class="form-group col">
+            <label class="col-form-label">Fecha de montaje</label>
+            <input class="form-control" type="date">
+          </div>
+
+        </div>
+
+        <div class="row">
+          <div class="form-group col">
+            <label class="col-form-label">Fin del evento</label>
+            <input class="form-control" type="date">
+          </div>
+
+          <div class="form-grup col">
+            <label class="col-form-label">Fecha de la cotizacion </label>
+            <input id="fecha_actual" class="form-control" type="date" disabled>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="form-group col">
+            <label class="col-form-label">Buscar Articulo</label>
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#ModaldeBusqueda">
+              Buscar
+            </button>
+          </div>
+        </div>
+
+
+        <div class="row">
           <table class="table">
             <thead class="thead-light">
               <tr>
-                <th scope="col">#</th>
+                <th scope="col">Cantidad</th>
                 <th scope="col">Producto</th>
                 <th scope="col">Descripcion</th>
+                <th scope="col">Valor Unitario</th>
+                <th scope="col">Valor</th>
               </tr>
             </thead>
             <tbody>
-              <!--<tr v-for="(i , modelo.msg) in modelo.articulos" :key="modelo.msg">
-                <th scope="row"> {{modelo.msg +1}} </th>
+              <tr v-for="i in modelo.articulos">
+                <td>{{i.cantidad}}</td>
                 <td> {{i.name}} </td>
                 <td> {{i.descripcion}} </td>
-              </tr>-->
+                <td> {{i.precio}} </td>
+                <td> {{i.valor}} </td>
+              </tr>
 
             </tbody>
           </table>
         </div>
-        <button type="button" class="btn btn-primary">Guardar peticion</button>
-      </div>
-      <div class="col">
+    </form>
 
+    <button type="button" class="btn btn-primary" @click="clickVerModalGuardar()">
+      Guardar
+    </button>
+    <!-- Modal -->
+
+    <modal class="example-modal" v-if="VerModalGuardar" @close="clickCerrarModalGuardar()" v-cloak>
+      <h1>Desea Guardar</h1>
+      <input type="button" value="Cerrar" @click="clickCerrarModalGuardar()">
+    </modal>
+
+    <!--<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+      aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Desea guardar los cambios</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true"> Esta cotizacion sera guardada por 30 dias </span>
+            </button>
+          </div>
+          <div class="modal-body">
+            ...
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+            <button type="button" class="btn btn-primary">Guardar los cambios</button>
+          </div>
+        </div>
+      </div>
+    </div>--->
+    <!--- Modal--->
+
+    <!-- Modal -->
+    <div class="modal fade" id="ModaldeBusqueda" tabindex="-1" role="dialog" aria-labelledby="ModaldeBusquedaID"
+      aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="ModaldeBusquedaID">Articulos del inventario</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true"> Articulos nesesarios para el evento </span>
+            </button>
+          </div>
+          <div class="modal-body">
+            aqui va todos los campos de busqueda
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+          </div>
+        </div>
       </div>
     </div>
+    <!--- Modal--->
+
   </div>
+</div>
 
 </div>
 <%- /* Expose server-rendered data as window.SAILS_LOCALS :: */ exposeLocalsToBrowser() %>
