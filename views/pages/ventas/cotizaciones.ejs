@@ -1,7 +1,60 @@
-<div id="cotizaciones" v-cloak>
+<div id="cotizaciones" class="container" v-cloak>
 
-  <h1>TODO: Implement this page.</h1>
-  <p>(See also <em>assets/styles/pages/ventas/cotizaciones.less</em>, <em>assets/js/pages/ventas/cotizaciones.page.js</em>, and <em>api/controllers/ventas/view-cotizaciones.js</em>.)</p>
+  <h1>Cotizaciones</h1>
+
+  <table class="table table-hover table-striped table-bordered">
+    <thead class="thead-dark">
+      <th>Encargado</th>
+      <th>Cliente</th>
+      <th>Ubicación</th>
+      <th>Fecha de Montaje</th>
+      <th>Fin de evento</th>
+      <th>Descripción</th>
+      <th>Opciones</th>
+    </thead>
+    <tbody>
+      <tr v-for="cotizacion in modelo.cotizaciones">
+        <td v-text="cotizacion.encargado"></td>
+        <td v-text="cotizacion.cliente"></td>
+        <td v-text="cotizacion.ubicacion"></td>
+        <td v-text="cotizacion.fechaMontaje"></td>
+        <td v-text="cotizacion.fechaFin"></td>
+        <td v-text="cotizacion.descripcion"></td>
+        <td><button class="btn btn-primary" type="button" @click="verEvento(cotizacion)">Ver</button></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <modal v-if="verModal" id="verEvento">
+    <div class="row">
+      <div class="col">
+        <form action="">
+          <h1 class="text-center">Cotizacion #{{cotizacion.id}}</h1>
+          <div class="row">
+            <div class="form-group col">
+              <label for="encargado">Encargado</label>
+              <input type="text" id="encargado" class="form-control" v-bind:value="cotizacion.encargado">
+            </div>
+            <div class="form-group col">
+              <label for="cliente">Cliente</label>
+              <input type="text" id="cliente" class="form-control" v-bind:value="cotizacion.cliente">
+            </div>
+          </div>
+          <div class="row">
+            <div class="form-group col">
+              <label for="fechaEvento">Fecha del Evento</label>
+              <input type="date" id="fechaEvento" class="form-control" v-bind:value="cotizacion.fechaEvento">
+            </div>
+            <div class="form-group col">
+              <label for="fechaEvento">Fecha de Montaje</label>
+              <input type="date" id="fechaEvento" class="form-control" v-bind:value="cotizacion.fechaMontaje">
+            </div>
+          </div>
+          <input type="button" value="Cerrar" class="btn btn-primary" @click="cerrarEvento()">
+        </form>
+      </div>
+    </div>
+  </modal>
 
 </div>
 <%- /* Expose server-rendered data as window.SAILS_LOCALS :: */ exposeLocalsToBrowser() %>
