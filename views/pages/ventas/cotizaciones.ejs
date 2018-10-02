@@ -1,32 +1,70 @@
 <div id="cotizaciones" v-cloak>
 
   <h1>Cotizaciones</h1>
-<div class="row">
-  <div class="col">
-    <table class="table table-hover table-striped table-bordered">
-      <thead class="thead-dark">
-        <th>Encargado</th>
-        <th>Cliente</th>
-        <th>Ubicación</th>
-        <th>Fecha de Montaje</th>
-        <th>Fin de evento</th>
-        <th>Descripción</th>
-        <th>Opciones</th>
-      </thead>
-      <tbody>
-        <tr v-for="cotizacion in modelo.cotizaciones">
-          <td v-text="cotizacion.encargado"></td>
-          <td v-text="cotizacion.cliente"></td>
-          <td v-text="cotizacion.ubicacion"></td>
-          <td v-text="cotizacion.fechaMontaje"></td>
-          <td v-text="cotizacion.fechaFin"></td>
-          <td v-text="cotizacion.descripcion"></td>
-          <td><button class="btn btn-primary" type="button" @click="verEvento(cotizacion)">Ver</button></td>
-        </tr>
-      </tbody>
-    </table>
+  <div class="row">
+    <div class="col-6">
+        <div class="form-group">
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false">Filtros</button>
+              <div class="dropdown-menu p-4">
+                <div class="form-check mb-2">
+                  <input type="checkbox" name="mis cotizaciones" id="misCotizaciones" class="form-check-input">
+                  <label for="misCotizaciones" class="form-check-label">Mis Cotizaciones</label>
+                </div>
+                <div class="form-group">
+                  <label for="encargado">Encargado:</label>
+                  <input type="text" id="encargado" class="form-control" placeholder="Nombre Encargado">
+                </div>
+                <div class="form-group">
+                  <label for="fechaInicio">Fecha Inicio:</label>
+                  <input type="date" name="Fecha Inicio" id="fechaInicio" class="form-control">
+                </div>
+                <div class="form-group">
+                  <label for="fechaMontaje">Fecha Montaje:</label>
+                  <input type="date" name="Fecha Inicio" id="fechaMontaje" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="fechaFin">Fecha Fin:</label>
+                    <input type="date" name="Fecha Inicio" id="fechaFin" class="form-control">
+                  </div>
+              </div>
+            </div>
+            <input type="text" name="Buscar Cotización" id="cotizacion" placeholder="Buscar Cotización" class="form-control">
+            <div class="input-group-append">
+              <span class="input-group-text"><i class="fa fa-search"></i></span>
+            </div>
+          </div>
+        </div>
+    </div>
   </div>
-</div>
+  <div class="row">
+    <div class="col">
+      <table class="table table-hover table-striped table-bordered">
+        <thead class="thead-dark">
+          <th>Encargado</th>
+          <th>Cliente</th>
+          <th>Ubicación</th>
+          <th>Fecha de Montaje</th>
+          <th>Fin de evento</th>
+          <th>Descripción</th>
+          <th>Opciones</th>
+        </thead>
+        <tbody>
+          <tr v-for="cotizacion in modelo.cotizaciones">
+            <td v-text="cotizacion.encargado"></td>
+            <td v-text="cotizacion.cliente"></td>
+            <td v-text="cotizacion.ubicacion"></td>
+            <td v-text="cotizacion.fechaMontaje"></td>
+            <td v-text="cotizacion.fechaFin"></td>
+            <td v-text="cotizacion.descripcion"></td>
+            <td><button class="btn btn-primary" type="button" @click="verEvento(cotizacion)">Ver</button></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
 
   <modal v-if="verModal" id="verEvento">
     <div class="row">
