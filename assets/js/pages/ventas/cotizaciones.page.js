@@ -4,6 +4,8 @@ parasails.registerPage('cotizaciones', {
   //  ╩╝╚╝╩ ╩ ╩╩ ╩╩═╝  ╚═╝ ╩ ╩ ╩ ╩ ╚═╝
   data: {
     //…
+    cotizacion: {},
+    verModal: false
   },
 
   //  ╦  ╦╔═╗╔═╗╔═╗╦ ╦╔═╗╦  ╔═╗
@@ -22,5 +24,13 @@ parasails.registerPage('cotizaciones', {
   //  ╩╝╚╝ ╩ ╚═╝╩╚═╩ ╩╚═╝ ╩ ╩╚═╝╝╚╝╚═╝
   methods: {
     //…
+    verEvento: async function(cotizacion){
+      this.cotizacion = cotizacion;
+      this.verModal = true;
+    },
+
+    cerrarEvento: async function(){
+      this.verModal = false;
+    }
   }
 });
