@@ -16,7 +16,12 @@
           <div class="form-group col">
             <label>Cliente</label>
             <div>
-              <input class="form-control" type="text" placeholder="Nombre de la empresa">
+              <input class="form-control" type="text" placeholder="Nombre de la empresa" list="listClientes">
+              <datalist id="listClientes">
+                <div v-for="empresa in modelo.empresas">
+                  <option v-bind:value="empresa.name">
+                </div>
+              </datalist>
               <br>
               <!--<div v-for="(empresa, index) in modelo.filteredEmpresa" :key="index">
                     <ul v-show="verEmpresa">
@@ -32,8 +37,21 @@
         <div class="row">
           <div class="form-group col">
             <label>Contacto</label>
-            <div class=>
-              <input class="form-control" type="text" placeholder="Persona de Contacto">
+            <div class="dropdown">
+              <input class="form-control" type="text" placeholder="Persona de Contacto" id="dropdownClientes" v-model="txtCliente"
+                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <div class="dropdown-menu" aria-labelledby="dropdownClientes">
+                <div v-for="cliente in filteredClientes">
+                  <table class="table table-hover">
+                    <td @click="clickVerclientes(cliente.name)">
+                      <label type="text" v-bind:value="cliente.name"> {{cliente.name}} </label>
+                    </td>
+                  </table>
+
+                </div>
+
+              </div>
+
               <br>
               <!--<div v-for="(Cliente, index) in modelo.filteredCliente" :key="index">
                     <ul v-show="verClientes">
