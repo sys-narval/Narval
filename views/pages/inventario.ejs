@@ -3,51 +3,234 @@
   <div class="container">
     <form class="form-signin">
       <div class="formGroupCenter form-group">
-        <div class="input-group mb-2">
-          <div class="input-group-prepend">
-            <div class="input-group-text">
-              <button class="fa fa-search" type="submit" />
-            </div>
-          </div>
-          <input class="form-control" type="search" placeholder="Search" aria-label="Search">
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-md-5 col offset-md-3">
+      <div class="row rows">
+        <div class="col-md-5 col offset-md-2">
           <div class="panel panel-default">
             <div class="panel panel-primary">
-              <h3 class="text-center">Inventario </h3>
+              <h3 class="text-left">Inventario </h3>
+                <div class="input-group mb-2">
+                    <div class="input-group-prepend">
+                      <div class="input-group-text">
+                        <button class="fa fa-search" type="button" />
+                      </div>
+                    </div class="form-group">
+                    <input class="form-control" type="search" placeholder="Search" aria-label="Search">
+                    <button type="button" title="Busqueda Avanzada" class="btn btn-secondary offset-md-1" data-toggle="collapse" data-target="#demo">Busqueda avanzada</button>
+                    <!--Busqueda Avanzada-->
+                    <div id="demo" class="collapse busquedaAvanzada">
+                      <form>
+                          <div class="form-group">
+                              <label for="busquedadPorID">ID: </label>
+                              <input type="text" class="form-control" id="idArt" placeholder="ID del Articulo:">
+                          </div>
+                          <div class="form-group">
+                              <label for="busquedadPorNombre">Nombre: </label>
+                              <input type="text" class="form-control" id="nombreArt" placeholder="Nombre del Articulo:">
+                          </div>
+                          <button type="button" class="btn btn-warning">Buscar</button>
+                      </form>
+                    </div>
+                  </div>
+                </div>
               <div class="panel-body">
                 <table class="table table-striped table-condensed">
                   <thead>
                     <tr>
+                      <th>ID</th>
                       <th>Nombre</th>
                       <th>Tamaño</th>
+                      <th>Cantidad</th>
                       <th>Descripcion</th>
-
+                      <th>Precio</th>
+                      <th>Estado</th>
                       <th>Actualizar</th>
                       <th>Eliminar</th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr>
+                      <td>1</td>
                       <td>Pantalla</td>
                       <td>42"</td>
+                      <td>5</td>
                       <td>Led</td>
-
-                      <td><button class="btn btn-sm btn-warning btn-block">Actualizar</button></td>
-                      <td><button class="btn btn-sm btn-danger btn-block">Eliminar</button></td>
+                      <td>50000</td>
+                      <td>Disponible</td>
+                      <td><button type="button" class="btn btn-sm btn-warning btn-block" data-toggle="modal" data-target="#actualizarArticulo">Actualizar</button></td>
+                      <td><button type="button" class="btn btn-sm btn-danger btn-block"data-toggle="modal" data-target="#ModalBorrar">Eliminar</button></td>
                     </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>Luces</td>
+                        <td>100 mts</td>
+                        <td>20</td>
+                        <td>Luces Grandes</td>
+                        <td>20000</td>
+                        <td>Ocupado</td>
+                        <td><button type="button" class="btn btn-sm btn-warning btn-block" data-toggle="modal" data-target="#actualizarArticulo">Actualizar</button></td>
+                        <td><button type="button" class="btn btn-sm btn-danger btn-block"data-toggle="modal" data-target="#ModalBorrar">Eliminar</button></td>
+                      </tr>
+                      <tr>
+                          <td>3</td>
+                          <td>Tros</td>
+                          <td>10 cm</td>
+                          <td>200</td>
+                          <td>Luces Grandes</td>
+                          <td>10000</td>
+                          <td>Disponible</td>
+                          <td><button type="button" class="btn btn-sm btn-warning btn-block" data-toggle="modal" data-target="#actualizarArticulo">Actualizar</button></td>
+                          <td><button type="button" class="btn btn-sm btn-danger btn-block" data-toggle="modal" data-target="#ModalBorrar">Eliminar</button></td>
+                        </tr>
+                        <tr>
+                            <td>4</td>
+                            <td>Mesas</td>
+                            <td>5 mts</td>
+                            <td>5</td>
+                            <td>Mesas Largas</td>
+                            <td>50000</td>
+                            <td>Disponible</td>
+                            <td><button type="button" class="btn btn-sm btn-warning btn-block" data-toggle="modal" data-target="#actualizarArticulo">Actualizar</button></td>
+                            <td><button type="button" class="btn btn-sm btn-danger btn-block" data-toggle="modal" data-target="#ModalBorrar">Eliminar</button></td>
+                          </tr>                      
                   </tbody>
                 </table>
-                <button class="btn btn-sm btn-primary btn-block boton">Agregar</button>
+                <button type="button" class="btn btn-sm btn-primary btn-block boton boton1" data-toggle="modal" data-target="#agregarArticulo">Agregar</button>
               </div>
             </div>
           </div>
         </div>
       </div>
     </form>
+    <!--Modal de agregar-->
+    <div id="agregarArticulo" class="modal fade" role="dialog">
+      <div class="modal-dialog">
+        <!-- Contenido del modal-->
+        <div class="modal-content">
+          <div class="model-header" background="blue">
+            <button type="button" class="close" data-dismiss="modal">X</button>
+            <h4 class="modal-title">Agregando Articulo al Inventario</h4>
+          </div>
+          <div class="modal-body">
+            <form>
+                <div class="form-group">
+                    <label for="id">ID: </label>
+                    <input type="text" class="form-control" id="idArtNuevo" placeholder="ID del Articulo">
+                </div>
+                <div class="form-group">
+                    <label for="nombre">Nombre: </label>
+                    <input type="text" class="form-control" id="nombreArtNuevo" placeholder="Nombre del Articulo">
+                </div>
+                <div class="form-group">
+                    <label for="tamaño">Tamaño: </label>
+                    <input type="text" class="form-control" id="tamañoArtNuevo" placeholder="Tamaño del Articulo">
+                </div>
+                <div class="form-group">
+                    <label for="cantidad">Cantidad: </label>
+                    <input type="text" class="form-control" id="cantidadArtNuevo" placeholder="Cantidad del Articulo">
+                </div>
+                <div class="form-group">
+                    <label for="precio">Precio: </label>
+                    <input type="text" class="form-control" id="precioArtNuevo" placeholder="Precio del Articulo">
+                </div>
+                <div class="form-group">
+                    <label for="descripcion">Descripcion: </label>
+                    <textarea class="form-control" id="descripcionArtNuevo" rows="3" cols="10" maxlength="180" placeholder="Descripcion del Articulo" > </textarea>
+                </div>
+                <div class="form-group">
+                    <label for="estado">Estado: </label>
+                    <select>
+                      <option>Disponible</option>
+                      <option>Ocupado</option>
+                      <option>Dañado</option>
+                    </select>
+                </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+              <button type="button" class="btn btn-primary">Agregar</button>
+            <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+          </div>
+        </div>
+      </div>
+    </div><!--Fin del modal agregar-->
+    <!-- Modal de borrar articulo-->
+    <div class="modal fade" id="ModalBorrar" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+              <h6 class="modal-title" id="AdvertenciaBorrado">¿Está seguro que desea borrar este Articulo?</h6>
+            </div>
+            <div class="modal-body">
+              <!-- Aqui va el contenido del modal -->
+              <p>Despues de ejecutar este evento no abra marcha atras</p>
+              <div class="row">
+                <div class="col-lg-6 my-3">
+                  <div class="pull-right">
+                    <div class="">
+                      <button class="btn btn-primary" type="button" id="Aceptar" data-dismiss="modal">
+                        Aceptar
+                      </button>
+                      <button class="btn btn-danger" type="button" id="Borrar" data-dismiss="modal">
+                        Cancelar
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div> <!--Aca termina el modal de eliminar-->
+      <!--Aca inicia el modal de actualizar-->
+      <div id="actualizarArticulo" class="modal fade" role="dialog">
+          <div class="modal-dialog">
+            <!-- Contenido del modal-->
+            <div class="modal-content">
+              <div class="model-header" background="blue">
+                <button type="button" class="close" data-dismiss="modal">X</button>
+                <h4 class="modal-title">Actualizar Articulo del Inventario</h4>
+              </div>
+              <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <label for="nombre">Nombre: </label>
+                        <input type="text" class="form-control" id="nombreArtNuevo" placeholder="Nombre del Articulo">
+                    </div>
+                    <div class="form-group">
+                        <label for="tamaño">Tamaño: </label>
+                        <input type="text" class="form-control" id="tamañoArtNuevo" placeholder="Tamaño del Articulo">
+                    </div>
+                    <div class="form-group">
+                        <label for="cantidad">Cantidad: </label>
+                        <input type="text" class="form-control" id="cantidadArtNuevo" placeholder="Cantidad del Articulo">
+                    </div>
+                    <div class="form-group">
+                        <label for="precio">Precio: </label>
+                        <input type="text" class="form-control" id="precioArtNuevo" placeholder="Precio del Articulo">
+                    </div>
+                    <div class="form-group">
+                        <label for="descripcion">Descripcion: </label>
+                        <textarea class="form-control" id="descripcionArtNuevo" rows="3" cols="10" maxlength="180" placeholder="Descripcion del Articulo" > </textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="estado">Estado: </label>
+                        <select>
+                          <option>Disponible</option>
+                          <option>Ocupado</option>
+                          <option>Dañado</option>
+                        </select>
+                    </div>
+                </form>
+              </div>
+              <div class="modal-footer">
+                  <button type="button" class="btn btn-primary">Actualizar</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+              </div>
+            </div>
+          </div>
+        </div>
   </div>
-
 </div>
+
 <%- /* Expose server-rendered data as window.SAILS_LOCALS :: */ exposeLocalsToBrowser() %>
