@@ -33,21 +33,21 @@
           <div class="row">
             <div class="form-group col">
               <label for="encargado">Encargado</label>
-              <input type="text" id="encargado" class="form-control" v-bind:value="cotizacion.encargado">
+              <input type="text" id="encargado" class="form-control" :value="cotizacion.encargado">
             </div>
             <div class="form-group col">
               <label for="cliente">Cliente</label>
-              <input type="text" id="cliente" class="form-control" v-bind:value="cotizacion.cliente">
+              <input type="text" id="cliente" class="form-control" :value="cotizacion.cliente">
             </div>
           </div>
           <div class="row">
             <div class="form-group col">
               <label for="fechaEvento">Fecha del Evento</label>
-              <input type="date" id="fechaEvento" class="form-control" v-bind:value="cotizacion.fechaEvento">
+              <input type="date" id="fechaEvento" class="form-control" :value="cotizacion.fechaEvento">
             </div>
             <div class="form-group col">
               <label for="fechaEvento">Fecha de Montaje</label>
-              <input type="date" id="fechaEvento" class="form-control" v-bind:value="cotizacion.fechaMontaje">
+              <input type="date" id="fechaEvento" class="form-control" :value="cotizacion.fechaMontaje">
             </div>
           </div>
           <input type="button" value="Cerrar" class="btn btn-primary" @click="cerrarEvento()">
