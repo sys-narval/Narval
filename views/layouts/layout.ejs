@@ -33,7 +33,14 @@
       <div class="navbar-nav flex-row">
         <!-- LOGGED-IN NAVIGATION -->
         <% if(me) { %>
-        <a class="nav-item nav-link ml-2 ml-md-0 mr-2 mr-md-0" href="/ventas">Ventas</a>
+        <div class="nav-item dropdown d-none d-sm-block">
+          <a class="nav-link dropdown-toggle" id="header-account-menu-link" data-toggle="dropdown" aria-haspopup="true"
+            aria-expanded="false">Ventas</a>
+          <div class="dropdown-menu account-menu" aria-labelledby="header-account-menu-link">
+            <a class="dropdown-item" href="/ventas">Ingresar Evento</a>
+            <a class="dropdown-item" href="/cotizaciones">Ver Cotizaciones</a>
+          </div>
+        </div>
         <a class="nav-item nav-link ml-2 ml-md-0 mr-2 mr-md-0" href="/inventario">Inventario</a>
         <a class="nav-item nav-link ml-2 ml-md-0 mr-2 mr-md-0" href="/usuarios">Usuarios</a>
         <a class="nav-item nav-link ml-2 ml-md-0 mr-2 mr-md-0" href="/contact">Ayuda</a>
