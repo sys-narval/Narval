@@ -40,7 +40,7 @@ module.exports = {
           cliente: 'Imperial',
           ubicacion: 'Puerto Viejo, Limon',
           fechaMontaje: '2018-09-30',
-          fechaEvento: '2018-09-31',
+          fechaEvento: '2018-10-10',
           fechaFin: '2018-12-05',
           descripcion: 'Fiesta Imperial'
         }
