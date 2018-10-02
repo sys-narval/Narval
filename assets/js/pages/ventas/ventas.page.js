@@ -47,10 +47,10 @@ parasails.registerPage('ventas', {
     clickCerrarModalGuardar: async function() {
       this.VerModalGuardar=false
     },
-    clickVerclientes: async function(name) {
+    clickVerClientes: async function(name) {
       this.txtCliente = name
     },
-     clickNoVerclientes: async function () {
+     clickNoVerClientes: async function () {
        this.txtCliente = ""
      },
     

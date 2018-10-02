@@ -1,183 +1,213 @@
 <div id="ventas" v-cloak>
 
-  <div class="container">
-    <div class="text-center">
-      <h1>Ventas</h1>
-    </div>
-    <form action="">
-      <div class="col">
+  <div class="text-center">
+    <h1>Ventas</h1>
+  </div>
+  <form action="">
+    <div class="col">
 
-        <div class="row">
-          <div class="form-group col">
-            <label for="usuario">Encargado del evento</label>
-            <input id="usuario" class="form-control" type="text" v-bind:value="modelo.usuario" disabled>
-          </div>
-
-          <div class="form-group col">
-            <label>Lugar del evento</label>
-            <div>
-              <input class="form-control" type="text" placeholder="Lugar del evento">
-            </div>
-          </div>
+      <div class="row">
+        <div class="form-group col">
+          <label for="usuario">Encargado del evento</label>
+          <input id="usuario" class="form-control" type="text" v-bind:value="modelo.usuario" disabled>
         </div>
 
-        <div class="row">
-          
-          <div class="form-group col">
-            <label>Cliente</label>
-            <div>
-              <input class="form-control" type="text" placeholder="Nombre de la empresa" list="listClientes">
-              <datalist id="listClientes">
-                <div v-for="empresa in modelo.empresas">
-                  <option v-bind:value="empresa.name">
-                </div>
-              </datalist>
-              <br>
-              <!--<div v-for="(empresa, index) in modelo.filteredEmpresa" :key="index">
+        <div class="form-group col">
+          <label>Lugar del evento</label>
+          <div>
+            <input class="form-control" type="text" placeholder="Lugar del evento">
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+
+        <div class="form-group col">
+          <label>Cliente</label>
+          <div>
+            <input class="form-control" type="text" placeholder="Nombre de la empresa" list="listClientes">
+            <datalist id="listClientes">
+              <div v-for="empresa in modelo.empresas">
+                <option v-bind:value="empresa.name">
+              </div>
+            </datalist>
+            <br>
+            <!--<div v-for="(empresa, index) in modelo.filteredEmpresa" :key="index">
                     <ul v-show="verEmpresa">
                       Nombre: {{modelo.empresa.name}} Telefono: {{modelo.empresa.telefono}} Correo:
                       {{modelo.empresa.correo}}
                     </ul>
                   </div>-->
-            </div>
-
           </div>
-          <div class="form-group col">
-            <label>Contacto</label>
-            <div class="dropdown">
-              <input class="form-control" type="text" placeholder="Persona de Contacto" v-model="txtCliente" list="listContactos">
-              <datalist id="listContactos">
-                <div v-for="empresa in modelo.Clientes">
-                  <option v-bind:value="empresa.name">
-                </div>
-              </datalist>
-              <br>
-              <!--<div v-for="(Cliente, index) in modelo.filteredCliente" :key="index">
+
+        </div>
+        <div class="form-group col">
+          <label>Contacto</label>
+          <div class="dropdown">
+            <input class="form-control" type="text" placeholder="Persona de Contacto" v-model="txtCliente" list="listContactos">
+            <datalist id="listContactos">
+              <div v-for="empresa in modelo.Clientes">
+                <option v-bind:value="empresa.name">
+              </div>
+            </datalist>
+            <br>
+            <!--<div v-for="(Cliente, index) in modelo.filteredCliente" :key="index">
                     <ul v-show="verClientes">
                       Nombre: {{modelo.Cliente.name}} Telefono: {{modelo.Cliente.telefono}} Correo:
                       {{modelo.Cliente.correo}}
                     </ul>
                   </div>-->
+          </div>
+        </div>
+
+      </div>
+
+      <div class="row">
+        <div class="form-group col">
+          <label>Tipo de servicio </label>
+          <div>
+
+            <div class="form-check">
+              <label class="form-check-label">
+                <input type="checkbox" class="form-check-input">
+                Servicio diseño
+              </label>
             </div>
-          </div>
-
-        </div>
-
-        <div class="row">
-          <div class="form-group col">
-            <label>Tipo de servicio </label>
-            <div>
-
-              <div class="form-check">
-                <label class="form-check-label">
-                  <input type="checkbox" class="form-check-input">
-                  Servicio diseño
-                </label>
-              </div>
-              <div class="form-check">
-                <label class="form-check-label">
-                  <input type="checkbox" class="form-check-input">
-                  Servicio de montaje
-                </label>
-              </div>
-              <div class="form-check">
-                <label class="form-check-label">
-                  <input type="checkbox" class="form-check-input">
-                  Servicio de alquiler
-                </label>
-              </div>
-              <br>
-              <label class="form-check-label">Descripcion de los servicios </label>
-              <textarea class="form-control" id="exampleTextarea" rows="3" placeholder="Descripcion"></textarea>
-              <br>
+            <div class="form-check">
+              <label class="form-check-label">
+                <input type="checkbox" class="form-check-input">
+                Servicio de montaje
+              </label>
             </div>
+            <div class="form-check">
+              <label class="form-check-label">
+                <input type="checkbox" class="form-check-input">
+                Servicio de alquiler
+              </label>
+            </div>
+            <br>
+            <label class="form-check-label">Descripcion de los servicios </label>
+            <textarea class="form-control" id="exampleTextarea" rows="3" placeholder="Descripcion"></textarea>
+            <br>
           </div>
         </div>
+      </div>
 
-        <div class="row">
-          <div class="form-group col">
-            <label class="col-form-label">Fecha del evento</label>
-            <input class="form-control" type="date">
-          </div>
-
-          <div class="form-group col">
-            <label class="col-form-label">Fecha de montaje</label>
-            <input class="form-control" type="date">
-          </div>
-
+      <div class="row">
+        <div class="form-group col">
+          <label class="col-form-label">Fecha del evento</label>
+          <input class="form-control" type="date">
         </div>
 
-        <div class="row">
-          <div class="form-group col">
-            <label class="col-form-label">Fin del evento</label>
-            <input class="form-control" type="date">
-          </div>
-
-          <div class="form-grup col">
-            <label class="col-form-label">Fecha de desmontaje </label>
-            <input id="fecha_actual" class="form-control" type="date">
-          </div>
+        <div class="form-group col">
+          <label class="col-form-label">Fecha de montaje</label>
+          <input class="form-control" type="date">
         </div>
 
-        <div class="row">
-          <div class="form-group col-5">
-            <label class="form-label">Buscar Articulo</label>
-            <div class="input-group">
-              <input class="form-control" type="text" placeholder="Persona de Contacto" list="listProductos">
-              <div class="input-group-append">
-                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#ModaldeBusqueda">
-                  Buscar
+      </div>
+
+      <div class="row">
+        <div class="form-group col">
+          <label class="col-form-label">Fin del evento</label>
+          <input class="form-control" type="date">
+        </div>
+
+        <div class="form-grup col">
+          <label class="col-form-label">Fecha de desmontaje </label>
+          <input id="fecha_actual" class="form-control" type="date">
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="form-group col-5">
+          <label class="form-label">Buscar Articulo</label>
+          <div class="input-group">
+            <div class="input-group-append">
+              <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false">Filtros</button>
+              <div class="dropdown-menu p-4">
+                <div class="form-check mb-2">
+                  <input type="checkbox" name="mis cotizaciones" id="elctronicos" class="form-check-input">
+                  <label for="electronicos" class="form-check-label">Electronicos</label>
+                </div>
+                <div class="form-check mb-2">
+                  <input type="checkbox" name="mis cotizaciones" id="inmobiliario" class="form-check-input">
+                  <label for="inmobiliario" class="form-check-label">Inmobiliario</label>
+                </div>
+              </div>
+            </div>
+            <input class="form-control" type="text" placeholder="Persona de Contacto" list="listProductos">
+            <div class="input-group-append">
+              <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#ModaldeBusqueda">
+                Buscar
+              </button>
+            </div>
+
+          </div>
+          <datalist id="listProductos">
+            <div v-for="empresa in modelo.articulos">
+              <option v-bind:value="empresa.name">
+            </div>
+          </datalist>
+        </div>
+      </div>
+
+
+      <div class="row">
+        <table class="table">
+          <thead class="thead-light">
+            <tr>
+              <th scope="col">id</th>
+              <th scope="col">Producto</th>
+              <th scope="col">Descripcion</th>
+              <th scope="col">Cantidad en stock</th>
+              <th scope="col">Cantidad solitada</th>
+              <th scope="col">Valor Unitario</th>
+              <th scope="col">Valor</th>
+              <th> Opciones </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="i in modelo.articulos">
+              <td> {{i.id}} </td>
+              <td> {{i.name}} </td>
+              <td> {{i.descripcion}} </td>
+              <td>{{i.cantidad}}</td>
+              <td> <input type="number"> </td>
+              <td> <input type="number" :value="i.precio"> </td>
+              <td> {{i.precio}} </td>
+              <td><button type="button" class="btn btn-success">
+                  Ver
                 </button>
-              </div>
+                <button type="button" class="btn btn-danger">
+                  Eliminar
+                </button>
+              </td>
+            </tr>
 
-            </div>
-            <datalist id="listProductos">
-              <div v-for="empresa in modelo.articulos">
-                <option v-bind:value="empresa.name">
-              </div>
-            </datalist>
-          </div>
-        </div>
+          </tbody>
+        </table>
+      </div>
+  </form>
 
+  <button type="button" class="btn btn-primary" @click="clickVerModalGuardar()">
+    Guardar
+  </button>
+  <!-- Modal -->
 
-        <div class="row">
-          <table class="table">
-            <thead class="thead-light">
-              <tr>
-                <th scope="col">id</th>
-                <th scope="col">Producto</th>
-                <th scope="col">Descripcion</th>
-                <th scope="col">Cantidad en stock</th>
-                <th scope="col">Cantidad solitada</th>
-                <th scope="col">Valor Unitario</th>
-                <th scope="col">Valor</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr v-for="i in modelo.articulos">
-                <td>{{i.cantidad}}</td>
-                <td> {{i.name}} </td>
-                <td> {{i.descripcion}} </td>
-                <td> {{i.precio}} </td>
-                <td> {{i.valor}} </td>
-              </tr>
+  <modal class="example-modal" v-if="VerModalGuardar" @close="clickCerrarModalGuardar()" v-cloak>
+    <div class="modal-dialog" role="document">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Desea guardar los cambios</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span> Esta cotizacion sera guardada por 30 dias </span>
+        </button>
+      </div>
+    </div>
+    <input type="button" value="Cerrar" @click="clickCerrarModalGuardar()">
+  </modal>
 
-            </tbody>
-          </table>
-        </div>
-    </form>
-
-    <button type="button" class="btn btn-primary" @click="clickVerModalGuardar()">
-      Guardar
-    </button>
-    <!-- Modal -->
-
-    <modal class="example-modal" v-if="VerModalGuardar" @close="clickCerrarModalGuardar()" v-cloak>
-      <h1>Desea Guardar</h1>
-      <input type="button" value="Cerrar" @click="clickCerrarModalGuardar()">
-    </modal>
-
-    <!--<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  <!--<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
       aria-hidden="true">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -197,31 +227,31 @@
         </div>
       </div>
     </div>--->
-    <!--- Modal--->
+  <!--- Modal--->
 
-    <!-- Modal -->
-    <div class="modal fade" id="ModaldeBusqueda" tabindex="-1" role="dialog" aria-labelledby="ModaldeBusquedaID"
-      aria-hidden="true">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="ModaldeBusquedaID">Articulos del inventario</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true"> Articulos nesesarios para el evento </span>
-            </button>
-          </div>
-          <div class="modal-body">
-            aqui va todos los campos de busqueda
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-          </div>
+  <!-- Modal -->
+  <div class="modal fade" id="ModaldeBusqueda" tabindex="-1" role="dialog" aria-labelledby="ModaldeBusquedaID"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="ModaldeBusquedaID">Articulos del inventario</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true"> Articulos nesesarios para el evento </span>
+          </button>
+        </div>
+        <div class="modal-body">
+          aqui va todos los campos de busqueda
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
         </div>
       </div>
     </div>
-    <!--- Modal--->
-
   </div>
+  <!--- Modal--->
+
+
 </div>
 
 </div>
