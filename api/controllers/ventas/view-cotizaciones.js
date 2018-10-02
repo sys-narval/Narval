@@ -41,7 +41,7 @@ module.exports = {
           ubicacion: 'Puerto Viejo, Limon',
           fechaMontaje: '2018-09-30',
           fechaEvento: '2018-09-31',
-          fechaFin: '2018-10-05',
+          fechaFin: '2018-12-05',
           descripcion: 'Fiesta Imperial'
         }
       ]
