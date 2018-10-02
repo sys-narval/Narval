@@ -20,21 +20,6 @@ module.exports = {
 
     let modelo = {
       msg: 1,
-      filteredCliente: function () {
-        return this.Clientes.filter((Cliente) => {
-          return Cliente.name.match(this.txtCliente)
-        })
-      },
-      filteredEmpresa: function () {
-        return this.empresas.filter((empresa) => {
-          return empresa.name.match(this.txtEmpresa)
-        })
-      },
-      filteredArticulos: function () {
-        return this.articulos.filter((articulo) => {
-          return articulo.name.match(this.txtArticulo)
-        })
-      },
       usuario: 'Jose quesada',
       txtCliente: '',
       txtEmpresa: '',
@@ -42,7 +27,21 @@ module.exports = {
       verClientes: false,
       verArticulos: false,
       verEmpresa: false,
-      articulos: [],
+      articulos: [{
+          cantidad: 2,
+          name: 'Tros',
+          descripcion: 'Distancia dos metros',
+          precio: 500,
+          valor: 5
+        },
+        {
+          cantidad: 3,
+          name: 'Pantallas',
+          descripcion: '40 pulgadas',
+          precio: 300,
+          valor: 5
+        }
+      ],
       Clientes: [{
           name: 'Jose arturo',
           telefono: '89792734',

@@ -4,6 +4,7 @@ parasails.registerPage('ventas', {
   //  ╩╝╚╝╩ ╩ ╩╩ ╩╩═╝  ╚═╝ ╩ ╩ ╩ ╩ ╚═╝
   data: {
     //…
+    VerModalGuardar: false,
   },
 
   //  ╦  ╦╔═╗╔═╗╔═╗╦ ╦╔═╗╦  ╔═╗
@@ -22,5 +23,11 @@ parasails.registerPage('ventas', {
   //  ╩╝╚╝ ╩ ╚═╝╩╚═╩ ╩╚═╝ ╩ ╩╚═╝╝╚╝╚═╝
   methods: {
     //…
+    clickVerModalGuardar: async function() {
+      this.VerModalGuardar=true
+    },
+    clickCerrarModalGuardar: async function() {
+      this.VerModalGuardar=false
+    }
   }
 });
