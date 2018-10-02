@@ -1,106 +1,67 @@
 <div id="inventario" v-cloak>
-
-  <div class="container">
-    <form class="form-signin">
-      <div class="formGroupCenter form-group">
-      <div class="row rows">
-        <div class="col-md-5 col offset-md-2">
-          <div class="panel panel-default">
-            <div class="panel panel-primary">
-              <h3 class="text-left">Inventario </h3>
-                <div class="input-group mb-2">
-                    <div class="input-group-prepend">
-                      <div class="input-group-btn">
-                        <button class="btn btn-primary" type="button" ><i class="fa fa-search"></i></button>
-                      </div>
-                    </div class="form-group">
-                    <input class="form-control" type="search" placeholder="Search" aria-label="Search">
-                    <button type="button" title="Busqueda Avanzada" class="btn btn-secondary offset-md-1" data-toggle="collapse" data-target="#demo">Busqueda avanzada</button>
-                    <!--Busqueda Avanzada-->
-                    <div id="demo" class="collapse busquedaAvanzada">
-                      <form>
-                          <div class="form-group">
-                              <label for="busquedadPorID">ID: </label>
-                              <input type="text" class="form-control" id="idArt" placeholder="ID del Articulo:">
-                          </div>
-                          <div class="form-group">
-                              <label for="busquedadPorNombre">Nombre: </label>
-                              <input type="text" class="form-control" id="nombreArt" placeholder="Nombre del Articulo:">
-                          </div>
-                          <button type="button" class="btn btn-warning">Buscar</button>
-                      </form>
+  <h1>Inventario</h1>
+  <div class="row-3 offset-md-3">
+    <div class="col-6">
+      <div class="form-group">
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Filtro</button>
+            <div class="dropdown-menu p-4">
+                <form>
+                    <div class="form-group">
+                        <label for="busquedadPorID">ID: </label>
+                        <input type="text" class="form-control" id="idArt" placeholder="ID del Articulo:">
                     </div>
-                  </div>
-                </div>
-              <div class="panel-body">
-                <table class="table table-striped table-hover table-condensed">
-                  <thead class="thead-dark">
-                    <tr>
-                      <th>ID</th>
-                      <th>Nombre</th>
-                      <th>Tamaño</th>
-                      <th>Cantidad</th>
-                      <th>Descripcion</th>
-                      <th>Precio</th>
-                      <th>Estado</th>
-                      <th>Actualizar</th>
-                      <th>Eliminar</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td>1</td>
-                      <td>Pantalla</td>
-                      <td>42"</td>
-                      <td>5</td>
-                      <td>Led</td>
-                      <td>50000</td>
-                      <td>Disponible</td>
-                      <td><button type="button" class="btn btn-sm btn-warning btn-block" data-toggle="modal" data-target="#actualizarArticulo">Actualizar</button></td>
-                      <td><button type="button" class="btn btn-sm btn-danger btn-block"data-toggle="modal" data-target="#ModalBorrar">Eliminar</button></td>
-                    </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>Luces</td>
-                        <td>100 mts</td>
-                        <td>20</td>
-                        <td>Luces Grandes</td>
-                        <td>20000</td>
-                        <td>Ocupado</td>
-                        <td><button type="button" class="btn btn-sm btn-warning btn-block" data-toggle="modal" data-target="#actualizarArticulo">Actualizar</button></td>
-                        <td><button type="button" class="btn btn-sm btn-danger btn-block"data-toggle="modal" data-target="#ModalBorrar">Eliminar</button></td>
-                      </tr>
-                      <tr>
-                          <td>3</td>
-                          <td>Tros</td>
-                          <td>10 cm</td>
-                          <td>200</td>
-                          <td>Luces Grandes</td>
-                          <td>10000</td>
-                          <td>Disponible</td>
-                          <td><button type="button" class="btn btn-sm btn-warning btn-block" data-toggle="modal" data-target="#actualizarArticulo">Actualizar</button></td>
-                          <td><button type="button" class="btn btn-sm btn-danger btn-block" data-toggle="modal" data-target="#ModalBorrar">Eliminar</button></td>
-                        </tr>
-                        <tr>
-                            <td>4</td>
-                            <td>Mesas</td>
-                            <td>5 mts</td>
-                            <td>5</td>
-                            <td>Mesas Largas</td>
-                            <td>50000</td>
-                            <td>Disponible</td>
-                            <td><button type="button" class="btn btn-sm btn-warning btn-block" data-toggle="modal" data-target="#actualizarArticulo">Actualizar</button></td>
-                            <td><button type="button" class="btn btn-sm btn-danger btn-block" data-toggle="modal" data-target="#ModalBorrar">Eliminar</button></td>
-                          </tr>                      
-                  </tbody>
-                </table>
-                <button type="button" class="btn btn-sm btn-primary btn-block boton boton1" data-toggle="modal" data-target="#agregarArticulo">Agregar</button>
-              </div>
+                    <div class="form-group">
+                        <label for="busquedadPorNombre">Nombre: </label>
+                        <input type="text" class="form-control" id="nombreArt" placeholder="Nombre del Articulo:">
+                    </div>
+                    <button type="button" class="btn btn-warning">Buscar</button>
+                </form>
             </div>
           </div>
+        
+          <input type="text" name="buscarArticulo" id="articulo" placeholder="Search" class="form-control">
+        <div class="input-group-append">
+          <span class="input-group-text"><i class="fa fa-search"></i></span>
         </div>
       </div>
-    </form>
+    </div>
+  </div>
+  </div>
+  <div class="row">
+    <div class="col-6 offset-md-3">
+        <table class="table table-striped table-hover table-condensed">
+            <thead class="thead-dark">
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre</th>
+                    <th>Tamaño</th>
+                    <th>Cantidad</th>
+                    <th>Descripcion</th>
+                    <th>Precio</th>
+                    <th>Estado</th>
+                    <th>Actualizar</th>
+                    <th>Eliminar</th>
+                  </tr>
+            </thead>
+            <tbody>
+                <tr>
+                  <td>1</td>
+                  <td>Pantalla</td>
+                  <td>42"</td>
+                  <td>5</td>
+                  <td>Led</td>
+                  <td>50000</td>
+                  <td>Disponible</td>
+                  <td><button type="button" class="btn btn-sm btn-warning btn-block" data-toggle="modal" data-target="#actualizarArticulo">Actualizar</button></td>
+                  <td><button type="button" class="btn btn-sm btn-danger btn-block"data-toggle="modal" data-target="#ModalBorrar">Eliminar</button></td>
+                </tr>
+              </tbody>
+        </table>
+        <button type="button" class="btn btn-sm btn-primary btn-block boton boton1" data-toggle="modal" data-target="#agregarArticulo">Agregar</button>
+    </div>
+  </div>
     <!--Modal de agregar-->
     <div id="agregarArticulo" class="modal fade" role="dialog">
       <div class="modal-dialog">
@@ -163,20 +124,22 @@
             </div>
             <div class="modal-body">
               <!-- Aqui va el contenido del modal -->
-              <p>Despues de ejecutar este evento no abra marcha atras</p>
+              <p class="text-center">Despues de ejecutar este evento no abra marcha atras</p>
               <div class="row">
-                <div class="col-lg-6 my-3">
+                <div class="col-lg-4 my-3">
                   <div class="pull-right">
-                    <div class="">
                       <button class="btn btn-primary" type="button" id="Aceptar" data-dismiss="modal">
                         Aceptar
                       </button>
-                      <button class="btn btn-danger" type="button" id="Borrar" data-dismiss="modal">
-                        Cancelar
-                      </button>
-                    </div>
                   </div>
                 </div>
+                <div class="col-lg-6 my-3">
+                    <div class="pull-right">
+                        <button class="btn btn-danger" type="button" id="Borrar" data-dismiss="modal">
+                          Cancelar
+                        </button>
+                    </div>
+                  </div>
               </div>
             </div>
           </div>
@@ -230,7 +193,6 @@
             </div>
           </div>
         </div>
-  </div>
 </div>
 
 <%- /* Expose server-rendered data as window.SAILS_LOCALS :: */ exposeLocalsToBrowser() %>
