@@ -4,6 +4,8 @@ parasails.registerPage('inventario', {
   //  ╩╝╚╝╩ ╩ ╩╩ ╩╩═╝  ╚═╝ ╩ ╩ ╩ ╩ ╚═╝
   data: {
     //…
+    articulo: {},
+    verModalA: false
   },
 
   //  ╦  ╦╔═╗╔═╗╔═╗╦ ╦╔═╗╦  ╔═╗
@@ -22,5 +24,13 @@ parasails.registerPage('inventario', {
   //  ╩╝╚╝ ╩ ╚═╝╩╚═╩ ╩╚═╝ ╩ ╩╚═╝╝╚╝╚═╝
   methods: {
     //…
+    verArticulo: async function(art){
+      this.articulo = art;
+      this.verModalA = true;
+    },
+
+    cerrarEvento: async function(){
+      this.verModalA = false;
+    }
   }
 });
