@@ -44,6 +44,15 @@ module.exports = {
       descripcion: 'Luces especiales',
       precio: 20000,
       estado: 'Disponible'
+  },
+  {
+    id:4,
+      nombre: 'Mesas',
+      tamano: '10x20 cm',
+      cantidad: 10,
+      descripcion: 'mesas de madera',
+      precio: 2000,
+      estado: 'Disponible'
   }]
     };
     // Respond with view.
