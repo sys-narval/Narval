@@ -43,7 +43,12 @@
               </div>
             </div>
           </div>
-          <input type="text" name="Buscar Usuario" id="usuario" placeholder="Buscar Usuario" class="form-control">
+          <input type="text" name="Buscar Usuario" id="usuario" list="listaUsuarios" placeholder="Buscar Usuario" class="form-control">
+          <datalist id="listaUsuarios">
+              <div v-for="usuario in modelo.usuarios">
+                <option v-bind:value="usuario.nombre">
+              </div>
+            </datalist>
           <div class="input-group-append">
             <span class="input-group-text" title="Búsqueda"><i class="fa fa-search"></i></span>
           </div>
