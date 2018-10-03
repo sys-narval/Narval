@@ -44,19 +44,14 @@
         <div class="form-group col">
           <label>Contacto</label>
           <div class="dropdown">
-            <input class="form-control" type="text" placeholder="Persona de Contacto" v-model="txtCliente" list="listContactos">
+            <input class="form-control" type="text" placeholder="Persona de Contacto" v-model="txtCliente" list="listContactos"
+              @click="clickVerContacto(modelo.Clientes)" />
             <datalist id="listContactos">
               <div v-for="empresa in modelo.Clientes">
                 <option v-bind:value="empresa.name">
               </div>
             </datalist>
             <br>
-            <!--<div v-for="(Cliente, index) in modelo.filteredCliente" :key="index">
-                    <ul v-show="verClientes">
-                      Nombre: {{modelo.Cliente.name}} Telefono: {{modelo.Cliente.telefono}} Correo:
-                      {{modelo.Cliente.correo}}
-                    </ul>
-                  </div>-->
           </div>
         </div>
 

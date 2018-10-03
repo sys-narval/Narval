@@ -5,24 +5,11 @@ parasails.registerPage('ventas', {
   data: {
     //…
     VerModalGuardar: false,
-    verInfoCliente: '',
     txtCliente:'',
-     Clientes: [{
-         name: 'Jose arturo',
-         telefono: '89792734',
-         correo: 'jose17971@outlook.es'
-       },
-       {
-         name: 'Jose antonio',
-         telefono: '89792734',
-         correo: 'jose17971@outlook.es'
-       },
-       {
-         name: 'Mario',
-         telefono: '8888888',
-         correo: 'mario123@gmailcom'
-       },
-     ],
+    clientes: {},
+    contactos: {},
+    verCliente: false,
+    verContacto: false
   },
 
   //  ╦  ╦╔═╗╔═╗╔═╗╦ ╦╔═╗╦  ╔═╗
@@ -53,12 +40,20 @@ parasails.registerPage('ventas', {
      clickNoVerClientes: async function () {
        this.txtCliente = ""
      },
+     clickVerCliente: async function(cliente) {
+       this.clientes=cliente
+       this.verCliente= true
+     },
+     clickVerContacto: async function (contacto) {
+       this.contactos = contacto
+       this.verCliente = true
+     }
     
   },
   computed:{
-     filteredClientes: function () {
-       return this.Clientes.filter((cliente) => {
-         return cliente.name.match(this.txtCliente)
+     filteredContactos: function () {
+       return this.contactos.filter((contacto) => {
+         return contacto.name.match(this.txtCliente)
        })
      }
   },
