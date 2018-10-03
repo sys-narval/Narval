@@ -45,7 +45,7 @@ parasails.registerPage('cotizaciones', {
           return this.modelo.cotizaciones.filter(cotizacion => {
             // Verifica que cada atributo del objeto sea igual al atributo del filtro
             for (var key in this.filtro) {
-              if (this.filtro[key].length !== 0 && (cotizacion[key] === undefined || cotizacion[key] !== this.filtro[key]))
+              if (this.filtro[key].length !== 0 && (cotizacion[key] === undefined || !cotizacion[key].match(this.filtro[key])))
                 return false;
             }
             // Verifica que la descripción o la ubicación del evento cumpla con lo escrito en la barra de búsqueda
