@@ -25,19 +25,20 @@
         <div class="form-group col">
           <label>Cliente</label>
           <div>
-            <input class="form-control" type="text" placeholder="Nombre de la empresa" list="listClientes">
+            <input class="form-control" type="text" placeholder="Nombre de la empresa" list="listClientes" v-model="txtEmpresa"
+              @click="clickVerCliente(modelo.empresas)" />
             <datalist id="listClientes">
-              <div v-for="empresa in modelo.empresas">
-                <option v-bind:value="empresa.name">
-              </div>
+              <option v-for="empresa in modelo.empresas" :value="empresa.name">
             </datalist>
             <br>
-            <!--<div v-for="(empresa, index) in modelo.filteredEmpresa" :key="index">
-                    <ul v-show="verEmpresa">
-                      Nombre: {{modelo.empresa.name}} Telefono: {{modelo.empresa.telefono}} Correo:
-                      {{modelo.empresa.correo}}
-                    </ul>
-                  </div>-->
+            <ul v-for="vEmpresa in filteredClientes">
+              <li>
+                Telefono: {{vEmpresa.telefono}}
+              </li>
+              <li>
+                Correo: {{vEmpresa.correo}}
+              </li>
+            </ul>
           </div>
 
         </div>
@@ -47,11 +48,18 @@
             <input class="form-control" type="text" placeholder="Persona de Contacto" v-model="txtCliente" list="listContactos"
               @click="clickVerContacto(modelo.Clientes)" />
             <datalist id="listContactos">
-              <div v-for="empresa in modelo.Clientes">
-                <option v-bind:value="empresa.name">
-              </div>
+              <option v-for="cont in modelo.Clientes" :label="cont.name" :value="cont.name">
+              </option>
             </datalist>
             <br>
+            <ul v-for="vContacto in filteredContactos">
+              <li>
+                Telefono: {{vContacto.telefono}}
+              </li>
+              <li>
+                Correo: {{vContacto.correo}}
+              </li>
+            </ul>
           </div>
         </div>
 

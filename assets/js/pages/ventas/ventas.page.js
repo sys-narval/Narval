@@ -6,8 +6,9 @@ parasails.registerPage('ventas', {
     //…
     VerModalGuardar: false,
     txtCliente:'',
-    clientes: {},
-    contactos: {},
+    txtEmpresa:'',
+    clientes: [{name:''}],
+    contactos: [{name:''}],
     verCliente: false,
     verContacto: false
   },
@@ -44,8 +45,8 @@ parasails.registerPage('ventas', {
        this.clientes=cliente
        this.verCliente= true
      },
-     clickVerContacto: async function (contacto) {
-       this.contactos = contacto
+     clickVerContacto: async function (vcontacto) {
+       this.contactos = vcontacto
        this.verCliente = true
      }
     
@@ -54,6 +55,11 @@ parasails.registerPage('ventas', {
      filteredContactos: function () {
        return this.contactos.filter((contacto) => {
          return contacto.name.match(this.txtCliente)
+       })
+     },
+     filteredClientes: function () {
+       return this.clientes.filter((cliente) => {
+         return cliente.name.match(this.txtEmpresa)
        })
      }
   },
