@@ -35,9 +35,11 @@ parasails.registerPage('inventario', {
       this.verModalA = false;
     },
     crearArticulo: async function(articuloNuevo){
-      modeloI.articulos.push(articuloNuevo);
-      articuloNuevo = {};
-      this.verModalAgr= false;
+      this.articuloNuevo = articuloNuevo;
+      articuloNuevo = {}
+      this.modeloI.articulos.push(this.articuloNuevo);
+      this.verModalAgregar= false;
+      this.articuloNuevo = {};
     },
     cerrarNuevo: async function(){
       this.verModalAgregar = false;
