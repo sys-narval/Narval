@@ -42,8 +42,9 @@
           <th>Contactos</th>
           <th>Opciones</th>
         </thead>
-        <tbody>
-          <tr v-for="empresa in contactos">
+        <tbody v-for="empresa in contactos">
+          <tr class="clickable" data-toggle="collapse" data-target="#group-of-rows-1"
+          aria-expanded="false" aria-controls="group-of-rows-1">
             <td> {{empresa.empresa}} </td>
             <td> {{empresa.correoEmpresarial}} </td>
             <td> {{empresa.telefonoEmpresarial}} </td>
@@ -58,6 +59,20 @@
               <button class="btn btn-danger">Eliminar</button>
             </td>
           </tr>
+        <tbody id="group-of-rows-1" class="collapse">
+          <tr>
+            <td>- child row</td>
+            <td>data 1</td>
+            <td>data 1</td>
+            <td>data 1</td>
+          </tr>
+          <tr>
+            <td>- child row</td>
+            <td>data 1</td>
+            <td>data 1</td>
+            <td>data 1</td>
+          </tr>
+        </tbody>
         </tbody>
       </table>
     </div>
