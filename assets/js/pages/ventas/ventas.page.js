@@ -9,6 +9,7 @@ parasails.registerPage('ventas', {
     txtEmpresa:'',
     clientes: [{name:''}],
     contactos: [{name:''}],
+    articulo: {},
     verCliente: false,
     verContacto: false
   },
@@ -48,6 +49,9 @@ parasails.registerPage('ventas', {
      clickVerContacto: async function (vcontacto) {
        this.contactos = vcontacto
        this.verCliente = true
+     },
+     clickVerArticulo: async function(vArticulo) {
+       this.articulo = vArticulo
      }
     
   },

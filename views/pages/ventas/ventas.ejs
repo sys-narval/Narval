@@ -141,7 +141,7 @@
             </div>
             <input class="form-control" type="text" placeholder="Persona de Contacto" list="listProductos">
             <div class="input-group-append">
-              <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#ModaldeBusqueda">
+              <button type="button" class="btn btn-primary">
                 Buscar
               </button>
             </div>
@@ -171,20 +171,18 @@
             </tr>
           </thead>
           <tbody>
-            <tr v-for="i in modelo.articulos">
-              <td> {{i.id}} </td>
-              <td> {{i.name}} </td>
-              <td> {{i.descripcion}} </td>
-              <td>{{i.cantidad}}</td>
+            <tr v-for="art in modelo.articulos">
+              <td> {{art.id}} </td>
+              <td> {{art.name}} </td>
+              <td> {{art.descripcion}} </td>
+              <td>{{art.cantidad}}</td>
               <td> <input type="number"> </td>
-              <td> <input type="number" :value="i.precio"> </td>
-              <td> {{i.precio}} </td>
-              <td><button type="button" class="btn btn-success">
-                  Ver
-                </button>
-                <button type="button" class="btn btn-danger">
-                  Eliminar
-                </button>
+              <td> <input type="number" :value="art.precio"> </td>
+              <td> {{art.precio}} </td>
+              <td>
+                <button type="button" class="btn btn-success" @click="clickVerArticulo(art)" data-toggle="modal"
+                  data-target="#modalVer">Ver</button>
+                <button type="button" class="btn btn-danger">Eliminar</button>
               </td>
             </tr>
 
@@ -201,50 +199,30 @@
   <modal class="example-modal" v-if="VerModalGuardar" @close="clickCerrarModalGuardar()" v-cloak>
     <div class="modal-dialog" role="document">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Desea guardar los cambios</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span> Esta cotizacion sera guardada por 30 dias </span>
-        </button>
+        <h5 class="modal-title" id="exampleModalLabel">Desea guardar la cotizacion </h5>
       </div>
     </div>
-    <input type="button" value="Cerrar" @click="clickCerrarModalGuardar()">
+    <div class="modal-body">
+      <h6>La cotizacion esta disponible por 30 dia despues de este tiempo sera borrada del sistema </h6>
+      <p>Si se desa hacer cambios sobre esta cotizacion despues de ser guardada se podran ver el area de ver
+        cotizaciones</p>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+      <button type="button" class="btn btn-primary">Guardar los cambios</button>
+    </div>
+
   </modal>
 
-  <!--<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-      aria-hidden="true">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Desea guardar los cambios</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true"> Esta cotizacion sera guardada por 30 dias </span>
-            </button>
-          </div>
-          <div class="modal-body">
-            ...
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-            <button type="button" class="btn btn-primary">Guardar los cambios</button>
-          </div>
-        </div>
-      </div>
-    </div>--->
-  <!--- Modal--->
-
   <!-- Modal -->
-  <div class="modal fade" id="ModaldeBusqueda" tabindex="-1" role="dialog" aria-labelledby="ModaldeBusquedaID"
-    aria-hidden="true">
+  <div class="modal fade" id="modalVer" tabindex="-1" role="dialog" aria-labelledby="ModaldeBusquedaID" aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="ModaldeBusquedaID">Articulos del inventario</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true"> Articulos nesesarios para el evento </span>
-          </button>
+          <h5 class="modal-title" id="ModaldeBusquedaID">{{articulo.name}}</h5>
         </div>
         <div class="modal-body">
-          aqui va todos los campos de busqueda
+          <li v-for="(datos, key) in articulo"> {{key}}: {{datos}} </li>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>

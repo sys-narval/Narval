@@ -33,6 +33,7 @@ module.exports = {
           name: 'Tros',
           descripcion: 'Distancia dos metros',
           precio: 500,
+          largo: '2 m'
         
         },
         {
@@ -41,6 +42,7 @@ module.exports = {
           name: 'Pantallas',
           descripcion: '40 pulgadas',
           precio: 300,
+          amperaje: '55'
         }
       ],
       Clientes: [{
