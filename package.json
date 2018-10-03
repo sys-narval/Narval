@@ -33,9 +33,9 @@
   "main": "app.js",
   "repository": {
     "type": "git",
-    "url": "git://github.com/anonymous node/sails user/narval.git"
+    "url": "git://github.com/sys-narval/Narval.git"
   },
-  "author": "anonymous node/sails user",
+  "author": "Grupo 2018-26, Ingeniería en Sistemas - Universidad Nacional",
   "license": "",
   "engines": {
     "node": ">=9.6"
