@@ -6,6 +6,8 @@ parasails.registerPage('cotizaciones', {
     //…
     cotizacion: { /* */ },
     verModal: false,
+    modBorrarEvento: false,
+    modCopiarEvento: false,
     busquedaCotizacion: '',
     filtro: {}
   },
@@ -33,9 +35,38 @@ parasails.registerPage('cotizaciones', {
 
         // Método de cerrar el modal y restablecer la cotizacion local
         cerrarEvento: async function () {
-          this.cotizacion = { /* */ };
-          this.verModal = false;
-        },
+            this.cotizacion = { /* */ };
+            this.verModal = false;
+          },
+
+          copiarEvento: async function (cotizacion) {
+              this.cotizacion = cotizacion;
+              this.modCopiarEvento = true;
+            },
+
+            confirmarCopiar: async function () {
+                this.cancelarCopiar();
+              },
+
+              cancelarCopiar: async function () {
+                  this.cotizacion = { /*_*/ };
+                  this.modCopiarEvento = false;
+                },
+
+                borrarEvento: async function (cotizacion) {
+                    this.cotizacion = cotizacion;
+                    this.modBorrarEvento = true;
+                  },
+
+                  confirmarBorrar: async function () {
+                      //this.cotizaciones = this.cotizaciones.filter(cotizacion => cotizacion !== this.cotizacion)
+                      this.cancelarBorrar();
+                    },
+
+                    cancelarBorrar: async function () {
+                      this.cotizacion = { /*_*/ };
+                      this.modBorrarEvento = false;
+                    }
     },
     // Métodos de filtro
     computed: {
