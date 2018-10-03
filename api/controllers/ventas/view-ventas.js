@@ -28,18 +28,19 @@ module.exports = {
       verArticulos: false,
       verEmpresa: false,
       articulos: [{
+        id: 1,
           cantidad: 2,
           name: 'Tros',
           descripcion: 'Distancia dos metros',
           precio: 500,
-          valor: 5
+        
         },
         {
+          id: 2,
           cantidad: 3,
           name: 'Pantallas',
           descripcion: '40 pulgadas',
           precio: 300,
-          valor: 5
         }
       ],
       Clientes: [{
