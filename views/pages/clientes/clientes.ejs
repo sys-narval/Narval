@@ -1,7 +1,89 @@
 <div id="clientes" v-cloak>
 
-  <h1>TODO: Implement this page.</h1>
-  <p>(See also <em>assets/styles/pages/clientes/clientes.less</em>, <em>assets/js/pages/clientes/clientes.page.js</em>, and <em>api/controllers/clientes/view-clientes.js</em>.)</p>
+  <h1>Clientes</h1>
+
+  <div class="row">
+    <div class="col-5">
+      <div class="input-group">
+        <div class="input-goup-prepend">
+          <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true"
+            aria-expanded="false">Filtros</button>
+          <div class="dropdown-menu p-4">
+            <div class="form-check mb-2">
+              <input type="checkbox" name="Nombre de empresa" id="miEmpresa" class="form-check-input">
+              <label for="miEmpresa" class="form-check-label">Nombre de la empresa</label>
+            </div>
+            <div class="form-check mb-2">
+              <input type="checkbox" name="Nombre del contacto" id="miContacto" class="form-check-input">
+              <label for="miContacto" class="form-check-label">Nombre del contacto</label>
+            </div>
+            <div class="form-check mb-2">
+              <input type="checkbox" name="Correo" id="miCorreo" class="form-check-input">
+              <label for="miCorreo" class="form-check-label">Correo</label>
+            </div>
+          </div>
+        </div>
+        <input type="text" name="Buscar Cotización" id="cotizacion" placeholder="Buscar Cotización" class="form-control">
+        <div class="input-group-append">
+          <span class="input-group-text"><i class="fa fa-search"></i></span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="row">
+    <div class="col">
+      <table class="table table-hover table-striped table-bordered">
+        <thead class="thead-light">
+          <th>Nombre de la empresa</th>
+          <th>Correo de facturacion</th>
+          <th>Telefono de la empresa</th>
+          <th>Contactos</th>
+          <th>Opciones</th>
+        </thead>
+        <tbody>
+          <tr v-for="empresa in contactos">
+            <td> {{empresa.empresa}} </td>
+            <td> {{empresa.correoEmpresarial}} </td>
+            <td> {{empresa.telefonoEmpresarial}} </td>
+            <td>
+              <ul v-for="contacto in empresa.Contacto">
+                <li v-for="(info, key ) in contacto"> {{key}}: {{info}} </li>
+              </ul>
+            </td>
+            <td>
+              <button class="btn btn-primary" @click="clickVerEmpresa(empresa)" data-toggle="modal" data-target="#modalEditar">
+                Editar </button>
+              <button class="btn btn-danger">Eliminar</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+
+  <!-----Modal-->
+  <div class="modal fade" id="modalEditar" tabindex="-1" role="dialog" aria-labelledby="ModaldeBusquedaID" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="ModaldeBusquedaID"> Editar al Usuario </h5>
+        </div>
+        <div class="modal-body">
+          <ul>
+            <li></li>
+          </ul>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!------Modal-->
 
 </div>
 <%- /* Expose server-rendered data as window.SAILS_LOCALS :: */ exposeLocalsToBrowser() %>
