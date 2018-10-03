@@ -53,7 +53,8 @@ module.exports = {
       descripcion: 'mesas de madera',
       precio: 2000,
       estado: 'Disponible'
-  }]
+  }],
+  articuloNuevo: {}
     };
     // Respond with view.
     return exits.success({

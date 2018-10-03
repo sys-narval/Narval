@@ -21,7 +21,12 @@
             </div>
           </div>
         
-          <input type="text" name="buscarArticulo" id="articulo" placeholder="Search" class="form-control">
+          <input type="text" name="buscarArticulo" id="articulo" placeholder="Search" list="listaArticulos" class="form-control">
+          <datalist id="listaArticulos">
+              <div v-for="art in modeloI.articulos">
+                <option v-bind:value="art.nombre">
+              </div>
+          </datalist>
         <div class="input-group-append">
           <span class="input-group-text"><i class="fa fa-search"></i></span>
         </div>
@@ -59,61 +64,61 @@
                 </tr>
               </tbody>
         </table>
-        <button type="button" class="btn btn-sm btn-primary btn-block boton boton1" data-toggle="modal" data-target="#agregarArticulo">Agregar</button>
+        <button type="button" class="btn btn-sm btn-primary btn-block boton boton1" @click="verModalAgr()">Agregar</button>
     </div>
   </div>
     <!--Modal de agregar-->
-    <div id="agregarArticulo" class="modal fade" role="dialog">
+    <modal v-if="verModalAgregar" id="agregarArticulo">
       <div class="modal-dialog">
         <!-- Contenido del modal-->
         <div class="modal-content">
           <div class="model-header" background="blue">
-            <button type="button" class="close" data-dismiss="modal">X</button>
+            <button type="button" class="close" @click="cerrarNuevo">X</button>
             <h4 class="modal-title">Agregando Articulo al Inventario</h4>
           </div>
           <div class="modal-body">
-            <form>
+            <form v-on:submit.prevent="crearArticulo">
                 <div class="form-group">
                     <label for="id">ID: </label>
-                    <input type="text" class="form-control" id="idArtNuevo" placeholder="ID del Articulo">
+                    <input type="text" class="form-control" id="idArtNuevo" v-model="articuloNuevo.id" placeholder="ID del Articulo">
                 </div>
                 <div class="form-group">
                     <label for="nombre">Nombre: </label>
-                    <input type="text" class="form-control" id="nombreArtNuevo" placeholder="Nombre del Articulo">
+                    <input type="text" class="form-control" id="nombreArtNuevo" v-model="articuloNuevo.nombre" placeholder="Nombre del Articulo">
                 </div>
                 <div class="form-group">
                     <label for="tamaño">Tamaño: </label>
-                    <input type="text" class="form-control" id="tamañoArtNuevo" placeholder="Tamaño del Articulo">
+                    <input type="text" class="form-control" id="tamañoArtNuevo" v-model="articuloNuevo.tamano" placeholder="Tamaño del Articulo">
                 </div>
                 <div class="form-group">
                     <label for="cantidad">Cantidad: </label>
-                    <input type="text" class="form-control" id="cantidadArtNuevo" placeholder="Cantidad del Articulo">
+                    <input type="text" class="form-control" id="cantidadArtNuevo" v-model="articuloNuevo.cantidad" placeholder="Cantidad del Articulo">
                 </div>
                 <div class="form-group">
                     <label for="precio">Precio: </label>
-                    <input type="text" class="form-control" id="precioArtNuevo" placeholder="Precio del Articulo">
+                    <input type="text" class="form-control" id="precioArtNuevo" v-model="articuloNuevo.precio" placeholder="Precio del Articulo">
                 </div>
                 <div class="form-group">
                     <label for="descripcion">Descripcion: </label>
-                    <textarea class="form-control" id="descripcionArtNuevo" rows="3" cols="10" maxlength="180" placeholder="Descripcion del Articulo" > </textarea>
+                    <textarea class="form-control" id="descripcionArtNuevo" rows="3" cols="10" maxlength="180" v-model="articuloNuevo.descripcion" placeholder="Descripcion del Articulo" > </textarea>
                 </div>
                 <div class="form-group">
                     <label for="estado">Estado: </label>
-                    <select>
+                    <select v-model="articuloNuevo.estado">
                       <option>Disponible</option>
                       <option>Ocupado</option>
                       <option>Dañado</option>
                     </select>
                 </div>
-            </form>
-          </div>
-          <div class="modal-footer">
-              <button type="button" class="btn btn-primary">Agregar</button>
-            <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+                <button type="submit" class="btn btn-primary" @click="crearArticulo">Agregar</button>
+              </form>
+            </div>
+            <div class="modal-footer">
+            <button type="button" class="btn btn-danger" @click="cerrarNuevo">Cancelar</button>
           </div>
         </div>
       </div>
-    </div><!--Fin del modal agregar-->
+    </modal><!--Fin del modal agregar-->
     <!-- Modal de borrar articulo-->
     <div class="modal fade" id="ModalBorrar" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
         <div class="modal-dialog">
