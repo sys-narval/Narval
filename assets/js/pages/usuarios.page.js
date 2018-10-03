@@ -3,6 +3,10 @@ parasails.registerPage('usuarios', {
   //  ║║║║║ ║ ║╠═╣║    ╚═╗ ║ ╠═╣ ║ ║╣
   //  ╩╝╚╝╩ ╩ ╩╩ ╩╩═╝  ╚═╝ ╩ ╩ ╩ ╩ ╚═╝
   data: {
+    usuario: {},
+    verModalEditar: false,
+    verModalDeshabilitar: false,
+    verModalAgregar: false
     //…
   },
 
@@ -22,5 +26,30 @@ parasails.registerPage('usuarios', {
   //  ╩╝╚╝ ╩ ╚═╝╩╚═╩ ╩╚═╝ ╩ ╩╚═╝╝╚╝╚═╝
   methods: {
     //…
+    modalEditar: async function(usuario){
+      this.usuario = usuario;
+      this.verModalEditar = true;
+    },
+
+    modalDeshabilitar: async function(){
+      this.verModalDeshabilitar = true;
+    },
+
+    modalAgregar: async function(){
+      this.verModalAgregar = true;
+    },
+
+    cerrarEditar: async function(){
+      this.verModalEditar = false;
+    },
+
+    cerrarDeshabilitar: async function(){
+      this.verModalDeshabilitar = false;
+    },
+
+    cerrarAgregar: async function(){
+      this.verModalAgregar = false;
+    }
+
   }
 });
