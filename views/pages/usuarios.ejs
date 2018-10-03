@@ -1,7 +1,58 @@
 <div id="usuarios" v-cloak>
 
   <h1>Usuarios</h1>
+  <!--Buscador-->
+  <div class="row">
+    <div class="col-6">
+      <div class="form-group">
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <button class="btn btn-outline-secondary dropdown-toggle" title="Búsqueda" type="button" data-toggle="dropdown"
+              aria-haspopup="true" aria-expanded="false">Filtros</button>
+            <div class="dropdown-menu p-4">
+              <div class="form-group">
+                <label for="nombre">Nombre:</label>
+                <input type="text" id="nombre" class="form-control" placeholder="Nombre del Usuario">
+              </div>
+              <div class="form-group">
+                <label for="correoElectrónico">Correo</label>
+                <input type="text" id="correoElectrónico" class="form-control" placeholder="Correo del Usuario">
+              </div>
+              <div class="form-group">
+                  <label for="nombre">Roles:</label>
+                </div>
+              <div class="form-check mb-2">
+                <input type="checkbox" name="rol Administrador" id="rolAdministrador" class="form-check-input">
+                <label for="rolAdministrador" class="form-check-label">Administrador</label>
+              </div>
+              <div class="form-check mb-2">
+                <input type="checkbox" name="rol TI" id="rolTI" class="form-check-input">
+                <label for="rolTI" class="form-check-label">TI</label>
+              </div>
+              <div class="form-check mb-2">
+                <input type="checkbox" name="rol Secretario" id="rolSecretario" class="form-check-input">
+                <label for="rolSecretario" class="form-check-label">Secretario</label>
+              </div>
+              <div class="form-check mb-2">
+                <input type="checkbox" name="rol Vendedor" id="rolVendedor" class="form-check-input">
+                <label for="rolVendedor" class="form-check-label">Vendedor</label>
+              </div>
+              <div class="form-check mb-2">
+                  <input type="checkbox" name="rol Bodega" id="rolBodega" class="form-check-input">
+                  <label for="rolBodega" class="form-check-label">Bodega</label>
+                </div>
+            </div>
+          </div>
+          <input type="text" name="Buscar Usuario" id="usuario" placeholder="Buscar Usuario" class="form-control">
+          <div class="input-group-append">
+            <span class="input-group-text" title="Búsqueda"><i class="fa fa-search"></i></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
+  <!--Tabla-->
   <table class="table table-hover table-striped table-bordered">
     <thead class="thead-dark">
       <th>Seleccionar</th>
@@ -25,8 +76,8 @@
     </tbody>
   </table>
   <div class="col-lg-11 my-6 text-center">
-    <button class="btn btn-primary" type="button" id="Agregar" @click="modalAgregar()">Agregar</button>
-    <button class="btn btn-danger" type="button" id="deshabilitar" @click="modalDeshabilitar()">Deshabilitar</button>
+    <button class="btn btn-primary" type="button" id="Agregar" @click="modalAgregar()" title="Agregar">Agregar</button>
+    <button class="btn btn-danger" type="button" id="deshabilitar" @click="modalDeshabilitar()" title="Deshabilitar">Deshabilitar</button>
   </div>
 
   <!--Modal Editar-->
@@ -60,8 +111,8 @@
               </select>
             </div>
           </div>
-          <button type="button" id="Guardar" class="btn btn-primary" @click="cerrarEditar()">Guardar</button>
-          <input type="button" value="Cerrar" class="btn btn-basic" @click="cerrarEditar()">
+          <button type="button" id="Guardar" class="btn btn-primary" @click="cerrarEditar()" title="Guardar">Guardar</button>
+          <input type="button" value="Cerrar" class="btn btn-basic" @click="cerrarEditar()" title="Cerrar">
         </form>
       </div>
     </div>
@@ -81,8 +132,8 @@
               <h6 class="modal-title" id="AdvertenciaDeshabilitar">¿Está seguro que desea deshabilitar este Usuario?</h6>
             </div>
           </div>
-          <button type="button" id="aceptar" class="btn btn-primary" @click="cerrarDeshabilitar()">Aceptar</button>
-          <input type="button" value="cerrar" class="btn btn-basic" @click="cerrarDeshabilitar()">
+          <button type="button" id="aceptar" class="btn btn-primary" @click="cerrarDeshabilitar()" title="Aceptar">Aceptar</button>
+          <input type="button" value="cerrar" class="btn btn-basic" @click="cerrarDeshabilitar()" title="Cerrar">
         </form>
       </div>
     </div>
@@ -119,8 +170,8 @@
               </select>
             </div>
           </div>
-          <button type="button" id="Agregar" class="btn btn-primary" @click="cerrarAgregar()">Agregar</button>
-          <input type="button" value="Cerrar" class="btn btn-basic" @click="cerrarAgregar()">
+          <button type="button" id="Agregar" class="btn btn-primary" @click="cerrarAgregar()" title="Agregar">Agregar</button>
+          <input type="button" value="Cerrar" class="btn btn-basic" @click="cerrarAgregar()" title="Cerrar">
         </form>
       </div>
     </div>
