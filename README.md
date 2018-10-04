@@ -1,6 +1,6 @@
-# Sistema Narval
+# narval
 
-Una aplicacion basada en [Sails v1](https://sailsjs.com)
+a [Sails v1](https://sailsjs.com) application
 
 
 ### Links
