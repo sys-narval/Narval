@@ -33,7 +33,7 @@
             <br>
             <ul v-for="vEmpresa in filteredClientes">
               <li>
-                Telefono: {{vEmpresa.telefono}}
+                Teléfono: {{vEmpresa.telefono}}
               </li>
               <li>
                 Correo: {{vEmpresa.correo}}
@@ -54,7 +54,7 @@
             <br>
             <ul v-for="vContacto in filteredContactos">
               <li>
-                Telefono: {{vContacto.telefono}}
+                Teléfono: {{vContacto.telefono}}
               </li>
               <li>
                 Correo: {{vContacto.correo}}
@@ -89,8 +89,8 @@
               </label>
             </div>
             <br>
-            <label class="form-check-label">Descripcion de los servicios </label>
-            <textarea class="form-control" id="exampleTextarea" rows="3" placeholder="Descripcion"></textarea>
+            <label class="form-check-label">Descripción de los servicios </label>
+            <textarea class="form-control" id="exampleTextarea" rows="3" placeholder="Descripción"></textarea>
             <br>
           </div>
         </div>
@@ -115,7 +115,7 @@
           <input class="form-control" type="date">
         </div>
 
-        <div class="form-grup col">
+        <div class="form-group col">
           <label class="col-form-label">Fecha de desmontaje </label>
           <input id="fecha_actual" class="form-control" type="date">
         </div>
@@ -131,7 +131,7 @@
               <div class="dropdown-menu p-4">
                 <div class="form-check mb-2">
                   <input type="checkbox" name="mis cotizaciones" id="elctronicos" class="form-check-input">
-                  <label for="electronicos" class="form-check-label">Electronicos</label>
+                  <label for="electronicos" class="form-check-label">Electrónicos</label>
                 </div>
                 <div class="form-check mb-2">
                   <input type="checkbox" name="mis cotizaciones" id="inmobiliario" class="form-check-input">
@@ -139,7 +139,7 @@
                 </div>
               </div>
             </div>
-            <input class="form-control" type="text" placeholder="Persona de Contacto" list="listProductos">
+            <input class="form-control" type="text" placeholder="Buscar Producto" list="listProductos">
             <div class="input-group-append">
               <button type="button" class="btn btn-primary">
                 Buscar
@@ -162,9 +162,9 @@
             <tr>
               <th scope="col">id</th>
               <th scope="col">Producto</th>
-              <th scope="col">Descripcion</th>
+              <th scope="col">Descripción</th>
               <th scope="col">Cantidad en stock</th>
-              <th scope="col">Cantidad solitada</th>
+              <th scope="col">Cantidad solicitada</th>
               <th scope="col">Valor Unitario</th>
               <th scope="col">Valor</th>
               <th> Opciones </th>
@@ -199,12 +199,12 @@
   <modal class="example-modal" v-if="VerModalGuardar" @close="clickCerrarModalGuardar()" v-cloak>
     <div class="modal-dialog" role="document">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Desea guardar la cotizacion </h5>
+        <h5 class="modal-title" id="exampleModalLabel">Desea guardar la cotización </h5>
       </div>
     </div>
     <div class="modal-body">
-      <h6>La cotizacion esta disponible por 30 dia despues de este tiempo sera borrada del sistema </h6>
-      <p>Si se desa hacer cambios sobre esta cotizacion despues de ser guardada se podran ver el area de ver
+      <h6>La cotización esta disponible por 30 dia después de este tiempo sera borrada del sistema </h6>
+      <p>Si se desea hacer cambios sobre esta cotización después de ser guardada se podrán ver el area de ver
         cotizaciones</p>
     </div>
     <div class="modal-footer">

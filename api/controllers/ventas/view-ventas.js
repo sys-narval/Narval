@@ -30,7 +30,7 @@ module.exports = {
       articulos: [{
         id: 1,
           cantidad: 2,
-          name: 'Tros',
+          name: 'Tross',
           descripcion: 'Distancia dos metros',
           precio: 500,
           largo: '2 m'
@@ -58,7 +58,7 @@ module.exports = {
         {
           name: 'Mario',
           telefono: '8888888',
-          correo: 'mario123@gmailcom'
+          correo: 'mario123@gmail.com'
         },
       ],
       empresas: [{
@@ -67,7 +67,7 @@ module.exports = {
           correo: '1122@gmail.com'
         },
         {
-          name: 'Nisan',
+          name: 'Nissan',
           telefono: '2222',
           correo: '222222@gmail.com'
         }
