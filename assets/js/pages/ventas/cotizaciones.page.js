@@ -76,11 +76,11 @@ parasails.registerPage('cotizaciones', {
           return this.modelo.cotizaciones.filter(cotizacion => {
             // Verifica que cada atributo del objeto sea igual al atributo del filtro
             for (var key in this.filtro) {
-              if (this.filtro[key].length !== 0 && (cotizacion[key] === undefined || !cotizacion[key].match(this.filtro[key])))
+              if (this.filtro[key].length !== 0 && (cotizacion[key] === undefined || !cotizacion[key].includes(this.filtro[key])))
                 return false;
             }
             // Verifica que la descripción o la ubicación del evento cumpla con lo escrito en la barra de búsqueda
-            return (cotizacion.descripcion.match(this.busquedaCotizacion) || cotizacion.ubicacion.match(this.busquedaCotizacion));
+            return (cotizacion.descripcion.includes(this.busquedaCotizacion) || cotizacion.ubicacion.includes(this.busquedaCotizacion));
           })
         } else {
           return [];
