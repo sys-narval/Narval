@@ -6,6 +6,8 @@ parasails.registerPage('cotizaciones', {
     //…
     cotizacion: { /* */ },
     verModal: false,
+    modBorrarEvento: false,
+    modCopiarEvento: false,
     busquedaCotizacion: '',
     filtro: {}
   },
@@ -33,26 +35,63 @@ parasails.registerPage('cotizaciones', {
 
         // Método de cerrar el modal y restablecer la cotizacion local
         cerrarEvento: async function () {
-          this.cotizacion = { /* */ };
-          this.verModal = false;
-        },
+            this.cotizacion = { /* */ };
+            this.verModal = false;
+          },
+
+          copiarEvento: async function (cotizacion) {
+              this.cotizacion = cotizacion;
+              this.modCopiarEvento = true;
+            },
+
+            confirmarCopiar: async function () {
+                this.cancelarCopiar();
+              },
+
+              cancelarCopiar: async function () {
+                  this.cotizacion = { /*_*/ };
+                  this.modCopiarEvento = false;
+                },
+
+                borrarEvento: async function (cotizacion) {
+                    this.cotizacion = cotizacion;
+                    this.modBorrarEvento = true;
+                  },
+
+                  confirmarBorrar: async function () {
+                      //this.cotizaciones = this.cotizaciones.filter(cotizacion => cotizacion !== this.cotizacion)
+                      this.cancelarBorrar();
+                    },
+
+                    cancelarBorrar: async function () {
+                      this.cotizacion = { /*_*/ };
+                      this.modBorrarEvento = false;
+                    }
     },
     // Métodos de filtro
     computed: {
       filtroCotizacion: function () {
-        // Se verifica que la barra de búsqueda no este vaciá
+
+        /*
+        * Función para limpiar el filtro a usar, en caso de que el atributo este vacío
+        * eliminamos ese atributo del objeto para que no sea evaluado
+        */
+        const limpiaFiltro = objeto => {
+          for (let atributo in objeto)
+            if (objeto[atributo] === null || objeto[atributo] === undefined || objeto[atributo] === '')
+              delete objeto[atributo];
+          return objeto;
+        }
+
+        /*
+        * Filtramos las cotizaciones que cumplan con el filtro preestablecido por el usuario y que cumpla con
+        * que la barra de búsqueda tenga más de un dígito y coincida con la descripción o ubicación.
+        */
         if (this.busquedaCotizacion) {
-          return this.modelo.cotizaciones.filter(cotizacion => {
-            // Verifica que cada atributo del objeto sea igual al atributo del filtro
-            for (var key in this.filtro) {
-              if (this.filtro[key].length !== 0 && (cotizacion[key] === undefined || !cotizacion[key].match(this.filtro[key])))
-                return false;
-            }
-            // Verifica que la descripción o la ubicación del evento cumpla con lo escrito en la barra de búsqueda
-            return (cotizacion.descripcion.match(this.busquedaCotizacion) || cotizacion.ubicacion.match(this.busquedaCotizacion));
-          })
+          return _.filter(this.modelo.cotizaciones, limpiaFiltro(this.filtro))
+            .filter(cotizacion => cotizacion.descripcion.includes(this.busquedaCotizacion) || cotizacion.ubicacion.includes(this.busquedaCotizacion));
         } else {
-          return [];
+          return new Array();
         }
       }
     }

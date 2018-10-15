@@ -29,10 +29,10 @@ module.exports = {
       },
     {
       id:2,
-      nombre: 'Tros',
+      nombre: 'Tross',
       tamano: '5 mts',
       cantidad: 3,
-      descripcion: 'Tros metalico',
+      descripcion: 'Tross metálico',
       precio: 10000,
       estado: 'Ocupado'
     },

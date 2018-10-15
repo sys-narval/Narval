@@ -1,5 +1,4 @@
 <div id="cotizaciones" v-cloak>
-
   <h1>Cotizaciones</h1>
   <div class="row">
     <div class="col-6">
@@ -15,13 +14,11 @@
               </div>
               <div class="form-group">
                 <label for="encargado">Encargado:</label>
-                <input type="text" id="encargado" class="form-control" placeholder="Nombre Encargado"
-                v-model="filtro.encargado">
+                <input type="text" id="encargado" class="form-control" placeholder="Nombre Encargado" v-model="filtro.encargado">
               </div>
               <div class="form-group">
                 <label for="encargado">Cliente:</label>
-                <input type="text" id="cliente" class="form-control" placeholder="Cliente"
-                v-model="filtro.cliente">
+                <input type="text" id="cliente" class="form-control" placeholder="Cliente" v-model="filtro.cliente">
               </div>
               <div class="form-group">
                 <label for="fechaInicio">Fecha Evento:</label>
@@ -41,7 +38,8 @@
               </div>
             </div>
           </div>
-          <input type="text" name="Buscar Cotización" id="cotizacion" placeholder="Buscar Cotización" class="form-control" v-model.trim="busquedaCotizacion">
+          <input type="text" name="Buscar Cotización" id="cotizacion" placeholder="Buscar Cotización" class="form-control"
+            v-model.trim="busquedaCotizacion">
           <div class="input-group-append">
             <span class="input-group-text"><i class="fa fa-search"></i></span>
           </div>
@@ -56,9 +54,9 @@
           <th>Encargado</th>
           <th>Cliente</th>
           <th>Ubicación</th>
+          <th>Descripción</th>
           <th>Fecha de Montaje</th>
           <th>Fin de evento</th>
-          <th>Descripción</th>
           <th>Opciones</th>
         </thead>
         <tbody>
@@ -66,18 +64,18 @@
             <td v-text="cotizacion.encargado"></td>
             <td v-text="cotizacion.cliente"></td>
             <td v-text="cotizacion.ubicacion"></td>
+            <td v-text="cotizacion.descripcion"></td>
             <td v-text="cotizacion.fechaMontaje"></td>
             <td v-text="cotizacion.fechaFin"></td>
-            <td v-text="cotizacion.descripcion"></td>
             <td class="text-center">
               <div class="btn-group ">
                 <label for="ver" class="btn btn-primary" @click="verEvento(cotizacion)">
                   Ver
                 </label>
-                <label for="copiar" class="btn btn-success">
+                <label for="copiar" class="btn btn-success" @click="copiarEvento(cotizacion)">
                   Copiar
                 </label>
-                <label for="borrar" class="btn btn-danger">
+                <label for="borrar" class="btn btn-danger" @click="borrarEvento(cotizacion)">
                   Borrar
                 </label>
               </div>
@@ -156,6 +154,78 @@
             </div>
           </div>
           <input type="button" value="Cerrar" class="btn btn-primary" @click="cerrarEvento()">
+        </form>
+      </div>
+    </div>
+  </modal>
+
+  <modal v-if="modBorrarEvento" id="borrarEvento">
+    <div class="row">
+      <div class="col">
+        <h1>Seguro que desea borrar la cotizacion?</h1>
+        <form action="" readonly>
+          <div class="form-row">
+            <!-- Encargado del evento -->
+            <div class="form-group col">
+              <label for="encargado">Encargado</label>
+              <input type="text" id="encargado" class="form-control" :value="cotizacion.encargado">
+            </div>
+            <!-- Cliente del evento -->
+            <div class="form-group col">
+              <label for="cliente">Cliente</label>
+              <input type="text" id="cliente" class="form-control" :value="cotizacion.cliente">
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group col">
+              <label for="descipcion">Descripción:</label>
+              <textarea name="Descripción" id="descripcion" cols="30" rows="3" class="form-control"></textarea>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-2">
+              <input type="button" value="Cancelar" class="btn btn-success" @click="cancelarBorrar">
+            </div>
+            <div class="form-group col-2">
+              <input type="button" value="Borrar" class="btn btn-danger" @click="confirmarBorrar">
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </modal>
+
+  <modal v-if="modCopiarEvento" id="copiarEvento">
+    <div class="row">
+      <div class="col">
+        <h1>Seguro que desea copiar la cotizacion?</h1>
+        <form action="" readonly>
+          <div class="form-row">
+            <!-- Encargado del evento -->
+            <div class="form-group col">
+              <label for="encargado">Encargado</label>
+              <input type="text" id="encargado" class="form-control" :value="cotizacion.encargado">
+            </div>
+            <!-- Cliente del evento -->
+            <div class="form-group col">
+              <label for="cliente">Cliente</label>
+              <input type="text" id="cliente" class="form-control" :value="cotizacion.cliente">
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group col">
+              <label for="descipcion">Descripción:</label>
+              <textarea name="Descripción" id="descripcion" cols="30" rows="3" class="form-control"></textarea>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-2">
+              <input type="button" value="Cancelar" class="btn btn-success" @click="cancelarCopiar">
+            </div>
+            <div class="form-group col-2">
+              <input type="button" value="Copiar" class="btn btn-primary" @click="confirmarCopiar">
+            </div>
+          </div>
         </form>
       </div>
     </div>
