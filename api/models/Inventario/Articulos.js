@@ -24,7 +24,7 @@ module.exports = {
       example: 'T001'
     },
 
-    descipcion: {
+    descripcion: {
       type: 'string',
       required: true,
       description: 'Descripción del articulo para mostrar a los usuarios',

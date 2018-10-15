@@ -18,41 +18,46 @@ module.exports = {
 
   fn: async function (inputs, exits) {
     let modeloI= {
+      tipos:['TRUSS','Cables','Mobiliario','Herramientas'],
       articulos: [{
-        id:1,
-        nombre: 'Pantalla',
-        tamano: '42"',
-        cantidad: 5,
-        descripcion: 'Led',
-        precio: 100000,
-        estado: 'Disponible'
+        id:'T001',
+        descripcion : '0.25mts',
+        cantidadLibre: 10,
+        cantidadUso: 0,
+        cantidadDanado: 0,
+        cantidadTotal: 10,
+        tipo: 'TRUSS',
+        precio: 1000
       },
     {
-      id:2,
-      nombre: 'Tross',
-      tamano: '5 mts',
-      cantidad: 3,
-      descripcion: 'Tross metálico',
-      precio: 10000,
-      estado: 'Ocupado'
+      id:'C001',
+      descripcion : 'Conectores de 3 Vias',
+      cantidadLibre: 1,
+      cantidadUso: 0,
+      cantidadDanado: 0,
+      cantidadTotal: 1,
+      tipo: "Cables",
+      precio: 2000
     },
   {
-    id:3,
-      nombre: 'Luces',
-      tamano: '10 mts',
-      cantidad: 4,
-      descripcion: 'Luces especiales',
-      precio: 20000,
-      estado: 'Disponible'
+    id:'M001',
+    descripcion : 'Sillón Blanco 1pax',
+      cantidadLibre: 2,
+      cantidadUso: 0,
+      cantidadDanado: 0,
+      cantidadTotal: 1,
+      tipo: 'Mobiliario',
+      precio: 2000
   },
   {
-    id:4,
-      nombre: 'Mesas',
-      tamano: '10x20 cm',
-      cantidad: 10,
-      descripcion: 'mesas de madera',
-      precio: 2000,
-      estado: 'Disponible'
+    id:'H001',
+    descripcion : 'Maquina de Humo',
+    cantidadLibre: 1,
+    cantidadUso: 0,
+    cantidadDanado: 0,
+    cantidadTotal: 1,
+    tipo: 'Herramientas',
+    precio: 2000
   }],
   articuloNuevo: {}
     };
