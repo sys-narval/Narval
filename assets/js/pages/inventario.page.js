@@ -18,7 +18,7 @@ parasails.registerPage('inventario', {
   beforeMount: function() {
     // Attach any initial data from the server.
     _.extend(this, SAILS_LOCALS);
-    this.modeloI.articulos= Cloud.extraerInventario();
+    //this.modeloI.articulos= Cloud.extraerInventario();
   },
   mounted: async function() {
     //…
@@ -41,6 +41,7 @@ parasails.registerPage('inventario', {
       await Cloud.insertarUnArticulo.with(articuloNuevo);
       this.verModalAgregar= false;
       this.articuloNuevo = {};
+      this.modeloI.articulos.push(articuloNuevo);
       this.$forceUpdate();
     },
     cerrarNuevo: async function(){
@@ -55,12 +56,13 @@ parasails.registerPage('inventario', {
     },
     eliminar: async function(){
       await Cloud.eliminarUnArticulo.with(this.articulo);
-      //this.modeloI.articulos.splice(this.modeloI.articulos.indexOf(this.articulo),1);
+      this.modeloI.articulos.splice(this.modeloI.articulos.indexOf(this.articulo),1);
       this.verModalEliminar = false;
+      this.$forceUpdate();
     },
     actualizar: async function(p_articulo)
     {
-      this.modeloI.articulos = this.modeloI.articulos.map(articulo => {
+       this.modeloI.articulos.map(articulo => {
         if(articulo.id === p_articulo.id){
           articulo = p_articulo;
         }
@@ -76,5 +78,20 @@ parasails.registerPage('inventario', {
       this.verModalA = false;
     }
 
+  },
+  filters:{
+    formatoMoneda: function(cantidad){
+      if(typeof cantidad !== 'number'){
+        return cantidad;
+      }
+
+      let formato = Intl.NumberFormat('en-US', {
+        style: 'Currency',
+        currency: 'USD',
+        minimumFractionDigits: 0
+      });
+
+      return formato.format(cantidad);
+    }
   }
 });

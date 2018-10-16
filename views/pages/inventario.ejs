@@ -52,17 +52,17 @@
                     <th>Eliminar</th>
                   </tr>
             </thead>
-            <tbody v-for="articulo in modeloI.articulos">
-                <tr v-if="tipos == articulo.tipo">
-                  <td v-text="articulo.id"></td>
-                  <td v-text="articulo.descripcion"></td>
-                  <td v-text="articulo.cantidadLibre"></td>
-                  <td v-text="articulo.cantidadUso"></td>
-                  <td v-text="articulo.cantidadDanado"></td>
-                  <td v-text="articulo.cantidadTotal"></td>
-                  <td v-text="articulo.precio"></td>
-                  <td><button type="button" class="btn btn-sm btn-warning btn-block" @click="verArticulo(articulo)">Actualizar</button></td>
-                  <td><button type="button" class="btn btn-sm btn-danger btn-block" @click="verModalEli(articulo)">Eliminar</button></td>
+            <tbody v-for="t_articulo in modeloI.articulos">
+                <tr v-if="tipos == t_articulo.categoria">
+                  <td v-text="t_articulo.id"></td>
+                  <td v-text="t_articulo.descripcion"></td>
+                  <td v-text="t_articulo.cantidadLibre"></td>
+                  <td v-text="t_articulo.cantidadUso"></td>
+                  <td v-text="t_articulo.cantidadDanado"></td>
+                  <td v-text="t_articulo.cantidadTotal"></td>
+                  <td >{{t_articulo.precio }}</td>
+                  <td><button type="button" class="btn btn-sm btn-warning btn-block" @click="verArticulo(t_articulo)">Actualizar</button></td>
+                  <td><button type="button" class="btn btn-sm btn-danger btn-block" @click="verModalEli(t_articulo)">Eliminar</button></td>
                 </tr>
               </tbody>
         </table>
@@ -123,7 +123,7 @@
                   </div>
                   <div class="form-group">
                       <label for="precio">Precio: </label>
-                      <input type="text" class="form-control" id="precioArtNuevo" v-model="articuloNuevo.precio" placeholder="Precio Articulo Nuevo" required>
+                      <input type="number" min="0" step="100" data-number-to-fixed="2" data-number-stepfactor="100" class="form-control" id="precioArtNuevo" v-model="articuloNuevo.precio" placeholder="Precio Articulo Nuevo" required>
                   </div>
                 </form>
               </div>
@@ -170,16 +170,16 @@
                         <input type="text" class="form-control" id="cantidadTotalArtNuevo" :value="articulo.cantidadTotal" v-model="articulo.cantidadTotal">
                     </div>
                     <div class="form-group">
-                        <label for="tipo">Tipo: <input type="text" class="form-control" id="tipoArtNuevo" :value="articulo.tipo" readonly v-model="articulo.tipo"> </label>
+                        <label for="tipo">Categoria: <input type="text" class="form-control" id="tipoArtNuevo" :value="articulo.tipo" readonly v-model="articulo.categoria"> </label>
                     </div>
                     <div class="form-group">
-                        <label for="precio">Precio: <input type="text" class="form-control" id="precioArtNuevo" :value="articulo.precio" v-model="articulo.precio"> </label>
+                        <label for="precio">Precio: <input type="number" class="form-control" id="precioArtNuevo" :value="articulo.precio" v-model="articulo.precio"> </label>
                     </div>
 
                 </form>
               </div>
               <div class="modal-footer">
-                  <button type="button" class="btn btn-primary" @click="actualizar(articulo)">Actualizar</button>
+                  <button type="button" class="btn btn-primary"  @click="actualizar(articulo)">Actualizar</button>
                 <button type="button" class="btn btn-danger" @click="cerrarEvento">Cancelar</button>
               </div>
             </div>
