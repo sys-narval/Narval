@@ -17,7 +17,7 @@ module.exports = {
 
 
   fn: async function (inputs, exits) {
-    let modeloI= {
+    /*let modeloI= {
       tipos:['TRUSS','Cables','Mobiliario','Herramientas'],
       unidadMedida: ['metros', 'unidades'],
       articulos: [{
@@ -65,7 +65,14 @@ module.exports = {
     // Respond with view.
     return exits.success({
       modeloI
+    });*/
+
+    let modeloI = await Cloud.extraerInventario.with();
+    return exits.success({
+      modeloI
     });
+
+
   }
 
 

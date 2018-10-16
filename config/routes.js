@@ -57,6 +57,8 @@ module.exports.routes = {
   'POST  /api/v1/deliver-contact-form-message':          { action: 'deliver-contact-form-message' },
 
   'POST /api/v1/inventario/insertar-un-articulo':        { action: 'inventario/insertar-un-articulo' },
+  'DELETE /api/v1/inventario/eliminar-un-articulo':      {action: 'inventario/eliminar-un-articulo'},
+  'GET /api/v1/inventario/extraer-inventario':           {action: 'inventario/extraer-inventario'},
 
 
   //  ╦ ╦╔═╗╔╗ ╦ ╦╔═╗╔═╗╦╔═╔═╗

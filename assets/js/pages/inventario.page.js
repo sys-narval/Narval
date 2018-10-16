@@ -9,7 +9,7 @@ parasails.registerPage('inventario', {
     verModalAgregar: false,
     verModalEliminar: false,
     articuloNuevo:{},
-    arts:{}
+    arts:{},
   },
 
   //  ╦  ╦╔═╗╔═╗╔═╗╦ ╦╔═╗╦  ╔═╗
@@ -18,6 +18,7 @@ parasails.registerPage('inventario', {
   beforeMount: function() {
     // Attach any initial data from the server.
     _.extend(this, SAILS_LOCALS);
+    this.modeloI.articulos= Cloud.extraerInventario();
   },
   mounted: async function() {
     //…
@@ -40,6 +41,7 @@ parasails.registerPage('inventario', {
       await Cloud.insertarUnArticulo.with(articuloNuevo);
       this.verModalAgregar= false;
       this.articuloNuevo = {};
+      this.$forceUpdate();
     },
     cerrarNuevo: async function(){
       this.verModalAgregar = false;
@@ -52,7 +54,8 @@ parasails.registerPage('inventario', {
       this.verModalEliminar = true;
     },
     eliminar: async function(){
-      this.modeloI.articulos.splice(this.modeloI.articulos.indexOf(this.articulo),1);
+      await Cloud.eliminarUnArticulo.with(this.articulo);
+      //this.modeloI.articulos.splice(this.modeloI.articulos.indexOf(this.articulo),1);
       this.verModalEliminar = false;
     },
     actualizar: async function(p_articulo)
