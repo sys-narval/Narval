@@ -86,12 +86,12 @@ parasails.registerPage('inventario', {
       }
 
       let formato = Intl.NumberFormat('en-US', {
-        style: 'Currency',
+        style: 'currency',
         currency: 'USD',
         minimumFractionDigits: 0
       });
-
       return formato.format(cantidad);
+
     }
   }
 });
