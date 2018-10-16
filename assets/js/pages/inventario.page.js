@@ -28,8 +28,8 @@ parasails.registerPage('inventario', {
   //  ╩╝╚╝ ╩ ╚═╝╩╚═╩ ╩╚═╝ ╩ ╩╚═╝╝╚╝╚═╝
   methods: {
     //…
-    verArticulo: async function(art){
-      this.articulo = art;
+    verArticulo: async function(p_articulo){
+      this.articulo = p_articulo;
       this.verModalA = true;
     },
 
@@ -49,23 +49,28 @@ parasails.registerPage('inventario', {
     verModalAgr: async function(){
       this.verModalAgregar = true;
     },
-    verModalEli: async function(art){
-      this.articulo = art;
+    verModalEli: async function(p_articulo){
+      this.articulo = p_articulo;
       this.verModalEliminar = true;
     },
     eliminar: async function(){
       this.modeloI.articulos.splice(this.modeloI.articulos.indexOf(this.articulo),1);
       this.verModalEliminar = false;
     },
-    actualizar: async function(p_arts)
+    actualizar: async function(p_articulo)
     {
-      this.arts = p_arts;
-      this.modeloI.articulos.forEach(function(art){
+      this.modeloI.articulos = this.modeloI.articulos.map(articulo => {
+        if(articulo.id === p_articulo.id){
+          articulo = p_articulo;
+        }
+      })
+
+      /*this.modeloI.articulos.forEach(function(art){
         if(art.id === this.articulo.id)
         {
           console.log(art.id);
         }
-      });
+      });*/
       
       this.verModalA = false;
     }
