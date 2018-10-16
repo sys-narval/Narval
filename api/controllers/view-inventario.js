@@ -19,6 +19,7 @@ module.exports = {
   fn: async function (inputs, exits) {
     let modeloI= {
       tipos:['TRUSS','Cables','Mobiliario','Herramientas'],
+      unidadMedida: ['metros', 'unidades'],
       articulos: [{
         id:'T001',
         descripcion : '0.25mts',

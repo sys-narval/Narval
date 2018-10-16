@@ -37,9 +37,7 @@ parasails.registerPage('inventario', {
       this.verModalA = false;
     },
     crearArticulo: async function(articuloNuevo){
-      this.articuloNuevo = articuloNuevo;
-      articuloNuevo = {}
-      this.modeloI.articulos.push(this.articuloNuevo);
+      await Cloud.insertarUnArticulo.with(articuloNuevo);
       this.verModalAgregar= false;
       this.articuloNuevo = {};
     },
