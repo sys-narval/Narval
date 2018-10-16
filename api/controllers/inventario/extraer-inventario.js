@@ -13,16 +13,16 @@ module.exports = {
 
 
   exits: {
-
   },
 
 
   fn: async function (inputs, exits) {
 
+    let articulos = await Articulos.find().log();
 
-    let articulos = await Articulos.find();
-
-    return exits.success(articulos);
+    return exits.success({
+      articulos
+    });
 
   }
 

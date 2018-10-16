@@ -17,10 +17,10 @@ module.exports = {
 
 
   fn: async function (inputs, exits) {
-    /*let modeloI= {
+    let modeloI= {
       tipos:['TRUSS','Cables','Mobiliario','Herramientas'],
       unidadMedida: ['metros', 'unidades'],
-      articulos: [{
+      /*articulos: [{
         id:'T001',
         descripcion : '0.25mts',
         cantidadLibre: 10,
@@ -59,15 +59,12 @@ module.exports = {
     cantidadTotal: 1,
     tipo: 'Herramientas',
     precio: 2000
-  }],
+  }],*/
   articuloNuevo: {}
     };
-    // Respond with view.
-    return exits.success({
-      modeloI
-    });*/
 
-    let modeloI = await Cloud.extraerInventario.with();
+    //modeloI.articulos = await Cloud.extraerInventario();
+    modeloI.articulos = await Articulos.find();
     return exits.success({
       modeloI
     });
