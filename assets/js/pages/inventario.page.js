@@ -10,6 +10,8 @@ parasails.registerPage('inventario', {
     verModalEliminar: false,
     articuloNuevo:{},
     arts:{},
+    busquedaArticulo: '',
+    filtro: {}
   },
 
   //  ╦  ╦╔═╗╔═╗╔═╗╦ ╦╔═╗╦  ╔═╗
@@ -87,6 +89,33 @@ parasails.registerPage('inventario', {
       });
       return formato.format(cantidad);
 
+    }
+  },
+  computed:
+  {
+    filtroArticulo: function()
+    {
+      /*
+        * Función para limpiar el filtro a usar, en caso de que el atributo este vacío
+        * eliminamos ese atributo del objeto para que no sea evaluado
+        */
+       const limpiaFiltro = objeto => {
+        for (let atributo in objeto)
+          if (objeto[atributo] === null || objeto[atributo] === undefined || objeto[atributo] === '')
+            delete objeto[atributo];
+        return objeto;
+      }
+
+      /*
+      * Filtramos las cotizaciones que cumplan con el filtro preestablecido por el usuario y que cumpla con
+      * que la barra de búsqueda tenga más de un dígito y coincida con la descripción o ubicación.
+      */
+      if (this.busquedaArticulo) {
+        return _.filter(this.modeloI.articulos, limpiaFiltro(this.filtro))
+          .filter(articulo => articulo.descripcion.includes(this.busquedaArticulo) || articulo.id.includes(this.busquedaArticulo));
+      } else {
+        return new Array();
+      }
     }
   }
 });
