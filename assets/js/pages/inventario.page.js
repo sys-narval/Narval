@@ -68,14 +68,9 @@ parasails.registerPage('inventario', {
         }
       })
 
-      /*this.modeloI.articulos.forEach(function(art){
-        if(art.id === this.articulo.id)
-        {
-          console.log(art.id);
-        }
-      });*/
-      
+     //await Cloud.actualizarUnArticulo.with(this.articulo);
       this.verModalA = false;
+       this.$forceUpdate();
     }
 
   },
