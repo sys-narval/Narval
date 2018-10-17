@@ -62,13 +62,13 @@ parasails.registerPage('inventario', {
     },
     actualizar: async function(p_articulo)
     {
-       this.modeloI.articulos.map(articulo => {
+       /*this.modeloI.articulos.map(articulo => {
         if(articulo.id === p_articulo.id){
           articulo = p_articulo;
         }
-      })
+      })*/
 
-     //await Cloud.actualizarUnArticulo.with(this.articulo);
+     await Cloud.actualizarUnArticulo.with(this.articulo);
       this.verModalA = false;
        this.$forceUpdate();
     }

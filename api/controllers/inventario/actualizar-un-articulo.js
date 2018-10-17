@@ -141,7 +141,7 @@ module.exports = {
 
   fn: async function (inputs, exits) {
 
-    await Articulos.update(inputs,inputs);
+    await Articulos.update({id: inputs.id},inputs);
 
     return exits.success();
 
