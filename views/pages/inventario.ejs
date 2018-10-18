@@ -61,16 +61,16 @@
                   <td v-text="t_articulo.cantidadDanado"></td>
                   <td v-text="t_articulo.cantidadTotal"></td>
                   <td >{{t_articulo.precio | formatoMoneda}}</td>
-                  <td><button type="button" class="btn btn-sm btn-warning btn-block" @click="verArticulo(t_articulo)">Actualizar</button></td>
-                  <td><button type="button" class="btn btn-sm btn-danger btn-block" @click="verModalEli(t_articulo)">Eliminar</button></td>
+                  <td><button type="button" class="btn btn-sm btn-warning btn-block" @click="verModalActualizar(t_articulo)">Actualizar</button></td>
+                  <td><button type="button" class="btn btn-sm btn-danger btn-block" @click="verModalEliminar(t_articulo)">Eliminar</button></td>
                 </tr>
               </tbody>
         </table>
-        <button type="button" class="btn btn-sm btn-primary btn-block boton boton1" @click="verModalAgr()">Agregar</button>
+        <button type="button" class="btn btn-sm btn-primary btn-block boton boton1" @click="verModalAgregar()">Agregar</button>
     </div>
   </div>
     <!--Modal de agregar-->
-    <modal v-if="verModalAgregar" id="agregarArticulo">
+    <modal v-if="l_verModalAgregar" id="agregarArticulo">
         <div class="modal-dialog">
           <!-- Contenido del modal-->
           <div class="modal-content">
@@ -135,63 +135,63 @@
         </div>
       </modal><!--Fin del modal agregar-->
       <!--Aca inicia el modal de actualizar-->
-      <modal v-if="verModalA" id="verArticulo">
+      <modal v-if="l_verModalActualizar" id="verArticulo">
           <div class="modal-dialog">
             <!-- Contenido del modal-->
             <div class="modal-content">
               <div class="model-header" background="blue">
-                <button type="button" class="close" @click="cerrarEvento">X</button>
+                <button type="button" class="close" @click="cerrarModalActualizar">X</button>
                 <h4 class="modal-title">Actualizar Articulo del Inventario</h4>
               </div>
               <div class="modal-body">
                 <form v-on:submit.prevent="actualizar">
                     <div class="form-group">
                         <label for="id">ID: </label>
-                        <input type="text" class="form-control" id="nombreArtNuevo" :value="articulo.id" v-model="articulo.id" readonly>
+                        <input type="text" class="form-control" id="nombreArtNuevo" :value="o_articulo.id" v-model="o_articulo.id" readonly>
                     </div>
                     <div class="form-group">
                         <label for="descripcion">Descripcion: </label>
-                        <input type="text" class="form-control" id="descripcionArtNuevo" :value="articulo.descripcion" v-model="articulo.descripcion">
+                        <input type="text" class="form-control" id="descripcionArtNuevo" :value="o_articulo.descripcion" v-model="o_articulo.descripcion">
                     </div>
                     <div class="form-group">
                         <label for="cantidadLibre">Cantidad Libre: </label>
-                        <input type="text" class="form-control" id="cantidadLibreArtNuevo" :value="articulo.cantidadLibre" v-model="articulo.cantidadLibre">
+                        <input type="text" class="form-control" id="cantidadLibreArtNuevo" :value="o_articulo.cantidadLibre" v-model="o_articulo.cantidadLibre">
                     </div>
                     <div class="form-group">
                         <label for="cantidad">Cantidad Uso: </label>
-                        <input type="text" class="form-control" id="cantidadUsoArtNuevo" :value="articulo.cantidadUso" v-model="articulo.cantidadUso">
+                        <input type="text" class="form-control" id="cantidadUsoArtNuevo" :value="o_articulo.cantidadUso" v-model="o_articulo.cantidadUso">
                     </div>
                     <div class="form-group">
                         <label for="cantidadDanado">Cantidad Dañado: </label>
-                        <input type="text" class="form-control" id="cantidadDanadoArtNuevo" :value="articulo.cantidadDanado" v-model="articulo.cantidadDanado">
+                        <input type="text" class="form-control" id="cantidadDanadoArtNuevo" :value="o_articulo.cantidadDanado" v-model="o_articulo.cantidadDanado">
                     </div>
                     <div class="form-group">
                         <label for="cantidadTotal">Cantidad Total: </label>
-                        <input type="text" class="form-control" id="cantidadTotalArtNuevo" :value="articulo.cantidadTotal" v-model="articulo.cantidadTotal">
+                        <input type="text" class="form-control" id="cantidadTotalArtNuevo" :value="o_articulo.cantidadTotal" v-model="o_articulo.cantidadTotal">
                     </div>
                     <div class="form-group">
-                        <label for="tipo">Categoria: <input type="text" class="form-control" id="tipoArtNuevo" :value="articulo.tipo" readonly v-model="articulo.categoria"> </label>
+                        <label for="tipo">Categoria: <input type="text" class="form-control" id="tipoArtNuevo" :value="o_articulo.tipo" readonly v-model="o_articulo.categoria"> </label>
                     </div>
                     <div class="form-group">
-                        <label for="precio">Precio: <input type="number" class="form-control" id="precioArtNuevo" :value="articulo.precio" v-model="articulo.precio"> </label>
+                        <label for="precio">Precio: <input type="number" class="form-control" id="precioArtNuevo" :value="o_articulo.precio" v-model="o_articulo.precio"> </label>
                     </div>
 
                 </form>
               </div>
               <div class="modal-footer">
-                  <button type="button" class="btn btn-primary"  @click="actualizar(articulo)">Actualizar</button>
-                <button type="button" class="btn btn-danger" @click="cerrarEvento">Cancelar</button>
+                  <button type="button" class="btn btn-primary"  @click="actualizarUnArticulo(o_articulo)">Actualizar</button>
+                <button type="button" class="btn btn-danger" @click="cerrarModalActualizar">Cancelar</button>
               </div>
             </div>
           </div>
         </modal>
         <!--Aca termina  el modal de Actualizar-->
         <!-- Modal de borrar articulo-->
-    <modal v-if="verModalEliminar" id="verArticulo">
+    <modal v-if="l_verModalEliminar" id="verArticulo">
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
-              <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+              <button type="button" class="close" @click="cerrarModalEliminar"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
               <h6 class="modal-title" id="AdvertenciaBorrado">¿Está seguro que desea borrar este Articulo?</h6>
             </div>
             <div class="modal-body">
@@ -200,16 +200,12 @@
               <div class="row">
                 <div class="col-lg-4 my-3">
                   <div class="pull-right">
-                      <button class="btn btn-primary" type="button" id="Aceptar" @click="eliminar()">
-                        Aceptar
-                      </button>
+                      <button class="btn btn-primary" type="button" id="Aceptar" @click="eliminarUnArticulo()">Aceptar</button>
                   </div>
                 </div>
                 <div class="col-lg-6 my-3">
                     <div class="pull-right">
-                        <button class="btn btn-danger" type="button" id="Borrar" data-dismiss="modal">
-                          Cancelar
-                        </button>
+                        <button class="btn btn-danger" type="button" id="Borrar" @click="cerrarModalEliminar">Cancelar</button>
                     </div>
                   </div>
               </div>

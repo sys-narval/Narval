@@ -4,10 +4,10 @@ parasails.registerPage('inventario', {
   //  ╩╝╚╝╩ ╩ ╩╩ ╩╩═╝  ╚═╝ ╩ ╩ ╩ ╩ ╚═╝
   data: {
     //…
-    articulo: {},
-    verModalA: false,
-    verModalAgregar: false,
-    verModalEliminar: false,
+    o_articulo: {},
+    l_verModalActualizar: false,
+    l_verModalAgregar: false,
+    l_verModalEliminar: false,
     articuloNuevo:{},
     arts:{},
   },
@@ -28,48 +28,42 @@ parasails.registerPage('inventario', {
   //  ║║║║ ║ ║╣ ╠╦╝╠═╣║   ║ ║║ ║║║║╚═╗
   //  ╩╝╚╝ ╩ ╚═╝╩╚═╩ ╩╚═╝ ╩ ╩╚═╝╝╚╝╚═╝
   methods: {
-    //…
-    verArticulo: async function(p_articulo){
-      this.articulo = p_articulo;
-      this.verModalA = true;
+    cerrarModalActualizar: async function(){
+      this.l_verModalActualizar = false;
     },
-
-    cerrarEvento: async function(){
-      this.verModalA = false;
+    cerrarModalEliminar: async function(){
+      this.l_verModalEliminar = false;
+    },
+    cerrarNuevo: async function(){
+      this.l_verModalAgregar = false;
     },
     crearArticulo: async function(articuloNuevo){
       await Cloud.insertarUnArticulo.with(articuloNuevo);
-      this.verModalAgregar= false;
+      this.l_verModalAgregar= false;
       this.articuloNuevo = {};
       this.modeloI.articulos.push(articuloNuevo);
       this.$forceUpdate();
     },
-    cerrarNuevo: async function(){
-      this.verModalAgregar = false;
+    verModalActualizar: async function(p_articulo){
+      this.o_articulo = p_articulo;
+      this.l_verModalActualizar = true;
     },
-    verModalAgr: async function(){
-      this.verModalAgregar = true;
+    verModalAgregar: async function(){
+      this.l_verModalAgregar = true;
     },
-    verModalEli: async function(p_articulo){
-      this.articulo = p_articulo;
-      this.verModalEliminar = true;
+    verModalEliminar: async function(p_articulo){
+      this.o_articulo = p_articulo;
+      this.l_verModalEliminar = true;
     },
-    eliminar: async function(){
-      await Cloud.eliminarUnArticulo.with(this.articulo);
-      this.modeloI.articulos.splice(this.modeloI.articulos.indexOf(this.articulo),1);
-      this.verModalEliminar = false;
+    eliminarUnArticulo: async function(){
+      await Cloud.eliminarUnArticulo.with(this.o_articulo);
+      this.modeloI.articulos.splice(this.modeloI.articulos.indexOf(this.o_articulo),1);
+      this.l_verModalEliminar = false;
       this.$forceUpdate();
     },
-    actualizar: async function(p_articulo)
-    {
-       /*this.modeloI.articulos.map(articulo => {
-        if(articulo.id === p_articulo.id){
-          articulo = p_articulo;
-        }
-      })*/
-
-     await Cloud.actualizarUnArticulo.with(this.articulo);
-      this.verModalA = false;
+    actualizarUnArticulo: async function(p_articulo){
+     await Cloud.actualizarUnArticulo.with(this.o_articulo);
+      this.l_verModalActualizar = false;
        this.$forceUpdate();
     }
 
