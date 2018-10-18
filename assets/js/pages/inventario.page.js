@@ -8,7 +8,6 @@ parasails.registerPage('inventario', {
     l_verModalActualizar: false,
     l_verModalAgregar: false,
     l_verModalEliminar: false,
-    articuloNuevo:{},
     arts:{},
   },
 
@@ -30,18 +29,21 @@ parasails.registerPage('inventario', {
   methods: {
     cerrarModalActualizar: async function(){
       this.l_verModalActualizar = false;
+      this.o_articulo = {};
     },
     cerrarModalEliminar: async function(){
       this.l_verModalEliminar = false;
     },
     cerrarNuevo: async function(){
       this.l_verModalAgregar = false;
+      this.o_articulo = {};
     },
     crearArticulo: async function(articuloNuevo){
       await Cloud.insertarUnArticulo.with(articuloNuevo);
       this.l_verModalAgregar= false;
       this.articuloNuevo = {};
       this.modeloI.articulos.push(articuloNuevo);
+      this.o_articulo = {};
       this.$forceUpdate();
     },
     verModalActualizar: async function(p_articulo){
@@ -63,6 +65,7 @@ parasails.registerPage('inventario', {
     },
     actualizarUnArticulo: async function(p_articulo){
      await Cloud.actualizarUnArticulo.with(this.o_articulo);
+     this.o_articulo = {};
       this.l_verModalActualizar = false;
        this.$forceUpdate();
     }

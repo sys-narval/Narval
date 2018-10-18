@@ -82,53 +82,53 @@
               <form v-on:submit.prevent="crearArticulo">
                   <div class="form-group">
                       <label for="id">ID: </label>
-                      <input type="text" class="form-control" id="idArtNuevo" v-model="articuloNuevo.id" placeholder="ID del Articulo">
+                      <input type="text" class="form-control" id="idArtNuevo" v-model="o_articulo.id" placeholder="ID del Articulo">
                   </div>
                   <div class="form-group">
                       <label for="descripcion">Descripcion: </label>
-                      <input type="text" class="form-control" id="descripcionArtNuevo" v-model="articuloNuevo.descripcion" placeholder="Descripción del Articulo">
+                      <input type="text" class="form-control" id="descripcionArtNuevo" v-model="o_articulo.descripcion" placeholder="Descripción del Articulo">
                   </div>
                   <div class="form-group">
                       <label for="cantidadLibre">Cantidad Libre: </label>
-                      <input type="text" class="form-control" id="cantidadLibreArtNuevo" v-model="articuloNuevo.cantidadLibre" placeholder="Cantidad Libre">
+                      <input type="text" class="form-control" id="cantidadLibreArtNuevo" v-model="o_articulo.cantidadLibre" placeholder="Cantidad Libre">
                   </div>
                   <div class="form-group">
                       <label for="cantidadUso">Cantidad Uso: </label>
-                      <input type="text" class="form-control" id="cantidadUsoArtNuevo" v-model="articuloNuevo.cantidadUso" placeholder="Cantidad Uso">
+                      <input type="text" class="form-control" id="cantidadUsoArtNuevo" v-model="o_articulo.cantidadUso" placeholder="Cantidad Uso">
                   </div>
                   <div class="form-group">
                       <label for="cantidadReservado">Cantidad Reservado: </label>
-                      <input type="text" class="form-control" id="cantidadReservado" v-model="articuloNuevo.cantidadReservado" placeholder="Cantidad Reservado">
+                      <input type="text" class="form-control" id="cantidadReservado" v-model="o_articulo.cantidadReservado" placeholder="Cantidad Reservado">
                   </div>
                   <div class="form-group">
                       <label for="cantidadDanado">Cantidad Dañado: </label>
-                      <input type="text" class="form-control" id="cantidadDanadoArtNuevo" v-model="articuloNuevo.cantidadDanado" placeholder="Cantidad Dañado" required>
+                      <input type="text" class="form-control" id="cantidadDanadoArtNuevo" v-model="o_articulo.cantidadDanado" placeholder="Cantidad Dañado" required>
                   </div>
                   <div class="form-group">
                       <label for="descripcion">Cantidad Total: </label>
                      <!-- <textarea required class="form-control" id="descripcionArtNuevo" rows="3" cols="10" maxlength="180" v-model="articuloNuevo.descripcion" placeholder="Descripcion del Articulo" > </textarea>-->
-                      <input type="text" class="form-control" id="cantidadDanadoArtNuevo" v-model="articuloNuevo.cantidadTotal" placeholder="Cantidad Total" required>
+                      <input type="text" class="form-control" id="cantidadDanadoArtNuevo" v-model="o_articulo.cantidadTotal" placeholder="Cantidad Total" required>
                   </div>
                   <div class="form-group">
                       <label for="categoria">Categorías: </label>
-                      <select v-model="articuloNuevo.categoria" class="form-control" required> 
+                      <select v-model="o_articulo.categoria" class="form-control" required> 
                         <option v-for="tipos in modeloI.tipos" v-text="tipos"></option>
                       </select>
                   </div>
                   <div class="form-group">
                       <label for="unidadMedida">Unidad de medida: </label>
-                      <select v-model="articuloNuevo.unidadMedida" class="form-control" required> 
+                      <select v-model="o_articulo.unidadMedida" class="form-control" required> 
                         <option v-for="unidadMedida in modeloI.unidadMedida" v-text="unidadMedida"></option>
                       </select>
                   </div>
                   <div class="form-group">
                       <label for="precio">Precio: </label>
-                      <input type="number" min="0" step="100" v-bind:value="articuloNuevo.precio | formatoMoneda" class="form-control" id="precioArtNuevo" v-model="articuloNuevo.precio" placeholder="Precio Articulo Nuevo" required>
+                      <input type="number" min="0" step="100" v-bind:value="o_articulo.precio | formatoMoneda" class="form-control" id="precioArtNuevo" v-model="o_articulo.precio" placeholder="Precio Articulo Nuevo" required>
                   </div>
                 </form>
               </div>
               <div class="modal-footer">
-                <button type="submit" class="btn btn-primary" @click="crearArticulo(articuloNuevo)">Agregar</button>
+                <button type="submit" class="btn btn-primary" @click="crearArticulo(o_articulo)">Agregar</button>
               <button type="button" class="btn btn-danger" @click="cerrarNuevo">Cancelar</button>
             </div>
           </div>
@@ -170,7 +170,7 @@
                         <input type="text" class="form-control" id="cantidadTotalArtNuevo" :value="o_articulo.cantidadTotal" v-model="o_articulo.cantidadTotal">
                     </div>
                     <div class="form-group">
-                        <label for="tipo">Categoria: <input type="text" class="form-control" id="tipoArtNuevo" :value="o_articulo.tipo" readonly v-model="o_articulo.categoria"> </label>
+                        <label for="tipo">Categoría: <input type="text" class="form-control" id="tipoArtNuevo" :value="o_articulo.tipo" readonly v-model="o_articulo.categoria"> </label>
                     </div>
                     <div class="form-group">
                         <label for="precio">Precio: <input type="number" class="form-control" id="precioArtNuevo" :value="o_articulo.precio" v-model="o_articulo.precio"> </label>
