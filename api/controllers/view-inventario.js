@@ -17,16 +17,14 @@ module.exports = {
 
 
   fn: async function (inputs, exits) {
-    let modeloI= {
-      tipos:['TRUSS','Cables','Mobiliario','Herramientas/otros','Cortinaje','Tarimas'],
-      unidadMedida: ['metros', 'unidades'],
-  articuloNuevo: {}
+    let modelo= {
+      a_categorias:['TRUSS','Cables','Mobiliario','Herramientas/otros','Cortinaje','Tarimas'],
+      a_unidadMedida: ['metros', 'unidades'],
     };
 
-    //modeloI.articulos = await Cloud.extraerInventario();
-    modeloI.articulos = await Articulos.find();
+    modelo.articulos = await Articulos.find();
     return exits.success({
-      modeloI
+      modelo
     });
 
 
