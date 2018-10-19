@@ -75,9 +75,7 @@
   </div>
     <!--Modal de agregar-->
     <modal v-if="l_verModalAgregar" id="agregarArticulo">
-        <div class="modal-dialog">
           <!-- Contenido del modal-->
-          <div class="modal-content">
             <div class="model-header" background="blue">
               <button type="button" class="close" @click="cerrarNuevo">X</button>
               <h4 class="modal-title">Agregando Articulo al Inventario</h4>
@@ -135,14 +133,10 @@
                 <button type="submit" class="btn btn-primary" @click="crearArticulo(o_articulo)">Agregar</button>
               <button type="button" class="btn btn-danger" @click="cerrarNuevo">Cancelar</button>
             </div>
-          </div>
-        </div>
       </modal><!--Fin del modal agregar-->
       <!--Aca inicia el modal de actualizar-->
       <modal v-if="l_verModalActualizar" id="verArticulo">
-          <div class="modal-dialog">
             <!-- Contenido del modal-->
-            <div class="modal-content">
               <div class="model-header" background="blue">
                 <button type="button" class="close" @click="cerrarModalActualizar">X</button>
                 <h4 class="modal-title">Actualizar Articulo del Inventario</h4>
@@ -186,17 +180,13 @@
                   <button type="button" class="btn btn-primary"  @click="actualizarUnArticulo(o_articulo)">Actualizar</button>
                 <button type="button" class="btn btn-danger" @click="cerrarModalActualizar">Cancelar</button>
               </div>
-            </div>
-          </div>
         </modal>
         <!--Aca termina  el modal de Actualizar-->
         <!-- Modal de borrar articulo-->
     <modal v-if="l_verModalEliminar" id="verArticulo">
-        <div class="modal-dialog">
-          <div class="modal-content">
             <div class="modal-header">
               <button type="button" class="close" @click="cerrarModalEliminar"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
-              <h6 class="modal-title" id="AdvertenciaBorrado">¿Está seguro que desea borrar este Articulo?</h6>
+              <h1 class="modal-title" id="AdvertenciaBorrado">¿Está seguro que desea borrar este Articulo?</h1>
             </div>
             <div class="modal-body">
               <!-- Aquí va el contenido del modal -->
@@ -214,8 +204,6 @@
                   </div>
               </div>
             </div>
-          </div>
-        </div>
       </modal> <!--Aca termina el modal de eliminar-->
 </div>
 
