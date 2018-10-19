@@ -39,14 +39,6 @@ parasails.registerPage('inventario', {
       this.l_verModalAgregar = false;
       this.o_articulo = {};
     },
-    crearArticulo: async function(articuloNuevo){
-      await Cloud.insertarUnArticulo.with(articuloNuevo);
-      this.l_verModalAgregar= false;
-      this.articuloNuevo = {};
-      this.modelo.articulos.push(articuloNuevo);
-      this.o_articulo = {};
-      this.$forceUpdate();
-    },
     verModalActualizar: async function(p_articulo){
       this.o_articulo = p_articulo;
       this.l_verModalActualizar = true;
@@ -57,6 +49,18 @@ parasails.registerPage('inventario', {
     verModalEliminar: async function(p_articulo){
       this.o_articulo = p_articulo;
       this.l_verModalEliminar = true;
+    },
+    crearArticulo: async function(articuloNuevo){
+      this.o_articulo.cantidadLibre= this.o_articulo.cantidadTotal;
+      this.o_articulo.cantidadDanado=0;
+      this.o_articulo.cantidadUso=0;
+      this.o_articulo.cantidadReservado=0;
+      await Cloud.insertarUnArticulo.with(articuloNuevo);
+      this.l_verModalAgregar= false;
+      this.articuloNuevo = {};
+      this.modelo.articulos.push(articuloNuevo);
+      this.o_articulo = {};
+      this.$forceUpdate();
     },
     eliminarUnArticulo: async function(){
       await Cloud.eliminarUnArticulo.with(this.o_articulo);
@@ -70,8 +74,7 @@ parasails.registerPage('inventario', {
      this.o_articulo = {};
       this.l_verModalActualizar = false;
        this.$forceUpdate();
-    }
-
+    },
   },
   filters:{
     formatoMoneda: function(cantidad){

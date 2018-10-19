@@ -5,206 +5,217 @@
       <div class="form-group">
         <div class="input-group">
           <div class="input-group-prepend">
-            <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Filtro</button>
+            <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-toggle="dropdown"
+              aria-haspopup="true" aria-expanded="false">Filtro</button>
             <div class="dropdown-menu p-4">
-                <form>
-                    <div class="form-group">
-                        <label for="busquedaPorID">ID: </label>
-                        <input type="text" class="form-control" id="idArt" placeholder="ID del Articulo:">
-                    </div>
-                    <div class="form-group">
-                        <label for="busquedaPorNombre">Categoría: </label>
-                        <input type="text" class="form-control" id="nombreArt" placeholder="Nombre del Articulo:">
-                    </div>
-                </form>
+              <form>
+                <div class="form-group">
+                  <label for="busquedaPorID">ID: </label>
+                  <input type="text" class="form-control" id="idArt" placeholder="ID del Articulo:">
+                </div>
+                <div class="form-group">
+                  <label for="busquedaPorNombre">Categoría: </label>
+                  <input type="text" class="form-control" id="nombreArt" placeholder="Nombre del Articulo:">
+                </div>
+              </form>
             </div>
           </div>
-        
+
           <input type="text" name="buscarArticulo" id="articulo" placeholder="Search" list="listaArticulos" class="form-control">
           <datalist id="listaArticulos">
-              <div v-for="art in modelo.articulos">
-                <option v-bind:value="art.descripcion">
-              </div>
+            <div v-for="art in modelo.articulos">
+              <option v-bind:value="art.descripcion">
+            </div>
           </datalist>
-        <div class="input-group-append">
-          <span class="input-group-text"><i class="fa fa-search"></i></span>
+          <div class="input-group-append">
+            <span class="input-group-text"><i class="fa fa-search"></i></span>
+          </div>
         </div>
       </div>
     </div>
   </div>
-  </div>
   <div class="row">
     <div class="col">
-        <table v-for="tipos in modelo.a_categorias" class="table table-striped table-hover table-condensed">
-          <thead class="thead-light">
-              <tr> <th v-text="tipos"></th>
-              </tr>
-                <tr>
-                    <th>ID</th>
-                    <th>Descripcion</th>
-                    <th>Cantidad Libre</th>
-                    <th>Cantidad Ocupado</th>
-                    <th>Cantidad Dañado</th>
-                    <th>Cantidad Total</th>
-                    <th>Precio</th>
-                    <th>Opciones</th>
-                  </tr>
-            </thead>
-            <tbody v-for="t_articulo in modelo.articulos">
-                <tr v-if="tipos == t_articulo.categoria">
-                  <td v-text="t_articulo.id"></td>
-                  <td v-text="t_articulo.descripcion"></td>
-                  <td v-text="t_articulo.cantidadLibre"></td>
-                  <td v-text="t_articulo.cantidadUso"></td>
-                  <td v-text="t_articulo.cantidadDanado"></td>
-                  <td v-text="t_articulo.cantidadTotal"></td>
-                  <td >{{t_articulo.precio | formatoMoneda}}</td>
-                  <td class="text-center">
-                      <label for="ver" class="btn btn-info" @click="verModalActualizar(t_articulo)">
-                        Actualizar 
-                      </label>
-                      <label for="borrar" class="btn btn-danger"  @click="verModalEliminar(t_articulo)">
-                        Borrar
-                      </label>
-                  </td>
-                </tr>
-              </tbody>
-        </table>
-        <button type="button" class="btn btn-sm btn-primary btn-block boton boton1" @click="verModalAgregar()">Agregar</button>
+      <table v-for="tipos in modelo.a_categorias" class="table table-striped table-hover table-condensed">
+        <thead class="thead-light">
+          <tr>
+            <th v-text="tipos"></th>
+          </tr>
+          <tr>
+            <th>ID</th>
+            <th>Descripcion</th>
+            <th>Cantidad Libre</th>
+            <th>Cantidad Ocupado</th>
+            <th>Cantidad Dañado</th>
+            <th>Cantidad Total</th>
+            <th>Precio</th>
+            <th>Opciones</th>
+          </tr>
+        </thead>
+        <tbody v-for="t_articulo in modelo.articulos">
+          <tr v-if="tipos == t_articulo.categoria">
+            <td v-text="t_articulo.id"></td>
+            <td v-text="t_articulo.descripcion"></td>
+            <td v-text="t_articulo.cantidadLibre"></td>
+            <td v-text="t_articulo.cantidadUso"></td>
+            <td v-text="t_articulo.cantidadDanado"></td>
+            <td v-text="t_articulo.cantidadTotal"></td>
+            <td>{{t_articulo.precio | formatoMoneda}}</td>
+            <td class="text-center">
+              <label for="ver" class="btn btn-info" @click="verModalActualizar(t_articulo)">
+                Actualizar
+              </label>
+              <label for="borrar" class="btn btn-danger" @click="verModalEliminar(t_articulo)">
+                Borrar
+              </label>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <button type="button" class="btn btn-sm btn-primary btn-block boton boton1" @click="verModalAgregar()">Agregar</button>
     </div>
   </div>
-    <!--Modal de agregar-->
-    <modal v-if="l_verModalAgregar" id="agregarArticulo">
-          <!-- Contenido del modal-->
-            <div class="model-header" background="blue">
-              <button type="button" class="close" @click="cerrarNuevo">X</button>
-              <h4 class="modal-title">Agregando Articulo al Inventario</h4>
-            </div>
-            <div class="modal-body">
-              <form v-on:submit.prevent="crearArticulo">
-                  <div class="form-group">
-                      <label for="id">ID: </label>
-                      <input type="text" class="form-control" id="idArtNuevo" v-model="o_articulo.id" placeholder="ID del Articulo">
-                  </div>
-                  <div class="form-group">
-                      <label for="descripcion">Descripcion: </label>
-                      <input type="text" class="form-control" id="descripcionArtNuevo" v-model="o_articulo.descripcion" placeholder="Descripción del Articulo">
-                  </div>
-                  <div class="form-group">
-                      <label for="cantidadLibre">Cantidad Libre: </label>
-                      <input type="text" class="form-control" id="cantidadLibreArtNuevo" v-model="o_articulo.cantidadLibre" placeholder="Cantidad Libre">
-                  </div>
-                  <div class="form-group">
-                      <label for="cantidadUso">Cantidad Uso: </label>
-                      <input type="text" class="form-control" id="cantidadUsoArtNuevo" v-model="o_articulo.cantidadUso" placeholder="Cantidad Uso">
-                  </div>
-                  <div class="form-group">
-                      <label for="cantidadReservado">Cantidad Reservado: </label>
-                      <input type="text" class="form-control" id="cantidadReservado" v-model="o_articulo.cantidadReservado" placeholder="Cantidad Reservado">
-                  </div>
-                  <div class="form-group">
-                      <label for="cantidadDanado">Cantidad Dañado: </label>
-                      <input type="text" class="form-control" id="cantidadDanadoArtNuevo" v-model="o_articulo.cantidadDanado" placeholder="Cantidad Dañado" required>
-                  </div>
-                  <div class="form-group">
-                      <label for="descripcion">Cantidad Total: </label>
-                     <!-- <textarea required class="form-control" id="descripcionArtNuevo" rows="3" cols="10" maxlength="180" v-model="articuloNuevo.descripcion" placeholder="Descripcion del Articulo" > </textarea>-->
-                      <input type="text" class="form-control" id="cantidadDanadoArtNuevo" v-model="o_articulo.cantidadTotal" placeholder="Cantidad Total" required>
-                  </div>
-                  <div class="form-group">
-                      <label for="categoria">Categorías: </label>
-                      <select v-model="o_articulo.categoria" class="form-control" required> 
-                        <option v-for="tipos in modelo.a_categorias" v-text="tipos"></option>
-                      </select>
-                  </div>
-                  <div class="form-group">
-                      <label for="unidadMedida">Unidad de medida: </label>
-                      <select v-model="o_articulo.unidadMedida" class="form-control" required> 
-                        <option v-for="unidadMedida in modelo.a_unidadMedida" v-text="unidadMedida"></option>
-                      </select>
-                  </div>
-                  <div class="form-group">
-                      <label for="precio">Precio: </label>
-                      <input type="number" min="0" step="100" v-bind:value="o_articulo.precio | formatoMoneda" class="form-control" id="precioArtNuevo" v-model="o_articulo.precio" placeholder="Precio Articulo Nuevo" required>
-                  </div>
-                </form>
-              </div>
-              <div class="modal-footer">
-                <button type="submit" class="btn btn-primary" @click="crearArticulo(o_articulo)">Agregar</button>
-              <button type="button" class="btn btn-danger" @click="cerrarNuevo">Cancelar</button>
-            </div>
-      </modal><!--Fin del modal agregar-->
-      <!--Aca inicia el modal de actualizar-->
-      <modal v-if="l_verModalActualizar" id="verArticulo">
-            <!-- Contenido del modal-->
-              <div class="model-header" background="blue">
-                <button type="button" class="close" @click="cerrarModalActualizar">X</button>
-                <h4 class="modal-title">Actualizar Articulo del Inventario</h4>
-              </div>
-              <div class="modal-body">
-                <form v-on:submit.prevent="actualizar">
-                    <div class="form-group">
-                        <label for="id">ID: </label>
-                        <input type="text" class="form-control" id="nombreArtNuevo" :value="o_articulo.id" v-model="o_articulo.id" readonly>
-                    </div>
-                    <div class="form-group">
-                        <label for="descripcion">Descripcion: </label>
-                        <input type="text" class="form-control" id="descripcionArtNuevo" :value="o_articulo.descripcion" v-model="o_articulo.descripcion">
-                    </div>
-                    <div class="form-group">
-                        <label for="cantidadLibre">Cantidad Libre: </label>
-                        <input type="text" class="form-control" id="cantidadLibreArtNuevo" :value="o_articulo.cantidadLibre" v-model="o_articulo.cantidadLibre">
-                    </div>
-                    <div class="form-group">
-                        <label for="cantidad">Cantidad Uso: </label>
-                        <input type="text" class="form-control" id="cantidadUsoArtNuevo" :value="o_articulo.cantidadUso" v-model="o_articulo.cantidadUso">
-                    </div>
-                    <div class="form-group">
-                        <label for="cantidadDanado">Cantidad Dañado: </label>
-                        <input type="text" class="form-control" id="cantidadDanadoArtNuevo" :value="o_articulo.cantidadDanado" v-model="o_articulo.cantidadDanado">
-                    </div>
-                    <div class="form-group">
-                        <label for="cantidadTotal">Cantidad Total: </label>
-                        <input type="text" class="form-control" id="cantidadTotalArtNuevo" :value="o_articulo.cantidadTotal" v-model="o_articulo.cantidadTotal">
-                    </div>
-                    <div class="form-group">
-                        <label for="tipo">Categoría: <input type="text" class="form-control" id="tipoArtNuevo" :value="o_articulo.tipo" readonly v-model="o_articulo.categoria"> </label>
-                    </div>
-                    <div class="form-group">
-                        <label for="precio">Precio: <input type="number" class="form-control" id="precioArtNuevo" :value="o_articulo.precio" v-model="o_articulo.precio"> </label>
-                    </div>
-
-                </form>
-              </div>
-              <div class="modal-footer">
-                  <button type="button" class="btn btn-primary"  @click="actualizarUnArticulo(o_articulo)">Actualizar</button>
-                <button type="button" class="btn btn-danger" @click="cerrarModalActualizar">Cancelar</button>
-              </div>
-        </modal>
-        <!--Aca termina  el modal de Actualizar-->
-        <!-- Modal de borrar articulo-->
-    <modal v-if="l_verModalEliminar" id="verArticulo">
-            <div class="modal-header">
-              <button type="button" class="close" @click="cerrarModalEliminar"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
-              <h1 class="modal-title" id="AdvertenciaBorrado">¿Está seguro que desea borrar este Articulo?</h1>
-            </div>
-            <div class="modal-body">
-              <!-- Aquí va el contenido del modal -->
-              <p class="text-center">Después de ejecutar este evento no abra marcha atrás</p>
-              <div class="row">
-                <div class="col-lg-4 my-3">
-                  <div class="pull-right">
-                      <button class="btn btn-primary" type="button" id="Aceptar" @click="eliminarUnArticulo()">Aceptar</button>
-                  </div>
-                </div>
-                <div class="col-lg-6 my-3">
-                    <div class="pull-right">
-                        <button class="btn btn-danger" type="button" id="Borrar" @click="cerrarModalEliminar">Cancelar</button>
-                    </div>
-                  </div>
-              </div>
-            </div>
-      </modal> <!--Aca termina el modal de eliminar-->
+  <!--Modal de agregar-->
+  <modal v-if="l_verModalAgregar" id="agregarArticulo">
+    <!-- Contenido del modal-->
+    <div class="model-header" background="blue">
+      <button type="button" class="close" @click="cerrarNuevo">X</button>
+      <h4 class="modal-title">Agregando Articulo al Inventario</h4>
+    </div>
+    <div class="modal-body">
+      <form v-on:submit.prevent="crearArticulo">
+        <div class="row">
+          <div class="form-group col">
+            <label for="id">ID: </label>
+            <input type="text" class="form-control" id="idArtNuevo" v-model="o_articulo.id" placeholder="ID del Articulo">
+          </div>
+          <div class="form-group col">
+            <label for="descripcion">Descripcion: </label>
+            <input type="text" class="form-control" id="descripcionArtNuevo" v-model="o_articulo.descripcion"
+              placeholder="Descripción del Articulo">
+          </div>
+        </div>
+        <div class="row">
+          <div class="form-group col">
+            <label for="descripcion">Cantidad Total: </label>
+            <!-- <textarea required class="form-control" id="descripcionArtNuevo" rows="3" cols="10" maxlength="180" v-model="articuloNuevo.descripcion" placeholder="Descripcion del Articulo" > </textarea>-->
+            <input type="text" class="form-control" id="cantidadDanadoArtNuevo" v-model="o_articulo.cantidadTotal"
+              placeholder="Cantidad Total" required>
+          </div>
+          <div class="form-group col">
+            <label for="precio">Precio: </label>
+            <input type="number" min="0" step="100" v-bind:value="o_articulo.precio | formatoMoneda" class="form-control"
+              id="precioArtNuevo" v-model="o_articulo.precio" placeholder="Precio Articulo Nuevo" required>
+          </div>
+        </div>
+        <div class="row">
+          <div class="form-group col">
+            <label for="categoria">Categorías: </label>
+            <select v-model="o_articulo.categoria" class="form-control" required>
+              <option v-for="tipos in modelo.a_categorias" v-text="tipos"></option>
+            </select>
+          </div>
+          <div class="form-group col">
+            <label for="unidadMedida">Unidad de medida: </label>
+            <select v-model="o_articulo.unidadMedida" class="form-control" required>
+              <option v-for="unidadMedida in modelo.a_unidadMedida" v-text="unidadMedida"></option>
+            </select>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="modal-footer">
+      <button type="submit" class="btn btn-primary" @click="crearArticulo(o_articulo)">Agregar</button>
+      <button type="button" class="btn btn-danger" @click="cerrarNuevo">Cancelar</button>
+    </div>
+  </modal>
+  <!--Fin del modal agregar-->
+  <!--Aca inicia el modal de actualizar-->
+  <modal v-if="l_verModalActualizar" id="verArticulo">
+    <!-- Contenido del modal-->
+    <div class="model-header" background="blue">
+      <button type="button" class="close" @click="cerrarModalActualizar">X</button>
+      <h4 class="modal-title">Actualizar Articulo del Inventario</h4>
+    </div>
+    <div class="modal-body">
+      <form v-on:submit.prevent="actualizar">
+        <div class="row">
+          <div class="form-group col">
+            <label for="id">ID: </label>
+            <input type="text" class="form-control" id="nombreArtNuevo" :value="o_articulo.id" v-model="o_articulo.id"
+              readonly>
+          </div>
+          <div class="form-group col">
+            <label for="descripcion">Descripcion: </label>
+            <input type="text" class="form-control" id="descripcionArtNuevo" :value="o_articulo.descripcion" v-model="o_articulo.descripcion">
+          </div>
+        </div>
+        <div class="row">
+          <div class="form-group col">
+            <label for="cantidadLibre">Cantidad Libre: </label>
+            <input type="text" class="form-control" id="cantidadLibreArtNuevo" :value="o_articulo.cantidadLibre"
+              v-model="o_articulo.cantidadLibre" readonly>
+          </div>
+          <div class="form-group col">
+            <label for="cantidad">Cantidad Uso: </label>
+            <input type="text" class="form-control" id="cantidadUsoArtNuevo" :value="o_articulo.cantidadUso" v-model="o_articulo.cantidadUso"
+              readonly>
+          </div>
+        </div>
+        <div class="row">
+          <div class="form-group col">
+            <label for="cantidadDanado">Cantidad Dañado: </label>
+            <input type="text" class="form-control" id="cantidadDanadoArtNuevo" :value="o_articulo.cantidadDanado"
+              v-model="o_articulo.cantidadDanado" readonly>
+          </div>
+          <div class="form-group col">
+            <label for="cantidadTotal">Cantidad Total: </label>
+            <input type="text" class="form-control" id="cantidadTotalArtNuevo" :value="o_articulo.cantidadTotal"
+              v-model="o_articulo.cantidadTotal" readonly>
+          </div>
+        </div>
+        <div class="row">
+          <div class="form-group  col">
+            <label for="tipo">Categoría: <input type="text" class="form-control" id="tipoArtNuevo" :value="o_articulo.tipo"
+                readonly v-model="o_articulo.categoria"> </label>
+          </div>
+          <div class="form-group col">
+            <label for="precio">Precio: <input type="number" class="form-control" id="precioArtNuevo" :value="o_articulo.precio"
+                v-model="o_articulo.precio"> </label>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-primary" @click="actualizarUnArticulo(o_articulo)">Actualizar</button>
+      <button type="button" class="btn btn-danger" @click="cerrarModalActualizar">Cancelar</button>
+    </div>
+  </modal>
+  <!--Aca termina  el modal de Actualizar-->
+  <!-- Modal de borrar articulo-->
+  <modal v-if="l_verModalEliminar" id="verArticulo">
+    <div class="modal-header">
+      <button type="button" class="close" @click="cerrarModalEliminar"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+      <h1 class="modal-title" id="AdvertenciaBorrado">¿Está seguro que desea borrar este Articulo?</h1>
+    </div>
+    <div class="modal-body">
+      <!-- Aquí va el contenido del modal -->
+      <p class="text-center">Después de ejecutar este evento no abra marcha atrás</p>
+      <div class="row">
+        <div class="col-lg-4 my-3">
+          <div class="pull-right">
+            <button class="btn btn-primary" type="button" id="Aceptar" @click="eliminarUnArticulo()">Aceptar</button>
+          </div>
+        </div>
+        <div class="col-lg-6 my-3">
+          <div class="pull-right">
+            <button class="btn btn-danger" type="button" id="Borrar" @click="cerrarModalEliminar">Cancelar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </modal>
+  <!--Aca termina el modal de eliminar-->
 </div>
 
 <%- /* Expose server-rendered data as window.SAILS_LOCALS :: */ exposeLocalsToBrowser() %>
