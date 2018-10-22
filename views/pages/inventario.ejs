@@ -23,8 +23,8 @@
 
           <input type="text" name="buscarArticulo" id="articulo" placeholder="Search" list="listaArticulos" class="form-control">
           <datalist id="listaArticulos">
-            <div v-for="art in modelo.articulos">
-              <option v-bind:value="art.descripcion">
+            <div v-for="t_articulo in modelo.articulos">
+              <option v-bind:value="t_articulo.descripcion">
             </div>
           </datalist>
           <div class="input-group-append">
@@ -36,10 +36,10 @@
   </div>
   <div class="row">
     <div class="col">
-      <table v-for="tipos in modelo.a_categorias" class="table table-striped table-hover table-condensed">
+      <table v-for="t_Categoria in filtroCategorias" class="table table-striped table-hover table-condensed">
         <thead class="thead-light">
           <tr>
-            <th v-text="tipos"></th>
+            <th v-text="t_Categoria"></th>
           </tr>
           <tr>
             <th>ID</th>
@@ -53,7 +53,7 @@
           </tr>
         </thead>
         <tbody v-for="t_articulo in modelo.articulos">
-          <tr v-if="tipos == t_articulo.categoria">
+          <tr v-if="t_Categoria == t_articulo.categoria">
             <td v-text="t_articulo.id"></td>
             <td v-text="t_articulo.descripcion"></td>
             <td v-text="t_articulo.cantidadLibre"></td>

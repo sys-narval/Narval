@@ -8,7 +8,6 @@ parasails.registerPage('inventario', {
     l_verModalActualizar: false,
     l_verModalAgregar: false,
     l_verModalEliminar: false,
-    arts:{},
   },
 
   //  ╦  ╦╔═╗╔═╗╔═╗╦ ╦╔═╗╦  ╔═╗
@@ -88,7 +87,30 @@ parasails.registerPage('inventario', {
         minimumFractionDigits: 0
       });
       return formato.format(cantidad);
-
+    },
+  },
+  computed:{
+    filtroCategorias: function(){
+      let l_bandera=false;
+      let a_arregloCategoria =[];
+      this.modelo.articulos.forEach(element => {
+        if(a_arregloCategoria.length===0){
+          a_arregloCategoria.push(element.categoria);
+        }else{
+          for (let index = 0; index < a_arregloCategoria.length; index++) {
+             if(a_arregloCategoria[index]===element.categoria){
+               l_bandera=true;
+               index=a_arregloCategoria.length+1;
+             }
+          }
+          if(l_bandera===false){
+            a_arregloCategoria.push(element.categoria);
+          } 
+          l_bandera=false;
+        }
+      });
+      return a_arregloCategoria;
     }
   }
+  
 });
