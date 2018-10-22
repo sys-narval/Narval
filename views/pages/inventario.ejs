@@ -11,17 +11,17 @@
               <form>
                 <div class="form-group">
                   <label for="busquedaPorID">ID: </label>
-                  <input type="text" class="form-control" id="idArt" placeholder="ID del Articulo:">
+                  <input type="text" class="form-control" id="idArt" placeholder="ID del Articulo:" v-model="l_filtro.id">
                 </div>
                 <div class="form-group">
                   <label for="busquedaPorNombre">Categoría: </label>
-                  <input type="text" class="form-control" id="nombreArt" placeholder="Nombre del Articulo:">
+                  <input type="text" class="form-control" id="nombreArt" placeholder="Nombre del Articulo:" v-model="l_filtro.categoria">
                 </div>
               </form>
             </div>
           </div>
 
-          <input type="text" name="buscarArticulo" id="articulo" placeholder="Search" list="listaArticulos" class="form-control">
+          <input type="text" name="buscarArticulo" id="articulo" placeholder="Search" list="listaArticulos" class="form-control" v-model="l_buscarArticulo">
           <datalist id="listaArticulos">
             <div v-for="t_articulo in modelo.articulos">
               <option v-bind:value="t_articulo.descripcion">
@@ -52,7 +52,7 @@
             <th>Opciones</th>
           </tr>
         </thead>
-        <tbody v-for="t_articulo in modelo.articulos">
+        <tbody v-for="t_articulo in filtroArticulos">
           <tr v-if="t_Categoria == t_articulo.categoria">
             <td v-text="t_articulo.id"></td>
             <td v-text="t_articulo.descripcion"></td>
