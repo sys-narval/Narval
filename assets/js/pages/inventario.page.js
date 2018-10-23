@@ -11,6 +11,7 @@ parasails.registerPage('inventario', {
     l_buscarArticulo: '',
     l_filtro: {},
     l_masDanado: 0,
+    l_masArticulos: 0,
   },
 
   //  ╦  ╦╔═╗╔═╗╔═╗╦ ╦╔═╗╦  ╔═╗
@@ -58,23 +59,26 @@ parasails.registerPage('inventario', {
                       this.o_articulo.cantidadUso = 0;
                       this.o_articulo.cantidadReservado = 0;
                       await Cloud.insertarUnArticulo.with(articuloNuevo);
-                      this.l_verModalAgregar = false;
                       this.articuloNuevo = {};
                       this.modelo.articulos.push(articuloNuevo);
-                      this.o_articulo = {};
+                      this.cerrarNuevo();
                       this.$forceUpdate();
                     },
                     eliminarUnArticulo: async function () {
                         await Cloud.eliminarUnArticulo.with(this.o_articulo);
                         this.modelo.articulos.splice(this.modelo.articulos.indexOf(this.o_articulo), 1);
-                        this.l_verModalEliminar = false;
-                        this.o_articulo = {};
+                        this.cerrarModalEliminar();
                         this.$forceUpdate();
                       },
                       actualizarUnArticulo: async function (p_articulo) {
                         await Cloud.actualizarUnArticulo.with(this.o_articulo);
-                        this.o_articulo = {};
-                        this.l_verModalActualizar = false;
+                        this.modelo.articulos = this.modelo.articulos.map(articulo => {
+                          if (articulo.id === this.o_articulo.id) {
+                            articulo = this.o_articulo;
+                          }
+                          return articulo;
+                        });
+                        this.cerrarModalActualizar();
                         this.$forceUpdate();
                       },
     },
@@ -131,9 +135,11 @@ parasails.registerPage('inventario', {
          * Filtramos las articulos que cumplan con el filtro preestablecido por el usuario y que cumpla con
          * que la barra de búsqueda tenga más de un dígito y coincida con la descripción o ubicación.
          */
-        if (this.l_buscarArticulo) {
+        if (this.l_buscarArticulo.length > 3) {
           return _.filter(this.modelo.articulos, c_limpiaFiltro(this.l_filtro))
-            .filter(articulo => articulo.descripcion.includes(this.l_buscarArticulo) || articulo.categoria.includes(this.l_buscarArticulo));
+            .filter(articulo => articulo.descripcion.includes(this.l_buscarArticulo) || articulo.categoria.includes(this.l_buscarArticulo) || articulo.id.includes(this.l_buscarArticulo));
+        }else if(this.l_buscarArticulo === "*"){
+          return this.modelo.articulos;
         } else {
           return new Array();
         }
@@ -141,14 +147,42 @@ parasails.registerPage('inventario', {
     },
     watch: {
       l_masDanado(valNew, valOld) {
-        if (valNew > valOld) {
-          this.o_articulo.cantidadLibre += valNew;
-        }else{
-          this.o_articulo.cantidadLibre -= valNew;
-        }
+        /* Esta variable resibe el filtro del articulo del modelo que es 
+                igual a el que se utiliza en cada acctualizar*/
+        let l_cantidadLibre = _.find(this.modelo.articulos, {
+          id: this.o_articulo.id
+        }).cantidadLibre;
+        /* Esta variable parsea el valor del input de el modal actualizar*/
+        let l_numMasDanado = parseInt(this.l_masDanado);
 
-        console.log(valOld, valNew);
+        if (this.l_masDanado && l_numMasDanado <= l_cantidadLibre) {
+          this.o_articulo.cantidadLibre = l_cantidadLibre - l_numMasDanado;
+        } else {
+          this.o_articulo.cantidadLibre = l_cantidadLibre;
+        }
+      },
+      l_masArticulos() {
+        /* Esta variable resibe el filtro del articulo del modelo que es 
+        igual a el que se utiliza en cada acctualizar*/
+        let l_cantidadTotal = _.find(this.modelo.articulos, {
+          id: this.o_articulo.id
+        }).cantidadTotal;
+        /* Esta variable resibe el filtro del articulo del modelo que es 
+                igual a el que se utiliza en cada acctualizar*/
+        let l_cantidadLibre = _.find(this.modelo.articulos, {
+          id: this.o_articulo.id
+        }).cantidadLibre;
+        /* Esta variable parsea el valor del input de el modal actualizar*/
+        let l_numMasArticulos = parseInt(this.l_masArticulos)
+        if (this.l_masArticulos && l_numMasArticulos <= l_cantidadTotal) {
+          this.o_articulo.cantidadTotal = l_cantidadTotal + l_numMasArticulos;
+          this.o_articulo.cantidadLibre = l_numMasArticulos + l_cantidadTotal;
+        } else {
+          this.o_articulo.cantidadTotal = l_cantidadTotal;
+          this.o_articulo.cantidadLibre = l_cantidadLibre;
+        }
       }
+
     }
 
 });
