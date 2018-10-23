@@ -18,7 +18,7 @@ module.exports = {
 
   fn: async function (inputs, exits) {
     let modelo= {
-      a_categorias:['TRUSS','Cables','Mobiliario','Herramientas/otros','Cortinaje','Tarimas'],
+      a_categorias:['Truss','Cables','Mobiliario','Herramientas/otros','Cortinaje','Tarimas'],
       a_unidadMedida: ['metros', 'unidades'],
     };
 
