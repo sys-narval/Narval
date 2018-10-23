@@ -60,7 +60,9 @@ parasails.registerPage('inventario', {
                     this.l_verModalEliminar = true;
                   },
                   crearArticulo: async function (articuloNuevo) {
-                      this.o_articulo.cantidadLibre = this.o_articulo.cantidadTotal;
+                      this.o_articulo.cantidadTotal = parseInt(this.o_articulo.cantidadTotal);
+                      this.o_articulo.cantidadLibre = parseInt(this.o_articulo.cantidadTotal);
+                      this.o_articulo.precio = parseInt(this.o_articulo.precio);
                       this.o_articulo.cantidadDanado = 0;
                       this.o_articulo.cantidadUso = 0;
                       this.o_articulo.cantidadReservado = 0;
@@ -79,6 +81,7 @@ parasails.registerPage('inventario', {
                         this.$forceUpdate();
                       },
                       actualizarUnArticulo: async function (p_articulo) {
+                        this.o_articulo.precio = parseInt(this.o_articulo.precio);
                         await Cloud.actualizarUnArticulo.with(this.o_articulo);
                         this.modelo.articulos = this.modelo.articulos.map(articulo => {
                           if (articulo.id === this.o_articulo.id) {
