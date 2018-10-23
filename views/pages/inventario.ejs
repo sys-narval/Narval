@@ -80,18 +80,18 @@
     <!-- Contenido del modal-->
     <div class="model-header" background="blue">
       <button type="button" class="close" @click="cerrarNuevo">X</button>
-      <h4 class="modal-title">Agregando Articulo al Inventario</h4>
+      <h4 class="modal-title">Agregando Artículo al Inventario</h4>
     </div>
     <div class="modal-body">
       <form v-on:submit.prevent="crearArticulo">
         <div class="row">
           <div class="form-group col">
             <label for="id">ID: </label>
-            <input type="text" class="form-control" id="id" v-model="o_articulo.id" placeholder="ID del Articulo">
+            <input type="text" class="form-control" id="idArtNuevo" v-model="o_articulo.id" placeholder="ID del Articulo" maxlength="5">
           </div>
           <div class="form-group col">
-            <label for="descripcion">Descripcion: </label>
-            <input type="text" class="form-control" id="descripcion" v-model="o_articulo.descripcion"
+            <label for="descripcion">Descripción: </label>
+            <input type="text" class="form-control" id="descripcionArtNuevo" v-model="o_articulo.descripcion"
               placeholder="Descripción del Articulo">
           </div>
         </div>
@@ -135,7 +135,7 @@
     <!-- Contenido del modal-->
     <div class="model-header" background="blue">
       <button type="button" class="close" @click="cerrarModalActualizar">X</button>
-      <h4 class="modal-title">Actualizar Articulo del Inventario</h4>
+      <h4 class="modal-title">Actualizar Artículo del Inventario</h4>
     </div>
     <div class="modal-body">
       <form v-on:submit.prevent="actualizar">
@@ -146,8 +146,8 @@
               readonly>
           </div>
           <div class="form-group col">
-            <label for="descripcion">Descripcion: </label>
-            <input type="text" class="form-control" id="descripcion" :value="o_articulo.descripcion" v-model="o_articulo.descripcion">
+            <label for="descripcion">Descripción: </label>
+            <input type="text" class="form-control" id="descripcionArtNuevo" :value="o_articulo.descripcion" v-model="o_articulo.descripcion">
           </div>
         </div>
         <div class="row">
@@ -200,11 +200,11 @@
   <modal v-if="l_verModalEliminar" id="verArticulo">
     <div class="modal-header">
       <button type="button" class="close" @click="cerrarModalEliminar"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
-      <h1 class="modal-title" id="AdvertenciaBorrado">¿Está seguro que desea borrar este Articulo?</h1>
+      <h1 class="modal-title" id="AdvertenciaBorrado">¿Está seguro que desea borrar este Artículo?</h1>
     </div>
     <div class="modal-body">
       <!-- Aquí va el contenido del modal -->
-      <p class="text-center">Después de ejecutar este evento no abra marcha atrás</p>
+      <p class="text-center">Después de ejecutar este evento no hay marcha atrás</p>
       <div class="row">
         <div class="col-lg-4 my-3">
           <div class="pull-right">
