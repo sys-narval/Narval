@@ -42,7 +42,7 @@ parasails.registerPage('inventario', {
               this.o_articulo = {};
             },
             verModalActualizar: async function (p_articulo) {
-                this.o_articulo = p_articulo;
+                Object.assign(this.o_articulo, p_articulo);
                 this.l_verModalActualizar = true;
               },
               verModalAgregar: async function () {
@@ -142,9 +142,9 @@ parasails.registerPage('inventario', {
     watch: {
       l_masDanado(valNew, valOld) {
         if (valNew > valOld) {
-          this.o_articulo.cantidadLibre = this.o_articulo.cantidadLibre + this.l_masDanado;
+          this.o_articulo.cantidadLibre += valNew;
         }else{
-          this.o_articulo.cantidadLibre = this.o_articulo.cantidadLibre - this.l_masDanado;
+          this.o_articulo.cantidadLibre -= valNew;
         }
 
         console.log(valOld, valNew);
