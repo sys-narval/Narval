@@ -138,7 +138,7 @@ parasails.registerPage('inventario', {
         if (this.l_buscarArticulo.length > 3) {
           return _.filter(this.modelo.articulos, c_limpiaFiltro(this.l_filtro))
             .filter(articulo => articulo.descripcion.includes(this.l_buscarArticulo) || articulo.categoria.includes(this.l_buscarArticulo) || articulo.id.includes(this.l_buscarArticulo));
-        }else if(this.l_buscarArticulo === "*"){
+        } else if (this.l_buscarArticulo === "*") {
           return this.modelo.articulos;
         } else {
           return new Array();
@@ -148,15 +148,21 @@ parasails.registerPage('inventario', {
     watch: {
       l_masDanado(valNew, valOld) {
         /* Esta variable resibe el filtro del articulo del modelo que es 
-                igual a el que se utiliza en cada acctualizar*/
+                igual a el que se utiliza en cada actualizar*/
         let l_cantidadLibre = _.find(this.modelo.articulos, {
           id: this.o_articulo.id
         }).cantidadLibre;
+        /* esta varible resive la cantidad danado del articulo del modelo que 
+        es igual aal que utiliza en cada actualizar*/
+        let l_cantidadDanado = _.find(this.modelo.articulos, {
+          id: this.o_articulo.id
+        }).cantidadDanado;
         /* Esta variable parsea el valor del input de el modal actualizar*/
         let l_numMasDanado = parseInt(this.l_masDanado);
 
         if (this.l_masDanado && l_numMasDanado <= l_cantidadLibre) {
-          this.o_articulo.cantidadLibre = l_cantidadLibre - l_numMasDanado;
+          this.o_articulo.cantidadLibre = l_cantidadLibre - l_numMasDanado + parseInt(this.l_masArticulos);
+          this.o_articulo.cantidadDanado = l_numMasDanado + l_cantidadDanado;
         } else {
           this.o_articulo.cantidadLibre = l_cantidadLibre;
         }
@@ -172,11 +178,17 @@ parasails.registerPage('inventario', {
         let l_cantidadLibre = _.find(this.modelo.articulos, {
           id: this.o_articulo.id
         }).cantidadLibre;
+        /* esta varible resive la cantidad danado del articulo del modelo que 
+        es igual aal que utiliza en cada actualizar*/
+        let l_cantidadDanado = _.find(this.modelo.articulos, {
+          id: this.o_articulo.id
+        }).cantidadDanado;
         /* Esta variable parsea el valor del input de el modal actualizar*/
         let l_numMasArticulos = parseInt(this.l_masArticulos)
-        if (this.l_masArticulos && l_numMasArticulos <= l_cantidadTotal) {
+
+        if (this.l_masArticulos) {
           this.o_articulo.cantidadTotal = l_cantidadTotal + l_numMasArticulos;
-          this.o_articulo.cantidadLibre = l_numMasArticulos + l_cantidadTotal;
+          this.o_articulo.cantidadLibre = l_numMasArticulos + l_cantidadTotal - parseInt(this.l_masDanado) - l_cantidadDanado;
         } else {
           this.o_articulo.cantidadTotal = l_cantidadTotal;
           this.o_articulo.cantidadLibre = l_cantidadLibre;
