@@ -33,22 +33,24 @@ parasails.registerPage('inventario', {
     methods: {
       cerrarModalActualizar: async function () {
           this.l_verModalActualizar = false;
-          this.l_actualizar = false;
           this.o_articulo = {};
+          this.l_actualizar = false;
         },
         cerrarModalEliminar: async function () {
             this.l_verModalEliminar = false;
-            this.l_actualizar = false;
             this.o_articulo = {};
+            this.l_actualizar = false;
           },
           cerrarNuevo: async function () {
               this.l_verModalAgregar = false;
-              this.l_actualizar = false;
               this.o_articulo = {};
+              this.l_actualizar = false;
             },
             verModalActualizar: async function (p_articulo) {
                 Object.assign(this.o_articulo, p_articulo);
                 this.l_verModalActualizar = true;
+                this.l_masArticulos = 0;
+                this.l_masDanado = 0;
               },
               verModalAgregar: async function () {
                   this.l_verModalAgregar = true;
