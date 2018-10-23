@@ -65,7 +65,7 @@
       <th>Correo</th>
       <th>Rol</th>
       <th>Fecha</th>
-      <th title="Opciones" class="text-center"><em class="fa fa-cog"></em></th>
+      <th title="Opciones" class="text-center"><span class="fa fa-cog"></span></th>
     </thead>
     <tbody>
       <tr v-for="usuario in modelo.usuarios">
@@ -75,7 +75,7 @@
         <td v-text="usuario.rol"></td>
         <td v-text="usuario.fecha"></td>
         <td class="text-center">
-          <button href="" class="btn btn-success" title="Editar fila"><em class="fa fa-pencil" @click="modalEditar(usuario)">Editar</em></button>
+          <button href="" class="btn btn-success" title="Editar fila"><span class="fa fa-pencil" @click="modalEditar(usuario)"></span> Editar</button>
         </td>
       </tr>
     </tbody>
