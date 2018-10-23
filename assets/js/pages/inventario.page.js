@@ -8,6 +8,7 @@ parasails.registerPage('inventario', {
     l_verModalActualizar: false,
     l_verModalAgregar: false,
     l_verModalEliminar: false,
+    l_actualizar: false,
     l_buscarArticulo: '',
     l_filtro: {},
     l_masDanado: 0,
@@ -33,18 +34,23 @@ parasails.registerPage('inventario', {
       cerrarModalActualizar: async function () {
           this.l_verModalActualizar = false;
           this.o_articulo = {};
+          this.l_actualizar = false;
         },
         cerrarModalEliminar: async function () {
             this.l_verModalEliminar = false;
             this.o_articulo = {};
+            this.l_actualizar = false;
           },
           cerrarNuevo: async function () {
               this.l_verModalAgregar = false;
               this.o_articulo = {};
+              this.l_actualizar = false;
             },
             verModalActualizar: async function (p_articulo) {
                 Object.assign(this.o_articulo, p_articulo);
                 this.l_verModalActualizar = true;
+                this.l_masArticulos = 0;
+                this.l_masDanado = 0;
               },
               verModalAgregar: async function () {
                   this.l_verModalAgregar = true;
@@ -61,12 +67,14 @@ parasails.registerPage('inventario', {
                       await Cloud.insertarUnArticulo.with(articuloNuevo);
                       this.articuloNuevo = {};
                       this.modelo.articulos.push(articuloNuevo);
+                      this.l_actualizar = true;
                       this.cerrarNuevo();
                       this.$forceUpdate();
                     },
                     eliminarUnArticulo: async function () {
                         await Cloud.eliminarUnArticulo.with(this.o_articulo);
                         this.modelo.articulos.splice(this.modelo.articulos.indexOf(this.o_articulo), 1);
+                        this.l_actualizar = true;
                         this.cerrarModalEliminar();
                         this.$forceUpdate();
                       },
@@ -78,6 +86,7 @@ parasails.registerPage('inventario', {
                           }
                           return articulo;
                         });
+                        this.l_actualizar = true;
                         this.cerrarModalActualizar();
                         this.$forceUpdate();
                       },
@@ -119,7 +128,6 @@ parasails.registerPage('inventario', {
         return a_arregloCategoria;
       },
       filtroArticulos: function () {
-
         /*
          * Función para limpiar el filtro a usar, en caso de que el atributo este vacío
          * eliminamos ese atributo del objeto para que no sea evaluado
@@ -135,7 +143,7 @@ parasails.registerPage('inventario', {
          * Filtramos las articulos que cumplan con el filtro preestablecido por el usuario y que cumpla con
          * que la barra de búsqueda tenga más de un dígito y coincida con la descripción o ubicación.
          */
-        if (this.l_buscarArticulo.length > 3) {
+        if (this.l_buscarArticulo.length > 3 && this.l_actualizar === false) {
           return _.filter(this.modelo.articulos, c_limpiaFiltro(this.l_filtro))
             .filter(articulo => articulo.descripcion.includes(this.l_buscarArticulo) || articulo.categoria.includes(this.l_buscarArticulo) || articulo.id.includes(this.l_buscarArticulo));
         } else if (this.l_buscarArticulo === "*") {
