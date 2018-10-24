@@ -142,7 +142,13 @@ module.exports = {
     inputs.cantidadDanado = 0;
     inputs.cantidadUso = 0;
     inputs.cantidadReservado = 0;
-    let l_vacioID =true; //Comprueba que el ID este vacio
+
+    // En caso de categoría electronica
+    if(inputs.categoria === 'Electrónico'){
+      inputs.serialesBuenos = inputs.serialesTotal;
+    }
+
+    let l_vacioID =true; //Comprueba que el ID este vació
 if(inputs.id=== undefined){
   l_vacioID = false;
 }
