@@ -161,7 +161,7 @@ parasails.registerPage('inventario', {
         if (this.l_buscarArticulo.length > 3 && this.l_actualizar === false) {
           return _.filter(this.modelo.articulos, c_limpiaFiltro(this.l_filtro))
             .filter(articulo => articulo.descripcion.includes(this.l_buscarArticulo) || articulo.categoria.includes(this.l_buscarArticulo) || articulo.id.includes(this.l_buscarArticulo));
-        } else if (this.l_buscarArticulo === "*") {
+        } else if (this.l_buscarArticulo === "*"  && this.l_actualizar === false) {
           return this.modelo.articulos;
         } else {
           return new Array();
