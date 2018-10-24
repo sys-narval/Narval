@@ -8,6 +8,7 @@ module.exports = {
 
 
   inputs: {
+    //Valores necesarios para un articulo comun
       id: {
           type: 'string',
           required: true,

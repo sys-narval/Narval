@@ -4,7 +4,7 @@ parasails.registerPage('inventario', {
   //  ╩╝╚╝╩ ╩ ╩╩ ╩╩═╝  ╚═╝ ╩ ╩ ╩ ╩ ╚═╝
   data: {
     //…
-    o_articulo: {},
+    o_articulo: {}, //objeto local que permite recibir un articulo
     l_verModalActualizar: false,
     l_verModalAgregar: false,
     l_verModalEliminar: false,
@@ -22,7 +22,7 @@ parasails.registerPage('inventario', {
     formRules: {
       id: { required: true },
       descripcion: { required: true },
-    },
+    }, //Reglas para las validaciones
   },
 
   //  ╦  ╦╔═╗╔═╗╔═╗╦ ╦╔═╗╦  ╔═╗
@@ -46,31 +46,31 @@ parasails.registerPage('inventario', {
           this.o_articulo = {};
           this.formErrors = {};
           this.l_actualizar = false;
-        },
+        }, //Metodo que cierra el modal de actualizar
         cerrarModalEliminar: async function () {
             this.l_verModalEliminar = false;
             this.o_articulo = {};
             this.l_actualizar = false;
-          },
+          }, //Metodo que cierra el modal de Eliminar
           cerrarNuevo: async function () {
               this.l_verModalAgregar = false;
               this.o_articulo = {};
               this.formErrors = {};
               this.l_actualizar = false;
-            },
+            }, //Metodo que cierra el modal de Agregar Articulo
             verModalActualizar: async function (p_articulo) {
                 Object.assign(this.o_articulo, p_articulo);
                 this.l_verModalActualizar = true;
                 this.l_masArticulos = 0;
                 this.l_masDanado = 0;
-              },
+              }, //Metodo que abre el modal Actualizar 
               verModalAgregar: async function () {
                   this.l_verModalAgregar = true;
-                },
+                },//Metodo que abre el modal Agregar
                 verModalEliminar: async function (p_articulo) {
                     this.o_articulo = p_articulo;
                     this.l_verModalEliminar = true;
-                  },
+                  },//Metodo que abre el modal Eliminar
                   crearArticulo: async function (articuloNuevo) {
                       this.o_articulo.cantidadTotal = parseInt(this.o_articulo.cantidadTotal);
                       this.o_articulo.cantidadLibre = parseInt(this.o_articulo.cantidadTotal);
@@ -84,14 +84,14 @@ parasails.registerPage('inventario', {
                       this.l_actualizar = true;
                       this.cerrarNuevo();
                       this.$forceUpdate();
-                    },
+                    }, //Metodo que crea un articulo, primero analizar los valores enteros y despues lo mete en un arreglo
                     eliminarUnArticulo: async function () {
                         await Cloud.eliminarUnArticulo.with(this.o_articulo);
                         this.modelo.articulos.splice(this.modelo.articulos.indexOf(this.o_articulo), 1);
                         this.l_actualizar = true;
                         this.cerrarModalEliminar();
                         this.$forceUpdate();
-                      },
+                      }, //Metodo que elimina un articulo de la base de datos local y despues lo elimina del arreglo
                       actualizarUnArticulo: async function (p_articulo) {
                         this.o_articulo.precio = parseInt(this.o_articulo.precio);
                         //await Cloud.actualizarUnArticulo.with(this.o_articulo);
@@ -104,7 +104,7 @@ parasails.registerPage('inventario', {
                         this.l_actualizar = true;
                         this.cerrarModalActualizar();
                         this.$forceUpdate();
-                      },
+                      }, //Metodo que actualiza un objeto de la base de datos local
     },
     filters: {
       formatoMoneda: function (cantidad) {
@@ -119,7 +119,7 @@ parasails.registerPage('inventario', {
         });
         return formato.format(cantidad);
       },
-    },
+    }, //Metodo que permite darle formato a la moneda del precio del articulo
     computed: {
       filtroCategorias: function () {
         let l_bandera = false;
@@ -141,7 +141,7 @@ parasails.registerPage('inventario', {
           }
         });
         return a_arregloCategoria;
-      },
+      }, //Metodo para filtrar por categorias
       filtroArticulos: function () {
         /*
          * Función para limpiar el filtro a usar, en caso de que el atributo este vacío
@@ -208,7 +208,7 @@ parasails.registerPage('inventario', {
         }).cantidadDanado;
         /* Esta variable parsea el valor del input de el modal actualizar*/
         let l_numMasArticulos = parseInt(this.l_masArticulos)
-
+// Metodos if que verifica los datos numericos de las variables de cantidad
         if (this.l_masArticulos) {
           this.o_articulo.cantidadTotal = l_cantidadTotal + l_numMasArticulos;
           this.o_articulo.cantidadLibre = l_numMasArticulos + l_cantidadTotal - parseInt(this.l_masDanado) - l_cantidadDanado;
