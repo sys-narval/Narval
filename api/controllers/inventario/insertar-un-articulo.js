@@ -130,7 +130,9 @@ module.exports = {
 
 
   exits: {
-
+    idRepetido: {
+      description: 'Error cuando el Id esta repetido'
+    },
   },
 
 
@@ -148,15 +150,9 @@ module.exports = {
       inputs.serialesBuenos = inputs.serialesTotal;
     }
 
-    let l_vacioID =true; //Comprueba que el ID este vació
-if(inputs.id=== undefined){
-  l_vacioID = false;
-}
-    await Articulos.create(inputs)
-
-    return exits.success(
-      l_vacioID
-    );
+    let response = await Articulos.create(inputs).intercept('E_UNIQUE', 'idRepetido');
+    console.log(response);
+    return exits.success();
 
   }
 
