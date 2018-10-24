@@ -2,7 +2,7 @@
   <div class="container">
     <h1 class="text-center">Contáctenos</h1>
     <div class="contact-form" v-if="!cloudSuccess">
-      <p class="text-center">Tiene alguna duda sobre el Sistema Narval?</p>
+      <p class="text-center">Tiene algúna duda sobre el Sistema Narval?</p>
       <hr/>
       <ajax-form action="deliverContactFormMessage" :syncing.sync="syncing" :cloud-error.sync="cloudError" @submitted="submittedForm()" :handle-parsing="handleParsingForm">
         <div class="form-group">
@@ -17,7 +17,7 @@
         </div>
         <div class="form-group">
           <label for="topic">Tema</label>
-          <input class="form-control" id="topic" name="topic" type="text"  :class="[formErrors.topic ? 'is-invalid' : '']" v-model.trim="formData.topic" placeholder="Error en pagina..." autocomplete="none">
+          <input class="form-control" id="topic" name="topic" type="text"  :class="[formErrors.topic ? 'is-invalid' : '']" v-model.trim="formData.topic" placeholder="Error en página..." autocomplete="none">
           <div class="invalid-feedback" v-if="formErrors.topic">Por favor seleccione un tema.</div>
         </div>
         <div class="form-group">
