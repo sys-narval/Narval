@@ -46,8 +46,8 @@
   </div>
   <div class="row">
     <div class="col">
-      <label v-if="filtroArticulos.length === 0 && l_buscarArticulo !== '' "> Si se encuentra ningún articulo , revise los filtros si están bien
-        escritos, la descripción o id. Recuerden que se busca después de 3 valores en el campo de busqueda</label>
+      <label v-if="filtroArticulos.length === 0 && l_buscarArticulo !== '' "> No se encuentra ningún artículo , revise en la opción filtros si están bien
+        escritos, la categoría o id que desea.  Recuerde que se busca después de 3 caracteres en el campo de búsqueda</label>
       <table v-for="t_Categoria in filtroCategorias" class="table table-striped table-hover table-condensed">
         <!--Filtro para que se muestre solo la informacion requerida-->
         <thead class="thead-light">
@@ -116,13 +116,13 @@
         <div class="row">
           <div class="form-group col">
             <label for="descripcion">Cantidad Total: </label>
-            <input type="number" min="1" maxlength="4" class="form-control" id="cantidadDanadoArtNuevo"
+            <input type="number" min="1" max="9999" class="form-control" id="cantidadDanadoArtNuevo"
               v-model="o_articulo.cantidadTotal" placeholder="Cantidad Total" :class="[(formErrors.cantidadTotal || o_articulo.cantidadTotal !== undefined) && !o_articulo.cantidadTotal ? 'is-invalid' : '']">
             <div class="invalid-feedback" v-text="modelo.l_errorCantidadTotal"></div>
           </div>
           <div class="form-group col">
             <label for="precio">Precio: </label>
-            <input type="number" min="0" step="100" maxlength="4" v-bind:value="o_articulo.precio | formatoMoneda"
+            <input type="number" min="0" step="100" max="9999" v-bind:value="o_articulo.precio | formatoMoneda"
               class="form-control" id="precioArtNuevo" v-model="o_articulo.precio" placeholder="Precio Artículo Nuevo"
               :class="[(formErrors.precio || o_articulo.precio !== undefined) && !o_articulo.precio ? 'is-invalid' : '']">
             <div class="invalid-feedback" v-text="modelo.l_errorPrecio"></div>
@@ -249,7 +249,7 @@
           </div>
           <div class="form-group col">
             <label for="precio">Precio:</label>
-            <input type="number" min="0" step="100" class="form-control" id="precio" :value="o_articulo.precio" :class="[(formErrors.precio || o_articulo.precio !== undefined) && !o_articulo.precio ? 'is-invalid' : '']"
+            <input type="number" min="0" step="100" max="9999" class="form-control" id="precio" :value="o_articulo.precio" :class="[(formErrors.precio || o_articulo.precio !== undefined) && !o_articulo.precio ? 'is-invalid' : '']"
               v-model="o_articulo.precio">
             <div class="invalid-feedback" v-text="modelo.l_errorPrecio"></div>
           </div>
