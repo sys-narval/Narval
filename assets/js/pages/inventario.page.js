@@ -208,7 +208,7 @@ parasails.registerPage('inventario', {
         }).cantidadDanado;
         /* Esta variable parsea el valor del input de el modal actualizar*/
         let l_numMasArticulos = parseInt(this.l_masArticulos)
-// Metodos if que verifica los datos numericos
+// Metodos if que verifica los datos numericos de las variables de cantidad
         if (this.l_masArticulos) {
           this.o_articulo.cantidadTotal = l_cantidadTotal + l_numMasArticulos;
           this.o_articulo.cantidadLibre = l_numMasArticulos + l_cantidadTotal - parseInt(this.l_masDanado) - l_cantidadDanado;
