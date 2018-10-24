@@ -1,7 +1,7 @@
 module.exports = {
 
 
-  friendlyName: 'Actualizar un articulo',
+  friendlyName: 'Actualizar un artículo',
 
 
   description: '',
@@ -91,7 +91,7 @@ module.exports = {
 
         tipo: {
           type: 'string',
-          description: 'Tipo de articulo electrónico, ya sea TV, Audio o Luces',
+          description: 'Tipo de artículo electrónico, ya sea TV, Audio o Luces',
           example: 'Television'
         },
 
@@ -128,7 +128,7 @@ module.exports = {
         // Elementos específicos requeridos para artículos Truss y Cables
         largo: {
           type: 'number',
-          description: 'Largo del articulo especificado en metros',
+          description: 'Largo del artículo especificado en metros',
           example: 1
         },
 

@@ -43,7 +43,7 @@ module.exports = {
           mensaje: 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Facere, aspernatur animi voluptas doloribus eaque non. Dolores ipsum voluptate ducimus aspernatur vero nobis ipsa illo perferendis accusamus laboriosam ea, impedit temporibus?'
         },
         {
-          titulo: '<i class="fa fa-exclamation-circle"></i> Mas datos importantes:',
+          titulo: '<i class="fa fa-exclamation-circle"></i> Más datos importantes:',
           mensaje: 'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Veniam ducimus recusandae vel cum excepturi praesentium id ratione eos numquam corporis magnam totam esse voluptas voluptate temporibus, aliquam sapiente placeat cupiditate?'
         }
       ]

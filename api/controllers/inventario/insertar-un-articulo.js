@@ -1,10 +1,10 @@
 module.exports = {
 
 
-  friendlyName: 'Insertar un articulo',
+  friendlyName: 'Insertar un artículo',
 
 
-  description: 'Inserta un articulo a la base de datos',
+  description: 'Inserta un artículo a la base de datos',
 
 
   inputs: {
@@ -13,14 +13,14 @@ module.exports = {
       required: true,
       maxLength: 4,
       unique: true,
-      description: 'ID único de 4 caracteres para identificar el articulo dentro de la base de datos',
+      description: 'ID único de 4 caracteres para identificar el artículo dentro de la base de datos',
       example: 'T001'
     },
 
     descripcion: {
       type: 'string',
       required: true,
-      description: 'Descripción del articulo para mostrar a los usuarios',
+      description: 'Descripción del artículo para mostrar a los usuarios',
       example: 'Truss de 2m color plateado'
     },
 

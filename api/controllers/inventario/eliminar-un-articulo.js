@@ -1,7 +1,7 @@
 module.exports = {
 
 
-  friendlyName: 'Eliminar un articulo',
+  friendlyName: 'Eliminar un artículo',
 
 
   description: '',
@@ -13,7 +13,7 @@ module.exports = {
        required: true,
        maxLength: 4,
        unique: true,
-       description: 'ID único de 4 caracteres para identificar el articulo dentro de la base de datos',
+       description: 'ID único de 4 caracteres para identificar el artículo dentro de la base de datos',
        example: 'T001'
     }
   },
