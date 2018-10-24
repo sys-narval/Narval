@@ -18,7 +18,8 @@
                   <label for="busquedaPorNombre">Categoría: </label>
                   <input type="text" name="buscarPorNombre" id="busquedaPorNombre" placeholder="Categoría" list="listaCategorias"
                     class="form-control" v-model="l_filtro.categoria">
-                  <datalist id="listaCategorias"><!--Toma el valor del buscador-->
+                  <datalist id="listaCategorias">
+                    <!--Toma el valor del buscador-->
                     <div v-for="l_categoria in modelo.a_categorias">
                       <option v-bind:value="l_categoria">
                     </div>
@@ -99,41 +100,45 @@
         <div class="row">
           <div class="form-group col">
             <label for="id">ID: </label>
-            <input type="text" class="form-control" id="idArtNuevo" v-model="o_articulo.id" placeholder="ID del Artículo"
-              maxlength="4" :class="[formErrors.id ? 'is-invalid' : '']">
-            <div class="invalid-feedback" v-if="formErrors.id" v-text="modelo.l_errorId"></div>
+            <input type="text" class="form-control" id="idArtNuevo" v-model.trim="o_articulo.id" placeholder="ID del Artículo"
+              maxlength="4" :class="[(formErrors.id || o_articulo.id !== undefined) && !o_articulo.id ? 'is-invalid' : '']">
+            <div class="invalid-feedback" v-text="modelo.l_errorId"></div>
           </div>
           <div class="form-group col">
             <label for="descripcion">Descripción: </label>
             <input type="text" class="form-control" id="descripcionArtNuevo" v-model="o_articulo.descripcion"
-              placeholder="Descripción del Artículo" :class="[formErrors.descripcion ? 'is-invalid' : '']">
-            <div class="invalid-feedback" v-if="formErrors.descripcion" v-text="modelo.l_errorDescripcion"></div>
+              placeholder="Descripción del Artículo" :class="[(formErrors.descripcion || o_articulo.descripcion !== undefined) && !o_articulo.descripcion ? 'is-invalid' : '']">
+            <div class="invalid-feedback" v-text="modelo.l_errorDescripcion"></div>
           </div>
         </div>
         <div class="row">
           <div class="form-group col">
             <label for="descripcion">Cantidad Total: </label>
             <input type="number" min="1" class="form-control" id="cantidadDanadoArtNuevo" v-model="o_articulo.cantidadTotal"
-              placeholder="Cantidad Total" required>
+              placeholder="Cantidad Total" :class="[(formErrors.cantidadTotal || o_articulo.cantidadTotal !== undefined) && !o_articulo.cantidadTotal ? 'is-invalid' : '']">
+            <div class="invalid-feedback" v-text="modelo.l_errorCantidadTotal"></div>
           </div>
           <div class="form-group col">
             <label for="precio">Precio: </label>
             <input type="number" min="0" step="100" v-bind:value="o_articulo.precio | formatoMoneda" class="form-control"
-              id="precioArtNuevo" v-model="o_articulo.precio" placeholder="Precio Artículo Nuevo" required>
+              id="precioArtNuevo" v-model="o_articulo.precio" placeholder="Precio Artículo Nuevo" :class="[(formErrors.precio || o_articulo.precio !== undefined) && !o_articulo.precio ? 'is-invalid' : '']">
+            <div class="invalid-feedback" v-text="modelo.l_errorPrecio"></div>
           </div>
         </div>
         <div class="row">
           <div class="form-group col">
             <label for="categoria">Categorías: </label>
-            <select v-model="o_articulo.categoria" class="form-control" required>
+            <select v-model="o_articulo.categoria" class="form-control" :class="[(formErrors.categoria || o_articulo.categoria !== undefined) && !o_articulo.categoria ? 'is-invalid' : '']">
               <option v-for="tipos in modelo.a_categorias" v-text="tipos"></option>
             </select>
+            <div class="invalid-feedback" v-text="modelo.l_errorCategorias"></div>
           </div>
           <div class="form-group col">
             <label for="unidadMedida">Unidad de medida: </label>
-            <select v-model="o_articulo.unidadMedida" class="form-control" required>
+            <select v-model="o_articulo.unidadMedida" class="form-control" :class="[(formErrors.unidadMedida || o_articulo.unidadMedida !== undefined) && !o_articulo.unidadMedida ? 'is-invalid' : '']">
               <option v-for="unidadMedida in modelo.a_unidadMedida" v-text="unidadMedida"></option>
             </select>
+            <div class="invalid-feedback" v-text="modelo.l_errorUnidadMedida"></div>
           </div>
         </div>
         <div class="modal-footer">
@@ -164,8 +169,8 @@
           <div class="form-group col">
             <label for="descripcion">Descripción: </label>
             <input type="text" class="form-control" id="descripcionArtNuevo" :value="o_articulo.descripcion" v-model="o_articulo.descripcion"
-              :class="[formErrors.descripcion ? 'is-invalid' : '']">
-            <div class="invalid-feedback" v-if="formErrors.descripcion" v-text="modelo.l_errorDescripcion"></div>
+              :class="[(formErrors.descripcion || o_articulo.descripcion !== undefined) && !o_articulo.descripcion ? 'is-invalid' : '']">
+            <div class="invalid-feedback" v-text="modelo.l_errorDescripcion"></div>
           </div>
         </div>
         <div class="row">
@@ -210,7 +215,9 @@
           </div>
           <div class="form-group col">
             <label for="precio">Precio:</label>
-            <input type="number" min="0" step="100" class="form-control" id="precio" :value="o_articulo.precio" v-model="o_articulo.precio">
+            <input type="number" min="0" step="100" class="form-control" id="precio" :value="o_articulo.precio" :class="[(formErrors.precio || o_articulo.precio !== undefined) && !o_articulo.precio ? 'is-invalid' : '']"
+              v-model="o_articulo.precio">
+            <div class="invalid-feedback" v-text="modelo.l_errorPrecio"></div>
           </div>
         </div>
 
