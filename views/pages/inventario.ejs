@@ -46,8 +46,8 @@
   </div>
   <div class="row">
     <div class="col">
-      <label v-if="filtroArticulos.length === 0 && l_buscarArticulo !== '' "> No se encuentra ningún artículo , revise en la opción filtros si están bien
-        escritos, la categoría o id que desea.  Recuerde que se busca después de 3 caracteres en el campo de búsqueda</label>
+      <h5><span class="badge badge-pill badge-warning" v-if="filtroArticulos.length === 0 && l_buscarArticulo !== '' " > No se encuentra ningún artículo , revise en la opción filtros si están bien
+        escritos, la categoría o id que desea.  Recuerde que se busca después de 3 caracteres en el campo de búsqueda</span></h5>
       <table v-for="t_Categoria in filtroCategorias" class="table table-striped table-hover table-condensed">
         <!--Filtro para que se muestre solo la informacion requerida-->
         <thead class="thead-light">
