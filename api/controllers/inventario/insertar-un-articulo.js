@@ -40,28 +40,24 @@ module.exports = {
 
     cantidadLibre: {
       type: 'number',
-      required: true,
       description: 'Cantidad de dicho articulo libre para ser alquilado o utilizado',
       example: 2
     },
 
     cantidadUso: {
       type: 'number',
-      required: true,
       description: 'Cantidad de dicho articulo que actualmente se encuentra en uso.',
       example: 2
     },
 
     cantidadReservado: {
       type: 'number',
-      required: true,
       description: 'Cantidad de dicho articulo que actualmente se encuentra alquilado o fuera de bodega',
       example: 2
     },
 
     cantidadDanado: {
       type: 'number',
-      required: true,
       description: 'Cantidad de dicho articulo que esta dañado y no se puede utilizar',
       example: 2
     },
@@ -140,10 +136,20 @@ module.exports = {
 
   fn: async function (inputs, exits) {
 
+    inputs.cantidadTotal = parseInt(inputs.cantidadTotal);
+    inputs.cantidadLibre = parseInt(inputs.cantidadTotal);
+    inputs.precio = parseInt(inputs.precio);
+    inputs.cantidadDanado = 0;
+    inputs.cantidadUso = 0;
+    inputs.cantidadReservado = 0;
+    let l_vacioID =true;
+if(inputs.id=== undefined){
+  l_vacioID = false;
+}
     await Articulos.create(inputs)
 
     return exits.success(
-      inputs.id
+      l_vacioID
     );
 
   }
