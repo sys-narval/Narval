@@ -27,12 +27,24 @@ parasails.registerPage('inventario', {
     cloudError: '',
     formErrors: { /* … */ },
     formRules: {
-      id: { required: true },
-      descripcion: { required: true },
-      cantidadTotal: { required: true},
-      precio: { required: true},
-      categoria: { required: true},
-      unidadMedida: { required: true},
+      id: {
+        required: true
+      },
+      descripcion: {
+        required: true
+      },
+      cantidadTotal: {
+        required: true
+      },
+      precio: {
+        required: true
+      },
+      categoria: {
+        required: true
+      },
+      unidadMedida: {
+        required: true
+      },
 
     }, //Reglas para las validaciones
   },
@@ -53,81 +65,85 @@ parasails.registerPage('inventario', {
     //  ║║║║ ║ ║╣ ╠╦╝╠═╣║   ║ ║║ ║║║║╚═╗
     //  ╩╝╚╝ ╩ ╚═╝╩╚═╩ ╩╚═╝ ╩ ╩╚═╝╝╚╝╚═╝
     methods: {
-      limpiar_o_articulo: async function(){
-        this.o_articulo = {
-          id: undefined,
-          descripcion: undefined,
-          precio: undefined,
-          cantidadTotal: undefined,
-          categoria: undefined,
-          unidadMedida: undefined
-        }
-      },
-      cerrarModalActualizar: async function () {
-          this.l_verModalActualizar = false;
-          this.limpiar_o_articulo();
-          this.formErrors = {};
-          this.l_actualizar = false;
-        }, //Metodo que cierra el modal de actualizar
-        cerrarModalEliminar: async function () {
-            this.l_verModalEliminar = false;
+      limpiar_o_articulo: async function () {
+          this.o_articulo = {
+            id: undefined,
+            descripcion: undefined,
+            precio: undefined,
+            cantidadTotal: undefined,
+            categoria: undefined,
+            unidadMedida: undefined
+          }
+        },
+        cerrarModalActualizar: async function () {
+            this.l_verModalActualizar = false;
             this.limpiar_o_articulo();
+            this.formErrors = {};
             this.l_actualizar = false;
-          }, //Metodo que cierra el modal de Eliminar
-          cerrarNuevo: async function () {
-              this.l_verModalAgregar = false;
+          }, //Metodo que cierra el modal de actualizar
+          cerrarModalEliminar: async function () {
+              this.l_verModalEliminar = false;
               this.limpiar_o_articulo();
-              this.formErrors = {};
               this.l_actualizar = false;
-            }, //Metodo que cierra el modal de Agregar Articulo
-            verModalActualizar: async function (p_articulo) {
-                Object.assign(this.o_articulo, p_articulo);
-                this.l_verModalActualizar = true;
-                this.l_masArticulos = 0;
-                this.l_masDanado = 0;
-              }, //Metodo que abre el modal Actualizar 
-              verModalAgregar: async function () {
-                  this.l_verModalAgregar = true;
-                },//Metodo que abre el modal Agregar
-                verModalEliminar: async function (p_articulo) {
-                    this.o_articulo = p_articulo;
-                    this.l_verModalEliminar = true;
-                  },//Metodo que abre el modal Eliminar
-                  crearArticulo: async function (p_articuloNuevo) {
-                      this.o_articulo.cantidadTotal = parseInt(this.o_articulo.cantidadTotal);
-                      this.o_articulo.cantidadLibre = parseInt(this.o_articulo.cantidadTotal);
-                      this.o_articulo.precio = parseInt(this.o_articulo.precio);
-                      this.o_articulo.cantidadDanado = 0;
-                      this.o_articulo.cantidadUso = 0;
-                      this.o_articulo.cantidadReservado = 0;
-                      //await Cloud.insertarUnArticulo.with(articuloNuevo);
-                      this.p_articuloNuevo = {};
-                      this.modelo.articulos.push(this.o_articulo);
-                      this.l_actualizar = true;
-                      this.cerrarNuevo();
-                      this.$forceUpdate();
-                      alert('Articulo ingresado correctamente!');
-                    }, //Metodo que crea un articulo, primero analizar los valores enteros y despues lo mete en un arreglo
-                    eliminarUnArticulo: async function () {
-                        await Cloud.eliminarUnArticulo.with(this.o_articulo);
-                        this.modelo.articulos.splice(this.modelo.articulos.indexOf(this.o_articulo), 1);
-                        this.l_actualizar = true;
-                        this.cerrarModalEliminar();
-                        this.$forceUpdate();
-                      }, //Metodo que elimina un articulo de la base de datos local y despues lo elimina del arreglo
-                      actualizarUnArticulo: async function (p_articulo) {
+            }, //Metodo que cierra el modal de Eliminar
+            cerrarNuevo: async function () {
+                this.l_verModalAgregar = false;
+                this.limpiar_o_articulo();
+                this.formErrors = {};
+                this.l_actualizar = false;
+              }, //Metodo que cierra el modal de Agregar Articulo
+              verModalActualizar: async function (p_articulo) {
+                  Object.assign(this.o_articulo, p_articulo);
+                  this.l_verModalActualizar = true;
+                  this.l_masArticulos = 0;
+                  this.l_masDanado = 0;
+                }, //Metodo que abre el modal Actualizar 
+                verModalAgregar: async function () {
+                    this.l_verModalAgregar = true;
+                  }, //Metodo que abre el modal Agregar
+                  verModalEliminar: async function (p_articulo) {
+                      this.o_articulo = p_articulo;
+                      this.l_verModalEliminar = true;
+                    }, //Metodo que abre el modal Eliminar
+                    crearArticulo: async function (p_articuloNuevo) {
+                        this.o_articulo.cantidadTotal = parseInt(this.o_articulo.cantidadTotal);
+                        this.o_articulo.cantidadLibre = parseInt(this.o_articulo.cantidadTotal);
                         this.o_articulo.precio = parseInt(this.o_articulo.precio);
-                        //await Cloud.actualizarUnArticulo.with(this.o_articulo);
-                        this.modelo.articulos = this.modelo.articulos.map(articulo => {
-                          if (articulo.id === this.o_articulo.id) {
-                            articulo = this.o_articulo;
-                          }
-                          return articulo;
-                        });
+                        this.o_articulo.cantidadDanado = 0;
+                        this.o_articulo.cantidadUso = 0;
+                        this.o_articulo.cantidadReservado = 0;
+                        // En caso de categoría electronica
+                        if (this.o_articulo.categoria === 'Electrónico') {
+                          this.o_articulo.serialesBuenos = this.o_articulo.serialesTotal;
+                        }
+                        //await Cloud.insertarUnArticulo.with(articuloNuevo);
+                        this.p_articuloNuevo = {};
+                        this.modelo.articulos.push(this.o_articulo);
                         this.l_actualizar = true;
-                        this.cerrarModalActualizar();
+                        this.cerrarNuevo();
                         this.$forceUpdate();
-                      }, //Metodo que actualiza un objeto de la base de datos local
+                        alert('Articulo ingresado correctamente!');
+                      }, //Metodo que crea un articulo, primero analizar los valores enteros y despues lo mete en un arreglo
+                      eliminarUnArticulo: async function () {
+                          await Cloud.eliminarUnArticulo.with(this.o_articulo);
+                          this.modelo.articulos.splice(this.modelo.articulos.indexOf(this.o_articulo), 1);
+                          this.l_actualizar = true;
+                          this.cerrarModalEliminar();
+                          this.$forceUpdate();
+                        }, //Metodo que elimina un articulo de la base de datos local y despues lo elimina del arreglo
+                        actualizarUnArticulo: async function (p_articulo) {
+                            this.o_articulo.precio = parseInt(this.o_articulo.precio);
+                            //await Cloud.actualizarUnArticulo.with(this.o_articulo);
+                            this.modelo.articulos = this.modelo.articulos.map(articulo => {
+                              if (articulo.id === this.o_articulo.id) {
+                                articulo = this.o_articulo;
+                              }
+                              return articulo;
+                            });
+                            this.l_actualizar = true;
+                            this.cerrarModalActualizar();
+                            this.$forceUpdate();
+                          }, //Metodo que actualiza un objeto de la base de datos local
     },
     filters: {
       formatoMoneda: function (cantidad) {
@@ -184,7 +200,7 @@ parasails.registerPage('inventario', {
         if (this.l_buscarArticulo.length > 3 && this.l_actualizar === false) {
           return _.filter(this.modelo.articulos, c_limpiaFiltro(this.l_filtro))
             .filter(articulo => articulo.descripcion.includes(this.l_buscarArticulo) || articulo.categoria.includes(this.l_buscarArticulo) || articulo.id.includes(this.l_buscarArticulo));
-        } else if (this.l_buscarArticulo === "*"  && this.l_actualizar === false) {
+        } else if (this.l_buscarArticulo === "*" && this.l_actualizar === false) {
           return this.modelo.articulos;
         } else {
           return new Array();
@@ -231,7 +247,7 @@ parasails.registerPage('inventario', {
         }).cantidadDanado;
         /* Esta variable parsea el valor del input de el modal actualizar*/
         let l_numMasArticulos = parseInt(this.l_masArticulos)
-// Metodos if que verifica los datos numericos de las variables de cantidad
+        // Metodos if que verifica los datos numericos de las variables de cantidad
         if (this.l_masArticulos) {
           this.o_articulo.cantidadTotal = l_cantidadTotal + l_numMasArticulos;
           this.o_articulo.cantidadLibre = l_numMasArticulos + l_cantidadTotal - parseInt(this.l_masDanado) - l_cantidadDanado;
