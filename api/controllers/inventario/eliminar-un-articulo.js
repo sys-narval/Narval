@@ -26,7 +26,7 @@ module.exports = {
 
   fn: async function (inputs, exits) {
 
-    await Articulos.destroy(inputs);
+    await Articulos.destroy(inputs); //Elimina el articulo de la base de datos local
 
     return exits.success(inputs.id);
     

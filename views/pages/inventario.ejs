@@ -8,25 +8,25 @@
             <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-toggle="dropdown"
               aria-haspopup="true" aria-expanded="false">Filtro</button>
             <div class="dropdown-menu p-4">
-              <form>
+              <form> <!--Form del Filtro-->
                 <div class="form-group">
                   <label for="busquedaPorID">ID: </label>
                   <input type="text" class="form-control" id="idArt" placeholder="ID del Articulo:" v-model="l_filtro.id">
                 </div>
-                <div class="form-group">
-                  <label for="busquedaPorNombre">Categoría: </label>
-                  <select v-model="l_filtro.categoria" class="form-control" required>
-                    <option v-for="tipos in modelo.a_categorias" v-text="tipos"></option>
-                  </select>
-                </div>
+                        <div class="form-group">
+                          <label for="busquedaPorNombre">Categoría: </label>
+                          <select v-model="l_filtro.categoria" class="form-control" required>
+                            <option v-for="tipos in modelo.a_categorias" v-text="tipos"></option>
+                          </select>
+                        </div>
               </form>
             </div>
           </div>
           <input type="text" name="buscarArticulo" id="articulo" placeholder="Search" list="listaArticulos" class="form-control"
-            v-model="l_buscarArticulo">
+            v-model="l_buscarArticulo"> <!--Input de Buscador-->
           <datalist id="listaArticulos">
             <div v-for="t_articulo in modelo.articulos">
-              <option v-bind:value="t_articulo.descripcion">
+              <option v-bind:value="t_articulo.descripcion"> <!--Toma el valor del buscador-->
             </div>
           </datalist>
           <div class="input-group-append">
@@ -38,7 +38,7 @@
   </div>
   <div class="row">
     <div class="col">
-      <table v-for="t_Categoria in filtroCategorias" class="table table-striped table-hover table-condensed">
+      <table v-for="t_Categoria in filtroCategorias" class="table table-striped table-hover table-condensed"> <!--Filtro para que se muestre solo la informacion requerida-->
         <thead class="thead-light">
           <tr>
             <th v-text="t_Categoria"></th>
@@ -85,6 +85,7 @@
       <h4 class="modal-title">Agregando Artículo al Inventario</h4>
     </div>
     <div class="modal-body">
+      <!--Ajaxform que permite insertar un nuevo articulo-->
       <ajax-form action="insertarUnArticulo" :syncing.sync="syncing" :cloud-error.sync="cloudError" :form-data="o_articulo"
         :form-errors.sync="formErrors" :form-rules="formRules" @submitted="crearArticulo">
         <div class="row">
@@ -144,6 +145,7 @@
       <h4 class="modal-title">Actualizar Artículo del Inventario</h4>
     </div>
     <div class="modal-body">
+      <!--AjaxForm que permite actualizar el articulo-->
       <ajax-form action="actualizarUnArticulo" :syncing.sync="syncing" :cloud-error.sync="cloudError" :form-data="o_articulo"
         :form-errors.sync="formErrors" :form-rules="formRules" @submitted="actualizarUnArticulo">
         <div class="row">

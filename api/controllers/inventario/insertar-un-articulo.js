@@ -135,14 +135,14 @@ module.exports = {
 
 
   fn: async function (inputs, exits) {
-
+    //Controlador de los datos numericos
     inputs.cantidadTotal = parseInt(inputs.cantidadTotal);
     inputs.cantidadLibre = parseInt(inputs.cantidadTotal);
     inputs.precio = parseInt(inputs.precio);
     inputs.cantidadDanado = 0;
     inputs.cantidadUso = 0;
     inputs.cantidadReservado = 0;
-    let l_vacioID =true;
+    let l_vacioID =true; //Comprueba que el ID este vacio
 if(inputs.id=== undefined){
   l_vacioID = false;
 }
