@@ -19,7 +19,7 @@
         <p class="text-danger" v-if="cloudError==='badCombo'" v-text="modelo.errorCredenciales"><small></small></p>
         <p class="text-danger" v-else-if="cloudError"><small v-html="modelo.errorCargar"></small></p>
         <div class="form-group">
-          <ajax-button :syncing="syncing" class="btn-dark btn-lg btn-block" v-text="modelo.ingresar"></ajax-button>
+          <ajax-button :syncing="syncing" class="btn-dark btn-lg btn-block">Ingresar</ajax-button>
         </div>
       </ajax-form>
       <p class="text-center"><a href="/password/forgot" v-text="modelo.olvidoContrasena"></a></p>
