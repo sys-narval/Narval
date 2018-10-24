@@ -20,6 +20,8 @@ module.exports = {
     let modelo= {
       a_categorias:['Truss','Cables','Mobiliario','Herramientas/otros','Cortinaje','Tarimas'],
       a_unidadMedida: ['metros', 'unidades'],
+      l_errorId : "El ID es requerido",
+      l_errorDescripcion : "La descripción es requerida",
     };
 
     modelo.articulos = await Articulos.find();

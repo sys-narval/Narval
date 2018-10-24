@@ -13,6 +13,16 @@ parasails.registerPage('inventario', {
     l_filtro: {},
     l_masDanado: 0,
     l_masArticulos: 0,
+
+
+    formData: { /* … */ },
+    syncing: false,
+    cloudError: '',
+    formErrors: { /* … */ },
+    formRules: {
+      id: { required: true },
+      descripcion: { required: true },
+    },
   },
 
   //  ╦  ╦╔═╗╔═╗╔═╗╦ ╦╔═╗╦  ╔═╗
@@ -34,6 +44,7 @@ parasails.registerPage('inventario', {
       cerrarModalActualizar: async function () {
           this.l_verModalActualizar = false;
           this.o_articulo = {};
+          this.formErrors = {};
           this.l_actualizar = false;
         },
         cerrarModalEliminar: async function () {
@@ -44,6 +55,7 @@ parasails.registerPage('inventario', {
           cerrarNuevo: async function () {
               this.l_verModalAgregar = false;
               this.o_articulo = {};
+              this.formErrors = {};
               this.l_actualizar = false;
             },
             verModalActualizar: async function (p_articulo) {
@@ -66,9 +78,9 @@ parasails.registerPage('inventario', {
                       this.o_articulo.cantidadDanado = 0;
                       this.o_articulo.cantidadUso = 0;
                       this.o_articulo.cantidadReservado = 0;
-                      await Cloud.insertarUnArticulo.with(articuloNuevo);
+                      //await Cloud.insertarUnArticulo.with(articuloNuevo);
                       this.articuloNuevo = {};
-                      this.modelo.articulos.push(articuloNuevo);
+                      this.modelo.articulos.push(this.o_articulo);
                       this.l_actualizar = true;
                       this.cerrarNuevo();
                       this.$forceUpdate();
@@ -82,7 +94,7 @@ parasails.registerPage('inventario', {
                       },
                       actualizarUnArticulo: async function (p_articulo) {
                         this.o_articulo.precio = parseInt(this.o_articulo.precio);
-                        await Cloud.actualizarUnArticulo.with(this.o_articulo);
+                        //await Cloud.actualizarUnArticulo.with(this.o_articulo);
                         this.modelo.articulos = this.modelo.articulos.map(articulo => {
                           if (articulo.id === this.o_articulo.id) {
                             articulo = this.o_articulo;
