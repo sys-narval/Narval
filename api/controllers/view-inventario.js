@@ -27,7 +27,7 @@ module.exports = {
       l_errorPrecio: 'El precio es requerido',
       l_errorCategorias: 'Por favor seleccione una categoría.',
       l_errorUnidadMedida: 'Por favor seleccione una unidad de medida.',
-      l_errorIdRepetido: 'Articulo con el mismo ID ya existe',
+      l_errorIdRepetido: 'Artículo con el mismo ID ya existe',
     };
 
     modelo.articulos = await Articulos.find();
