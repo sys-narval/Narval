@@ -104,8 +104,9 @@
           <div class="form-group col">
             <label for="id">ID: </label>
             <input type="text" class="form-control" id="idArtNuevo" v-model.trim="o_articulo.id" placeholder="ID del Artículo"
-              maxlength="4" :class="[(formErrors.id || o_articulo.id !== undefined) && !o_articulo.id ? 'is-invalid' : '']">
-            <div class="invalid-feedback" v-text="modelo.l_errorId"></div>
+              maxlength="4" :class="[((formErrors.id || o_articulo.id !== undefined) && !o_articulo.id) || cloudError === 'idRepetido' ? 'is-invalid' : '']">
+            <div class="invalid-feedback" v-if="(formErrors.id || o_articulo.id !== undefined) && !o_articulo.id" v-text="modelo.l_errorId"></div>
+            <div class="invalid-feedback" v-if="cloudError === 'idRepetido'" v-text='modelo.l_errorIdRepetido'></div>
           </div>
           <div class="form-group col">
             <label for="descripcion">Descripción: </label>
