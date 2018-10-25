@@ -122,7 +122,7 @@ parasails.registerPage('inventario', {
                         this.l_actualizar = true;
                         this.cerrarNuevo();
                         this.$forceUpdate();
-                        alert('Articulo ingresado correctamente!');
+                        alert('Artículo ingresado correctamente!');
                       }, //Metodo que crea un articulo, primero analizar los valores enteros y despues lo mete en un arreglo
                       eliminarUnArticulo: async function () {
                           await Cloud.eliminarUnArticulo.with(this.o_articulo);
