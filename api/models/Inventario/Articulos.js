@@ -42,42 +42,42 @@ module.exports = {
       type: 'number',
       required: true,
       description: 'Precio estándar del articulo para hacer cálculos de precios iniciales',
-      example: '$1200'
+      example: 1200
     },
 
     cantidadLibre: {
       type: 'number',
       required: true,
       description: 'Cantidad de dicho articulo libre para ser alquilado o utilizado',
-      example: '2'
+      example: 2
     },
 
     cantidadUso: {
       type: 'number',
       required: true,
       description: 'Cantidad de dicho articulo que actualmente se encuentra en uso.',
-      example: '2'
+      example: 2
     },
 
     cantidadReservado: {
       type: 'number',
       required: true,
       description: 'Cantidad de dicho articulo que actualmente se encuentra alquilado o fuera de bodega',
-      example: '2'
+      example: 2
     },
 
     cantidadDanado: {
       type: 'number',
       required: true,
       description: 'Cantidad de dicho articulo que esta dañado y no se puede utilizar',
-      example: '2'
+      example: 2
     },
 
     cantidadTotal: {
       type: 'number',
       required: true,
       description: 'Cantidad total de dicho articulo sumando cantidad libre + cantidad uso + cantidad reservado + cantidad dañado',
-      example: '8'
+      example: 8
     },
 
     unidadMedida: {
@@ -88,11 +88,18 @@ module.exports = {
       example: 'unidades'
     },
 
+    activo: {
+      type: 'boolean',
+      defaultsTo: true,
+      description: 'Atributo para definir si un articulo esta activo o desactivo para su uso en el inventario',
+      example: true
+    },
+
     // Elementos específicos requeridos para artículos electrónicos
     amperaje: {
       type: 'number',
       description: 'Amperaje usado por el articulo electrónico para cuantificar amperaje total para el evento',
-      example: '1'
+      example: 1
     },
 
     tipo: {
@@ -135,7 +142,7 @@ module.exports = {
     largo: {
       type: 'number',
       description: 'Largo del articulo especificado en metros',
-      example: '1'
+      example: 1
     },
 
     //  ╔═╗╔╦╗╔╗ ╔═╗╔╦╗╔═╗

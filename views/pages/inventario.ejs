@@ -75,13 +75,12 @@
             <td v-text="t_articulo.cantidadDanado"></td>
             <td v-text="t_articulo.cantidadTotal"></td>
             <td>{{t_articulo.precio | formatoMoneda}}</td>
-            <td class="text-center">
-              <label for="ver" class="btn btn-info" @click="verModalActualizar(t_articulo)">
-                Actualizar
-              </label>
-              <label for="borrar" class="btn btn-danger" @click="verModalEliminar(t_articulo)">
-                Borrar
-              </label>
+            <td v-if="t_articulo.activo" class="text-center">
+              <input type="button" value="Actualizar" class="btn btn-info" @click="verModalActualizar(t_articulo)">
+              <input type="button" value="Borrar" class="btn btn-danger" @click="verModalEliminar(t_articulo)">
+            </td>
+            <td v-else>
+              <input type="button" value="Reactivar" class="btn btn-success" @click="activarArticulo(t_articulo)">
             </td>
           </tr>
         </tbody>

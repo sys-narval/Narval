@@ -82,6 +82,13 @@ module.exports = {
           example: 'unidades'
         },
 
+        activo: {
+          type: 'boolean',
+          defaultsTo: true,
+          description: 'Atributo para definir si un articulo esta activo o desactivo para su uso en el inventario',
+          example: true
+        },
+
         // Elementos específicos requeridos para artículos electrónicos
         amperaje: {
           type: 'number',
