@@ -15,6 +15,7 @@ parasails.registerPage('inventario', {
     l_verModalActualizar: false,
     l_verModalAgregar: false,
     l_verModalEliminar: false,
+    l_verModalAyuda: false,
     l_actualizar: false,
     l_buscarArticulo: '',
     l_filtro: {},
@@ -92,6 +93,12 @@ parasails.registerPage('inventario', {
       this.formErrors = {};
       this.l_actualizar = false;
     }, //Metodo que cierra el modal de Agregar Articulo
+    cerrarModalAyuda: async function () {
+        this.l_verModalAyuda = false;
+      },
+      verModalAyuda: async function () {
+        this.l_verModalAyuda = true;
+      },
     verModalActualizar: async function (p_articulo) {
       Object.assign(this.o_articulo, p_articulo);
       this.l_verModalActualizar = true;
@@ -112,6 +119,7 @@ parasails.registerPage('inventario', {
       this.o_articulo.cantidadDanado = 0;
       this.o_articulo.cantidadUso = 0;
       this.o_articulo.cantidadReservado = 0;
+      this.o_articulo.activo = true;
       // En caso de categoría electronica
       if (this.o_articulo.categoria === 'Electrónico') {
         this.o_articulo.serialesBuenos = this.o_articulo.serialesTotal;
@@ -136,6 +144,11 @@ parasails.registerPage('inventario', {
       this.cerrarModalEliminar();
       this.$forceUpdate();
     }, //Metodo que elimina un articulo de la base de datos local y despues lo elimina del arreglo
+    activarArticulo: async function (p_articulo) {
+      p_articulo.activo = true;
+      await Cloud.actualizarUnArticulo.with(p_articulo);
+      this.actualizarUnArticulo(p_articulo);
+    },
     actualizarUnArticulo: async function (p_articulo) {
       this.o_articulo.precio = parseInt(this.o_articulo.precio);
       //await Cloud.actualizarUnArticulo.with(this.o_articulo);
