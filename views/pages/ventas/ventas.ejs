@@ -175,13 +175,12 @@
               <td> {{art.id}} </td>
               <td> {{art.name}} </td>
               <td> {{art.descripcion}} </td>
-              <td>{{art.cantidad}}</td>
+              <td>{{art.cantidadTotal}}</td>
               <td> <input type="number"> </td>
               <td> <input type="number" :value="art.precio"> </td>
               <td> {{art.precio}} </td>
               <td>
-                <button type="button" class="btn btn-success" @click="clickVerArticulo(art)" data-toggle="modal"
-                  data-target="#modalVer">Ver</button>
+                <button type="button" class="btn btn-success" @click="verArticulo(art)">Ver</button>
                 <button type="button" class="btn btn-danger">Eliminar</button>
               </td>
             </tr>
@@ -195,6 +194,7 @@
     Guardar
   </button>
   <!-- Modal -->
+
 
   <modal class="example-modal" v-if="VerModalGuardar" @close="clickCerrarModalGuardar()" v-cloak>
     <div class="modal-dialog" role="document">
@@ -214,22 +214,105 @@
 
   </modal>
 
-  <!-- Modal -->
-  <div class="modal fade" id="modalVer" tabindex="-1" role="dialog" aria-labelledby="ModaldeBusquedaID" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="ModaldeBusquedaID">{{articulo.name}}</h5>
-        </div>
-        <div class="modal-body">
-          <li v-for="(datos, key) in articulo"> {{key}}: {{datos}} </li>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
-        </div>
-      </div>
+  <!-- Modal Ver  -->
+  <!-- Aqui inicia el modal ver-->
+  <modal v-if="l_verModalVer" id="modalVer">
+    <!-- Contenido del modal-->
+    <div class="modal-header">
+      <button type="button" class="close" @click="cerrarModalVer">&times</button>
+      <h2 class="modal-title">Ver Artículo del Inventario</h2>
     </div>
-  </div>
+    <div class="modal-body">
+      <!--Form que permite actualizar el articulo-->
+      <form>
+        <div class="row">
+          <div class="form-group col">
+            <label for="id">ID: </label>
+            <input type="text" class="form-control" id="id" :value="o_articulo.id" v-model="o_articulo.id" readonly>
+          </div>
+          <div class="form-group col">
+            <label for="descripcion">Descripción: </label>
+            <input type="text" class="form-control" id="descripcionArticulo" :value="o_articulo.descripcion" v-model="o_articulo.descripcion"
+              maxlength="32">
+          </div>
+        </div>
+        <div class="row">
+          <div class="form-group col">
+            <label for="cantidadLibre">Cantidad Libre: </label>
+            <input type="text" class="form-control" id="cantidadLibre" :value="o_articulo.cantidadLibre" v-model="o_articulo.cantidadLibre"
+              readonly>
+          </div>
+          <div class="form-group col">
+            <label for="cantidadUso">Cantidad Uso: </label>
+            <input type="text" class="form-control" id="cantidadUso" :value="o_articulo.cantidadUso" v-model="o_articulo.cantidadUso"
+              readonly>
+          </div>
+        </div>
+        <div class="row">
+          <div class="form-group col">
+            <label for="cantidadDanado">Cantidad Dañado: </label>
+            <input type="text" class="form-control" id="cantidadDanado" :value="o_articulo.cantidadDanado" v-model="o_articulo.cantidadDanado"
+              readonly>
+          </div>
+          <div class="form-group col">
+            <label for="cantidadTotal">Cantidad Total: </label>
+            <input type="text" class="form-control" id="cantidadTotalArtNuevo" :value="o_articulo.cantidadTotal"
+              v-model="o_articulo.cantidadTotal" readonly>
+          </div>
+        </div>
+        <div class="row">
+          <div class="form-group  col">
+            <label for="tipo">Categoría: </label>
+            <input type="text" class="form-control" id="tipo" :value="o_articulo.tipo" readonly v-model="o_articulo.categoria">
+          </div>
+          <div class="form-group col">
+            <label for="precio">Precio:</label>
+            <input type="number" min="0" step="1" max="9999" class="form-control" id="precio" :value="o_articulo.precio"
+              v-model="o_articulo.precio">
+          </div>
+        </div>
+        <!-- Otros espacios para los articulos electrónicos, incluyendo amperaje y seriales... -->
+        <template v-if="o_articulo.categoria === 'Electrónico'">
+          <div class="row">
+            <div class="form-group col">
+              <label for="amperaje">Amperaje:</label>
+              <input type="number" name="Amperaje" id="amperaje" min="0" max="999" placeholder="Amperaje del artículo"
+                step="0.01" v-model="o_articulo.amperaje" class="form-control">
+            </div>
+            <div class="form-group col">
+              <label for="tipoElectronico">Tipo:</label>
+              <select class="form-control" name="Tipo Electrónico" id="tipoElectronico" v-model="o_articulo.tipo">
+                <option v-for="tipo in modelo.a_tipos" :value="tipo" v-text="tipo"></option>
+              </select>
+            </div>
+          </div>
+          <div class="row">
+            <div class="form-group col-6">
+              <label for="serialesTotal">Números de serial (separados por coma):</label>
+              <input type="text" class="form-control" name="Números de Seriales" id="serialesTotal" placeholder="SN123, SN789, ..."
+                v-model="o_articulo.serialesTotal">
+            </div>
+            <div class="form-group col"></div>
+          </div>
+        </template>
+        <!-- Otros específicos para los articulos cables o truss -->
+        <template v-if="o_articulo.categoria === 'Cables' || o_articulo.categoria === 'Truss'">
+          <div class="row">
+            <div class="form-group col-6">
+              <label for="largo">Largo:</label>
+              <input type="number" name="Largo" id="largo" class="form-control" placeholder="Largo en metros" min="0"
+                max="9999" step="1" v-model="o_articulo.largo">
+            </div>
+          </div>
+        </template>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-primary">Aceptar</button>
+          <button type="button" class="btn btn-danger" @click="cerrarModalVer">Cancelar</button>
+        </div>
+      </form>
+    </div>
+
+  </modal>
   <!--- Modal--->
 
 
