@@ -29,7 +29,7 @@ module.exports = {
       verEmpresa: false,
       articulos: [{
         id: 1,
-          cantidad: 2,
+          cantidadTotal: 2,
           name: 'Tross',
           descripcion: 'Distancia dos metros',
           precio: 500,
@@ -38,7 +38,7 @@ module.exports = {
         },
         {
           id: 2,
-          cantidad: 3,
+          cantidadTotal: 3,
           name: 'Pantallas',
           descripcion: '40 pulgadas',
           precio: 300,

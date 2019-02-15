@@ -4,7 +4,16 @@ parasails.registerPage('ventas', {
   //  ╩╝╚╝╩ ╩ ╩╩ ╩╩═╝  ╚═╝ ╩ ╩ ╩ ╩ ╚═╝
   data: {
     //…
+    o_articulo: {
+      id: undefined,
+      descripcion: undefined,
+      precio: undefined,
+      cantidadTotal: undefined,
+      categoria: undefined,
+      unidadMedida: undefined
+    }, //objeto local que permite recibir un articulo
     VerModalGuardar: false,
+    l_verModalVer:false,
     txtCliente:'',
     txtEmpresa:'',
     clientes: [{name:''}],
@@ -30,6 +39,16 @@ parasails.registerPage('ventas', {
   //  ╩╝╚╝ ╩ ╚═╝╩╚═╩ ╩╚═╝ ╩ ╩╚═╝╝╚╝╚═╝
   methods: {
     //…
+    limpiar_o_articulo: async function () {
+      this.o_articulo = {
+        id: undefined,
+        descripcion: undefined,
+        precio: undefined,
+        cantidadTotal: undefined,
+        categoria: undefined,
+        unidadMedida: undefined
+      }
+    },
     clickVerModalGuardar: async function() {
       this.VerModalGuardar=true
     },
@@ -50,8 +69,13 @@ parasails.registerPage('ventas', {
        this.contactos = vcontacto
        this.verCliente = true
      },
-     clickVerArticulo: async function(vArticulo) {
-       this.articulo = vArticulo
+    verArticulo: async function(vArticulo) {
+       this.o_articulo = vArticulo
+       this.l_verModalVer=true
+     },
+     cerrarModalVer: async function () {
+       this.l_verModalVer=false
+       this.limpiar_o_articulo();
      }
     
   },
