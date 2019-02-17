@@ -59,13 +59,13 @@
 
   <!--Tabla-->
   <table class="table table-hover table-striped table-bordered">
-    <thead class="thead-dark">
+    <thead class="thead-light">
       <th>Seleccionar</th>
       <th>Nombre</th>
       <th>Correo</th>
       <th>Rol</th>
       <th>Fecha</th>
-      <th title="Opciones" class="text-center"><span class="fa fa-cog"></span></th>
+      <th title="Opciones" class="text-center">Opciones</th>
     </thead>
     <tbody>
       <tr v-for="usuario in modelo.usuarios">
@@ -76,13 +76,13 @@
         <td v-text="usuario.fecha"></td>
         <td class="text-center">
           <button href="" class="btn btn-success" title="Editar fila"><span class="fa fa-pencil" @click="modalEditar(usuario)"></span> Editar</button>
+          <button class="btn btn-danger" type="button" id="Deshabilitar" @click="modalDeshabilitar()" title="Deshabilitar">Deshabilitar</button>
         </td>
       </tr>
     </tbody>
   </table>
-  <div class="col-lg-11 my-6 text-center">
+  <div class="col-lg-11 my-6">
     <button class="btn btn-primary" type="button" id="Agregar" @click="modalAgregar()" title="Agregar">Agregar</button>
-    <button class="btn btn-danger" type="button" id="deshabilitar" @click="modalDeshabilitar()" title="Deshabilitar">Deshabilitar</button>
   </div>
 
   <!--Modal Editar-->
@@ -116,8 +116,10 @@
               </select>
             </div>
           </div>
-          <button type="button" id="Guardar" class="btn btn-primary" @click="cerrarEditar()" title="Guardar">Guardar</button>
-          <input type="button" value="Cerrar" class="btn btn-basic" @click="cerrarEditar()" title="Cerrar">
+          <div class="pull-right">
+            <button type="button" id="Guardar" class="btn btn-primary" @click="cerrarEditar()" title="Guardar">Guardar</button>
+            <input type="button" value="Cancelar" class="btn btn-danger" @click="cerrarEditar()" title="Cancelar">
+          </div>
         </form>
       </div>
     </div>
@@ -137,8 +139,10 @@
               <h6 class="modal-title" id="AdvertenciaDeshabilitar">¿Está seguro que desea deshabilitar este Usuario?</h6>
             </div>
           </div>
-          <button type="button" id="aceptar" class="btn btn-primary" @click="cerrarDeshabilitar()" title="Aceptar">Aceptar</button>
-          <input type="button" value="cerrar" class="btn btn-basic" @click="cerrarDeshabilitar()" title="Cerrar">
+          <div class="pull-right">
+            <button type="button" id="Aceptar" class="btn btn-primary" @click="cerrarDeshabilitar()" title="Aceptar">Aceptar</button>
+            <input type="button" value="Cancelar" class="btn btn-danger" @click="cerrarDeshabilitar()" title="Cancelar">
+          </div>
         </form>
       </div>
     </div>
@@ -175,8 +179,10 @@
               </select>
             </div>
           </div>
-          <button type="button" id="Agregar" class="btn btn-primary" @click="cerrarAgregar()" title="Agregar">Agregar</button>
-          <input type="button" value="Cerrar" class="btn btn-basic" @click="cerrarAgregar()" title="Cerrar">
+          <div class="pull-right">
+            <button type="button" id="Agregar" class="btn btn-primary" @click="cerrarAgregar()" title="Agregar">Agregar</button>
+            <input type="button" value="Cancelar" class="btn btn-danger" @click="cerrarAgregar()" title="Cancelar">
+          </div>
         </form>
       </div>
     </div>
