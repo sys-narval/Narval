@@ -3,10 +3,12 @@ parasails.registerPage('usuarios', {
   //  ║║║║║ ║ ║╠═╣║    ╚═╗ ║ ╠═╣ ║ ║╣
   //  ╩╝╚╝╩ ╩ ╩╩ ╩╩═╝  ╚═╝ ╩ ╩ ╩ ╩ ╚═╝
   data: {
-    usuario: {},
+    usuario: { /* */ },
     verModalEditar: false,
     verModalDeshabilitar: false,
-    verModalAgregar: false
+    verModalAgregar: false,
+    busquedaUsuario: '',
+    filtro:{}
     //…
   },
 
@@ -50,6 +52,24 @@ parasails.registerPage('usuarios', {
     cerrarAgregar: async function(){
       this.verModalAgregar = false;
     }
+  },
 
-  }
+    //Metodo del filtro
+    computed:{
+      filtroUsuario: function () {
+        const limpiaFiltro = objeto => {
+          for (let atributo in objeto)
+            if (objeto[atributo] === null || objeto[atributo] === undefined || objeto[atributo] === '')
+              delete objeto[atributo];
+          return objeto;
+        }
+
+        if (this.busquedaUsuario) {
+          return _.filter(this.modelo.usuarios, limpiaFiltro(this.filtro))
+            .filter(usuario => usuario.nombre.includes(this.busquedaUsuario) || usuario.correo.includes(this.busquedaUsuario));
+        } else {
+          return new Array();
+        }
+      }
+    }
 });
