@@ -7,6 +7,7 @@ parasails.registerPage('usuarios', {
     verModalEditar: false,
     verModalDeshabilitar: false,
     verModalAgregar: false,
+    verModalAyuda: false,
     busquedaUsuario: '',
     filtro:{}
     //…
@@ -41,6 +42,10 @@ parasails.registerPage('usuarios', {
       this.verModalAgregar = true;
     },
 
+    modalAyuda: async function(){
+      this.verModalAyuda = true;
+    },
+
     cerrarEditar: async function(){
       this.verModalEditar = false;
     },
@@ -51,6 +56,10 @@ parasails.registerPage('usuarios', {
 
     cerrarAgregar: async function(){
       this.verModalAgregar = false;
+    },
+
+    cerrarAyuda: async function(){
+      this.verModalAyuda = false;
     }
   },
 
