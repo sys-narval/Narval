@@ -8,18 +8,10 @@
         <div class="input-group">
           <div class="input-group-prepend">
             <button class="btn btn-outline-secondary dropdown-toggle" title="Búsqueda" type="button" data-toggle="dropdown"
-              aria-haspopup="true" aria-expanded="false">Filtros</button>
+              aria-haspopup="true" aria-expanded="false">Filtro</button>
             <div class="dropdown-menu p-4">
               <div class="form-group">
-                <label for="nombre">Nombre:</label>
-                <input type="text" id="nombre" class="form-control" placeholder="Nombre del Usuario">
-              </div>
-              <div class="form-group">
-                <label for="correoElectrónico">Correo</label>
-                <input type="text" id="correoElectrónico" class="form-control" placeholder="Correo del Usuario">
-              </div>
-              <div class="form-group">
-                <label for="nombre">Roles:</label>
+                <th>Rol del Usuario:</th>
               </div>
               <div class="form-check mb-2">
                 <input type="checkbox" name="rol Administrador" id="rolAdministrador" class="form-check-input">
@@ -43,7 +35,7 @@
               </div>
             </div>
           </div>
-          <input type="text" name="Buscar Usuario" id="usuario" list="listaUsuarios" placeholder="Buscar Usuario" class="form-control" v-model.trim="busquedaUsuario">
+          <input type="text" name="Buscar Usuario" id="usuario" list="listaUsuarios" placeholder="Buscar Usuario" class="form-control" maxlength="42" v-model.trim="busquedaUsuario">
           <datalist id="listaUsuarios">
               <div v-for="usuario in modelo.usuarios">
                 <option v-bind:value="usuario.nombre">
@@ -59,10 +51,9 @@
 
   <!--Tabla-->
   <h5><span class="badge badge-pill badge-warning" v-if="filtroUsuario.length === 0 && busquedaUsuario !== ''">
-      No se encuentra ningún usuario</span></h5>
+      No se encuentra ningún usuario  <button class="btn btn-primary" type="button" @click="modalAyuda()"><i class="fa fa-question"></i></button></span></h5>
   <table class="table table-hover table-striped table-bordered" v-if="filtroUsuario.length != 0">
     <thead class="thead-light">
-      <th>Seleccionar</th>
       <th>Nombre</th>
       <th>Correo</th>
       <th>Rol</th>
@@ -72,13 +63,12 @@
     <tbody>
       <tr v-for="usuario in modelo.usuarios">
         <tr v-for="usuario in filtroUsuario">
-        <td><input type="checkbox" /></td>
         <td v-text="usuario.nombre"></td>
         <td v-text="usuario.correo"></td>
         <td v-text="usuario.rol"></td>
         <td v-text="usuario.fecha"></td>
         <td class="text-center">
-          <button href="" class="btn btn-success" title="Editar fila"><span class="fa fa-pencil" @click="modalEditar(usuario)"></span> Editar</button>
+          <button href="" class="btn btn-success" title="Editar fila" @click="modalEditar(usuario)"><span class="fa fa-pencil"></span> Editar</button>
           <button class="btn btn-danger" type="button" id="Deshabilitar" @click="modalDeshabilitar()" title="Deshabilitar">Deshabilitar</button>
         </td>
       </tr>
@@ -139,7 +129,7 @@
           <h1 class="text-center">Deshabilitando Usuario</h1>
           <div class="row">
             <div class="form-group col">
-              <h6 class="modal-title" id="AdvertenciaDeshabilitar">¿Está seguro que desea deshabilitar este Usuario?</h6>
+              <h6 class="modal-title text-center" id="AdvertenciaDeshabilitar">¿Está seguro que desea deshabilitar este Usuario?</h6>
             </div>
           </div>
           <div class="pull-right">
@@ -188,6 +178,25 @@
           </div>
         </form>
       </div>
+    </div>
+  </modal>
+
+  <!--Modal Ayuda-->
+  <modal v-if="verModalAyuda" id="modalAyuda">
+    <div class="modal-header">
+      <button type="button" class="close" @click="cerrarAyuda()">&times</button>
+      <h2 class="modal-title">Ayuda</h2>
+    </div>
+    <div class="modal-body">
+      <p class="text-center">Si no encuentras el usuario, revisa los siguientes aspectos: </p>
+      <ul>
+        <li>Revisa si tus filtros son los correctos o si esta bien escrito.</li>
+        <li>El buscador utiliza "Nombre" o "Correo"  para realizar la búsqueda.</li>
+        <li>El buscador muestra los resultados desde el primer carácter digitado.</li>
+      </ul>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-danger" type="button" id="cancelarAyuda" @click="cerrarAyuda()">Cancelar</button>
     </div>
   </modal>
 </div>
