@@ -27,6 +27,8 @@
           <div>
             <input class="form-control" type="text" placeholder="Nombre de la empresa" list="listClientes" v-model="txtEmpresa"
               @click="clickVerCliente(modelo.empresas)" />
+              <br>
+              <input class="btn btn-primary" type="button" value="Agregar" @click="clickVerModalAgregar()" />
             <datalist id="listClientes">
               <option v-for="empresa in modelo.empresas" :value="empresa.name">
             </datalist>
@@ -47,6 +49,8 @@
           <div class="dropdown">
             <input class="form-control" type="text" placeholder="Persona de Contacto" v-model="txtCliente" list="listContactos"
               @click="clickVerContacto(modelo.Clientes)" />
+              <br>
+              <input class="btn btn-primary" type="button" value="Agregar" @click="clickVerModalAgregar()" />
             <datalist id="listContactos">
               <option v-for="cont in modelo.Clientes" :label="cont.name" :value="cont.name">
               </option>
@@ -193,7 +197,37 @@
   <button type="button" class="btn btn-primary" @click="clickVerModalGuardar()">
     Guardar
   </button>
-  <!-- Modal -->
+
+  <!--- Modal Clientes y Contactos--->
+  <modal class="example-modal" v-if="l_verModalAgregar" @close="clickCerrarModalAgregar()" v-cloak>
+    <div class="modal-dialog" role="document">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Agregando un cliente/contacto</h5>
+      </div>
+    </div>
+    <div class="modal-body">
+      <div class="row">
+        <div class="form-group col">
+          <label for="nombre">Nombre: </label>
+          <input type="text" class="form-control" id="nomCliNuevo"  placeholder="Digite el nombre">
+        </div>
+        <div class="form-group col">
+          <label for="telefono">Teléfono: </label>
+          <input type="tel" pattern="[0-9]{9}" maxlength="8" class="form-control" id="telCliNuevo"  placeholder="Digite el numero telefónico">
+        </div>
+        <div class="form-group col">
+          <label for="email">Email: </label>
+          <input type="email" name="email" pattern="[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*@[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*[.][a-zA-Z]{1,5}" class="form-control" id="emaCliNuevo"  placeholder="Digite el email">
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-primary">Guardar</button>
+      <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+    </div>
+  </modal>
+  
+  <!-- Modal Guardar-->
 
 
   <modal class="example-modal" v-if="VerModalGuardar" @close="clickCerrarModalGuardar()" v-cloak>
@@ -313,8 +347,8 @@
     </div>
 
   </modal>
-  <!--- Modal--->
 
+   
 
 </div>
 
