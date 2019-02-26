@@ -76,8 +76,8 @@ parasails.registerPage('ventas', {
      cerrarModalVer: async function () {
        this.l_verModalVer=false
        this.limpiar_o_articulo();
-     }
-    
+     },
+     
   },
   computed:{
      filteredContactos: function () {
