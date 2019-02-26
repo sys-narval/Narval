@@ -70,6 +70,11 @@ module.exports = {
           name: 'Nissan',
           telefono: '2222',
           correo: '222222@gmail.com'
+        },
+        {
+          name: 'Company',
+          telefono: '333',
+          correo: '3333@gmail.com'
         }
       ]
     };

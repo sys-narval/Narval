@@ -34,12 +34,14 @@
             </datalist>
             <br>
             <ul v-if="filteredClientes.length !== 0" v-for="vEmpresa in filteredClientes">
+              <div v-if="filteredClientes.length === 1">
               <li>
                 Teléfono: {{vEmpresa.telefono}}
               </li>
               <li>
                 Correo: {{vEmpresa.correo}}
               </li>
+            </div>
             </ul>
           </div>
 
@@ -57,12 +59,14 @@
             </datalist>
             <br>
             <ul v-if="filteredContactos.length !== 0" v-for="vContacto in filteredContactos">
+                <div v-if="filteredContactos.length === 1">
               <li>
                 Teléfono: {{vContacto.telefono}}
               </li>
               <li>
                 Correo: {{vContacto.correo}}
               </li>
+            </div>
             </ul>
           </div>
         </div>
