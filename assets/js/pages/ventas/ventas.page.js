@@ -14,6 +14,7 @@ parasails.registerPage('ventas', {
     }, //objeto local que permite recibir un articulo
     VerModalGuardar: false,
     l_verModalVer:false,
+    l_verModalAgregar: false,
     txtCliente:'',
     txtEmpresa:'',
     clientes: [{name:''}],
@@ -48,6 +49,14 @@ parasails.registerPage('ventas', {
         categoria: undefined,
         unidadMedida: undefined
       }
+    },
+    clickVerModalAgregar: async function()
+    {
+      this.l_verModalAgregar=true
+    },
+    clickCerrarModalAgregar: async function()
+    {
+      this.l_verModalAgregar=false
     },
     clickVerModalGuardar: async function() {
       this.VerModalGuardar=true
