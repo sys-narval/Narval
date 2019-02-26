@@ -310,20 +310,13 @@
     </div>
     <div class="modal-body">
       <!-- Aquí va el contenido del modal -->
-      <p class="text-center">Después de ejecutar este evento no hay marcha atrás</p>
-      <div class="row">
-        <div class="col-lg-4 my-3">
-          <div class="pull-right">
-            <button class="btn btn-primary" type="button" id="Aceptar" @click="eliminarUnArticulo()">Aceptar</button>
-          </div>
-        </div>
-        <div class="col-lg-6 my-3">
-          <div class="pull-right">
-            <button class="btn btn-danger" type="button" id="Borrar" @click="cerrarModalEliminar">Cancelar</button>
-          </div>
-        </div>
-      </div>
+      <p class="text-center">Esta acción deshabilitará el objeto por un tiempo de 30 días; luego será eliminado definitivamente y no podrá ser utilizado</p>
     </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" type="button" id="Aceptar" @click="eliminarUnArticulo()">Aceptar</button>
+        <button class="btn btn-danger" type="button" id="Borrar" @click="cerrarModalEliminar">Cancelar</button>
+      </div>
+
   </modal>
   <!--Aca termina el modal de eliminar-->
 
