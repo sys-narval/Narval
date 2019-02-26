@@ -7,7 +7,7 @@ parasails.registerPage('clientes', {
 
     contactos: [{
       empresa: 'Coca-Cola',
-      telefonoEmpresarial: 2555555,
+      telefonoEmpresarial: 25555555,
       correoEmpresarial: 'coca@gmail.com',
       Contacto: [{
           nombre: 'Jose quesada',
