@@ -199,11 +199,11 @@
   </button>
 
   <!--- Modal Clientes y Contactos--->
-  <modal class="example-modal" v-if="l_verModalAgregar" @close="clickCerrarModalAgregar()" v-cloak>
-    <div class="modal-dialog" role="document">
-      <div class="modal-header">
+  <modal v-if="l_verModalAgregar" id="modalAgregar">
+    
+       <div class="modal-header">
+          <button type="button" class="close" @click="clickCerrarModalAgregar()">&times</button>
         <h5 class="modal-title" id="exampleModalLabel">Agregando un cliente/contacto</h5>
-      </div>
     </div>
     <div class="modal-body">
       <div class="row">
@@ -230,12 +230,12 @@
   <!-- Modal Guardar-->
 
 
-  <modal class="example-modal" v-if="VerModalGuardar" @close="clickCerrarModalGuardar()" v-cloak>
-    <div class="modal-dialog" role="document">
+  <modal  v-if="VerModalGuardar" id="modalAgregar">
       <div class="modal-header">
+          <button type="button" class="close" @click="clickCerrarModalGuardar">&times</button>
         <h5 class="modal-title" id="exampleModalLabel">Desea guardar la cotización </h5>
       </div>
-    </div>
+    
     <div class="modal-body">
       <h6>La cotización esta disponible por 30 dia después de este tiempo sera borrada del sistema </h6>
       <p>Si se desea hacer cambios sobre esta cotización después de ser guardada se podrán ver el area de ver
