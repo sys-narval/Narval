@@ -28,7 +28,12 @@
             <input class="form-control" type="text" placeholder="Nombre de la empresa" list="listClientes" v-model="txtEmpresa"
               @click="clickVerCliente(modelo.empresas)" />
               <br>
-              <input v-if="filteredClientes.length === 0" class="btn btn-primary" type="button" value="Agregar" @click="clickVerModalAgregar()" />
+              <div v-if="filteredClientes.length === 0">
+                  <h5><span class="badge badge-pill badge-warning">
+                      No se encuentra ningún cliente con ese nombre</h5>
+                <input class="btn btn-primary" type="button" value="Agregar" @click="clickVerModalAgregar()" />
+               </div>
+             
             <datalist id="listClientes">
               <option v-for="empresa in modelo.empresas" :value="empresa.name">
             </datalist>
@@ -52,8 +57,12 @@
             <input class="form-control" type="text" placeholder="Persona de Contacto" v-model="txtCliente" list="listContactos"
               @click="clickVerContacto(modelo.Clientes)" />
               <br>
-              <input v-if="filteredContactos.length === 0" class="btn btn-primary" type="button" value="Agregar" @click="clickVerModalAgregar()" />
-            <datalist id="listContactos">
+              <div v-if="filteredContactos.length === 0">
+                  <h5><span class="badge badge-pill badge-warning">
+                      No se encuentra ningún contacto con ese nombre</h5>
+              <input class="btn btn-primary" type="button" value="Agregar" @click="clickVerModalAgregar()" />
+              </div>
+              <datalist id="listContactos">
               <option v-for="cont in modelo.Clientes" :label="cont.name" :value="cont.name">
               </option>
             </datalist>
@@ -168,7 +177,7 @@
               </div>
             </datalist>
             <div class="input-group-append">
-              <span class="input-group-text"><i class="fa fa-search"></i></span>
+              <span class="input-group-text"><i class="fa fa-plus"></i></span>
             </div>
 
           </div>
