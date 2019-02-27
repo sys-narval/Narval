@@ -34,12 +34,14 @@
             </datalist>
             <br>
             <ul v-if="filteredClientes.length !== 0" v-for="vEmpresa in filteredClientes">
+              <div v-if="filteredClientes.length === 1 && txtEmpresa !== ''">
               <li>
                 Teléfono: {{vEmpresa.telefono}}
               </li>
               <li>
                 Correo: {{vEmpresa.correo}}
               </li>
+            </div>
             </ul>
           </div>
 
@@ -57,12 +59,14 @@
             </datalist>
             <br>
             <ul v-if="filteredContactos.length !== 0" v-for="vContacto in filteredContactos">
+                <div v-if="filteredContactos.length === 1 && txtCliente !== ''">
               <li>
                 Teléfono: {{vContacto.telefono}}
               </li>
               <li>
                 Correo: {{vContacto.correo}}
               </li>
+            </div>
             </ul>
           </div>
         </div>
@@ -132,22 +136,39 @@
             <div class="input-group-append">
               <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-toggle="dropdown"
                 aria-haspopup="true" aria-expanded="false">Filtros</button>
-              <div class="dropdown-menu p-4">
-                <div class="form-check mb-2">
-                  <input type="checkbox" name="mis cotizaciones" id="elctronicos" class="form-check-input">
-                  <label for="electronicos" class="form-check-label">Electrónicos</label>
-                </div>
-                <div class="form-check mb-2">
-                  <input type="checkbox" name="mis cotizaciones" id="inmobiliario" class="form-check-input">
-                  <label for="inmobiliario" class="form-check-label">Inmobiliario</label>
-                </div>
-              </div>
+                <div class="dropdown-menu p-4">
+                    <form>
+                      <!--Form del Filtro-->
+                      <div class="form-group">
+                        <label for="busquedaPorID">ID: </label>
+                        <input type="text" class="form-control" id="idArt" placeholder="ID del Artículo:" maxlength="4"
+                          v-model="l_filtro.id">
+                      </div>
+                      <div class="form-group">
+                        <label for="busquedaPorNombre">Categoría: </label>
+                        <input type="text" name="buscarPorNombre" id="busquedaPorNombre" placeholder="Categoría" maxlength="20"
+                          list="listaCategorias" class="form-control" v-model="l_filtro.categoria">
+                        <datalist id="listaCategorias">
+                          <!--Toma el valor del buscador-->
+                          <div v-for="l_categoria in modelo.a_categorias">
+                            <option v-bind:value="l_categoria">
+                          </div>
+                        </datalist>
+                      </div>
+                    </form>
+                  </div>
             </div>
-            <input class="form-control" type="text" placeholder="Buscar Producto" list="listProductos">
+            <input type="text" name="buscarArticulo" id="articulo" placeholder="Buscar Artículo" list="listaArticulos" class="form-control"
+            v-model="l_buscarArticulo">
+            <!--Input de Buscador-->
+          <datalist id="listaArticulos">
+              <div v-for="l_articulo in modelo.articulos">
+                <option v-bind:value="l_articulo.descripcion">
+                  <!--Toma el valor del buscador-->
+              </div>
+            </datalist>
             <div class="input-group-append">
-              <button type="button" class="btn btn-primary">
-                Buscar
-              </button>
+              <span class="input-group-text"><i class="fa fa-search"></i></span>
             </div>
 
           </div>
@@ -199,11 +220,11 @@
   </button>
 
   <!--- Modal Clientes y Contactos--->
-  <modal class="example-modal" v-if="l_verModalAgregar" @close="clickCerrarModalAgregar()" v-cloak>
-    <div class="modal-dialog" role="document">
-      <div class="modal-header">
+  <modal v-if="l_verModalAgregar" id="modalAgregar">
+    
+       <div class="modal-header">
+          <button type="button" class="close" @click="clickCerrarModalAgregar()">&times</button>
         <h5 class="modal-title" id="exampleModalLabel">Agregando un cliente/contacto</h5>
-      </div>
     </div>
     <div class="modal-body">
       <div class="row">
@@ -230,16 +251,16 @@
   <!-- Modal Guardar-->
 
 
-  <modal class="example-modal" v-if="VerModalGuardar" @close="clickCerrarModalGuardar()" v-cloak>
-    <div class="modal-dialog" role="document">
+  <modal  v-if="VerModalGuardar" id="modalAgregar">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Desea guardar la cotización </h5>
+          <button type="button" class="close" @click="clickCerrarModalGuardar">&times</button>
+        <h5 class="modal-title" id="exampleModalLabel">¿Desea guardar la cotización? </h5>
       </div>
-    </div>
+    
     <div class="modal-body">
-      <h6>La cotización esta disponible por 30 dia después de este tiempo sera borrada del sistema </h6>
-      <p>Si se desea hacer cambios sobre esta cotización después de ser guardada se podrán ver el area de ver
-        cotizaciones</p>
+      <h6>La cotización estará disponible por 30 días; después de este tiempo será borrada del sistema </h6>
+      <p>Si se desea hacer cambios sobre esta cotización después de ser guardada, se podrán ver el área "Ver
+        Cotizaciones"</p>
     </div>
     <div class="modal-footer">
       <button type="button" class="btn btn-primary">Guardar</button>
