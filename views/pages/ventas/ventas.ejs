@@ -34,7 +34,7 @@
             </datalist>
             <br>
             <ul v-if="filteredClientes.length !== 0" v-for="vEmpresa in filteredClientes">
-              <div v-if="filteredClientes.length === 1">
+              <div v-if="filteredClientes.length === 1 && txtEmpresa !== ''">
               <li>
                 Teléfono: {{vEmpresa.telefono}}
               </li>
@@ -59,7 +59,7 @@
             </datalist>
             <br>
             <ul v-if="filteredContactos.length !== 0" v-for="vContacto in filteredContactos">
-                <div v-if="filteredContactos.length === 1">
+                <div v-if="filteredContactos.length === 1 && txtCliente !== ''">
               <li>
                 Teléfono: {{vContacto.telefono}}
               </li>
@@ -136,16 +136,27 @@
             <div class="input-group-append">
               <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-toggle="dropdown"
                 aria-haspopup="true" aria-expanded="false">Filtros</button>
-              <div class="dropdown-menu p-4">
-                <div class="form-check mb-2">
-                  <input type="checkbox" name="mis cotizaciones" id="elctronicos" class="form-check-input">
-                  <label for="electronicos" class="form-check-label">Electrónicos</label>
-                </div>
-                <div class="form-check mb-2">
-                  <input type="checkbox" name="mis cotizaciones" id="inmobiliario" class="form-check-input">
-                  <label for="inmobiliario" class="form-check-label">Inmobiliario</label>
-                </div>
-              </div>
+                <div class="dropdown-menu p-4">
+                    <form>
+                      <!--Form del Filtro-->
+                      <div class="form-group">
+                        <label for="busquedaPorID">ID: </label>
+                        <input type="text" class="form-control" id="idArt" placeholder="ID del Artículo:" maxlength="4"
+                          v-model="l_filtro.id">
+                      </div>
+                      <div class="form-group">
+                        <label for="busquedaPorNombre">Categoría: </label>
+                        <input type="text" name="buscarPorNombre" id="busquedaPorNombre" placeholder="Categoría" maxlength="20"
+                          list="listaCategorias" class="form-control" v-model="l_filtro.categoria">
+                        <datalist id="listaCategorias">
+                          <!--Toma el valor del buscador-->
+                          <div v-for="l_categoria in modelo.a_categorias">
+                            <option v-bind:value="l_categoria">
+                          </div>
+                        </datalist>
+                      </div>
+                    </form>
+                  </div>
             </div>
             <input class="form-control" type="text" placeholder="Buscar Producto" list="listProductos">
             <div class="input-group-append">
