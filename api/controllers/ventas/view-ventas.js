@@ -76,8 +76,13 @@ module.exports = {
           telefono: '333',
           correo: '3333@gmail.com'
         }
-      ]
+      ],
+      a_categorias: ['Truss', 'Cables', 'Mobiliario', 'Herramientas/Otros', 'Cortinaje', 'Tarimas', 'Electrónico'], //Arreglo con las categorías de los artículos
+      a_tipos: ['Luces', 'Audio', 'Video'], // Arreglo con los tipos de artículos electrónicos
+      a_unidadMedida: ['Metros', 'Unidades'] //Arreglo con las unidades de medida
     };
+
+    modelo.articulos = await Articulos.find();
     // Respond with view.
     return exits.success({
       modelo

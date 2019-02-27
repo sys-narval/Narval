@@ -158,11 +158,17 @@
                     </form>
                   </div>
             </div>
-            <input class="form-control" type="text" placeholder="Buscar Producto" list="listProductos">
+            <input type="text" name="buscarArticulo" id="articulo" placeholder="Buscar Artículo" list="listaArticulos" class="form-control"
+            v-model="l_buscarArticulo">
+            <!--Input de Buscador-->
+          <datalist id="listaArticulos">
+              <div v-for="l_articulo in modelo.articulos">
+                <option v-bind:value="l_articulo.descripcion">
+                  <!--Toma el valor del buscador-->
+              </div>
+            </datalist>
             <div class="input-group-append">
-              <button type="button" class="btn btn-primary">
-                Buscar
-              </button>
+              <span class="input-group-text"><i class="fa fa-search"></i></span>
             </div>
 
           </div>
