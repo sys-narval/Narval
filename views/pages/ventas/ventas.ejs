@@ -177,7 +177,7 @@
               </div>
             </datalist>
             <div class="input-group-append">
-              <span class="input-group-text"><i class="fa fa-plus"></i></span>
+              <button class="input-group-text"><i class="fa fa-plus"></i></button>
             </div>
 
           </div>
@@ -189,7 +189,7 @@
         </div>
       </div>
 
-
+     <!--Tabla de Productos dentro de los pedidos-->
       <div class="row">
         <table class="table">
           <thead class="thead-light">
@@ -206,13 +206,13 @@
           </thead>
           <tbody>
             <tr v-for="art in modelo.articulos">
-              <td> {{art.id}} </td>
-              <td> {{art.name}} </td>
-              <td> {{art.descripcion}} </td>
-              <td>{{art.cantidadTotal}}</td>
+              <td v-text="art.id"></td>
+              <td v-text="art.categoria"></td>
+              <td v-text="art.descripcion"> </td>
+              <td v-text="art.cantidadTotal"></td>
               <td> <input type="number"> </td>
               <td> <input type="number" :value="art.precio"> </td>
-              <td> {{art.precio}} </td>
+              <td v-text="art.precio"></td>
               <td>
                 <button type="button" class="btn btn-success" @click="verArticulo(art)">Ver</button>
                 <button type="button" class="btn btn-danger">Eliminar</button>
