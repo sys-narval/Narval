@@ -45,6 +45,7 @@ module.exports = {
           amperaje: '55'
         }
       ],
+      v_NArticulos:[{}],
       Clientes: [{
           name: 'Jose arturo',
           telefono: '89792734',

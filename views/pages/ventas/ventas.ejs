@@ -188,7 +188,33 @@
           </datalist>
         </div>
       </div>
+      <!--Tabla de producto jalados de la base de datos-->
+      <div class="row">
+        <table class="table" v-for="t_Categoria in filtroCategorias">
+          <thead class="thead-light">
+            <tr>
+              <th scope="col">ID</th>
+              <th scope="col">Producto</th>
+              <th scope="col">Descripción</th>
+              <th scope="col">Cantidad en stock</th>
+              <th scope="col">Valor Unitario</th>
+              <th>Opciones</th>
+            </tr>
+          </thead>
+          <tbody  v-for="art in filtroArticulos">
+            <tr  v-if="t_Categoria == art.categoria">
+                <td v-text="art.id"></td>
+                <td v-text="art.categoria"></td>
+                <td v-text="art.descripcion"> </td>
+                <td v-text="art.cantidadTotal"></td>
+                <td v-text="art.precio"></td>
+                <td><input type="button" value="Agregar" class="btn btn-primary" @click="agregarNuevaLista(art)" > </td>
+            </tr>
+          </tbody>
+        </table>
 
+      </div>
+      <br>
      <!--Tabla de Productos dentro de los pedidos-->
       <div class="row">
         <table class="table">
@@ -205,16 +231,16 @@
             </tr>
           </thead>
           <tbody>
-            <tr v-for="art in modelo.articulos">
-              <td v-text="art.id"></td>
-              <td v-text="art.categoria"></td>
-              <td v-text="art.descripcion"> </td>
-              <td v-text="art.cantidadTotal"></td>
+            <tr  v-for="arti in modelo.articulos">
+              <td v-text="arti.id"></td>
+              <td v-text="arti.categoria"></td>
+              <td v-text="arti.descripcion"> </td>
+              <td v-text="arti.cantidadTotal"></td>
               <td> <input type="number"> </td>
-              <td> <input type="number" :value="art.precio"> </td>
-              <td v-text="art.precio"></td>
+              <td> <input type="number" :value="arti.precio"> </td>
+              <td v-text="arti.precio"></td>
               <td>
-                <button type="button" class="btn btn-success" @click="verArticulo(art)">Ver</button>
+                <button type="button" class="btn btn-success" @click="verArticulo(arti)">Ver</button>
                 <button type="button" class="btn btn-danger">Eliminar</button>
               </td>
             </tr>

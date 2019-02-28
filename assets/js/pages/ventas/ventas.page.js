@@ -101,7 +101,7 @@ parasails.registerPage('ventas', {
          return cliente.name.match(this.txtEmpresa)
        })
      },
-
+     
      filtroCategorias: function () {
       let l_bandera = false;
       let a_arregloCategoria = [];
@@ -139,7 +139,7 @@ parasails.registerPage('ventas', {
        * Filtramos las articulos que cumplan con el filtro preestablecido por el usuario y que cumpla con
        * que la barra de búsqueda tenga más de un dígito y coincida con la descripción o ubicación.
        */
-      if (this.l_buscarArticulo.length > 3 && this.l_actualizar === false) {
+      if (this.l_buscarArticulo.length > 3) {
         return _.filter(this.modelo.articulos, c_limpiaFiltro(this.l_filtro))
           .filter(articulo => articulo.descripcion.includes(this.l_buscarArticulo) || articulo.categoria.includes(this.l_buscarArticulo) || articulo.id.includes(this.l_buscarArticulo));
       } else if (this.l_buscarArticulo === "*" && this.l_actualizar === false) {
