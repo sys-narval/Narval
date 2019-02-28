@@ -158,7 +158,7 @@ parasails.registerPage('ventas', {
      
       let t_articulosTabla=[];
       for (let t_tempID in this.l_selecArticulo) {
-        t_articulosTabla.push(this.modelo.articulos.filter(t_articulo => t_articulo.id.includes(this.l_selecArticulo[t_tempID])));
+        t_articulosTabla.push(this.modelo.articulos.filter(t_articulo => t_articulo.id.includes(this.l_selecArticulo[t_tempID]))[0]);
       }
       return t_articulosTabla;
     }

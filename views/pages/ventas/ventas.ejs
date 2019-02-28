@@ -231,8 +231,8 @@
               <th> Opciones </th>
             </tr>
           </thead>
-          <tbody v-for="t_articulo1 in filtroDeTabla">
-            <tr v-for="t_articulo in t_articulo1">
+          <tbody>
+            <tr v-for="t_articulo in filtroDeTabla">
               <td v-text="t_articulo.id"></td>
               <td v-text="t_articulo.categoria"></td>
               <td v-text="t_articulo.descripcion"> </td>
