@@ -13,27 +13,32 @@ parasails.registerPage('ventas', {
       unidadMedida: undefined
     }, //objeto local que permite recibir un articulo
     VerModalGuardar: false,
-    l_verModalVer:false,
+    l_verModalVer: false,
     l_verModalAgregar: false,
-    txtCliente:'',
-    txtEmpresa:'',
-    clientes: [{name:''}],
-    contactos: [{name:''}],
+    txtCliente: '',
+    txtEmpresa: '',
+    clientes: [{
+      name: ''
+    }],
+    contactos: [{
+      name: ''
+    }],
     articulo: {},
     verCliente: false,
     verContacto: false,
     l_buscarArticulo: '',
-    l_filtro: {}
+    l_filtro: {},
+    l_selecArticulo: []
   },
 
   //  ╦  ╦╔═╗╔═╗╔═╗╦ ╦╔═╗╦  ╔═╗
   //  ║  ║╠╣ ║╣ ║  ╚╦╝║  ║  ║╣
   //  ╩═╝╩╚  ╚═╝╚═╝ ╩ ╚═╝╩═╝╚═╝
-  beforeMount: function() {
+  beforeMount: function () {
     // Attach any initial data from the server.
     _.extend(this, SAILS_LOCALS);
   },
-  mounted: async function() {
+  mounted: async function () {
     //…
   },
 
@@ -52,57 +57,58 @@ parasails.registerPage('ventas', {
         unidadMedida: undefined
       }
     },
-    clickVerModalAgregar: async function()
-    {
-      this.l_verModalAgregar=true
+    clickVerModalAgregar: async function () {
+      this.l_verModalAgregar = true
     },
-    clickCerrarModalAgregar: async function()
-    {
-      this.l_verModalAgregar=false
+    clickCerrarModalAgregar: async function () {
+      this.l_verModalAgregar = false
     },
-    clickVerModalGuardar: async function() {
-      this.VerModalGuardar=true
+    clickVerModalGuardar: async function () {
+      this.VerModalGuardar = true
     },
-    clickCerrarModalGuardar: async function() {
-      this.VerModalGuardar=false
+    clickCerrarModalGuardar: async function () {
+      this.VerModalGuardar = false
     },
-    clickVerClientes: async function(name) {
+    clickVerClientes: async function (name) {
       this.txtCliente = name
     },
-     clickNoVerClientes: async function () {
-       this.txtCliente = ""
-     },
-     clickVerCliente: async function(cliente) {
-       this.clientes=cliente
-       this.verCliente= true
-     },
-     clickVerContacto: async function (vcontacto) {
-       this.contactos = vcontacto
-       this.verCliente = true
-     },
-    verArticulo: async function(vArticulo) {
-       this.o_articulo = vArticulo
-       this.l_verModalVer=true
-     },
-     cerrarModalVer: async function () {
-       this.l_verModalVer=false
-       this.limpiar_o_articulo();
-     },
-     
+    clickNoVerClientes: async function () {
+      this.txtCliente = ""
+    },
+    clickVerCliente: async function (cliente) {
+      this.clientes = cliente
+      this.verCliente = true
+    },
+    clickVerContacto: async function (vcontacto) {
+      this.contactos = vcontacto
+      this.verCliente = true
+    },
+    verArticulo: async function (vArticulo) {
+      this.o_articulo = vArticulo
+      this.l_verModalVer = true
+    },
+    cerrarModalVer: async function () {
+      this.l_verModalVer = false
+      this.limpiar_o_articulo();
+    },
+    agregarArticuloTemp: async function (p_articulo) {
+      this.l_selecArticulo.push(p_articulo)
+    }
+
   },
-  computed:{
-     filteredContactos: function () {
-       return this.contactos.filter((contacto) => {
-         return contacto.name.match(this.txtCliente)
-       })
-     },
-     filteredClientes: function () {
-       return this.clientes.filter((cliente) => {
-         return cliente.name.match(this.txtEmpresa)
-       })
-     },
-     
-     filtroCategorias: function () {
+  computed: {
+    filteredContactos: function () {
+      return this.contactos.filter((contacto) => {
+        return contacto.name.match(this.txtCliente)
+      })
+    },
+    filteredClientes: function () {
+      return this.clientes.filter((cliente) => {
+        return cliente.name.match(this.txtEmpresa)
+      })
+    },
+
+    filtroCategorias: function () {
       let l_bandera = false;
       let a_arregloCategoria = [];
       this.filtroArticulos.forEach(element => {
@@ -135,7 +141,7 @@ parasails.registerPage('ventas', {
         return objeto;
       }
 
-      /*
+      /*preestablecido
        * Filtramos las articulos que cumplan con el filtro preestablecido por el usuario y que cumpla con
        * que la barra de búsqueda tenga más de un dígito y coincida con la descripción o ubicación.
        */
@@ -147,9 +153,17 @@ parasails.registerPage('ventas', {
       } else {
         return new Array();
       }
+    },
+    filtroDeTabla: function () {
+     
+      let t_articulosTabla=[];
+      for (let t_tempID in this.l_selecArticulo) {
+        t_articulosTabla.push(this.modelo.articulos.filter(t_articulo => t_articulo.id.includes(this.l_selecArticulo[t_tempID])));
+      }
+      return t_articulosTabla;
     }
   },
-  watch:{
+  watch: {
     txtCliente() {
       console.log(this.txtCliente)
     }
