@@ -190,7 +190,7 @@
       </div>
       <!--Tabla de producto jalados de la base de datos-->
       <div class="row">
-        <table class="table" v-for="t_Categoria in filtroCategorias">
+        <table class="table" v-if=" filtroArticulos.length > 0 " >
           <thead class="thead-light">
             <tr>
               <th scope="col">ID</th>
@@ -201,14 +201,14 @@
               <th>Opciones</th>
             </tr>
           </thead>
-          <tbody v-for="t_articulo in filtroArticulos">
-            <tr v-if="t_Categoria == t_articulo.categoria">
-              <td v-text="t_articulo.id"></td>
-              <td v-text="t_articulo.categoria"></td>
-              <td v-text="t_articulo.descripcion"> </td>
-              <td v-text="t_articulo.cantidadTotal"></td>
-              <td v-text="t_articulo.precio"></td>
-              <td><input type="button" value="Agregar" class="btn btn-primary" @click=" agregarArticuloTemp(t_articulo.id)">
+          <tbody v-for="t_Categoria in filtroCategorias">
+            <tr v-if="t_Categoria == filtroArticulos[0].categoria">
+              <td v-text="filtroArticulos[0].id"></td>
+              <td v-text="filtroArticulos[0].categoria"></td>
+              <td v-text="filtroArticulos[0].descripcion"> </td>
+              <td v-text="filtroArticulos[0].cantidadTotal"></td>
+              <td v-text="filtroArticulos[0].precio"></td>
+              <td><input type="button" value="Agregar" class="btn btn-primary" @click=" agregarArticuloTemp(filtroArticulos[0].id)">
               </td>
             </tr>
           </tbody>
@@ -237,13 +237,24 @@
               <td v-text="t_articulo.categoria"></td>
               <td v-text="t_articulo.descripcion"> </td>
               <td v-text="t_articulo.cantidadTotal"></td>
-              <td> <input type="number"> </td>
-              <td> <input type="number" :value="t_articulo.precio"> </td>
+              <td> <input type="number" min="0" :max="t_articulo.cantidadTotal"> </td>
+              <td> <input type="number" min="0" :max="100000000" :value="t_articulo.precio" > </td>
               <td v-text="t_articulo.precio"></td>
               <td>
-                <button type="button" class="btn btn-success" @click="verArticulo(t_articulo)">Ver</button>
+                <button type="button" class="btn btn-success" @click="verArticulo(t_articulo)" >Ver</button>
                 <button type="button" class="btn btn-danger">Eliminar</button>
               </td>
+            </tr>
+
+            <tr style=" border: green 5px solid;">
+              <td >Total</td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td>000</td>
+              <td></td>
             </tr>
 
           </tbody>
