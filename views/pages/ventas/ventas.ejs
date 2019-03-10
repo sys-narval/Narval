@@ -9,7 +9,8 @@
       <div class="row">
         <div class="form-group col">
           <label for="usuario">Encargado del evento</label>
-          <input id="usuario" class="form-control" type="text" v-bind:value="me.fullName" disabled>
+          <input id="usuario" class="form-control" type="text" value="Nombre" disabled>
+          <!--v-bind:value="me.fullName"-->
         </div>
 
         <div class="form-group col">
@@ -27,26 +28,26 @@
           <div>
             <input class="form-control" type="text" placeholder="Nombre de la empresa" list="listClientes" v-model="txtEmpresa"
               @click="clickVerCliente(modelo.empresas)" />
-              <br>
-              <div v-if="filteredClientes.length === 0">
-                  <h5><span class="badge badge-pill badge-warning">
-                      No se encuentra ningún cliente con ese nombre</h5>
-                <input class="btn btn-primary" type="button" value="Agregar" @click="clickVerModalAgregar()" />
-               </div>
-             
+            <br>
+            <div v-if="filteredClientes.length === 0">
+              <h5><span class="badge badge-pill badge-warning">
+                  No se encuentra ningún cliente con ese nombre</h5>
+              <input class="btn btn-primary" type="button" value="Agregar" @click="clickVerModalAgregar()" />
+            </div>
+
             <datalist id="listClientes">
               <option v-for="empresa in modelo.empresas" :value="empresa.name">
             </datalist>
             <br>
             <ul v-if="filteredClientes.length !== 0" v-for="vEmpresa in filteredClientes">
               <div v-if="filteredClientes.length === 1 && txtEmpresa !== ''">
-              <li>
-                Teléfono: {{vEmpresa.telefono}}
-              </li>
-              <li>
-                Correo: {{vEmpresa.correo}}
-              </li>
-            </div>
+                <li>
+                  Teléfono: {{vEmpresa.telefono}}
+                </li>
+                <li>
+                  Correo: {{vEmpresa.correo}}
+                </li>
+              </div>
             </ul>
           </div>
 
@@ -56,26 +57,26 @@
           <div class="dropdown">
             <input class="form-control" type="text" placeholder="Persona de Contacto" v-model="txtCliente" list="listContactos"
               @click="clickVerContacto(modelo.Clientes)" />
-              <br>
-              <div v-if="filteredContactos.length === 0">
-                  <h5><span class="badge badge-pill badge-warning">
-                      No se encuentra ningún contacto con ese nombre</h5>
+            <br>
+            <div v-if="filteredContactos.length === 0">
+              <h5><span class="badge badge-pill badge-warning">
+                  No se encuentra ningún contacto con ese nombre</h5>
               <input class="btn btn-primary" type="button" value="Agregar" @click="clickVerModalAgregar()" />
-              </div>
-              <datalist id="listContactos">
+            </div>
+            <datalist id="listContactos">
               <option v-for="cont in modelo.Clientes" :label="cont.name" :value="cont.name">
               </option>
             </datalist>
             <br>
             <ul v-if="filteredContactos.length !== 0" v-for="vContacto in filteredContactos">
-                <div v-if="filteredContactos.length === 1 && txtCliente !== ''">
-              <li>
-                Teléfono: {{vContacto.telefono}}
-              </li>
-              <li>
-                Correo: {{vContacto.correo}}
-              </li>
-            </div>
+              <div v-if="filteredContactos.length === 1 && txtCliente !== ''">
+                <li>
+                  Teléfono: {{vContacto.telefono}}
+                </li>
+                <li>
+                  Correo: {{vContacto.correo}}
+                </li>
+              </div>
             </ul>
           </div>
         </div>
@@ -145,32 +146,32 @@
             <div class="input-group-append">
               <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-toggle="dropdown"
                 aria-haspopup="true" aria-expanded="false">Filtros</button>
-                <div class="dropdown-menu p-4">
-                    <form>
-                      <!--Form del Filtro-->
-                      <div class="form-group">
-                        <label for="busquedaPorID">ID: </label>
-                        <input type="text" class="form-control" id="idArt" placeholder="ID del Artículo:" maxlength="4"
-                          v-model="l_filtro.id">
-                      </div>
-                      <div class="form-group">
-                        <label for="busquedaPorNombre">Categoría: </label>
-                        <input type="text" name="buscarPorNombre" id="busquedaPorNombre" placeholder="Categoría" maxlength="20"
-                          list="listaCategorias" class="form-control" v-model="l_filtro.categoria">
-                        <datalist id="listaCategorias">
-                          <!--Toma el valor del buscador-->
-                          <div v-for="l_categoria in modelo.a_categorias">
-                            <option v-bind:value="l_categoria">
-                          </div>
-                        </datalist>
-                      </div>
-                    </form>
+              <div class="dropdown-menu p-4">
+                <form>
+                  <!--Form del Filtro-->
+                  <div class="form-group">
+                    <label for="busquedaPorID">ID: </label>
+                    <input type="text" class="form-control" id="idArt" placeholder="ID del Artículo:" maxlength="4"
+                      v-model="l_filtro.id">
                   </div>
+                  <div class="form-group">
+                    <label for="busquedaPorNombre">Categoría: </label>
+                    <input type="text" name="buscarPorNombre" id="busquedaPorNombre" placeholder="Categoría" maxlength="20"
+                      list="listaCategorias" class="form-control" v-model="l_filtro.categoria">
+                    <datalist id="listaCategorias">
+                      <!--Toma el valor del buscador-->
+                      <div v-for="l_categoria in modelo.a_categorias">
+                        <option v-bind:value="l_categoria">
+                      </div>
+                    </datalist>
+                  </div>
+                </form>
+              </div>
             </div>
-            <input type="text" name="buscarArticulo" id="articulo" placeholder="Buscar Artículo" list="listaArticulos" class="form-control"
-            v-model="l_buscarArticulo">
+            <input type="text" name="buscarArticulo" id="articulo" placeholder="Buscar Artículo" list="listaArticulos"
+              class="form-control" v-model="l_buscarArticulo">
             <!--Input de Buscador-->
-          <datalist id="listaArticulos">
+            <datalist id="listaArticulos">
               <div v-for="l_articulo in modelo.articulos">
                 <option v-bind:value="l_articulo.descripcion">
                   <!--Toma el valor del buscador-->
@@ -190,7 +191,7 @@
       </div>
       <!--Tabla de producto jalados de la base de datos-->
       <div class="row">
-        <table class="table" v-for="t_Categoria in filtroCategorias">
+        <table class="table" v-if=" filtroArticulos.length > 0 ">
           <thead class="thead-light">
             <tr>
               <th scope="col">ID</th>
@@ -201,21 +202,31 @@
               <th>Opciones</th>
             </tr>
           </thead>
-          <tbody  v-for="art in filtroArticulos">
-            <tr  v-if="t_Categoria == art.categoria">
-                <td v-text="art.id"></td>
-                <td v-text="art.categoria"></td>
-                <td v-text="art.descripcion"> </td>
-                <td v-text="art.cantidadTotal"></td>
-                <td v-text="art.precio"></td>
-                <td><input type="button" value="Agregar" class="btn btn-primary"> </td>
+          <tbody v-for="t_Categoria in filtroCategorias">
+            <tr v-if="t_Categoria == filtroArticulos[0].categoria">
+              <td v-text="filtroArticulos[0].id"></td>
+              <td v-text="filtroArticulos[0].categoria"></td>
+              <td v-text="filtroArticulos[0].descripcion"> </td>
+              <td v-text="filtroArticulos[0].cantidadTotal"></td>
+              <td v-text="filtroArticulos[0].precio"></td>
+              <td><input type="button" value="Agregar" class="btn btn-primary" @click=" agregarArticuloTemp(filtroArticulos[0].id)">
+              </td>
+            </tr>
+            <tr v-if="filtroArticulos.length > 1&&t_Categoria == filtroArticulos[1].categoria">
+              <td v-text="filtroArticulos[1].id"></td>
+              <td v-text="filtroArticulos[1].categoria"></td>
+              <td v-text="filtroArticulos[1].descripcion"> </td>
+              <td v-text="filtroArticulos[1].cantidadTotal"></td>
+              <td v-text="filtroArticulos[1].precio"></td>
+              <td><input type="button" value="Agregar" class="btn btn-primary" @click=" agregarArticuloTemp(filtroArticulos[1].id)">
+              </td>
             </tr>
           </tbody>
         </table>
 
       </div>
       <br>
-     <!--Tabla de Productos dentro de los pedidos-->
+      <!--Tabla de Productos dentro de los pedidos-->
       <div class="row">
         <table class="table">
           <thead class="thead-light">
@@ -231,18 +242,29 @@
             </tr>
           </thead>
           <tbody>
-            <tr  v-for="arti in modelo.articulos">
-              <td v-text="arti.id"></td>
-              <td v-text="arti.categoria"></td>
-              <td v-text="arti.descripcion"> </td>
-              <td v-text="arti.cantidadTotal"></td>
-              <td> <input type="number"> </td>
-              <td> <input type="number" :value="arti.precio"> </td>
-              <td v-text="arti.precio"></td>
+            <tr v-for="t_articulo in filtroDeTabla">
+              <td v-text="t_articulo.id"></td>
+              <td v-text="t_articulo.categoria"></td>
+              <td v-text="t_articulo.descripcion"> </td>
+              <td v-text="t_articulo.cantidadTotal"></td>
+              <td> <input type="number" min="0" :max="t_articulo.cantidadTotal"> </td>
+              <td> <input type="number" min="0" :max="100000000" :value="t_articulo.precio"> </td>
+              <td v-text="t_articulo.precio"></td>
               <td>
-                <button type="button" class="btn btn-success" @click="verArticulo(arti)">Ver</button>
-                <button type="button" class="btn btn-danger">Eliminar</button>
+                <button type="button" class="btn btn-success" @click="verArticulo(t_articulo)">Ver</button>
+                <button type="button" class="btn btn-danger" @click="quitarArticuloTabla(t_articulo)">Eliminar</button>
               </td>
+            </tr>
+
+            <tr style=" border: green 5px solid;">
+              <td>Total</td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td>000</td>
+              <td></td>
             </tr>
 
           </tbody>
@@ -256,24 +278,25 @@
 
   <!--- Modal Clientes y Contactos--->
   <modal v-if="l_verModalAgregar" id="modalAgregar">
-    
-       <div class="modal-header">
-          <button type="button" class="close" @click="clickCerrarModalAgregar()">&times</button>
-        <h5 class="modal-title" id="exampleModalLabel">Agregando un cliente/contacto</h5>
+
+    <div class="modal-header">
+      <button type="button" class="close" @click="clickCerrarModalAgregar()">&times</button>
+      <h5 class="modal-title" id="exampleModalLabel">Agregando un cliente/contacto</h5>
     </div>
     <div class="modal-body">
       <div class="row">
         <div class="form-group col">
           <label for="nombre">Nombre: </label>
-          <input type="text" class="form-control" id="nomCliNuevo"  placeholder="Digite el nombre">
+          <input type="text" class="form-control" id="nomCliNuevo" placeholder="Digite el nombre">
         </div>
         <div class="form-group col">
           <label for="telefono">Teléfono: </label>
-          <input type="tel" pattern="[0-9]{9}" maxlength="8" class="form-control" id="telCliNuevo"  placeholder="Digite el numero telefónico">
+          <input type="tel" pattern="[0-9]{9}" maxlength="8" class="form-control" id="telCliNuevo" placeholder="Digite el numero telefónico">
         </div>
         <div class="form-group col">
           <label for="email">Email: </label>
-          <input type="email" name="email" pattern="[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*@[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*[.][a-zA-Z]{1,5}" class="form-control" id="emaCliNuevo"  placeholder="Digite el email">
+          <input type="email" name="email" pattern="[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*@[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*[.][a-zA-Z]{1,5}"
+            class="form-control" id="emaCliNuevo" placeholder="Digite el email">
         </div>
       </div>
     </div>
@@ -282,16 +305,16 @@
       <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
     </div>
   </modal>
-  
+
   <!-- Modal Guardar-->
 
 
-  <modal  v-if="VerModalGuardar" id="modalAgregar">
-      <div class="modal-header">
-          <button type="button" class="close" @click="clickCerrarModalGuardar">&times</button>
-        <h5 class="modal-title" id="exampleModalLabel">¿Desea guardar la cotización? </h5>
-      </div>
-    
+  <modal v-if="VerModalGuardar" id="modalAgregar">
+    <div class="modal-header">
+      <button type="button" class="close" @click="clickCerrarModalGuardar">&times</button>
+      <h5 class="modal-title" id="exampleModalLabel">¿Desea guardar la cotización? </h5>
+    </div>
+
     <div class="modal-body">
       <h6>La cotización estará disponible por 30 días; después de este tiempo será borrada del sistema </h6>
       <p>Si se desea hacer cambios sobre esta cotización después de ser guardada, se podrán ver el área "Ver
@@ -404,7 +427,7 @@
 
   </modal>
 
-   
+
 
 </div>
 
