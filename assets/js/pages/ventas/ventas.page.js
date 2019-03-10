@@ -94,12 +94,26 @@ parasails.registerPage('ventas', {
       this.limpiar_o_articulo();
     },
     agregarArticuloTemp: async function (p_articulo) {
-      this.l_selecArticulo.push(p_articulo)
+      let esta = false;
+      for (let index = 0; index < this.l_selecArticulo.length; index++) {
+        if (this.l_selecArticulo[index] === p_articulo) {
+          esta = true;
+        }
+      }
+      if (!esta) {
+        this.l_selecArticulo.push(p_articulo)
+      }
     },
     quitarArticuloTabla: async function (p_articulo) {
-      this.filtroQuitarDeTabla(p_articulo);
-    }
+      let t_arregloSalida = [];
+      for (let index = 0; index < this.l_selecArticulo.length; index++) {
+        if (this.l_selecArticulo[index] !== p_articulo.id) {
+          t_arregloSalida.push(this.l_selecArticulo[index]);
+        }
+      }
+      this.l_selecArticulo = t_arregloSalida;
 
+    },
   },
   computed: {
     filteredContactos: function () {
@@ -151,19 +165,19 @@ parasails.registerPage('ventas', {
        * que la barra de búsqueda tenga más de un dígito y coincida con la descripción o ubicación.
        */
       if (this.l_buscarArticulo.length > 3) {
-        let t_arregloSalida=[];
+        let t_arregloSalida = [];
         let t_arregloSalida2 = [];
         t_arregloSalida = _.filter(this.modelo.articulos, c_limpiaFiltro(this.l_filtro))
           .filter(articulo => articulo.descripcion.includes(this.l_buscarArticulo) || articulo.categoria.includes(this.l_buscarArticulo) || articulo.id.includes(this.l_buscarArticulo));
-         for (let index = 0; index < t_arregloSalida.length; index++) {
-           if (t_arregloSalida[index].id === this.l_buscarArticulo) {
-            
-           }
-           if (t_arregloSalida[index].descripcion === this.l_buscarArticulo) {
-              t_arregloSalida2.push(t_arregloSalida[index]);
-           }
-         }
-          return t_arregloSalida2;
+        for (let index = 0; index < t_arregloSalida.length; index++) {
+          if (t_arregloSalida[index].id === this.l_buscarArticulo) {
+
+          }
+          if (t_arregloSalida[index].descripcion === this.l_buscarArticulo) {
+            t_arregloSalida2.push(t_arregloSalida[index]);
+          }
+        }
+        return t_arregloSalida2;
       } else if (this.l_buscarArticulo === "*" && this.l_actualizar === false) {
         return this.modelo.articulos;
       } else {
@@ -171,21 +185,13 @@ parasails.registerPage('ventas', {
       }
     },
     filtroDeTabla: function () {
-     
-      let t_articulosTabla=[];
+
+      let t_articulosTabla = [];
       for (let t_tempID in this.l_selecArticulo) {
         t_articulosTabla.push(this.modelo.articulos.filter(t_articulo => t_articulo.id.includes(this.l_selecArticulo[t_tempID]))[0]);
       }
       return t_articulosTabla;
     },
-    filtroQuitarDeTabla: function () {
-
-      let t_articulosTabla = [];
-      for (let t_tempID in this.l_selecArticulo) {
-        t_articulosTabla.pop(this.modelo.articulos.filter(t_articulo => t_articulo.id.includes(this.l_selecArticulo[t_tempID]))[0]);
-      }
-      return t_articulosTabla;
-    }
   },
   watch: {
     txtCliente() {
