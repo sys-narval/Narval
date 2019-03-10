@@ -212,6 +212,15 @@
               <td><input type="button" value="Agregar" class="btn btn-primary" @click=" agregarArticuloTemp(filtroArticulos[0].id)">
               </td>
             </tr>
+            <tr v-if="filtroArticulos.length > 1&&t_Categoria == filtroArticulos[1].categoria">
+              <td v-text="filtroArticulos[1].id"></td>
+              <td v-text="filtroArticulos[1].categoria"></td>
+              <td v-text="filtroArticulos[1].descripcion"> </td>
+              <td v-text="filtroArticulos[1].cantidadTotal"></td>
+              <td v-text="filtroArticulos[1].precio"></td>
+              <td><input type="button" value="Agregar" class="btn btn-primary" @click=" agregarArticuloTemp(filtroArticulos[1].id)">
+              </td>
+            </tr>
           </tbody>
         </table>
 

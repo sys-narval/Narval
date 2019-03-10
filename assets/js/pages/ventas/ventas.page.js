@@ -170,10 +170,10 @@ parasails.registerPage('ventas', {
         t_arregloSalida = _.filter(this.modelo.articulos, c_limpiaFiltro(this.l_filtro))
           .filter(articulo => articulo.descripcion.includes(this.l_buscarArticulo) || articulo.categoria.includes(this.l_buscarArticulo) || articulo.id.includes(this.l_buscarArticulo));
         for (let index = 0; index < t_arregloSalida.length; index++) {
-          if (t_arregloSalida[index].id === this.l_buscarArticulo) {
-
-          }
           if (t_arregloSalida[index].descripcion === this.l_buscarArticulo) {
+            t_arregloSalida2.push(t_arregloSalida[index]);
+          }
+          if (t_arregloSalida[index].id == this.l_buscarArticulo) {
             t_arregloSalida2.push(t_arregloSalida[index]);
           }
         }
