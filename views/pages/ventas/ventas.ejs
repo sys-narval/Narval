@@ -210,9 +210,17 @@
               <td v-text="filtroArticulos[0].id"></td>
               <td v-text="filtroArticulos[0].categoria"></td>
               <td v-text="filtroArticulos[0].descripcion"> </td>
+<<<<<<< HEAD
               <td v-text="filtroArticulos[0].cantidadLibre"></td>
               <td> {{filtroArticulos[0].precio |formatoMoneda}}</td>
+=======
+              <td v-text="filtroArticulos[0].cantidadTotal"></td>
+              <td v-text="filtroArticulos[0].precio"></td>
+
+>>>>>>> 1ccd4f29f037b43f7505c25175f5af01f8000d36
               <td><input type="button" value="Agregar" class="btn btn-primary" @click=" agregarArticuloTemp(filtroArticulos[0])">
+
+      
               </td>
             </tr>
             <tr v-if="filtroArticulos.length > 1&&t_Categoria == filtroArticulos[1].categoria">
@@ -254,7 +262,9 @@
               <td readonly> {{t_articulo.precio | formatoMoneda}} </td>
               <td>{{t_articulo.precioTotal | formatoMoneda}}</td>
               <td>
+
                 <button type="button" class="btn btn-info" @click="verArticulo(t_articulo)">Actualizar Solicitud</button>
+
                 <button type="button" class="btn btn-danger" @click="quitarArticuloTabla(t_articulo)">Eliminar</button>
               </td>
             </tr>
@@ -373,6 +383,7 @@
 
         <div class="row">
           <div class="form-group col">
+
             <label for="precio">Precio Unitario:</label>
             <input type="number" min="0" step="1" max="9999" class="form-control" id="precio" :value="l_precioUnitario"
               v-model="l_precioUnitario">
@@ -387,7 +398,13 @@
 
 
         <div class="modal-footer">
+<<<<<<< HEAD
           <button type="button" class="btn btn-primary" @click="modificarTabla(o_articulo)">Aceptar</button>
+=======
+          <button type="button" class="btn btn-primary" @click="modificarT(o_articulo)">Aceptar</button>
+
+           
+>>>>>>> 1ccd4f29f037b43f7505c25175f5af01f8000d36
           <button type="button" class="btn btn-danger" @click="cerrarModalVer">Cancelar</button>
         </div>
       </form>
