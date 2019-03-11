@@ -90,46 +90,49 @@
 
             <div class="form-check">
               <label class="form-check-label">
-                <input type="checkbox" class="form-check-input">
+                <input type="checkbox" class="form-check-input" v-model="l_sDiseno">
                 Servicio diseño
               </label>
             </div>
             <div class="form-check">
               <label class="form-check-label">
-                <input type="checkbox" class="form-check-input">
+                <input type="checkbox" class="form-check-input" v-model="l_sMontaje">
                 Servicio de montaje
               </label>
             </div>
             <div class="form-check">
               <label class="form-check-label">
-                <input type="checkbox" class="form-check-input">
+                <input type="checkbox" class="form-check-input" v-model="l_sAlquiler">
                 Servicio de alquiler
               </label>
             </div>
             <br>
-            <label class="form-check-label">Descripción de los servicios </label>
-            <textarea class="form-control" id="exampleTextarea" rows="3" placeholder="Descripción"></textarea>
+            <div class="row" v-if="l_sMontaje  || l_sAlquiler || l_sDiseno">
+              <label class="form-check-label">Descripción de los servicios </label>
+              <textarea class="form-control" id="exampleTextarea" rows="3" placeholder="Descripción"></textarea>
+            </div>
             <br>
           </div>
         </div>
       </div>
 
-      <div class="row">
+      <div class="row" v-if="l_sMontaje  || l_sAlquiler">
         <div class="form-group col">
           <label class="col-form-label">Fecha del evento</label>
           <input class="form-control" type="date">
         </div>
 
         <div class="form-group col">
-          <label class="col-form-label">Fecha de montaje</label>
+          <label class="col-form-label">Fin del evento</label>
           <input class="form-control" type="date">
         </div>
 
+
       </div>
 
-      <div class="row">
+      <div class="row" v-if="l_sMontaje">
         <div class="form-group col">
-          <label class="col-form-label">Fin del evento</label>
+          <label class="col-form-label">Fecha de montaje</label>
           <input class="form-control" type="date">
         </div>
 
@@ -139,7 +142,7 @@
         </div>
       </div>
 
-      <div class="row">
+      <div class="row" v-if="l_sAlquiler || l_sMontaje">
         <div class="form-group col-5">
           <label class="form-label">Buscar Articulo</label>
           <div class="input-group">
@@ -190,7 +193,7 @@
         </div>
       </div>
       <!--Tabla de producto jalados de la base de datos-->
-      <div class="row">
+      <div class="row" v-if="l_sAlquiler || l_sMontaje">
         <table class="table" v-if=" filtroArticulos.length > 0 ">
           <thead class="thead-light">
             <tr>
@@ -207,9 +210,14 @@
               <td v-text="filtroArticulos[0].id"></td>
               <td v-text="filtroArticulos[0].categoria"></td>
               <td v-text="filtroArticulos[0].descripcion"> </td>
+<<<<<<< HEAD
+              <td v-text="filtroArticulos[0].cantidadLibre"></td>
+              <td> {{filtroArticulos[0].precio |formatoMoneda}}</td>
+=======
               <td v-text="filtroArticulos[0].cantidadTotal"></td>
               <td v-text="filtroArticulos[0].precio"></td>
 
+>>>>>>> 1ccd4f29f037b43f7505c25175f5af01f8000d36
               <td><input type="button" value="Agregar" class="btn btn-primary" @click=" agregarArticuloTemp(filtroArticulos[0])">
 
       
@@ -219,8 +227,8 @@
               <td v-text="filtroArticulos[1].id"></td>
               <td v-text="filtroArticulos[1].categoria"></td>
               <td v-text="filtroArticulos[1].descripcion"> </td>
-              <td v-text="filtroArticulos[1].cantidadTotal"></td>
-              <td v-text="filtroArticulos[1].precio"></td>
+              <td v-text="filtroArticulos[1].cantidadLibre"></td>
+              <td> {{filtroArticulos[1].precio |formatoMoneda}}</td>
               <td><input type="button" value="Agregar" class="btn btn-primary" @click=" agregarArticuloTemp(filtroArticulos[1]); ">
               </td>
             </tr>
@@ -230,7 +238,7 @@
       </div>
       <br>
       <!--Tabla de Productos dentro de los pedidos-->
-      <div class="row">
+      <div class="row" v-if="l_sAlquiler || l_sMontaje">
         <table class="table">
           <thead class="thead-light">
             <tr>
@@ -251,8 +259,8 @@
               <td v-text="t_articulo.descripcion"> </td>
               <td v-text="t_articulo.cantidadLibre"></td>
               <td v-text="t_articulo.cantidadSolicitada" readonly> </td>
-              <td v-text="t_articulo.precio" readonly> </td>
-              <td v-text="t_articulo.precioTotal"></td>
+              <td readonly> {{t_articulo.precio | formatoMoneda}} </td>
+              <td>{{t_articulo.precioTotal | formatoMoneda}}</td>
               <td>
 
                 <button type="button" class="btn btn-info" @click="verArticulo(t_articulo)">Actualizar Solicitud</button>
@@ -268,8 +276,7 @@
               <td></td>
               <td></td>
               <td></td>
-            <!-- <td v-text="sumatoria()"></td>-->
-            <td v-text="l_sumatoria"></td>
+              <td>{{l_sumatoria |formatoMoneda}}</td>
               <td></td>
             </tr>
 
@@ -315,7 +322,7 @@
   <!-- Modal Guardar-->
 
 
-  <modal v-if="VerModalGuardar" id="modalAgregar">
+  <modal v-if="l_verModalGuardar" id="modalAgregar">
     <div class="modal-header">
       <button type="button" class="close" @click="clickCerrarModalGuardar">&times</button>
       <h5 class="modal-title" id="exampleModalLabel">¿Desea guardar la cotización? </h5>
@@ -327,7 +334,7 @@
         Cotizaciones"</p>
     </div>
     <div class="modal-footer">
-      <button type="button" class="btn btn-primary">Guardar</button>
+      <button type="button" class="btn btn-primary">Aceptar</button>
       <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
     </div>
 
@@ -351,7 +358,8 @@
           </div>
           <div class="form-group col">
             <label for="categoria">Producto: </label>
-            <input type="text" class="form-control" id="categoria" :value="o_articulo.tipo" v-model="o_articulo.categoria" readonly>
+            <input type="text" class="form-control" id="categoria" :value="o_articulo.tipo" v-model="o_articulo.categoria"
+              readonly>
           </div>
           <div class="form-group col">
             <label for="descripcion">Descripción: </label>
@@ -367,11 +375,12 @@
           </div>
           <div class="form-group col">
             <label for="cantidadLibre">Cantidad Solicitada: </label>
-            <input type="number" min="0" :max="o_articulo.cantidadLibre" class="form-control" id="cantidadSolicitada"  v-model="l_cantidadSolicitada"
-              >
+            <input type="number" min="0" :max="_.find(this.modelo.articulos, {id: this.o_articulo.id}).cantidadLibre"
+              class="form-control" id="cantidadSolicitada" v-model="l_cantidadSolicitada" :class="[ l_cantidadSolicitada !== undefined && l_error ? 'is-invalid' : '']">
+              <div class="invalid-feedback">La cantidad solicitada deber ser mayor o igual a {{o_articulo.cantidadLibre}}</div>
           </div>
         </div>
-       
+
         <div class="row">
           <div class="form-group col">
 
@@ -381,24 +390,28 @@
           </div>
           <div class="form-group col">
             <label for="precio">Precio Total:</label>
-            <input type="number" class="form-control" id="precioTotal" :value="o_articulo.precioTotal"
-              v-model="o_articulo.precioTotal" readonly>
+            <input type="number" class="form-control" id="precioTotal" :value="o_articulo.precioTotal" v-model="o_articulo.precioTotal"
+              readonly>
           </div>
         </div>
-       
-        
-        
+
+
+
         <div class="modal-footer">
+<<<<<<< HEAD
+          <button type="button" class="btn btn-primary" @click="modificarTabla(o_articulo)">Aceptar</button>
+=======
           <button type="button" class="btn btn-primary" @click="modificarT(o_articulo)">Aceptar</button>
 
            
+>>>>>>> 1ccd4f29f037b43f7505c25175f5af01f8000d36
           <button type="button" class="btn btn-danger" @click="cerrarModalVer">Cancelar</button>
         </div>
       </form>
     </div>
 
   </modal>
-
+  <!--Aqui termina el modal de Actualizar-->
 
 
 </div>

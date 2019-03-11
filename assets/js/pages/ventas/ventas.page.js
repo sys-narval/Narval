@@ -12,14 +12,18 @@ parasails.registerPage('ventas', {
       categoria: undefined,
       unidadMedida: undefined,
       precioTotal: undefined,
-      cantidadSolicitada: undefined
+      cantidadSolicitada: 0
     }, //objeto local que permite recibir un articulo
-    VerModalGuardar: false,
+    
     l_precioTotal: 0,
       l_cantidadSolicitada: 0,
       l_precioUnitario: 0,
     l_verModalVer: false,
+    l_sMontaje: false,
+    l_sAlquiler: false,
+    l_sDiseno: false,
     l_verModalAgregar: false,
+    l_verModalGuardar: false,
     l_sumatoria: 0,
     txtCliente: '',
     txtEmpresa: '',
@@ -38,7 +42,8 @@ parasails.registerPage('ventas', {
     l_canidades: [],
     l_precios: [],
     l_articulosTabla: [],
-    l_cantidadLibre: 0
+    l_cantidadLibre: 0,
+    l_error: false
   },
 
   //  ╦  ╦╔═╗╔═╗╔═╗╦ ╦╔═╗╦  ╔═╗
@@ -66,7 +71,7 @@ parasails.registerPage('ventas', {
         categoria: undefined,
         unidadMedida: undefined,
         precioTotal: undefined,
-        cantidadSolicitada: undefined
+        cantidadSolicitada: 0
       }
     },
     clickVerModalAgregar: async function () {
@@ -76,10 +81,10 @@ parasails.registerPage('ventas', {
       this.l_verModalAgregar = false
     },
     clickVerModalGuardar: async function () {
-      this.VerModalGuardar = true
+      this.l_verModalGuardar = true
     },
     clickCerrarModalGuardar: async function () {
-      this.VerModalGuardar = false
+      this.l_verModalGuardar = false
     },
     clickVerClientes: async function (p_name) {
       this.txtCliente = p_name
@@ -102,9 +107,12 @@ parasails.registerPage('ventas', {
       this.l_verModalVer = true
     },
     cerrarModalVer: async function () {
+      
       this.l_verModalVer = false
       this.sumatoria();
       this.limpiar_o_articulo();
+      
+      
     },
     agregarArticuloTemp: async function (p_articulo) {
       let esta = false;
@@ -139,17 +147,17 @@ parasails.registerPage('ventas', {
       this.sumatoria();
 
     },
-    modificarT: function(p_articulo)
+    modificarTabla: function(p_articulo)
     {
        for(let i = 0; i< this.l_articulosTabla.length; i++)
        {
           if(this.l_articulosTabla[i].id == p_articulo.id)
           { 
             this.l_articulosTabla[i].precio = p_articulo.precio;
-            this.cerrarModalVer();
+           // this.cerrarModalVer();
           }
        }
-       this.cerrarModalVer();
+       this.l_verModalVer = false;
     },
     sumatoria: async function () {
      
@@ -162,6 +170,20 @@ parasails.registerPage('ventas', {
     
     //return parseInt(this.l_sumatoria);
     }
+  },
+  filters: {
+    formatoMoneda: function (cantidad) {
+      if (typeof cantidad !== 'number') {
+        return cantidad;
+      }
+
+      let formato = Intl.NumberFormat('en-US', {
+        style: 'currency',
+        currency: 'USD',
+        minimumFractionDigits: 0
+      });
+      return formato.format(cantidad);
+    },
   },
   computed: {
     
@@ -264,10 +286,16 @@ parasails.registerPage('ventas', {
           }).cantidadLibre;
           
           let t_numeroSolicitado = parseInt(this.l_cantidadSolicitada);
-          if(this.l_cantidadSolicitada)
+          if(this.l_cantidadSolicitada && this.l_cantidadSolicitada <= l_cantidadLibre )
           {
             this.o_articulo.precioTotal = parseInt(this.o_articulo.precio) * t_numeroSolicitado;
             this.o_articulo.cantidadSolicitada = t_numeroSolicitado;
+            this.l_error = false;
+          }else
+          {
+            this.o_articulo.cantidadSolicitada = 0;
+            this.o_articulo.precioTotal = 0;
+            this.l_error = true;
           }
     },
     l_precioUnitario(valNew, valOld)
