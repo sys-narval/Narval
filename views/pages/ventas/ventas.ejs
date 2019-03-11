@@ -209,7 +209,9 @@
               <td v-text="filtroArticulos[0].descripcion"> </td>
               <td v-text="filtroArticulos[0].cantidadTotal"></td>
               <td v-text="filtroArticulos[0].precio"></td>
-              <td><input type="button" value="Agregar" class="btn btn-primary" @click=" agregarArticuloTemp(filtroArticulos[0].id)">
+              <td>
+                  <button type="button" class="btn btn-success" @click="verArticulo(filtroArticulos[0])">Ver</button>
+                <input type="button" value="Agregar" class="btn btn-primary" @click=" agregarArticuloTemp(filtroArticulos[0].id)">
               </td>
             </tr>
             <tr v-if="filtroArticulos.length > 1&&t_Categoria == filtroArticulos[1].categoria">
@@ -251,7 +253,6 @@
               <td> <input type="number" min="0" :max="100000000" :value="t_articulo.precio"> </td>
               <td v-text="t_articulo.precio"></td>
               <td>
-                <button type="button" class="btn btn-success" @click="verArticulo(t_articulo)">Ver</button>
                 <button type="button" class="btn btn-danger" @click="quitarArticuloTabla(t_articulo)">Eliminar</button>
               </td>
             </tr>
@@ -346,7 +347,7 @@
           <div class="form-group col">
             <label for="descripcion">Descripción: </label>
             <input type="text" class="form-control" id="descripcionArticulo" :value="o_articulo.descripcion" v-model="o_articulo.descripcion"
-              maxlength="32">
+              maxlength="32" readonly>
           </div>
         </div>
         <div class="row">
@@ -376,12 +377,12 @@
         <div class="row">
           <div class="form-group  col">
             <label for="tipo">Categoría: </label>
-            <input type="text" class="form-control" id="tipo" :value="o_articulo.tipo" readonly v-model="o_articulo.categoria">
+            <input type="text" class="form-control" id="tipo" :value="o_articulo.tipo" readonly v-model="o_articulo.categoria" readonly>
           </div>
           <div class="form-group col">
             <label for="precio">Precio:</label>
             <input type="number" min="0" step="1" max="9999" class="form-control" id="precio" :value="o_articulo.precio"
-              v-model="o_articulo.precio">
+              v-model="o_articulo.precio" readonly>
           </div>
         </div>
         <!-- Otros espacios para los articulos electrónicos, incluyendo amperaje y seriales... -->
@@ -390,20 +391,18 @@
             <div class="form-group col">
               <label for="amperaje">Amperaje:</label>
               <input type="number" name="Amperaje" id="amperaje" min="0" max="999" placeholder="Amperaje del artículo"
-                step="0.01" v-model="o_articulo.amperaje" class="form-control">
+                step="0.01" v-model="o_articulo.amperaje" class="form-control" readonly>
             </div>
             <div class="form-group col">
               <label for="tipoElectronico">Tipo:</label>
-              <select class="form-control" name="Tipo Electrónico" id="tipoElectronico" v-model="o_articulo.tipo">
-                <option v-for="tipo in modelo.a_tipos" :value="tipo" v-text="tipo"></option>
-              </select>
+              <input class="form-control" name="Tipo Electrónico" id="tipoElectronico" v-model="o_articulo.tipo" readonly>
             </div>
           </div>
           <div class="row">
             <div class="form-group col-6">
               <label for="serialesTotal">Números de serial (separados por coma):</label>
               <input type="text" class="form-control" name="Números de Seriales" id="serialesTotal" placeholder="SN123, SN789, ..."
-                v-model="o_articulo.serialesTotal">
+                v-model="o_articulo.serialesTotal" readonly>
             </div>
             <div class="form-group col"></div>
           </div>
@@ -414,12 +413,11 @@
             <div class="form-group col-6">
               <label for="largo">Largo:</label>
               <input type="number" name="Largo" id="largo" class="form-control" placeholder="Largo en metros" min="0"
-                max="9999" step="1" v-model="o_articulo.largo">
+                max="9999" step="1" v-model="o_articulo.largo" readonly>
             </div>
           </div>
         </template>
         <div class="modal-footer">
-          <button type="submit" class="btn btn-primary">Aceptar</button>
           <button type="button" class="btn btn-danger" @click="cerrarModalVer">Cancelar</button>
         </div>
       </form>
