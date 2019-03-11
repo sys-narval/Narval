@@ -209,9 +209,10 @@
               <td v-text="filtroArticulos[0].descripcion"> </td>
               <td v-text="filtroArticulos[0].cantidadTotal"></td>
               <td v-text="filtroArticulos[0].precio"></td>
-              <td>
-                  <button type="button" class="btn btn-success" @click="verArticulo(filtroArticulos[0])">Ver</button>
-                <input type="button" value="Agregar" class="btn btn-primary" @click=" agregarArticuloTemp(filtroArticulos[0].id)">
+
+              <td><input type="button" value="Agregar" class="btn btn-primary" @click=" agregarArticuloTemp(filtroArticulos[0])">
+
+      
               </td>
             </tr>
             <tr v-if="filtroArticulos.length > 1&&t_Categoria == filtroArticulos[1].categoria">
@@ -220,7 +221,7 @@
               <td v-text="filtroArticulos[1].descripcion"> </td>
               <td v-text="filtroArticulos[1].cantidadTotal"></td>
               <td v-text="filtroArticulos[1].precio"></td>
-              <td><input type="button" value="Agregar" class="btn btn-primary" @click=" agregarArticuloTemp(filtroArticulos[1].id)">
+              <td><input type="button" value="Agregar" class="btn btn-primary" @click=" agregarArticuloTemp(filtroArticulos[1]); ">
               </td>
             </tr>
           </tbody>
@@ -248,11 +249,14 @@
               <td v-text="t_articulo.id"></td>
               <td v-text="t_articulo.categoria"></td>
               <td v-text="t_articulo.descripcion"> </td>
-              <td v-text="t_articulo.cantidadTotal"></td>
-              <td> <input type="number" min="0" :max="t_articulo.cantidadTotal"> </td>
-              <td> <input type="number" min="0" :max="100000000" :value="t_articulo.precio"> </td>
-              <td v-text="t_articulo.precio"></td>
+              <td v-text="t_articulo.cantidadLibre"></td>
+              <td v-text="t_articulo.cantidadSolicitada" readonly> </td>
+              <td v-text="t_articulo.precio" readonly> </td>
+              <td v-text="t_articulo.precioTotal"></td>
               <td>
+
+                <button type="button" class="btn btn-info" @click="verArticulo(t_articulo)">Actualizar Solicitud</button>
+
                 <button type="button" class="btn btn-danger" @click="quitarArticuloTabla(t_articulo)">Eliminar</button>
               </td>
             </tr>
@@ -264,7 +268,8 @@
               <td></td>
               <td></td>
               <td></td>
-              <td>000</td>
+            <!-- <td v-text="sumatoria()"></td>-->
+            <td v-text="l_sumatoria"></td>
               <td></td>
             </tr>
 
@@ -345,6 +350,10 @@
             <input type="text" class="form-control" id="id" :value="o_articulo.id" v-model="o_articulo.id" readonly>
           </div>
           <div class="form-group col">
+            <label for="categoria">Producto: </label>
+            <input type="text" class="form-control" id="categoria" :value="o_articulo.tipo" v-model="o_articulo.categoria" readonly>
+          </div>
+          <div class="form-group col">
             <label for="descripcion">Descripción: </label>
             <input type="text" class="form-control" id="descripcionArticulo" :value="o_articulo.descripcion" v-model="o_articulo.descripcion"
               maxlength="32" readonly>
@@ -352,72 +361,37 @@
         </div>
         <div class="row">
           <div class="form-group col">
-            <label for="cantidadLibre">Cantidad Libre: </label>
+            <label for="cantidadLibre">Cantidad stock: </label>
             <input type="text" class="form-control" id="cantidadLibre" :value="o_articulo.cantidadLibre" v-model="o_articulo.cantidadLibre"
               readonly>
           </div>
           <div class="form-group col">
-            <label for="cantidadUso">Cantidad Uso: </label>
-            <input type="text" class="form-control" id="cantidadUso" :value="o_articulo.cantidadUso" v-model="o_articulo.cantidadUso"
-              readonly>
+            <label for="cantidadLibre">Cantidad Solicitada: </label>
+            <input type="number" min="0" :max="o_articulo.cantidadLibre" class="form-control" id="cantidadSolicitada"  v-model="l_cantidadSolicitada"
+              >
           </div>
         </div>
+       
         <div class="row">
           <div class="form-group col">
-            <label for="cantidadDanado">Cantidad Dañado: </label>
-            <input type="text" class="form-control" id="cantidadDanado" :value="o_articulo.cantidadDanado" v-model="o_articulo.cantidadDanado"
-              readonly>
+
+            <label for="precio">Precio Unitario:</label>
+            <input type="number" min="0" step="1" max="9999" class="form-control" id="precio" :value="l_precioUnitario"
+              v-model="l_precioUnitario">
           </div>
           <div class="form-group col">
-            <label for="cantidadTotal">Cantidad Total: </label>
-            <input type="text" class="form-control" id="cantidadTotalArtNuevo" :value="o_articulo.cantidadTotal"
-              v-model="o_articulo.cantidadTotal" readonly>
+            <label for="precio">Precio Total:</label>
+            <input type="number" class="form-control" id="precioTotal" :value="o_articulo.precioTotal"
+              v-model="o_articulo.precioTotal" readonly>
           </div>
         </div>
-        <div class="row">
-          <div class="form-group  col">
-            <label for="tipo">Categoría: </label>
-            <input type="text" class="form-control" id="tipo" :value="o_articulo.tipo" readonly v-model="o_articulo.categoria" readonly>
-          </div>
-          <div class="form-group col">
-            <label for="precio">Precio:</label>
-            <input type="number" min="0" step="1" max="9999" class="form-control" id="precio" :value="o_articulo.precio"
-              v-model="o_articulo.precio" readonly>
-          </div>
-        </div>
-        <!-- Otros espacios para los articulos electrónicos, incluyendo amperaje y seriales... -->
-        <template v-if="o_articulo.categoria === 'Electrónico'">
-          <div class="row">
-            <div class="form-group col">
-              <label for="amperaje">Amperaje:</label>
-              <input type="number" name="Amperaje" id="amperaje" min="0" max="999" placeholder="Amperaje del artículo"
-                step="0.01" v-model="o_articulo.amperaje" class="form-control" readonly>
-            </div>
-            <div class="form-group col">
-              <label for="tipoElectronico">Tipo:</label>
-              <input class="form-control" name="Tipo Electrónico" id="tipoElectronico" v-model="o_articulo.tipo" readonly>
-            </div>
-          </div>
-          <div class="row">
-            <div class="form-group col-6">
-              <label for="serialesTotal">Números de serial (separados por coma):</label>
-              <input type="text" class="form-control" name="Números de Seriales" id="serialesTotal" placeholder="SN123, SN789, ..."
-                v-model="o_articulo.serialesTotal" readonly>
-            </div>
-            <div class="form-group col"></div>
-          </div>
-        </template>
-        <!-- Otros específicos para los articulos cables o truss -->
-        <template v-if="o_articulo.categoria === 'Cables' || o_articulo.categoria === 'Truss'">
-          <div class="row">
-            <div class="form-group col-6">
-              <label for="largo">Largo:</label>
-              <input type="number" name="Largo" id="largo" class="form-control" placeholder="Largo en metros" min="0"
-                max="9999" step="1" v-model="o_articulo.largo" readonly>
-            </div>
-          </div>
-        </template>
+       
+        
+        
         <div class="modal-footer">
+          <button type="button" class="btn btn-primary" @click="modificarT(o_articulo)">Aceptar</button>
+
+           
           <button type="button" class="btn btn-danger" @click="cerrarModalVer">Cancelar</button>
         </div>
       </form>

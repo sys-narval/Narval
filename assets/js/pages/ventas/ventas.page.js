@@ -10,11 +10,17 @@ parasails.registerPage('ventas', {
       precio: undefined,
       cantidadTotal: undefined,
       categoria: undefined,
-      unidadMedida: undefined
+      unidadMedida: undefined,
+      precioTotal: undefined,
+      cantidadSolicitada: undefined
     }, //objeto local que permite recibir un articulo
     VerModalGuardar: false,
+    l_precioTotal: 0,
+      l_cantidadSolicitada: 0,
+      l_precioUnitario: 0,
     l_verModalVer: false,
     l_verModalAgregar: false,
+    l_sumatoria: 0,
     txtCliente: '',
     txtEmpresa: '',
     clientes: [{
@@ -31,6 +37,8 @@ parasails.registerPage('ventas', {
     l_selecArticulo: [],
     l_canidades: [],
     l_precios: [],
+    l_articulosTabla: [],
+    l_cantidadLibre: 0
   },
 
   //  ╦  ╦╔═╗╔═╗╔═╗╦ ╦╔═╗╦  ╔═╗
@@ -56,7 +64,9 @@ parasails.registerPage('ventas', {
         precio: undefined,
         cantidadTotal: undefined,
         categoria: undefined,
-        unidadMedida: undefined
+        unidadMedida: undefined,
+        precioTotal: undefined,
+        cantidadSolicitada: undefined
       }
     },
     clickVerModalAgregar: async function () {
@@ -71,51 +81,101 @@ parasails.registerPage('ventas', {
     clickCerrarModalGuardar: async function () {
       this.VerModalGuardar = false
     },
-    clickVerClientes: async function (name) {
-      this.txtCliente = name
+    clickVerClientes: async function (p_name) {
+      this.txtCliente = p_name
     },
     clickNoVerClientes: async function () {
       this.txtCliente = ""
     },
-    clickVerCliente: async function (cliente) {
-      this.clientes = cliente
+    clickVerCliente: async function (p_cliente) {
+      this.clientes = p_cliente
       this.verCliente = true
     },
-    clickVerContacto: async function (vcontacto) {
-      this.contactos = vcontacto
+    clickVerContacto: async function (p_contacto) {
+      this.contactos = p_contacto
       this.verCliente = true
     },
-    verArticulo: async function (vArticulo) {
-      this.o_articulo = vArticulo
+    verArticulo: async function (p_Articulo) {
+      this.o_articulo = p_Articulo
+      this.l_precioUnitario = parseInt(p_Articulo.precio)
+     this.o_articulo.precio = parseInt(this.o_articulo.precio)
       this.l_verModalVer = true
     },
     cerrarModalVer: async function () {
       this.l_verModalVer = false
+      this.sumatoria();
       this.limpiar_o_articulo();
     },
     agregarArticuloTemp: async function (p_articulo) {
       let esta = false;
       for (let index = 0; index < this.l_selecArticulo.length; index++) {
-        if (this.l_selecArticulo[index] === p_articulo) {
+        if (this.l_selecArticulo[index] === p_articulo.id) {
           esta = true;
         }
       }
       if (!esta) {
-        this.l_selecArticulo.push(p_articulo)
+        this.l_selecArticulo.push(p_articulo.id);
+        this.l_articulosTabla.push(p_articulo);
+        //this.l_sumatoria += p_articulo.precio;
       }
     },
     quitarArticuloTabla: async function (p_articulo) {
       let t_arregloSalida = [];
+      let t_arregloSalida2 = [];
       for (let index = 0; index < this.l_selecArticulo.length; index++) {
         if (this.l_selecArticulo[index] !== p_articulo.id) {
           t_arregloSalida.push(this.l_selecArticulo[index]);
         }
       }
+
+      for (let index = 0; index < this.l_articulosTabla.length; index++) {
+        if (this.l_articulosTabla[index].id !== p_articulo.id) {
+          t_arregloSalida2.push(this.l_articulosTabla[index]);
+        }
+      }
+
       this.l_selecArticulo = t_arregloSalida;
+      this.l_articulosTabla = t_arregloSalida2;
+      this.sumatoria();
 
     },
+    modificarT: function(p_articulo)
+    {
+       for(let i = 0; i< this.l_articulosTabla.length; i++)
+       {
+          if(this.l_articulosTabla[i].id == p_articulo.id)
+          { 
+            this.l_articulosTabla[i].precio = p_articulo.precio;
+            this.cerrarModalVer();
+          }
+       }
+       this.cerrarModalVer();
+    },
+    sumatoria: async function () {
+     
+      this.l_sumatoria = 0;
+      for (let i = 0; i < this.l_articulosTabla.length; i++) {
+        if (this.l_articulosTabla[i].precioTotal) {
+          this.l_sumatoria += parseInt(this.l_articulosTabla[i].precioTotal);
+        }
+      }
+    
+    //return parseInt(this.l_sumatoria);
+    }
   },
   computed: {
+    
+   /* sumatoria: function () {
+     
+      this.l_sumatoria = 0;
+      for (let i = 0; i < this.l_articulosTabla.length; i++) {
+        if (this.l_articulosTabla[i].precioTotal) {
+          this.l_sumatoria += parseInt(this.l_articulosTabla[i].precioTotal);
+        }
+      }
+    
+    return parseInt(this.l_sumatoria);
+    },*/
     filteredContactos: function () {
       return this.contactos.filter((contacto) => {
         return contacto.name.match(this.txtCliente)
@@ -185,15 +245,42 @@ parasails.registerPage('ventas', {
       }
     },
     filtroDeTabla: function () {
-
+      
       let t_articulosTabla = [];
       for (let t_tempID in this.l_selecArticulo) {
         t_articulosTabla.push(this.modelo.articulos.filter(t_articulo => t_articulo.id.includes(this.l_selecArticulo[t_tempID]))[0]);
+        
       }
       return t_articulosTabla;
     },
   },
   watch: {
+    l_cantidadSolicitada(valNew, valOld)
+    {
+      /* Esta variable resibe el filtro del articulo del modelo que es 
+              igual a el que se utiliza en cada actualizar*/
+          let l_cantidadLibre = _.find(this.modelo.articulos, {
+            id: this.o_articulo.id
+          }).cantidadLibre;
+          
+          let t_numeroSolicitado = parseInt(this.l_cantidadSolicitada);
+          if(this.l_cantidadSolicitada)
+          {
+            this.o_articulo.precioTotal = parseInt(this.o_articulo.precio) * t_numeroSolicitado;
+            this.o_articulo.cantidadSolicitada = t_numeroSolicitado;
+          }
+    },
+    l_precioUnitario(valNew, valOld)
+    {
+        let t_precioUnitario = parseInt(this.l_precioUnitario);
+        let t_numeroSolicitado = parseInt(this.l_cantidadSolicitada);
+        if(this.l_precioUnitario)
+        { 
+          this.o_articulo.precio = t_precioUnitario;
+          this.o_articulo.precioTotal = parseInt(this.o_articulo.precio) * t_numeroSolicitado;
+        }
+
+    },
     txtCliente() {
       console.log(this.txtCliente)
     }
