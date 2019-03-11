@@ -209,7 +209,10 @@
               <td v-text="filtroArticulos[0].descripcion"> </td>
               <td v-text="filtroArticulos[0].cantidadTotal"></td>
               <td v-text="filtroArticulos[0].precio"></td>
+
               <td><input type="button" value="Agregar" class="btn btn-primary" @click=" agregarArticuloTemp(filtroArticulos[0])">
+
+      
               </td>
             </tr>
             <tr v-if="filtroArticulos.length > 1&&t_Categoria == filtroArticulos[1].categoria">
@@ -251,7 +254,9 @@
               <td v-text="t_articulo.precio" readonly> </td>
               <td v-text="t_articulo.precioTotal"></td>
               <td>
+
                 <button type="button" class="btn btn-info" @click="verArticulo(t_articulo)">Actualizar Solicitud</button>
+
                 <button type="button" class="btn btn-danger" @click="quitarArticuloTabla(t_articulo)">Eliminar</button>
               </td>
             </tr>
@@ -369,6 +374,7 @@
        
         <div class="row">
           <div class="form-group col">
+
             <label for="precio">Precio Unitario:</label>
             <input type="number" min="0" step="1" max="9999" class="form-control" id="precio" :value="l_precioUnitario"
               v-model="l_precioUnitario">
@@ -384,6 +390,8 @@
         
         <div class="modal-footer">
           <button type="button" class="btn btn-primary" @click="modificarT(o_articulo)">Aceptar</button>
+
+           
           <button type="button" class="btn btn-danger" @click="cerrarModalVer">Cancelar</button>
         </div>
       </form>

@@ -131,7 +131,7 @@ parasails.registerPage('inventario', {
       this.cerrarNuevo();
       this.$forceUpdate();
       alert('Artículo ingresado correctamente!');
-    }, //Metodo que crea un articulo, primero analizar los valores enteros y despues lo mete en un arreglo
+    }, //Metodo que crea un articulo, primero analizar los valores enteros y después lo mete en un arreglo
     eliminarUnArticulo: async function () {
       await Cloud.eliminarUnArticulo.with(this.o_articulo);
       this.modelo.articulos = this.modelo.articulos.map(articulo => {
@@ -198,7 +198,7 @@ parasails.registerPage('inventario', {
         }
       });
       return a_arregloCategoria;
-    }, //Metodo para filtrar por categorias
+    }, //Metodo para filtrar por categorías
     filtroArticulos: function () {
       /*
        * Función para limpiar el filtro a usar, en caso de que el atributo este vacío
@@ -227,12 +227,12 @@ parasails.registerPage('inventario', {
   },
   watch: {
     l_masDanado(valNew, valOld) {
-      /* Esta variable resibe el filtro del articulo del modelo que es 
+      /* Esta variable recibe el filtro del articulo del modelo que es 
               igual a el que se utiliza en cada actualizar*/
       let l_cantidadLibre = _.find(this.modelo.articulos, {
         id: this.o_articulo.id
       }).cantidadLibre;
-      /* esta varible resive la cantidad danado del articulo del modelo que 
+      /* esta variable recibe la cantidad danado del articulo del modelo que 
       es igual aal que utiliza en cada actualizar*/
       let l_cantidadDanado = _.find(this.modelo.articulos, {
         id: this.o_articulo.id
@@ -248,24 +248,24 @@ parasails.registerPage('inventario', {
       }
     },
     l_masArticulos() {
-      /* Esta variable resibe el filtro del articulo del modelo que es 
-      igual a el que se utiliza en cada acctualizar*/
+      /* Esta variable recibe el filtro del articulo del modelo que es 
+      igual a el que se utiliza en cada actualizar*/
       let l_cantidadTotal = _.find(this.modelo.articulos, {
         id: this.o_articulo.id
       }).cantidadTotal;
-      /* Esta variable resibe el filtro del articulo del modelo que es 
-              igual a el que se utiliza en cada acctualizar*/
+      /* Esta variable recibe el filtro del articulo del modelo que es 
+              igual a el que se utiliza en cada actualizar*/
       let l_cantidadLibre = _.find(this.modelo.articulos, {
         id: this.o_articulo.id
       }).cantidadLibre;
-      /* esta varible resive la cantidad danado del articulo del modelo que 
+      /* esta variable recibe la cantidad danado del articulo del modelo que 
       es igual aal que utiliza en cada actualizar*/
       let l_cantidadDanado = _.find(this.modelo.articulos, {
         id: this.o_articulo.id
       }).cantidadDanado;
       /* Esta variable parsea el valor del input de el modal actualizar*/
       let l_numMasArticulos = parseInt(this.l_masArticulos)
-      // Metodos if que verifica los datos numericos de las variables de cantidad
+      // Métodos if que verifica los datos numéricos de las variables de cantidad
       if (this.l_masArticulos) {
         this.o_articulo.cantidadTotal = l_cantidadTotal + l_numMasArticulos;
         this.o_articulo.cantidadLibre = l_numMasArticulos + l_cantidadTotal - parseInt(this.l_masDanado) - l_cantidadDanado;
