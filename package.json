@@ -12,7 +12,7 @@
     "nodemon": "^1.18.9",
     "sails": "^1.1.0",
     "sails-hook-apianalytics": "^2.0.0",
-    "sails-hook-organics": "^0.15.1",
+    "sails-hook-organics": "^0.16.0",
     "sails-hook-orm": "^2.1.1",
     "sails-hook-sockets": "^1.4.0",
     "sails-mongo": "^1.0.1"
