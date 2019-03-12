@@ -1,0 +1,243 @@
+<div id="cotizaciones" v-cloak>
+  <h1>Cotizaciones</h1>
+  <div class="row">
+    <div class="col-6">
+      <div class="form-group">
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-toggle="dropdown"
+              aria-haspopup="true" aria-expanded="false">Filtros</button>
+            <div class="dropdown-menu p-4">
+              <div class="form-check mb-2">
+                <input type="checkbox" name="mis cotizaciones" id="misCotizaciones" class="form-check-input" v-model="filtro.misCotizaciones">
+                <label for="misCotizaciones" class="form-check-label">Mis Cotizaciones</label>
+              </div>
+              <div class="form-group">
+                <label for="encargado">Encargado:</label>
+                <input type="text" id="encargado" class="form-control" placeholder="Nombre Encargado" v-model="filtro.encargado">
+              </div>
+              <div class="form-group">
+                <label for="encargado">Cliente:</label>
+                <input type="text" id="cliente" class="form-control" placeholder="Cliente" v-model="filtro.cliente">
+              </div>
+              <div class="form-group">
+                <label for="fechaInicio">Fecha Evento:</label>
+                <input type="date" name="Fecha Inicio" id="fechaEvento" class="form-control" v-model="filtro.fechaEvento">
+              </div>
+              <div class="form-group">
+                <label for="fechaMontaje">Fecha Montaje:</label>
+                <input type="date" name="Fecha Inicio" id="fechaMontaje" class="form-control" v-model="filtro.fechaMontaje">
+              </div>
+              <div class="form-group">
+                <label for="fechaDesmontaje">Fecha Desmontaje:</label>
+                <input type="date" name="Fecha Inicio" id="fechaDesmontaje" class="form-control" v-model="filtro.fechaDesmontaje">
+              </div>
+              <div class="form-group">
+                <label for="fechaFin">Fecha Fin:</label>
+                <input type="date" name="Fecha Inicio" id="fechaFin" class="form-control" v-model="filtro.fechaFin">
+              </div>
+            </div>
+          </div>
+          <input type="text" name="Buscar Cotización" id="cotizacion" placeholder="Buscar Cotización" class="form-control"
+            v-model.trim="busquedaCotizacion">
+          <div class="input-group-append">
+            <span class="input-group-text"><i class="fa fa-search"></i></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <table class="table table-hover table-striped table-bordered" v-if="filtroCotizacion.length != 0">
+        <thead class="thead-light">
+          <th>Encargado</th>
+          <th>Cliente</th>
+          <th>Ubicación</th>
+          <th>Descripción</th>
+          <th>Fecha de Montaje</th>
+          <th>Fin de evento</th>
+          <th>Opciones</th>
+        </thead>
+        <tbody>
+          <tr v-for="cotizacion in filtroCotizacion">
+            <td v-text="cotizacion.encargado"></td>
+            <td v-text="cotizacion.cliente"></td>
+            <td v-text="cotizacion.ubicacion"></td>
+            <td v-text="cotizacion.descripcion"></td>
+            <td v-text="cotizacion.fechaMontaje"></td>
+            <td v-text="cotizacion.fechaFin"></td>
+            <td class="text-center">
+              <div class="btn-group ">
+                <label for="ver" class="btn btn-primary" @click="verEvento(cotizacion)">
+                  Ver
+                </label>
+                <label for="copiar" class="btn btn-success" @click="copiarEvento(cotizacion)">
+                  Copiar
+                </label>
+                <label for="borrar" class="btn btn-danger" @click="borrarEvento(cotizacion)">
+                  Borrar
+                </label>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <modal v-if="verModal" id="verEvento">
+    <div class="row">
+      <div class="col">
+        <form action="">
+            <div class="modal-header">
+                <button type="button" class="close" @click="cerrarEvento()">&times</button>
+                <h1 class="text-center">Cotización #{{cotizacion.id}}</h1>
+              </div>
+          <div class="row">
+            <!-- Encargado del evento -->
+            <div class="form-group col">
+              <label for="encargado">Encargado</label>
+              <input type="text" id="encargado" class="form-control" :value="cotizacion.encargado">
+            </div>
+            <!-- Cliente del evento -->
+            <div class="form-group col">
+              <label for="cliente">Cliente</label>
+              <input type="text" id="cliente" class="form-control" :value="cotizacion.cliente">
+            </div>
+          </div>
+          <div class="row">
+            <!-- Fecha del Evento -->
+            <div class="form-group col">
+              <label for="fechaEvento">Fecha del Evento</label>
+              <input type="date" id="fechaEvento" class="form-control" :value="cotizacion.fechaEvento">
+            </div>
+            <!-- Fecha de Montaje -->
+            <div class="form-group col">
+              <label for="fechaEvento">Fecha de Montaje</label>
+              <input type="date" id="fechaEvento" class="form-control" :value="cotizacion.fechaMontaje">
+            </div>
+          </div>
+          <div class="row">
+            <!-- Fecha fin de evento -->
+            <div class="form-group col">
+              <label for="fechaFin">Fin de Evento</label>
+              <input type="date" name="Fecha Fin" id="fechaFin" :value="cotizacion.fechaFin" class="form-control">
+            </div>
+            <!-- Fecha desmontaje -->
+            <div class="form-group col">
+              <label for="fechaDesmontaje">Fecha Desmontaje</label>
+              <input type="date" name="Fecha Desmontaje" id="fechaDesmontaje" :value="cotizacion.fechaDesmontaje" class="form-control">
+            </div>
+          </div>
+          <div class="row">
+            <div class="form-group col">
+              <label for="descipcion">Descripción:</label>
+              <textarea name="Descripción" id="descripcion" cols="30" rows="3" class="form-control"></textarea>
+            </div>
+          </div>
+          <div class="row" v-if="cotizacion.materiales">
+            <div class="form-group col">
+              <table class="table table-bordered table-striped table-hover">
+                <thead class="thead-light">
+                  <tr>
+                    <th>Código</th>
+                    <th>Descripción</th>
+                    <th>Cantidad</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr v-for="material in cotizacion.materiales">
+                    <td v-text="material.codigo"></td>
+                    <td v-text="material.descripcion"></td>
+                    <td v-text="material.cantidad"></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="modal-footer">
+          <input type="button" value="Guardar" class="btn btn-primary">
+          <input type="button" value="Cancelar" class="btn btn-danger" @click="cerrarEvento()">
+          </div>
+        </form>
+      </div>
+    </div>
+  </modal>
+
+  <modal v-if="modBorrarEvento" id="borrarEvento">
+    <div class="row">
+      <div class="col">
+          <div class="modal-header">
+              <button type="button" class="close" @click="cancelarBorrar">&times</button>
+        <h1>¿Seguro que desea borrar la cotización?</h1>
+        </div>
+        <form action="" readonly>
+          <div class="form-row">
+            <!-- Encargado del evento -->
+            <div class="form-group col">
+              <label for="encargado">Encargado</label>
+              <input type="text" id="encargado" class="form-control" :value="cotizacion.encargado">
+            </div>
+            <!-- Cliente del evento -->
+            <div class="form-group col">
+              <label for="cliente">Cliente</label>
+              <input type="text" id="cliente" class="form-control" :value="cotizacion.cliente">
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group col">
+              <label for="descipcion">Descripción:</label>
+              <textarea name="Descripción" id="descripcion" cols="30" rows="3" class="form-control"></textarea>
+            </div>
+          </div>
+          <div class="modal-footer">
+            
+              <input type="button" value="Aceptar" class="btn btn-primary" @click="confirmarBorrar">
+              <input type="button" value="Cancelar" class="btn btn-danger" @click="cancelarBorrar">
+          
+            
+          </div>
+        </form>
+      </div>
+    </div>
+  </modal>
+
+  <modal v-if="modCopiarEvento" id="copiarEvento">
+    <div class="row">
+      <div class="col">
+          <div class="modal-header">
+              <button type="button" class="close" @click="cancelarCopiar">&times</button>
+        <h1>¿Seguro que desea copiar la cotización?</h1>
+        </div>
+        <form action="" readonly>
+          <div class="form-row">
+            <!-- Encargado del evento -->
+            <div class="form-group col">
+              <label for="encargado">Encargado</label>
+              <input type="text" id="encargado" class="form-control" :value="cotizacion.encargado">
+            </div>
+            <!-- Cliente del evento -->
+            <div class="form-group col">
+              <label for="cliente">Cliente</label>
+              <input type="text" id="cliente" class="form-control" :value="cotizacion.cliente">
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group col">
+              <label for="descipcion">Descripción:</label>
+              <textarea name="Descripción" id="descripcion" cols="30" rows="3" class="form-control"></textarea>
+            </div>
+          </div>
+          <div class="modal-footer">
+              <input type="button" value="Copiar" class="btn btn-primary" @click="confirmarCopiar">
+              <input type="button" value="Cancelar" class="btn btn-danger" @click="cancelarCopiar">
+              
+          </div>
+        </form>
+      </div>
+    </div>
+  </modal>
+
+</div>
+<%- /* Expose server-rendered data as window.SAILS_LOCALS :: */ exposeLocalsToBrowser() %>

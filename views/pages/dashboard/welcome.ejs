@@ -1,0 +1,29 @@
+<div id="welcome">
+  <div class="container">
+    <h1>Bienvenido al Sistema Narval</h1>
+    <hr/>
+    <p>Esta es la página que se ve cuando la persona entra al sistema. Lorem ipsum, dolor sit amet consectetur adipisicing elit. Non quo eveniet inventore labore, quas et necessitatibus debitis nisi iure fugiat alias! Deleniti nihil culpa, minus enim animi repellendus a sint?</p>
+    <div class="buttons">
+      <a class="btn btn-info" href="/account/profile">Actualizar Email</a>
+      <button class="btn btn-outline-info ml-2" @click="clickOpenDashboardModalButton()">Abrir Modal</button>
+    </div>
+  </div>
+
+  <modal class="example-modal" v-if="dashboardModalVisible" @close="closeDashboardModal()" v-cloak>
+    <div class="modal-header">
+      <h2 class="modal-title"><i class="fa fa-info-circle"></i>Modal de información</h2>
+      <p>Aquí va la información del modal. Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsum modi voluptate ipsa necessitatibus cum eius temporibus. Praesentium ut blanditiis eum. Quibusdam architecto veritatis accusantium soluta quos quasi quas fuga adipisci!</p>
+      <hr/>
+      <button type="button" class="modal-close-button" data-dismiss="modal" aria-label="Close"></button>
+    </div>
+    <div class="modal-body">
+      <h5 class="section-heading">Capítulo 1: Uso.</h5>
+      <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Odio debitis nam impedit, commodi eius incidunt. Consectetur autem ad, totam sed iure nobis sit, corrupti iusto aut quod deserunt vel commodi. Lorem ipsum dolor sit, amet consectetur adipisicing elit. Explicabo at a inventore maxime voluptas sunt, veniam eum blanditiis dolor cumque molestias voluptatum, excepturi obcaecati. Deserunt repudiandae vero beatae libero cum!</p>
+    </div>
+    <div class="modal-footer flex-row-reverse justify-content-between">
+      <button type="button" data-dismiss="modal" class="btn btn-info">Close</button>
+      <button type="button" data-dismiss="modal" class="btn btn-outline-info">Cancel</button>
+    </div>
+  </modal>
+</div>
+<%- /* Expose locals as `window.SAILS_LOCALS` :: */ exposeLocalsToBrowser() %>
