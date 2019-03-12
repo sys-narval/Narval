@@ -102,6 +102,7 @@ parasails.registerPage('ventas', {
     },
     verArticulo: async function (p_Articulo) {
       this.o_articulo = p_Articulo
+      this.l_cantidadSolicitada = 1;
       this.l_precioUnitario = parseInt(p_Articulo.precio)
      this.o_articulo.precio = parseInt(this.o_articulo.precio)
       this.l_verModalVer = true
@@ -116,15 +117,18 @@ parasails.registerPage('ventas', {
     },
     agregarArticuloTemp: async function (p_articulo) {
       let esta = false;
+      p_articulo.cantidadSolicitada = 1;
+      p_articulo.precioTotal = p_articulo.precio;
       for (let index = 0; index < this.l_selecArticulo.length; index++) {
         if (this.l_selecArticulo[index] === p_articulo.id) {
           esta = true;
         }
       }
       if (!esta) {
+        
         this.l_selecArticulo.push(p_articulo.id);
         this.l_articulosTabla.push(p_articulo);
-        //this.l_sumatoria += p_articulo.precio;
+        this.sumatoria();
       }
     },
     quitarArticuloTabla: async function (p_articulo) {
@@ -157,6 +161,7 @@ parasails.registerPage('ventas', {
            // this.cerrarModalVer();
           }
        }
+       this.sumatoria();
        this.l_verModalVer = false;
     },
     sumatoria: async function () {
@@ -187,17 +192,7 @@ parasails.registerPage('ventas', {
   },
   computed: {
     
-   /* sumatoria: function () {
-     
-      this.l_sumatoria = 0;
-      for (let i = 0; i < this.l_articulosTabla.length; i++) {
-        if (this.l_articulosTabla[i].precioTotal) {
-          this.l_sumatoria += parseInt(this.l_articulosTabla[i].precioTotal);
-        }
-      }
-    
-    return parseInt(this.l_sumatoria);
-    },*/
+   
     filteredContactos: function () {
       return this.contactos.filter((contacto) => {
         return contacto.name.match(this.txtCliente)

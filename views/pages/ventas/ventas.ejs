@@ -181,7 +181,7 @@
               </div>
             </datalist>
             <div class="input-group-append">
-              <button class="input-group-text"><i class="fa fa-plus"></i></button>
+              <span class="input-group-text"><i class="fa fa-plus"></i></span>
             </div>
 
           </div>
@@ -371,7 +371,7 @@
             <label for="cantidadLibre">Cantidad Solicitada: </label>
             <input type="number" min="0" :max="_.find(this.modelo.articulos, {id: this.o_articulo.id}).cantidadLibre"
               class="form-control" id="cantidadSolicitada" v-model="l_cantidadSolicitada" :class="[ l_cantidadSolicitada !== undefined && l_error ? 'is-invalid' : '']">
-              <div class="invalid-feedback">La cantidad solicitada deber ser mayor o igual a {{o_articulo.cantidadLibre}}</div>
+              <div class="invalid-feedback">La cantidad solicitada deber ser menor o igual a {{o_articulo.cantidadLibre}}</div>
           </div>
         </div>
 
@@ -392,13 +392,9 @@
 
 
         <div class="modal-footer">
-<<<<<<< HEAD
-          <button type="button" class="btn btn-primary" @click="modificarTabla(o_articulo)">Aceptar</button>
-=======
-          <button type="button" class="btn btn-primary" @click="modificarT(o_articulo)">Aceptar</button>
 
-           
->>>>>>> 1ccd4f29f037b43f7505c25175f5af01f8000d36
+          <button type="button" class="btn btn-primary" @click="modificarTabla(o_articulo)">Aceptar</button>
+
           <button type="button" class="btn btn-danger" @click="cerrarModalVer">Cancelar</button>
         </div>
       </form>
