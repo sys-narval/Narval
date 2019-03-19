@@ -4,7 +4,11 @@ parasails.registerPage('clientes', {
   //  ╩╝╚╝╩ ╩ ╩╩ ╩╩═╝  ╚═╝ ╩ ╩ ╩ ╩ ╚═╝
   data: {
     //…
-
+    o_cliente: {
+      nombre: undefined,
+      telefono: 0,
+      correo: undefined
+    },
     contactos: [{
       empresa: 'Coca-Cola',
       telefono: 25555555,
@@ -39,8 +43,10 @@ parasails.registerPage('clientes', {
     }
   ],
   informacion:{},
+  l_verModalEditar: false,
+  l_verModalAgregar: false,
+  l_verModalEliminar: false,
   },
-
   //  ╦  ╦╔═╗╔═╗╔═╗╦ ╦╔═╗╦  ╔═╗
   //  ║  ║╠╣ ║╣ ║  ╚╦╝║  ║  ║╣
   //  ╩═╝╩╚  ╚═╝╚═╝ ╩ ╚═╝╩═╝╚═╝
@@ -57,9 +63,40 @@ parasails.registerPage('clientes', {
   //  ║║║║ ║ ║╣ ╠╦╝╠═╣║   ║ ║║ ║║║║╚═╗
   //  ╩╝╚╝ ╩ ╚═╝╩╚═╩ ╩╚═╝ ╩ ╩╚═╝╝╚╝╚═╝
   methods: {
-    //…
-    clickVerEmpresa: async function(info){
-      this.informacion=info
+    limpiar_o_cliente: async function()
+    {
+      this.o_cliente = {
+        nombre: undefined,
+        telefono: 0,
+        correo: undefined
+      }
     },
+    //…
+    clickVerModalEditar: async function(p_empresa){
+      this.o_cliente = p_empresa;
+      this.l_verModalEditar=true;
+    },
+    clickCerrarModalEditar: async function()
+    {
+      this.l_verModalEditar = false
+      this.limpiar_o_cliente();
+    }, 
+    clickVerModalEliminar: async function()
+    {
+      this.l_verModalEliminar = true
+    },
+    clickCerrarModalEliminar: async function()
+    {
+      this.l_verModalEliminar = false
+    },
+    clickVerModalAgregar: async function()
+    {
+      this.l_verModalAgregar = true
+    },
+    clickCerrarModalAgregar: async function()
+    {
+      this.l_verModalAgregar = false
+    }
+
   }
 });
