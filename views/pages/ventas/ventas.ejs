@@ -144,7 +144,7 @@
 
       <div class="row" v-if="l_sAlquiler || l_sMontaje">
         <div class="form-group col-5">
-          <label class="form-label">Buscar Articulo</label>
+          <label class="form-label">Buscar Artículo</label>
           <div class="input-group">
             <div class="input-group-append">
               <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-toggle="dropdown"
@@ -277,6 +277,7 @@
           </tbody>
         </table>
       </div>
+    
   </form>
 
   <button type="button" class="btn btn-primary" @click="clickVerModalGuardar()">
@@ -370,8 +371,8 @@
           <div class="form-group col">
             <label for="cantidadLibre">Cantidad Solicitada: </label>
             <input type="number" min="0" :max="_.find(this.modelo.articulos, {id: this.o_articulo.id}).cantidadLibre"
-              class="form-control" id="cantidadSolicitada" v-model="l_cantidadSolicitada" :class="[ l_cantidadSolicitada !== undefined && l_error ? 'is-invalid' : '']">
-              <div class="invalid-feedback">La cantidad solicitada deber ser menor o igual a {{o_articulo.cantidadLibre}}</div>
+              class="form-control" id="cantidadSolicitada" v-model="l_cantidadSolicitada" :class="[l_cantidadSolicitada !== undefined && !l_cantidadSolicitada &&l_error ? 'is-invalid' : '']">
+              <div class="invalid-feedback">La cantidad solicitada deber ser menor o igual a {{o_articulo.cantidadLibre}} y mayor a 0</div>
           </div>
         </div>
 
