@@ -46,6 +46,8 @@ parasails.registerPage('clientes', {
   l_verModalEditar: false,
   l_verModalAgregar: false,
   l_verModalEliminar: false,
+  l_verModalContactos: false,
+  l_edito: false
   },
   //  ╦  ╦╔═╗╔═╗╔═╗╦ ╦╔═╗╦  ╔═╗
   //  ║  ║╠╣ ║╣ ║  ╚╦╝║  ║  ║╣
@@ -96,6 +98,24 @@ parasails.registerPage('clientes', {
     clickCerrarModalAgregar: async function()
     {
       this.l_verModalAgregar = false
+    },
+    clickVerModalContactos: async function(p_cliente)
+    {
+      this.o_cliente = p_cliente;
+      this.l_verModalContactos = true
+    },
+    clickCerrarModalContactos: async function()
+    {
+      this.l_verModalContactos = false
+    },
+    clickEditar: async function()
+    {
+      this.l_edito = true;
+    },
+    clickGuardarContactos: async function()
+    {
+      this.l_verModalContactos = false;
+      this.l_edito = false
     }
 
   }

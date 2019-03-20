@@ -60,6 +60,7 @@
                   <button type="button" class="btn btn-primary" @click="clickVerModalEditar(empresa)" >
                     Editar </button>
                   <button type="button" class="btn btn-danger" @click="clickVerModalEliminar">Eliminar</button>
+                  <button type="button" class="btn btn-info" @click="clickVerModalContactos(empresa)">Ver Contactos</button>
                 </td>
               </tr>
             
@@ -106,6 +107,41 @@
       </div>
     </modal>
 
+    <!--Modal Contactos-->
+    <modal v-if="l_verModalContactos" id="modalEditar">
+      <div class="modal-header">
+          <button v-if="!l_edito" type="button" class="close" @click="clickCerrarModalContactos">&times</button>
+          <h2 class="modal-title">Ver Contactos</h2>
+      </div>
+      <div class="modal-body">
+        <form >
+            <table class="table table-hover table-striped table-bordered">
+                <thead class="thead-light">
+                    <th>Nombre</th>
+                    <th>Correo Electrónico</th>
+                    <th>Número telefónico</th>
+                    <th>Opciones</th>
+                 </thead>
+                 <tbody v-for="empresa in o_cliente.Contacto">
+                    <tr>
+                      <td> {{empresa.nombre}} </td>
+                      <td> {{empresa.correo}} </td>
+                      <td> {{empresa.telefono}} </td>
+                      <td>
+                        <button type="button" class="btn btn-primary" @click="clickEditar" >
+                          Editar </button>
+                      </td>
+                    </tr>
+          
+                  </tbody>
+            </table>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-primary" @click="clickGuardarContactos">Guardar</button>
+              <button v-if="l_edito === false" type="button" class="btn btn-danger" @click="clickCerrarModalContactos">Cancelar</button>
+            </div>
+         </form>
+      </div>
+    </modal>
   <!------Modal Eliminar-->
   <modal v-if="l_verModalEliminar" id="verArticulo">
       <div class="modal-header">
