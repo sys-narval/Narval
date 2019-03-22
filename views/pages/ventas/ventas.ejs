@@ -118,13 +118,14 @@
 
       <div class="row" v-if="l_sMontaje  || l_sAlquiler">
         <div class="form-group col">
-          <label class="col-form-label">Fecha del evento</label>
-          <input class="form-control" type="date">
+          <label class="col-form-label">Fecha del evento </label>
+          <input class="form-control" type="date" id="date" :min="l_date.getFullYear() + '-' + '0'+ (l_date.getMonth()+1) + '-' + l_date.getDate()" >
+          
         </div>
 
         <div class="form-group col">
           <label class="col-form-label">Fin del evento</label>
-          <input class="form-control" type="date">
+          <input class="form-control" type="date" id="date" :min="l_date.getFullYear() + '-' + '0'+ (l_date.getMonth()+1) + '-' + l_date.getDate()">
         </div>
 
 
@@ -133,12 +134,12 @@
       <div class="row" v-if="l_sMontaje">
         <div class="form-group col">
           <label class="col-form-label">Fecha de montaje</label>
-          <input class="form-control" type="date">
+          <input class="form-control" type="date" id="date" :min="l_date.getFullYear() + '-' + '0'+ (l_date.getMonth()+1) + '-' + l_date.getDate()">
         </div>
 
         <div class="form-group col">
           <label class="col-form-label">Fecha de desmontaje </label>
-          <input id="fecha_actual" class="form-control" type="date">
+          <input id="date" class="form-control" type="date":min="l_date.getFullYear() + '-' + '0'+ (l_date.getMonth()+1) + '-' + l_date.getDate()">
         </div>
       </div>
 

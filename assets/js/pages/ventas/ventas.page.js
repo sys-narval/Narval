@@ -4,6 +4,7 @@ parasails.registerPage('ventas', {
   //  ╩╝╚╝╩ ╩ ╩╩ ╩╩═╝  ╚═╝ ╩ ╩ ╩ ╩ ╚═╝
   data: {
     //…
+    
     o_articulo: {
       id: undefined,
       descripcion: undefined,
@@ -43,7 +44,9 @@ parasails.registerPage('ventas', {
     l_precios: [],
     l_articulosTabla: [],
     l_cantidadLibre: 0,
-    l_error: false
+    l_error: false,
+    l_date: new Date,
+    l_date2: ""
   },
 
   //  ╦  ╦╔═╗╔═╗╔═╗╦ ╦╔═╗╦  ╔═╗
@@ -62,6 +65,8 @@ parasails.registerPage('ventas', {
   //  ╩╝╚╝ ╩ ╚═╝╩╚═╩ ╩╚═╝ ╩ ╩╚═╝╝╚╝╚═╝
   methods: {
     //…
+    
+    
     limpiar_o_articulo: async function () {
       this.o_articulo = {
         id: undefined,
@@ -192,7 +197,7 @@ parasails.registerPage('ventas', {
   },
   computed: {
     
-   
+    
     filteredContactos: function () {
       return this.contactos.filter((contacto) => {
         return contacto.name.match(this.txtCliente)
