@@ -25,8 +25,11 @@ module.exports = {
 
   fn: async function (inputs) {
 
-    // All done.
-    return;
+    let cliente = await ClientRectList.findOne({
+      nombre: inputs.nombre
+    }).populate('contactos');
+
+    return cliente;
 
   }
 
