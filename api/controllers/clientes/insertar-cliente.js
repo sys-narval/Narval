@@ -36,19 +36,29 @@ module.exports = {
     },
   },
 
-
   exits: {
-
+    nombreRepetido: {
+      description: "Excepción cuando el nombre del cliente ya esta en uso"
+    }
   },
 
 
   fn: async function (inputs, exits) {
 
-    await ClientRectList.create(inputs);
+    try {
 
-    return exits.success();
+      await Clientes.create(inputs);
+      return exits.success();
 
+    } catch (error) {
+
+      switch (error.code) {
+        case "E_UNIQUE":
+          return exits.nombreRepetido();
+        default:
+          throw error;
+      }
+
+    }
   }
-
-
 };
