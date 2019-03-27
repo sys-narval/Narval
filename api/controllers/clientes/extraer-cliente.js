@@ -19,17 +19,18 @@ module.exports = {
 
 
   exits: {
-
+    clienteNoEncontrado: {
+      message: "No se encuentra el cliente solicitado",
+      responseType: "notFound"
+    }
   },
 
 
-  fn: async function (inputs) {
+  fn: async function (inputs, exits) {
 
-    let cliente = await ClientRectList.findOne({
-      nombre: inputs.nombre
-    }).populate('contactos');
+    let cliente = await Clientes.findOne({ nombre: inputs.nombre }).populate("contactos");
 
-    return cliente;
+    return cliente ? cliente : exits.clienteNoEncontrado(`Cliente ${inputs.nombre} no encontrado`)
 
   }
 
