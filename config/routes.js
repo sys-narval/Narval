@@ -63,6 +63,7 @@ module.exports.routes = {
   'DELETE /api/v1/inventario/eliminar-un-articulo':       {action: 'inventario/eliminar-un-articulo'},
 
   'GET /api/v1/clientes/extraer-cliente':                 { action: 'clientes/extraer-cliente' },
+  'POST /api/v1/clientes/insertar-cliente':               { action: 'clientes/insertar-cliente' },
 
 
   //  ╦ ╦╔═╗╔╗ ╦ ╦╔═╗╔═╗╦╔═╔═╗
