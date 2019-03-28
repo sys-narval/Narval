@@ -110,7 +110,7 @@
     <!--Modal Contactos-->
     <modal v-if="l_verModalContactos" id="modalEditar">
       <div class="modal-header">
-          <button v-if="!l_edito" type="button" class="close" @click="clickCerrarModalContactos">&times</button>
+          <button v-if="!l_edito " type="button" class="close" @click="clickCerrarModalContactos">&times</button>
           <h2 class="modal-title">Ver Contactos</h2>
       </div>
       <div class="modal-body">
@@ -172,10 +172,16 @@
           <label for="telefono">Teléfono: </label>
           <input type="tel" pattern="[0-9]{9}" maxlength="8" class="form-control" id="telCliNuevo" placeholder="Digite el numero telefónico">
         </div>
+      </div>
+      <div class="row">
         <div class="form-group col">
           <label for="email">Email: </label>
           <input type="email" name="email" pattern="[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*@[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*[.][a-zA-Z]{1,5}"
-            class="form-control" id="emaCliNuevo" placeholder="Digite el email">
+          class="form-control" id="emaCliNuevo" placeholder="Digite el email">
+        </div>
+        <div class="form-group col">
+          <label for="cedula">Cédula(Jurídica o Física)</label>
+          <input type="number" name="cedula" pattern="[0-9]{9}" maxlength="10" placeholder="Digite la cédula" class="form-control" id="cedNuevo">
         </div>
       </div>
     </div>
