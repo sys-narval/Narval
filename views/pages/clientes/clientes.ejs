@@ -86,17 +86,23 @@
                   <input type="text" class="form-control" id="Nombre" :value="o_cliente.empresa" v-model="o_cliente.empresa">
                 </div>
                 <div class="form-group col">
-                  <label for="correo">Correo de la facturación: </label>
+                  <label for="telefono">Teléfono: </label>
+                  <input type="tel" class="form-control" id="telefono" :value="o_cliente.telefono" v-model="o_cliente.telefono"
+                  maxlength="9">
+                </div>
+              </div>
+              <div class="row">
+                <div class="form-group col">
+                  <label for="correo">Email: </label>
                   <input type="text" class="form-control" id="correo" :value="o_cliente.correo" v-model="o_cliente.correo"
                     >
                 </div>
+                
                 <div class="form-group col">
-                  <label for="telefono">Teléfono: </label>
-                  <input type="tel" class="form-control" id="telefono" :value="o_cliente.telefono" v-model="o_cliente.telefono"
-                    maxlength="9">
+                  <label for="cedula">Cédula(Jurídica o Física)</label>
+                  <input type="number" name="cedula" pattern="[0-9]{9}" maxlength="10" placeholder="Digite la cédula" class="form-control" id="cedNuevo">
                 </div>
               </div>
-              
           
           <div class="modal-footer">
               <button type="button" class="btn btn-primary">Guardar</button>
