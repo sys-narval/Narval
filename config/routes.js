@@ -65,6 +65,7 @@ module.exports.routes = {
   'GET /api/v1/clientes/extraer-cliente':                 { action: 'clientes/extraer-cliente' },
   'GET /api/v1/clientes/extraer-clientes':                { action: 'clientes/extraer-clientes' },
   'POST /api/v1/clientes/insertar-cliente':               { action: 'clientes/insertar-cliente' },
+  'POST /api/v1/clientes/actualizar-cliente':             { action: 'clientes/actualizar-cliente' },
 
   'GET /api/v1/ventas/extraer-cotizacion':                { action: 'ventas/extraer-cotizacion' },
   'GET /api/v1/ventas/extraer-cotizaciones':              { action: 'ventas/extraer-cotizaciones' },
