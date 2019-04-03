@@ -6,8 +6,9 @@ parasails.registerPage('clientes', {
     //…
     o_cliente: {
       nombre: undefined,
-      telefono: 0,
-      correo: undefined
+      telefono: undefined,
+      correo: undefined,
+      cedula: undefined
     },
     contactos: [{
       empresa: 'Coca-Cola',
@@ -47,7 +48,28 @@ parasails.registerPage('clientes', {
   l_verModalAgregar: false,
   l_verModalEliminar: false,
   l_verModalContactos: false,
-  l_edito: false
+  l_edito: false,
+
+  // Datos del form
+  formData: { /* … */ },
+    syncing: false,
+    cloudError: '',
+    formErrors: { /* … */ },
+    formRules: {
+      nombre:{
+        required: true
+      },
+      telefono:{
+        required: true
+      },
+      correo:{
+        required: true
+      },
+      cedula:{
+        required: true
+      },
+
+      },
   },
   //  ╦  ╦╔═╗╔═╗╔═╗╦ ╦╔═╗╦  ╔═╗
   //  ║  ║╠╣ ║╣ ║  ╚╦╝║  ║  ║╣
@@ -69,8 +91,9 @@ parasails.registerPage('clientes', {
     {
       this.o_cliente = {
         nombre: undefined,
-        telefono: 0,
-        correo: undefined
+        telefono: undefined,
+        correo: undefined,
+        cedula:undefined
       }
     },
     //…
@@ -81,7 +104,6 @@ parasails.registerPage('clientes', {
     clickCerrarModalEditar: async function()
     {
       this.l_verModalEditar = false
-      this.limpiar_o_cliente();
     }, 
     clickVerModalEliminar: async function()
     {
@@ -98,6 +120,8 @@ parasails.registerPage('clientes', {
     clickCerrarModalAgregar: async function()
     {
       this.l_verModalAgregar = false
+      this.formErrors = {};
+      this.limpiar_o_cliente();
     },
     clickVerModalContactos: async function(p_cliente)
     {
@@ -116,6 +140,19 @@ parasails.registerPage('clientes', {
     {
       this.l_verModalContactos = false;
       this.l_edito = false
+    },
+    guardarCliente: async function(p_cliente)
+    {
+      /*
+      this.o_cliente.telefono =  parseInt(this.o_cliente.telefono);
+      this.o_cliente.cedula = parseInt(this.o_cliente.cedula);
+      */
+      this.p_cliente={};
+      this.modelo.clientes.push(this.o_cliente);
+
+      this.$forceUpdate();
+      this.clickCerrarModalAgregar();
+
     }
 
   }
