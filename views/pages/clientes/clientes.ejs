@@ -21,13 +21,14 @@
                   </div>
                   <div class="form-group">
                     <label for="busquedaPorTelefono">Teléfono: </label>
-                    <input type="text" class="form-control" id="l_Telefono" placeholder="Teléfono" maxlength="9">
+                    <input type="text" class="form-control" id="l_Telefono" placeholder="Teléfono"
+                      maxlength="9">
                   </div>
                   <div class="form-group">
-                    <label for="busquedaPorTelefono">Correo: </label>
-                    <input type="text" class="form-control" id="l_email" placeholder="Correo Electrónico"
-                      maxlength="20">
-                  </div>
+                      <label for="busquedaPorTelefono">Correo: </label>
+                      <input type="text" class="form-control" id="l_email" placeholder="Correo Electrónico"
+                        maxlength="20">
+                    </div>
                 </form>
               </div>
             </div>
@@ -56,14 +57,13 @@
                 <td> {{empresa.correo}} </td>
                 <td> {{empresa.telefono}} </td>
                 <td>
-                  <button type="button" class="btn btn-primary" @click="clickVerModalEditar(empresa)">
+                  <button type="button" class="btn btn-primary" @click="clickVerModalEditar(empresa)" >
                     Editar </button>
                   <button type="button" class="btn btn-danger" @click="clickVerModalEliminar">Eliminar</button>
-                  <button type="button" class="btn btn-info" @click="clickVerModalContactos(empresa)">Ver
-                    Contactos</button>
+                  <button type="button" class="btn btn-info" @click="clickVerModalContactos(empresa)">Ver Contactos</button>
                 </td>
               </tr>
-
+            
             </tbody>
           </table>
         </div>
@@ -74,7 +74,6 @@
 
   <!-----Modal Editar-->
   <modal v-if="l_verModalEditar" id="modalEditar">
-
       <div class="modal-header">
           <button type="button" class="close" @click="clickCerrarModalEditar">&times</button>
           <h2 class="modal-title">Ver Cliente</h2>
@@ -110,102 +109,93 @@
               <button type="button" class="btn btn-danger" @click="clickCerrarModalEditar">Cancelar</button>
           </div>
           
+        </form>
+      </div>
+    </modal>
 
-      </form>
-    </div>
-  </modal>
-
-  <!--Modal Contactos-->
-  <modal v-if="l_verModalContactos" id="modalEditar">
-    <div class="modal-header">
-      <button v-if="!l_edito " type="button" class="close" @click="clickCerrarModalContactos">&times</button>
-      <h2 class="modal-title">Ver Contactos</h2>
-    </div>
-    <div class="modal-body">
-      <form>
-        <table class="table table-hover table-striped table-bordered">
-          <thead class="thead-light">
-            <th>Nombre</th>
-            <th>Correo Electrónico</th>
-            <th>Número telefónico</th>
-            <th>Opciones</th>
-          </thead>
-          <tbody v-for="empresa in o_cliente.Contacto">
-            <tr>
-              <td> {{empresa.nombre}} </td>
-              <td> {{empresa.correo}} </td>
-              <td> {{empresa.telefono}} </td>
-              <td>
-                <button type="button" class="btn btn-primary" @click="clickEditar">
-                  Editar </button>
-              </td>
-            </tr>
-
-          </tbody>
-        </table>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-primary" @click="clickGuardarContactos">Guardar</button>
-          <button v-if="l_edito === false" type="button" class="btn btn-danger"
-            @click="clickCerrarModalContactos">Cancelar</button>
-        </div>
-      </form>
-    </div>
-  </modal>
+    <!--Modal Contactos-->
+    <modal v-if="l_verModalContactos" id="modalEditar">
+      <div class="modal-header">
+          <button v-if="!l_edito " type="button" class="close" @click="clickCerrarModalContactos">&times</button>
+          <h2 class="modal-title">Ver Contactos</h2>
+      </div>
+      <div class="modal-body">
+        <form >
+            <table class="table table-hover table-striped table-bordered">
+                <thead class="thead-light">
+                    <th>Nombre</th>
+                    <th>Correo Electrónico</th>
+                    <th>Número telefónico</th>
+                    <th>Opciones</th>
+                 </thead>
+                 <tbody v-for="empresa in o_cliente.Contacto">
+                    <tr>
+                      <td> {{empresa.nombre}} </td>
+                      <td> {{empresa.correo}} </td>
+                      <td> {{empresa.telefono}} </td>
+                      <td>
+                        <button type="button" class="btn btn-primary" @click="clickEditar" >
+                          Editar </button>
+                      </td>
+                    </tr>
+          
+                  </tbody>
+            </table>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-primary" @click="clickGuardarContactos">Guardar</button>
+              <button v-if="l_edito === false" type="button" class="btn btn-danger" @click="clickCerrarModalContactos">Cancelar</button>
+            </div>
+         </form>
+      </div>
+    </modal>
   <!------Modal Eliminar-->
   <modal v-if="l_verModalEliminar" id="verArticulo">
-    <div class="modal-header">
-      <button type="button" class="close" @click="clickCerrarModalEliminar">&times</button>
-      <h2 class="modal-title" id="AdvertenciaBorrado">¿Está seguro que desea borrar este Cliente?</h2>
-    </div>
-
-    <div class="modal-footer">
-      <button class="btn btn-primary" type="button" id="Aceptar">Aceptar</button>
-      <button class="btn btn-danger" type="button" id="Borrar" @click="clickCerrarModalEliminar">Cancelar</button>
-    </div>
-
-  </modal>
-  <!--Modal Agregar-->
-  <modal v-if="l_verModalAgregar" id="modalAgregar">
+      <div class="modal-header">
+        <button type="button" class="close" @click="clickCerrarModalEliminar">&times</button>
+        <h2 class="modal-title" id="AdvertenciaBorrado">¿Está seguro que desea borrar este Cliente?</h2>
+      </div>
+      
+      <div class="modal-footer">
+          <button class="btn btn-primary" type="button" id="Aceptar">Aceptar</button>
+          <button class="btn btn-danger" type="button" id="Borrar" @click="clickCerrarModalEliminar">Cancelar</button>
+        </div>
+  
+    </modal>
+<!--Modal Agregar-->
+<modal v-if="l_verModalAgregar" id="modalAgregar">
 
     <div class="modal-header">
       <button type="button" class="close" @click="clickCerrarModalAgregar()">&times</button>
       <h5 class="modal-title" id="exampleModalLabel">Agregando un cliente/contacto</h5>
     </div>
-    <ajax-form action="insertarCliente" :syncing.sync="syncing" :cloud-error.sync="cloudError" :form-data="o_cliente"
-    :form-errors.sync="formErrors" :form-rules="formRules" @submitted="guardarCliente">
-      <div class="modal-body">
-        <div class="row">
-          <div class="form-group col">
-            <label for="nombre">Nombre: </label>
-            <input type="text" class="form-control" id="nomCliNuevo" placeholder="Digite el nombre" v-model="o_cliente.nombre">
-          </div>
-          <div class="form-group col">
-            <label for="telefono">Teléfono: </label>
-            <input type="number" max="99999999" class="form-control" id="telCliNuevo"
-              placeholder="Digite el numero telefónico" v-model="o_cliente.telefono">
-          </div>
+    <div class="modal-body">
+      <div class="row">
+        <div class="form-group col">
+          <label for="nombre">Nombre: </label>
+          <input type="text" class="form-control" id="nomCliNuevo" placeholder="Digite el nombre">
         </div>
-        <div class="row">
-          <div class="form-group col">
-            <label for="email">Email: </label>
-            <input type="email" name="email"
-              pattern="[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*@[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*[.][a-zA-Z]{1,5}"
-              class="form-control" id="emaCliNuevo" placeholder="Digite el email" v-model="o_cliente.correo">
-          </div>
-          <div class="form-group col">
-            <label for="cedula">Cédula(Jurídica o Física)</label>
-            <input type="number" name="cedula" max="9999999999" placeholder="Digite la cédula"
-              class="form-control" id="cedNuevo" v-model="o_cliente.cedula">
-          </div>
+        <div class="form-group col">
+          <label for="telefono">Teléfono: </label>
+          <input type="tel" pattern="[0-9]{9}" maxlength="8" class="form-control" id="telCliNuevo" placeholder="Digite el numero telefónico">
         </div>
-        <div class="modal-footer">
-          <ajax-button type="submit" :syncing="syncing" class="btn btn-primary">Guardar</ajax-button>
-          <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+      </div>
+      <div class="row">
+        <div class="form-group col">
+          <label for="email">Email: </label>
+          <input type="email" name="email" pattern="[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*@[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*[.][a-zA-Z]{1,5}"
+          class="form-control" id="emaCliNuevo" placeholder="Digite el email">
         </div>
-    </ajax-form>
-</div>
-
-</modal>
+        <div class="form-group col">
+          <label for="cedula">Cédula(Jurídica o Física)</label>
+          <input type="number" name="cedula" pattern="[0-9]{9}" maxlength="10" placeholder="Digite la cédula" class="form-control" id="cedNuevo">
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-primary">Guardar</button>
+      <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+    </div>
+  </modal>
 
 </div>
 <%- /* Expose server-rendered data as window.SAILS_LOCALS :: */ exposeLocalsToBrowser() %>

@@ -17,16 +17,45 @@ module.exports = {
 
 
   fn: async function (inputs, exits) {
+
     let modelo = {
-      l_errorNombre: 'El Nombre es requerido',
-      l_errorCorreo: 'El Correo es requerido',
-      l_errorCedula: 'El Cedula es requerido',
-      l_errorTelefono: 'El Telefono es requerido',
-      l_errorIdRepetido: 'La cedula ya existe',
+      contactos: [{
+          empresa: 'Coca-Cola',
+          telefonoEmpresarial: 2555555,
+          correoEmpresarial: 'coca@gmail.com',
+          Contacto: [{
+              nombre: 'Jose quesada',
+              telefono: 88989899,
+              correo: 'jose@gmail.com'
+            },
+            {
+              nombre: 'Mario Porras',
+              telefono: 9998555,
+              correo: 'mario@gmail.com'
+            }
+          ]
+        },
+        {
+          empresa: 'Imprerial',
+          telefonoEmpresarial: 2555555,
+          correoEmpresarial: 'imperial@gmail.com',
+          Contacto: [{
+              nombre: 'Carlos quesada',
+              telefono: 88989899,
+              correo: 'carlos@gmail.com'
+            },
+            {
+              nombre: 'Juan Porras',
+              telefono: 9998555,
+              correo: 'juan@gmail.com'
+            }
+          ]
+        }
+      ]
     }
     // Respond with view.
-    modelo.clientes=await Clientes.find();
-    return exits.success({modelo});
+    return exits.success();
+    modelo
   }
 
 
