@@ -30,7 +30,7 @@ module.exports = {
       l_errorIdRepetido: 'Artículo con el mismo ID ya existe',
     };
 
-    modelo.articulos = await Articulos.find();
+    modelo.articulos = await Cloud.extraerInventario();
     return exits.success({
       modelo
     });

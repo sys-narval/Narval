@@ -177,12 +177,18 @@
         <div class="row">
           <div class="form-group col">
             <label for="nombre">Nombre: </label>
-            <input type="text" class="form-control" id="nomCliNuevo" placeholder="Digite el nombre" v-model="o_cliente.nombre">
+            <input type="text" class="form-control" id="nomCliNuevo" placeholder="Digite el nombre" v-model="o_cliente.nombre"
+             :class="[(formErrors.nombre || o_cliente.nombre !== undefined) && !o_cliente.nombre ?
+             'is-invalid' : '']">
+             <div class="invalid-feedback" v-text="modelo.l_errorNombre"></div>
           </div>
           <div class="form-group col">
             <label for="telefono">Teléfono: </label>
             <input type="number" max="99999999" class="form-control" id="telCliNuevo"
-              placeholder="Digite el numero telefónico" v-model="o_cliente.telefono">
+              placeholder="Digite el numero telefónico" v-model="o_cliente.telefono"
+              :class="[(formErrors.telefono || o_cliente.telefono !== undefined) && !o_cliente.telefono ?
+              'is-invalid' : '']">
+              <div class="invalid-feedback" v-text="modelo.l_errorTelefono"></div>
           </div>
         </div>
         <div class="row">
@@ -190,12 +196,18 @@
             <label for="email">Email: </label>
             <input type="email" name="email"
               pattern="[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*@[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*[.][a-zA-Z]{1,5}"
-              class="form-control" id="emaCliNuevo" placeholder="Digite el email" v-model="o_cliente.correo">
+              class="form-control" id="emaCliNuevo" placeholder="Digite el email" v-model="o_cliente.correo"
+              :class="[(formErrors.correo || o_cliente.correo !== undefined) && !o_cliente.correo ?
+              'is-invalid' : '']">
+              <div class="invalid-feedback" v-text="modelo.l_errorCorreo"></div>
           </div>
           <div class="form-group col">
             <label for="cedula">Cédula(Jurídica o Física)</label>
             <input type="number" name="cedula" max="9999999999" placeholder="Digite la cédula"
-              class="form-control" id="cedNuevo" v-model="o_cliente.cedula">
+              class="form-control" id="cedNuevo" v-model="o_cliente.cedula"
+              :class="[(formErrors.cedula || o_cliente.cedula !== undefined) && !o_cliente.cedula ?
+              'is-invalid' : '']">
+              <div class="invalid-feedback" v-text="modelo.l_errorCedula"></div>
           </div>
         </div>
         <div class="modal-footer">
