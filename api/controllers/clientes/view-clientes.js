@@ -54,8 +54,13 @@ module.exports = {
       ]
     }
     // Respond with view.
+<<<<<<< HEAD
     return exits.success();
     modelo
+=======
+    modelo.clientes=Cloud.extraerClientes();
+    return exits.success({modelo});
+>>>>>>> parent of 53c44a9... Revert "Merge branch 'dev' of https://github.com/sys-narval/Narval into dev"
   }
 
 

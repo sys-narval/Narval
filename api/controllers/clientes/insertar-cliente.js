@@ -38,7 +38,8 @@ module.exports = {
 
   exits: {
     nombreRepetido: {
-      description: "Excepción cuando el nombre del cliente ya esta en uso"
+      description: "Excepción cuando el nombre del cliente ya esta en uso",
+      responseType: "idRepetido"
     }
   },
 
@@ -54,9 +55,9 @@ module.exports = {
 
       switch (error.code) {
         case "E_UNIQUE":
-          return exits.nombreRepetido();
+          return exits.nombreRepetido(`El cliente ${inputs.nombre} ya existe`);
         default:
-          throw error;
+          throw exits.error();
       }
 
     }
