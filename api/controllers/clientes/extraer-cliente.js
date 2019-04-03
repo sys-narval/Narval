@@ -28,21 +28,11 @@ module.exports = {
 
   fn: async function (inputs, exits) {
 
-    try {
+    let cliente = await Clientes.findOne({ nombre: inputs.nombre }).populate("contactos");
 
-      let cliente = await Clientes.findOne({ nombre: inputs.nombre }).populate("contactos");
+    return cliente ? cliente : exits.clienteNoEncontrado(`Cliente ${inputs.nombre} no encontrado`)
 
-      if (cliente === undefined) {
-        return exits.clienteNoEncontrado(`Cliente ${inputs.nombre} no encontrado`);
-      }
-      else {
-        return exits.success(cliente);
-      }
-
-    } catch (error) {
-
-      return exits.error(error.message);
-
-    }
   }
+
+
 };

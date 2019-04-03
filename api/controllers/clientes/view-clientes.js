@@ -25,7 +25,7 @@ module.exports = {
       l_errorIdRepetido: 'La cedula ya existe',
     }
     // Respond with view.
-    modelo.clientes=Cloud.extraerClientes();
+    modelo.clientes=await Clientes.find();
     return exits.success({modelo});
   }
 
