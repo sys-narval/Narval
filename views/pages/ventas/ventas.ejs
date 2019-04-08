@@ -3,7 +3,9 @@
   <div class="text-center">
     <h1>Ventas</h1>
   </div>
-  <form action="">
+  <ajax-form action="insertarCotizacion" :syncing.sync="syncing" :cloud-error.sync="cloudError"
+  :form-data="o_cotizacion" :form-errors.sync="formErrors" :form-rules="formRules"
+  @submitted="clickVerModalGuardar">
     <div class="col">
 
       <div class="row">
@@ -278,12 +280,12 @@
           </tbody>
         </table>
       </div>
-    
-  </form>
-
-  <button type="button" class="btn btn-primary" @click="clickVerModalGuardar()">
+     <button type="submit" :syncing="syncing" class="btn btn-primary">
     Guardar
   </button>
+  </ajax-form>
+
+ 
 
   <!--- Modal Clientes y Contactos--->
   <modal v-if="l_verModalAgregar" id="modalAgregar">
