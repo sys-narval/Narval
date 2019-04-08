@@ -14,6 +14,7 @@ module.exports = {
     //  ╩  ╩╚═╩╩ ╩╩ ╩ ╩ ╚╝ ╚═╝╚═╝
     nombre: {
       type: "string",
+      required: true,
       maxLength: 20,
       description: "Nombre del contacto de la empresa cliente"
     },
@@ -21,6 +22,7 @@ module.exports = {
     cedula:{
       type: "String",
       required: true,
+      unique: true,
       maxLength: 10,
       description: "Numero de cedula de del contacto de la empresa del cliente"
     },
@@ -36,6 +38,12 @@ module.exports = {
       isEmail: true,
       maxLength: 200,
       description: "Correo electrónico del contacto de la empresa"
+    },
+
+    activo: {
+      type: 'boolean',
+      defaultsTo: true,
+      description: 'Atributo para definir si el contacto esta activo o desactivo',
     },
 
 

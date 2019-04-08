@@ -35,6 +35,12 @@ module.exports = {
         isEmail: true,
         description: "Correo electrónico del contacto"
       },
+
+      activo: {
+        type: 'boolean',
+        defaultsTo: true,
+        description: 'Atributo para definir si el contacto esta activo o desactivo',
+      },
  
     },
   

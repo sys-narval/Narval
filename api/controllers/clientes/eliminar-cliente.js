@@ -36,7 +36,7 @@ module.exports = {
                 return exits.clienteNoEncontrado(`Cliente ${inputs.cedula} no encontrado`);
             }
             else {
-                await Clientes.destroy({ cedula: inputs.cedula });
+                await Clientes.update({ cedula: inputs.cedula }, {activo: false});
                 return exits.success();
             }
 

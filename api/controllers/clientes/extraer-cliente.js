@@ -8,12 +8,12 @@ module.exports = {
 
 
   inputs: {
-    nombre: {
+    cedula: {
       type: "string",
-      maxLength: 20,
+      maxLength: 10,
       required: true,
       unique: true,
-      description: "Nombre del cliente"
+      description: "Cedula del cliente, se deja de 10 campos en caso de ced. jurídica"
     }
   },
 
@@ -30,10 +30,10 @@ module.exports = {
 
     try {
 
-      let cliente = await Clientes.findOne({ nombre: inputs.nombre }).populate("contactos");
+      let cliente = await Clientes.findOne({ cedula: inputs.cedula }).populate("contactos");
 
       if (cliente === undefined) {
-        return exits.clienteNoEncontrado(`Cliente ${inputs.nombre} no encontrado`);
+        return exits.clienteNoEncontrado(`Cliente ${inputs.cedula} no encontrado`);
       }
       else {
         return exits.success(cliente);

@@ -12,12 +12,12 @@ module.exports = {
     nombre: {
       type: 'string',
       maxLength: 20,
-      unique: true,
       description: 'Nombre del Cliente',
     },
 
     cedula: {
       type: 'string',
+      unique: true,
       required: true,
       maxLength: 10,
       description: 'Cedula del cliente, se deja de 10 campos en caso de ced. jurídica',
@@ -34,6 +34,12 @@ module.exports = {
       type: "string",
       maxLength: 10,
       description: "Número telefónico del cliente",
+    },
+
+    activo: {
+      type: 'boolean',
+      defaultsTo: true,
+      description: 'Atributo para definir si el cliente esta activo o desactivo',
     },
 
   },
