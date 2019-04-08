@@ -52,7 +52,7 @@ module.exports = {
       try {
         let contacto = await Contactos.findOne({ cedula: inputs.cedula });
         if (contacto === undefined) {
-          return exits.clienteNoEncontrado(`Cliente ${inputs.cedula} no encontrado`);
+          return exits.clienteNoEncontrado(`Contacto ${inputs.cedula} no encontrado`);
         } else {
           await Contactos.update({ cedula: inputs.cedula }, inputs);
           return exits.success();
