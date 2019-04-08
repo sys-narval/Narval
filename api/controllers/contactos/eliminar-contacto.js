@@ -36,7 +36,7 @@ module.exports = {
                 return exits.contactoNoEncontrado(`Contacto ${inputs.cedula} no encontrado`);
             }
             else {
-                await Contactos.destroy({ cedula: inputs.cedula });
+                await Contactos.update({ cedula: inputs.cedula }, {activo: false});
                 return exits.success();
             }
 
