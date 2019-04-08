@@ -60,6 +60,7 @@ parasails.registerPage('clientes', {
     l_verModalAgregar: false,
     l_verModalEliminar: false,
     l_verModalContactos: false,
+    l_verModalAgregarContactos: false,
     l_edito: false,
     l_editarUnContacto: {
       nombre: undefined,
@@ -144,6 +145,14 @@ parasails.registerPage('clientes', {
       this.formErrors = {};
       this.limpiar_o_cliente();
     },
+    clickVerModalAgregarContactos: async function()
+    {
+      this.l_verModalAgregarContactos = true;
+    },
+    clickCerrarModalAgregarContactos: async function()
+    {
+      this.l_verModalAgregarContactos = false;
+    },
     clickVerModalContactos: async function (p_cliente) {
       this.o_cliente = p_cliente;
       this.l_verModalContactos = true
@@ -190,7 +199,10 @@ parasails.registerPage('clientes', {
     actualizarContacto: async function(p_contacto){
 
     },
-    actualizarCliente: async function(p_contacto){
+    actualizarCliente: async function(p_cliente){
+
+    },
+    eliminarContacto: async function(p_contacto){
 
     }
 
