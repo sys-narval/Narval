@@ -17,9 +17,10 @@ parasails.registerPage('clientes', {
       cedula: undefined
     },
     contactos: [{
-      empresa: 'Coca-Cola',
+      nombre: 'Coca-Cola',
       telefono: 25555555,
       correo: 'coca@gmail.com',
+      cedula: 1012345678,
       Contacto: [{
         nombre: 'Jose quesada',
         telefono: 88989899,
@@ -35,9 +36,10 @@ parasails.registerPage('clientes', {
       ]
     },
     {
-      empresa: 'Imprerial',
+      nombre: 'Imprerial',
       telefono: 2555555,
       correo: 'imperial@gmail.com',
+      cedula: 1012345679,
       Contacto: [{
         nombre: 'Carlos quesada',
         telefono: 88989899,
@@ -185,6 +187,12 @@ parasails.registerPage('clientes', {
       this.clickCerrarModalAgregar();
 
     },
+    actualizarContacto: async function(p_contacto){
+
+    },
+    actualizarCliente: async function(p_contacto){
+
+    }
 
   },
   computed: {
