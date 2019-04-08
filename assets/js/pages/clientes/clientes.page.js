@@ -62,6 +62,9 @@ parasails.registerPage('clientes', {
     l_verModalContactos: false,
     l_verModalAgregarContactos: false,
     l_edito: false,
+    l_buscarCliente:'',
+    l_actualizar:false,
+    l_filtro: {},
     l_editarUnContacto: {
       nombre: undefined,
       telefono: undefined,
@@ -131,7 +134,8 @@ parasails.registerPage('clientes', {
     clickCerrarModalEditar: async function () {
       this.l_verModalEditar = false
     },
-    clickVerModalEliminar: async function () {
+    clickVerModalEliminar: async function (p_cliente) {
+      this.o_cliente = p_cliente;
       this.l_verModalEliminar = true
     },
     clickCerrarModalEliminar: async function () {
@@ -210,10 +214,40 @@ parasails.registerPage('clientes', {
     },
     eliminarContacto: async function(p_contacto){
 
+    },
+    eliminarCliente: async function()
+    {
+      await Cloud.eliminarCliente.with(this.o_cliente);
+      this.clickCerrarModalEliminar();
+      this.$forceUpdate();
     }
 
   },
   computed: {
-    
+    filtroClientes: function () {
+      /*
+       * Función para limpiar el filtro a usar, en caso de que el atributo este vacío
+       * eliminamos ese atributo del objeto para que no sea evaluado
+       */
+      const c_limpiaFiltro = objeto => {
+        for (let t_atributo in objeto)
+          if (objeto[t_atributo] === null || objeto[t_atributo] === undefined || objeto[t_atributo] === '')
+            delete objeto[t_atributo];
+        return objeto;
+      }
+
+      /*
+       * Filtramos las articulos que cumplan con el filtro preestablecido por el usuario y que cumpla con
+       * que la barra de búsqueda tenga más de un dígito y coincida con la descripción o ubicación.
+       */
+      if (this.l_buscarCliente.length > 3 && this.l_actualizar === false) {
+        return _.filter(this.modelo.clientes, c_limpiaFiltro(this.l_filtro))
+          .filter(cliente => cliente.nombre.includes(this.l_buscarCliente) || cliente.telefono.includes(this.l_buscarCliente) || cliente.cedula.includes(this.l_buscarCliente));
+      } else if (this.l_buscarCliente === "*" && this.l_actualizar === false) {
+        return this.modelo.clientes;
+      } else {
+        return new Array();
+      }
+    }
   }
 });

@@ -34,10 +34,10 @@ parasails.registerPage('ventas', {
       fechaFinEvento:16,
       fechaMontaje:15,
       fechaDesmontaje:16,
-      encargado:{"id":1},
-      cliente:{},
-      contacto:{},
-      articulos:null
+      encargado: 1,
+      cliente:1,
+      contacto:1,
+      articulos: this.l_articulosTabla
      },
     
     l_precioTotal: 0,

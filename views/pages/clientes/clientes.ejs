@@ -31,7 +31,14 @@
                 </form>
               </div>
             </div>
-            <input type="text" name="Buscar Cliente" id="l_cliente" placeholder="Buscar Cliente" class="form-control">
+            <input type="text" name="l_buscarCliente" id="l_cliente" placeholder="Buscar Cliente" class="form-control" v-model="l_buscarCliente">
+            <!--Input de Buscador-->
+          <datalist id="listaClientes">
+              <div v-for="l_cliente in modelo.clientes">
+                <option v-bind:value="l_cliente.nombre">
+                  <!--Toma el valor del buscador-->
+              </div>
+            </datalist>
             <div class="input-group-append">
               <span class="input-group-text"><i class="fa fa-search"></i></span>
             </div>
@@ -43,7 +50,9 @@
 
       <div class="row">
         <div class="col">
-          <table class="table table-hover table-striped table-bordered">
+            <h5><span class="badge badge-pill badge-warning" v-if="filtroClientes.length === 0 && l_buscarCliente !== '' ">
+                No se encuentra ningún cliente <button class="btn btn-primary" type="button" ><i class="fa fa-question"></i></button></span></h5>
+          <table v-if="filtroClientes.length != 0" class="table table-hover table-striped table-bordered">
             <thead class="thead-light">
               <th>Nombre</th>
               <th>Correo de facturación</th>
@@ -51,7 +60,7 @@
               <th>Cédula(Física/Jurídica)</th>
               <th>Opciones</th>
             </thead>
-            <tbody v-for="empresa in modelo.clientes">
+            <tbody v-for="empresa in filtroClientes">
               <tr>
                 <td> {{empresa.nombre}} </td>
                 <td> {{empresa.correo}} </td>
@@ -60,7 +69,7 @@
                 <td>
                   <button type="button" class="btn btn-primary" @click="clickVerModalEditar(empresa)">
                     Editar </button>
-                  <button type="button" class="btn btn-danger" @click="clickVerModalEliminar">Eliminar</button>
+                  <button type="button" class="btn btn-danger" @click="clickVerModalEliminar(empresa)">Eliminar</button>
                   <button type="button" class="btn btn-info" @click="clickVerModalContactos(empresa)">Ver
                     Contactos</button>
                   <button type="button" class="btn btn-primary" @click="clickVerModalAgregarContactos">Agregar
@@ -134,24 +143,24 @@
       <button v-if="!l_edito " type="button" class="close" @click="clickCerrarModalContactos">&times</button>
       <h2 class="modal-title">Ver Contactos</h2>
     </div>
-    <div class="modal-body" v-for="empresa in o_cliente.Contacto">
+    <div class="modal-body" v-for="empresa in modelo.contactos">
 
       <div class="row" v-if="l_contacto.cedula==empresa.cedula">
         <div class="col-9">
-          <ajax-form action="insertarContacto" :syncing.sync="syncing" :cloud-error.sync="cloudError"
+          <ajax-form action="actualizarContacto" :syncing.sync="syncing" :cloud-error.sync="cloudError"
             :form-data="o_contacto" :form-errors.sync="formErrors" :form-rules="formRules"
-            @submitted="insertarContacto">
+            @submitted="">
             <div class="row">
               <div class="form-group col">
                 <label for="nombre">Nombre: </label>
-                <input type="text" class="form-control" id="nomCliNuevo" :value="empresa.nombre"
+                <input type="text" class="form-control" id="nomCliNuevo" 
                   v-model="o_contacto.nombre" :class="[(formErrors.nombre || o_contacto.nombre !== undefined) && !o_contacto.nombre ?
                            'is-invalid' : '']">
                 <div class="invalid-feedback" v-text="modelo.l_errorNombre"></div>
               </div>
               <div class="form-group col">
                 <label for="telefono">Teléfono: </label>
-                <input type="number" max="99999999" class="form-control" id="telCliNuevo" :value="empresa.telefono"
+                <input type="number" max="99999999" class="form-control" id="telCliNuevo" 
                   v-model="o_contacto.telefono" :class="[(formErrors.telefono || o_contacto.telefono !== undefined) && !o_contacto.telefono ?
                             'is-invalid' : '']">
                 <div class="invalid-feedback" v-text="modelo.l_errorTelefono"></div>
@@ -162,13 +171,13 @@
                 <label for="email">Email: </label>
                 <input type="email" name="email"
                   pattern="[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*@[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*[.][a-zA-Z]{1,5}"
-                  class="form-control" id="emaCliNuevo" :value="empresa.correo" v-model="o_contacto.correo" :class="[(formErrors.correo || o_contacto.correo !== undefined) && !o_contacto.correo ?
+                  class="form-control" id="emaCliNuevo" v-model="o_contacto.correo" :class="[(formErrors.correo || o_contacto.correo !== undefined) && !o_contacto.correo ?
                             'is-invalid' : '']">
                 <div class="invalid-feedback" v-text="modelo.l_errorCorreo"></div>
               </div>
               <div class="form-group col">
                 <label for="cedula">Cédula(Jurídica o Física)</label>
-                <input type="number" name="cedula" max="9999999999" :value="empresa.cedula" class="form-control"
+                <input type="number" name="cedula" max="9999999999" class="form-control"
                   id="cedNuevo" v-model="o_contacto.cedula" :class="[(formErrors.cedula || o_contacto.cedula !== undefined) && !o_contacto.cedula ?
                             'is-invalid' : '']">
                 <div class="invalid-feedback" v-text="modelo.l_errorCedula"></div>
@@ -237,7 +246,7 @@
     </div>
 
     <div class="modal-footer">
-      <button class="btn btn-primary" type="button" id="Aceptar">Aceptar</button>
+      <button class="btn btn-primary" type="button" id="Aceptar" @click="eliminarCliente()">Aceptar</button>
       <button class="btn btn-danger" type="button" id="Borrar" @click="clickCerrarModalEliminar">Cancelar</button>
     </div>
 
@@ -301,8 +310,8 @@
     <button type="button" class="close" @click="clickCerrarModalAgregarContactos()">&times</button>
     <h5 class="modal-title" id="exampleModalLabel">Agregando un Contacto</h5>
   </div>
-  <ajax-form action="" :syncing.sync="syncing" :cloud-error.sync="cloudError" :form-data="o_contacto"
-    :form-errors.sync="formErrors" :form-rules="formRules" @submitted="">
+  <ajax-form action="insertarContacto" :syncing.sync="syncing" :cloud-error.sync="cloudError" :form-data="o_contacto"
+    :form-errors.sync="formErrors" :form-rules="formRules" @submitted="insertarContacto">
     <div class="modal-body">
       <div class="row">
         <div class="form-group col">
