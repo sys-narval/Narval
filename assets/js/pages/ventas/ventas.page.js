@@ -15,6 +15,30 @@ parasails.registerPage('ventas', {
       precioTotal: undefined,
       cantidadSolicitada: 0
     }, //objeto local que permite recibir un articulo
+
+     // Datos del form
+     formData: { /* … */ },
+     syncing: false,
+     cloudError: '',
+     formErrors: { /* … */ },
+     formRules: {
+       
+     },
+     o_cotizacion:{
+      lugarEvento: "Cansas",
+      esDiseno: false,
+      esMontaje:true,
+      esAlquiler:true,
+      descripcion:"Coti de prueba",
+      fechaEvento:15,
+      fechaFinEvento:16,
+      fechaMontaje:15,
+      fechaDesmontaje:16,
+      encargado:{"id":1},
+      cliente:{},
+      contacto:{},
+      articulos:null
+     },
     
     l_precioTotal: 0,
       l_cantidadSolicitada: 0,
