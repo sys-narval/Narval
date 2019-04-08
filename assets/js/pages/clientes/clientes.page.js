@@ -199,7 +199,10 @@ parasails.registerPage('clientes', {
     actualizarContacto: async function(p_contacto){
 
     },
-    actualizarCliente: async function(p_contacto){
+    actualizarCliente: async function(p_cliente){
+
+    },
+    eliminarContacto: async function(p_contacto){
 
     }
 
