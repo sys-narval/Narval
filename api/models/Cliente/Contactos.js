@@ -14,9 +14,15 @@ module.exports = {
     //  ╩  ╩╚═╩╩ ╩╩ ╩ ╩ ╚╝ ╚═╝╚═╝
     nombre: {
       type: "string",
-      required: true,
       maxLength: 20,
       description: "Nombre del contacto de la empresa cliente"
+    },
+
+    cedula:{
+      type: "String",
+      required: true,
+      maxLength: 10,
+      description: "Numero de cedula de del contacto de la empresa del cliente"
     },
 
     telefono: {
