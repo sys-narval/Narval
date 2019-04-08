@@ -51,7 +51,7 @@
               <th>Cédula(Física/Jurídica)</th>
               <th>Opciones</th>
             </thead>
-            <tbody v-for="empresa in contactos">
+            <tbody v-for="empresa in modelo.clientes">
               <tr>
                 <td> {{empresa.nombre}} </td>
                 <td> {{empresa.correo}} </td>
@@ -82,7 +82,7 @@
       <button type="button" class="close" @click="clickCerrarModalEditar">&times</button>
       <h2 class="modal-title">Ver Cliente</h2>
     </div>
-    <ajax-form action="insertarCliente" :syncing.sync="syncing" :cloud-error.sync="cloudError" :form-data="o_cliente"
+    <ajax-form action="actualizarCliente" :syncing.sync="syncing" :cloud-error.sync="cloudError" :form-data="o_cliente"
       :form-errors.sync="formErrors" :form-rules="formRules" @submitted="actualizarCliente">
       <div class="modal-body">
         <div class="row">
@@ -120,23 +120,10 @@
 
 
         </div>
-        <div class="row">
-          <div class="form-group col">
-            <label for="email">Email: </label>
-            <input type="email" name="email"
-              pattern="[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*@[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*[.][a-zA-Z]{1,5}"
-              class="form-control" id="emaCliNuevo" placeholder="Digite el email" v-model="o_cliente.correo">
-          </div>
-          <div class="form-group col">
-            <label for="cedula">Cédula(Jurídica o Física)</label>
-            <input type="number" name="cedula" max="9999999999" placeholder="Digite la cédula" class="form-control"
-              id="cedNuevo" v-model="o_cliente.cedula">
-          </div>
-        </div>
       </div>
       <div class="modal-footer">
         <ajax-button type="submit" :syncing="syncing" class="btn btn-primary">Guardar</ajax-button>
-        <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-danger" @click="clickCerrarModalEditar">Cancelar</button>
       </div>
     </ajax-form>
   </modal>
@@ -151,9 +138,9 @@
 
       <div class="row" v-if="l_contacto.cedula==empresa.cedula">
         <div class="col-9">
-          <ajax-form action="insertarCliente" :syncing.sync="syncing" :cloud-error.sync="cloudError"
+          <ajax-form action="insertarContacto" :syncing.sync="syncing" :cloud-error.sync="cloudError"
             :form-data="o_contacto" :form-errors.sync="formErrors" :form-rules="formRules"
-            @submitted="actualizarContacto">
+            @submitted="insertarContacto">
             <div class="row">
               <div class="form-group col">
                 <label for="nombre">Nombre: </label>
@@ -301,7 +288,7 @@
       </div>
       <div class="modal-footer">
         <ajax-button type="submit" :syncing="syncing" class="btn btn-primary">Guardar</ajax-button>
-        <button type="button" class="btn btn-danger" @click="clickCerrarModalContactos">Cancelar</button>
+        <button type="button" class="btn btn-danger" @click="clickCerrarModalAgregar">Cancelar</button>
       </div>
     </ajax-form>
 

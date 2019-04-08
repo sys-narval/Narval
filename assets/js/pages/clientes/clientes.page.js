@@ -201,6 +201,12 @@ parasails.registerPage('clientes', {
     },
     actualizarCliente: async function(p_cliente){
 
+      this.$forceUpdate();
+      this.clickCerrarModalEditar();
+    },
+    insertarContacto: async function (p_contacto) {
+      this.$forceUpdate();
+      this.clickCerrarModalAgregarContactos();
     },
     eliminarContacto: async function(p_contacto){
 
