@@ -29,8 +29,7 @@ module.exports = {
       l_errorUnidadMedida: 'Por favor seleccione una unidad de medida.',
       l_errorIdRepetido: 'Artículo con el mismo ID ya existe',
     };
-
-    modelo.articulos = await Articulos.find();
+    
     return exits.success({
       modelo
     });
