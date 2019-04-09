@@ -228,8 +228,14 @@ parasails.registerPage('clientes', {
       this.$forceUpdate();
       this.clickCerrarModalAgregarContactos();
     },
-    eliminarContacto: async function(p_contacto){
-
+    eliminarContacto: async function(){
+      await Cloud.eliminarContacto.with(this.o_contacto);
+      this.modelo.contactos = this.modelo.contactos.map(contacto => {
+        if (contacto.cedula === this.o_contacto.cedula) {
+          contacto.activo = false;
+        }
+        return contacto;
+      });
     },
     eliminarCliente: async function()
     {
@@ -248,20 +254,19 @@ parasails.registerPage('clientes', {
     activarCliente: async function(p_cliente){
       p_cliente.activo = true;
       await Cloud.actualizarCliente.with(p_cliente);
-      this.actualizarUnArticulo(p_articulo);
+      this.actualizarUnCliente(p_cliente);
     },
-    actualizarCliente: async function (p_cliente) {
+    actualizarUnCliente: async function(p_cliente){
       
       this.modelo.clientes = this.modelo.clientes.map(cliente => {
         if (cliente.cedula === this.o_cliente.cedula) {
-          cliete = this.o_cliente;
+          cliente = this.o_cliente;
         }
         return cliente;
       });
-      this.l_actualizar = true;
       
       this.$forceUpdate();
-    }, //Metodo que actualiza un objeto de la base de datos local
+    }
 
   },
   computed: {
