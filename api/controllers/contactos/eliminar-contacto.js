@@ -30,7 +30,7 @@ module.exports = {
     fn: async function (inputs, exits) {
 
         try {
-            let contacto = await Contactos.find({ cedula: inputs.cedula });
+            let contacto = await Contactos.findOne({ cedula: inputs.cedula });
 
             if (contacto === undefined) {
                 return exits.contactoNoEncontrado(`Contacto ${inputs.cedula} no encontrado`);
