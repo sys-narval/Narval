@@ -56,7 +56,7 @@ module.exports = {
     //  ╠═╣╚═╗╚═╗║ ║║  ║╠═╣ ║ ║║ ║║║║╚═╗
     //  ╩ ╩╚═╝╚═╝╚═╝╚═╝╩╩ ╩ ╩ ╩╚═╝╝╚╝╚═╝
     cliente: {
-      model: "Clientes",
+      model: "clientes",
       description: "Referencia de cual es el cliente de este contacto"
     }
   },
