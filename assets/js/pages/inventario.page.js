@@ -53,10 +53,11 @@ parasails.registerPage('inventario', {
   //  ╦  ╦╔═╗╔═╗╔═╗╦ ╦╔═╗╦  ╔═╗
   //  ║  ║╠╣ ║╣ ║  ╚╦╝║  ║  ║╣
   //  ╩═╝╩╚  ╚═╝╚═╝ ╩ ╚═╝╩═╝╚═╝
-  beforeMount: function () {
+  beforeMount: async function () {
     // Attach any initial data from the server.
     _.extend(this, SAILS_LOCALS);
-    //this.modeloI.articulos= Cloud.extraerInventario();
+    
+    this.modelo.articulos = await Cloud.extraerInventario();
   },
   mounted: async function () {
     //…
@@ -94,11 +95,11 @@ parasails.registerPage('inventario', {
       this.l_actualizar = false;
     }, //Metodo que cierra el modal de Agregar Articulo
     cerrarModalAyuda: async function () {
-        this.l_verModalAyuda = false;
-      },
-      verModalAyuda: async function () {
-        this.l_verModalAyuda = true;
-      },
+      this.l_verModalAyuda = false;
+    },
+    verModalAyuda: async function () {
+      this.l_verModalAyuda = true;
+    },
     verModalActualizar: async function (p_articulo) {
       Object.assign(this.o_articulo, p_articulo);
       this.l_verModalActualizar = true;
