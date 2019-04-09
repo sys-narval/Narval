@@ -15,25 +15,20 @@
                 <form>
                   <!--Form del Filtro-->
                   <div class="form-group">
-                    <label for="busquedaPorNombreEmpresa">Nombre: </label>
-                    <input type="text" class="form-control" id="l_nomEmpresa" placeholder="Nombre de la Empresa"
-                      maxlength="20">
-                  </div>
-                  <div class="form-group">
                     <label for="busquedaPorTelefono">Teléfono: </label>
-                    <input type="text" class="form-control" id="l_Telefono" placeholder="Teléfono" maxlength="9">
+                    <input type="text" class="form-control" id="l_Telefono" placeholder="Teléfono" maxlength="9"  v-model="l_filtro.telefono">
                   </div>
                   <div class="form-group">
-                    <label for="busquedaPorTelefono">Correo: </label>
-                    <input type="text" class="form-control" id="l_email" placeholder="Correo Electrónico"
-                      maxlength="20">
+                    <label for="busquedaPorCedula">Cédula: </label>
+                    <input type="text" class="form-control" id="l_cedula" placeholder="Cédula"
+                      maxlength="20"  v-model="l_filtro.cedula">
                   </div>
                 </form>
               </div>
             </div>
-            <input type="text" name="l_buscarCliente" id="l_cliente" placeholder="Buscar Cliente" class="form-control" v-model="l_buscarCliente">
+            <input type="text" name="l_buscarCliente" id="l_clientes"  list="listaClientes" placeholder="Buscar Cliente" class="form-control" v-model="l_buscarCliente">
             <!--Input de Buscador-->
-          <datalist id="listaClientes">
+            <datalist id="listaClientes">
               <div v-for="l_cliente in modelo.clientes">
                 <option v-bind:value="l_cliente.nombre">
                   <!--Toma el valor del buscador-->
@@ -51,7 +46,7 @@
       <div class="row">
         <div class="col">
             <h5><span class="badge badge-pill badge-warning" v-if="filtroClientes.length === 0 && l_buscarCliente !== '' ">
-                No se encuentra ningún cliente <button class="btn btn-primary" type="button" ><i class="fa fa-question"></i></button></span></h5>
+                No se encuentra ningún cliente <button class="btn btn-primary" type="button" @click="clickVerModalAyuda" ><i class="fa fa-question"></i></button></span></h5>
           <table v-if="filtroClientes.length != 0" class="table table-hover table-striped table-bordered">
             <thead class="thead-light">
               <th>Nombre</th>
@@ -60,20 +55,23 @@
               <th>Cédula(Física/Jurídica)</th>
               <th>Opciones</th>
             </thead>
-            <tbody v-for="empresa in filtroClientes">
+            <tbody v-for="empresa in filtroClientes" :class="!filtroClientes.activo ?  'text-muted' : ''">
               <tr>
                 <td> {{empresa.nombre}} </td>
                 <td> {{empresa.correo}} </td>
                 <td> {{empresa.telefono}} </td>
                 <td> {{empresa.cedula}} </td>
-                <td>
+                <td v-if="filtroClientes.activo">
                   <button type="button" class="btn btn-primary" @click="clickVerModalEditar(empresa)">
                     Editar </button>
                   <button type="button" class="btn btn-danger" @click="clickVerModalEliminar(empresa)">Eliminar</button>
                   <button type="button" class="btn btn-info" @click="clickVerModalContactos(empresa)">Ver
                     Contactos</button>
-                  <button type="button" class="btn btn-primary" @click="clickVerModalAgregarContactos">Agregar
+                  <button type="button" class="btn btn-primary" @click="clickVerModalAgregarContactos(empresa)">Agregar
                     Contactos</button>
+                </td>
+                <td v-else>
+                    <input type="button" value="Reactivar" class="btn btn-success" @click="activarCliente(filtroClientes)">
                 </td>
               </tr>
 
@@ -292,6 +290,7 @@
               id="cedNuevo" v-model="o_cliente.cedula" :class="[(formErrors.cedula || o_cliente.cedula !== undefined) && !o_cliente.cedula ?
               'is-invalid' : '']">
             <div class="invalid-feedback" v-text="modelo.l_errorCedula"></div>
+            
           </div>
         </div>
       </div>
@@ -311,7 +310,7 @@
     <h5 class="modal-title" id="exampleModalLabel">Agregando un Contacto</h5>
   </div>
   <ajax-form action="insertarContacto" :syncing.sync="syncing" :cloud-error.sync="cloudError" :form-data="o_contacto"
-    :form-errors.sync="formErrors" :form-rules="formRules" @submitted="insertarContacto">
+    :form-errors.sync="formErrors" :form-rules="formRules" @submitted="clickGuardarContactos">
     <div class="modal-body">
       <div class="row">
         <div class="form-group col">
@@ -344,6 +343,7 @@
             id="cedNuevo" v-model="o_contacto.cedula" :class="[(formErrors.cedula || o_contacto.cedula !== undefined) && !o_contacto.cedula ?
               'is-invalid' : '']">
           <div class="invalid-feedback" v-text="modelo.l_errorCedula"></div>
+          <input type="text" hidden :value="l_cliente.nombre" :v-model="o_contacto.cliente" readonly > 
         </div>
       </div>
     </div>
@@ -352,9 +352,29 @@
       <button type="button" class="btn btn-danger" @click="clickCerrarModalAgregarContactos">Cancelar</button>
     </div>
   </ajax-form>
-  </div>
+  
 
 </modal>
+<!--Aca inicia el modal ayuda-->
+<modal v-if="l_verModalAyuda" id="verAyuda">
+    <div class="modal-header">
+      <button type="button" class="close" @click="clickCerrarModalAyuda">&times</button>
+      <h2 class="modal-title">Ayuda</h2>
+    </div>
+    <div class="modal-body">
+      <!-- Aquí va el contenido del modal -->
+      <p class="text-center">Si no encuentras este cliente; ten encuenta lo siguiente: </p>
+      <ul>
+        <li>Revisa los filtros si es el correcto o si esta bien escrito</li>
+        <li>El buscador utiliza el Número Telefónico o la Cédula (Física/Jurídica) para realizar la búsqueda</li>
+        <li>El buscador dispara la búsqueda apartir de los 3 primeros caracteres</li>
+      </ul>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-danger" type="button" id="Borrar" @click="clickCerrarModalAyuda">Cerrar</button>
+    </div>
+  </modal>
+  <!--Aca termina el modal de ayuda-->
 
 </div>
 <%- /* Expose server-rendered data as window.SAILS_LOCALS :: */ exposeLocalsToBrowser() %>

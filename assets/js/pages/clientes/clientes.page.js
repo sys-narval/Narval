@@ -14,7 +14,8 @@ parasails.registerPage('clientes', {
       nombre: undefined,
       telefono: undefined,
       correo: undefined,
-      cedula: undefined
+      cedula: undefined,
+      cliente: undefined
     },
     contactos: [{
       nombre: 'Coca-Cola',
@@ -61,6 +62,7 @@ parasails.registerPage('clientes', {
     l_verModalEliminar: false,
     l_verModalContactos: false,
     l_verModalAgregarContactos: false,
+    l_verModalAyuda: false,
     l_edito: false,
     l_buscarCliente:'',
     l_actualizar:false,
@@ -71,14 +73,15 @@ parasails.registerPage('clientes', {
       correo: undefined,
       cedula: undefined
     },
-
+    l_cliente: undefined,
     //cliente editado
 
     l_contacto: {
       nombre: undefined,
       telefono: undefined,
       correo: undefined,
-      cedula: undefined
+      cedula: undefined,
+      cliente: undefined
     },
 
     // Datos del form
@@ -134,12 +137,21 @@ parasails.registerPage('clientes', {
     clickCerrarModalEditar: async function () {
       this.l_verModalEditar = false
     },
+    clickVerModalAyuda: async function()
+    {
+      this.l_verModalAyuda = true;
+    },
+    clickCerrarModalAyuda: async function()
+    {
+      this.l_verModalAyuda = false;
+    },
     clickVerModalEliminar: async function (p_cliente) {
       this.o_cliente = p_cliente;
       this.l_verModalEliminar = true
     },
     clickCerrarModalEliminar: async function () {
-      this.l_verModalEliminar = false
+      this.l_verModalEliminar = false;
+      this.l_actualizar = false
     },
     clickVerModalAgregar: async function () {
       this.l_verModalAgregar = true
@@ -149,9 +161,10 @@ parasails.registerPage('clientes', {
       this.formErrors = {};
       this.limpiar_o_cliente();
     },
-    clickVerModalAgregarContactos: async function()
+    clickVerModalAgregarContactos: async function(p_cliente)
     {
       this.l_verModalAgregarContactos = true;
+      this.l_cliente = p_cliente;
     },
     clickCerrarModalAgregarContactos: async function()
     {
@@ -184,9 +197,12 @@ parasails.registerPage('clientes', {
       this.l_editarUnContacto = p_contacto;
       this.l_edito = true;
     },
-    clickGuardarContactos: async function () {
+    clickGuardarContactos: async function (p_contacto) {
       this.l_verModalContactos = false;
-      this.l_edito = false
+      this.l_edito = false;
+      this.p_contacto = {};
+      this.modelo.contactos.push(this.o_contacto);
+      this.clickCerrarModalAgregarContactos();
     },
     guardarCliente: async function (p_cliente) {
       /*
@@ -218,9 +234,34 @@ parasails.registerPage('clientes', {
     eliminarCliente: async function()
     {
       await Cloud.eliminarCliente.with(this.o_cliente);
+      this.modelo.clientes = this.modelo.clientes.map(cliente => {
+        if (cliente.cedula === this.o_cliente.cedula) {
+          cliente.activo = false;
+        }
+        return cliente;
+      });
+      this.l_actualizar = true;
       this.clickCerrarModalEliminar();
       this.$forceUpdate();
-    }
+
+    },
+    activarCliente: async function(p_cliente){
+      p_cliente.activo = true;
+      await Cloud.actualizarCliente.with(p_cliente);
+      this.actualizarUnArticulo(p_articulo);
+    },
+    actualizarCliente: async function (p_cliente) {
+      
+      this.modelo.clientes = this.modelo.clientes.map(cliente => {
+        if (cliente.cedula === this.o_cliente.cedula) {
+          cliete = this.o_cliente;
+        }
+        return cliente;
+      });
+      this.l_actualizar = true;
+      
+      this.$forceUpdate();
+    }, //Metodo que actualiza un objeto de la base de datos local
 
   },
   computed: {
