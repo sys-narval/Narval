@@ -15,7 +15,42 @@ parasails.registerPage('ventas', {
       precioTotal: undefined,
       cantidadSolicitada: 0
     }, //objeto local que permite recibir un articulo
-    
+
+     // Datos del form
+     formData: { /* … */ },
+     syncing: false,
+     cloudError: '',
+     formErrors: { /* … */ },
+     formRules: {
+       
+     },
+     o_cotizacion:{
+      lugarEvento: undefined,
+      esDiseno: false,
+      esMontaje:false,
+      esAlquiler:false,
+      descripcion:undefined,
+      fechaEvento:undefined,
+      fechaFinEvento:undefined,
+      fechaMontaje:undefined,
+      fechaDesmontaje:undefined,
+      encargado: undefined,
+      cliente:undefined,
+      contacto:undefined,
+      articulos: this.l_articulosTabla
+     },
+     o_cliente: {
+      nombre: undefined,
+      telefono: undefined,
+      correo: undefined,
+      cedula: undefined
+    },
+    o_contacto:{
+      nombre: undefined,
+      telefono: undefined,
+      correo: undefined,
+      cedula: undefined
+    },
     l_precioTotal: 0,
       l_cantidadSolicitada: 0,
       l_precioUnitario: 0,
@@ -46,7 +81,13 @@ parasails.registerPage('ventas', {
     l_cantidadLibre: 0,
     l_error: false,
     l_date: new Date,
-    l_date2: ""
+    l_date2: "",
+    l_buscarCliente:'',
+    l_buscarContacto:'',
+    l_actualizar:false,
+    l_filtro: {},
+    l_verModalAgregarC: false
+    
   },
 
   //  ╦  ╦╔═╗╔═╗╔═╗╦ ╦╔═╗╦  ╔═╗
@@ -84,6 +125,12 @@ parasails.registerPage('ventas', {
     },
     clickCerrarModalAgregar: async function () {
       this.l_verModalAgregar = false
+    },
+    clickVerModalAgregarC: async function(){
+      this.l_verModalAgregarC = true
+    },
+    clickCerrarModalAgregarC: async function(){
+      this.l_verModalAgregarC = false;
     },
     clickVerModalGuardar: async function () {
       this.l_verModalGuardar = true
@@ -179,6 +226,24 @@ parasails.registerPage('ventas', {
       }
     
     //return parseInt(this.l_sumatoria);
+    },
+    guardarCliente: async function (p_cliente) {
+      /*
+      this.o_cliente.telefono =  parseInt(this.o_cliente.telefono);
+      this.o_cliente.cedula = parseInt(this.o_cliente.cedula);
+      */
+      this.p_cliente = {};
+      this.modelo.clientes.push(this.o_cliente);
+
+      this.$forceUpdate();
+      this.clickCerrarModalAgregar();
+
+    },
+    guardarContacto: async function(p_contacto){
+      this.p_contacto = {};
+      this.modelo.contactos.push(this.o_contacto);
+      this.$forceUpdate();
+      this.clickCerrarModalAgregarC();
     }
   },
   filters: {
@@ -199,14 +264,42 @@ parasails.registerPage('ventas', {
     
     
     filteredContactos: function () {
-      return this.contactos.filter((contacto) => {
-        return contacto.name.match(this.txtCliente)
-      })
+      const c_limpiaFiltro = objeto => {
+        for (let t_atributo in objeto)
+          if (objeto[t_atributo] === null || objeto[t_atributo] === undefined || objeto[t_atributo] === '')
+            delete objeto[t_atributo];
+        return objeto;
+      }
+
+      /*
+       * Filtramos las articulos que cumplan con el filtro preestablecido por el usuario y que cumpla con
+       * que la barra de búsqueda tenga más de un dígito y coincida con la descripción o ubicación.
+       */
+      if (this.l_buscarContacto.length > 3 && this.l_actualizar === false) {
+        return _.filter(this.modelo.contactos, c_limpiaFiltro(this.l_filtro))
+          .filter(contacto => contacto.nombre.match(this.l_buscarContacto));
+      }  else {
+        return new Array();
+      }
     },
     filteredClientes: function () {
-      return this.clientes.filter((cliente) => {
-        return cliente.name.match(this.txtEmpresa)
-      })
+      const c_limpiaFiltro = objeto => {
+        for (let t_atributo in objeto)
+          if (objeto[t_atributo] === null || objeto[t_atributo] === undefined || objeto[t_atributo] === '')
+            delete objeto[t_atributo];
+        return objeto;
+      }
+
+      /*
+       * Filtramos las articulos que cumplan con el filtro preestablecido por el usuario y que cumpla con
+       * que la barra de búsqueda tenga más de un dígito y coincida con la descripción o ubicación.
+       */
+      if (this.l_buscarCliente.length > 3 && this.l_actualizar === false) {
+        return _.filter(this.modelo.clientes, c_limpiaFiltro(this.l_filtro))
+          .filter(cliente => cliente.nombre.match(this.l_buscarCliente) || cliente.telefono.includes(this.l_buscarCliente) || cliente.cedula.includes(this.l_buscarCliente));
+      }  else {
+        return new Array();
+      }
     },
 
     filtroCategorias: function () {

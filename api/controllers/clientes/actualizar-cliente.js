@@ -11,21 +11,20 @@ module.exports = {
     //Valores que posee un cliente
     nombre: {
       type: 'string',
-      required: true,
       maxLength: 20,
-      unique: true,
       description: 'Nombre del Cliente',
     },
 
     cedula: {
       type: 'string',
+      unique: true,
+      required: true,
       maxLength: 10,
       description: 'Cedula del cliente, se deja de 10 campos en caso de ced. jurídica',
     },
 
     correo: {
       type: 'string',
-      required: true,
       maxLength: 200,
       isEmail: true,
       description: 'Correo electrónico del cliente',
@@ -35,7 +34,12 @@ module.exports = {
       type: "string",
       maxLength: 10,
       description: "Número telefónico del cliente",
-      required: true,
+    },
+
+    activo: {
+      type: 'boolean',
+      defaultsTo: true,
+      description: 'Atributo para definir si el cliente esta activo o desactivo',
     },
 
   },
@@ -52,11 +56,11 @@ module.exports = {
 
   fn: async function (inputs, exits) {
     try {
-      let cliente = await Clientes.findOne({ nombre: inputs.nombre }).populate("contactos");
+      let cliente = await Clientes.findOne({ cedula: inputs.cedula }).populate("contactos");
       if (cliente === undefined) {
-        return exits.clienteNoEncontrado(`Cliente ${inputs.nombre} no encontrado`);
+        return exits.clienteNoEncontrado(`Cliente ${inputs.cedula} no encontrado`);
       } else {
-        await Clientes.update({ nombre: inputs.nombre }, inputs);
+        await Clientes.update({ cedula: inputs.cedula }, inputs);
         return exits.success();
       }
 

@@ -34,6 +34,13 @@ module.exports = {
       maxLength: 10,
       description: "Número telefónico del cliente"
     },
+
+    activo: {
+      type: 'boolean',
+      defaultsTo: true,
+      description: 'Atributo para definir si el cliente esta activo o desactivo',
+    },
+
   },
 
   exits: {
