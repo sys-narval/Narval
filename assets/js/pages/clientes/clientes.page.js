@@ -8,53 +8,55 @@ parasails.registerPage('clientes', {
       nombre: undefined,
       telefono: undefined,
       correo: undefined,
-      cedula: undefined
+      cedula: undefined,
+      activo: undefined
     },
-    o_contacto:{
+    o_contacto: {
       nombre: undefined,
       telefono: undefined,
       correo: undefined,
       cedula: undefined,
-      cliente: undefined
+      cliente: undefined,
+      activo: undefined
     },
     contactos: [{
-      nombre: 'Coca-Cola',
-      telefono: 25555555,
-      correo: 'coca@gmail.com',
-      cedula: 1012345678,
-      Contacto: [{
-        nombre: 'Jose quesada',
-        telefono: 88989899,
-        correo: 'jose@gmail.com',
+        nombre: 'Coca-Cola',
+        telefono: 25555555,
+        correo: 'coca@gmail.com',
         cedula: 1012345678,
+        Contacto: [{
+            nombre: 'Jose quesada',
+            telefono: 88989899,
+            correo: 'jose@gmail.com',
+            cedula: 1012345678,
+          },
+          {
+            nombre: 'Mario Porras',
+            telefono: 9998555,
+            correo: 'mario@gmail.com',
+            cedula: 1012345679,
+          }
+        ]
       },
       {
-        nombre: 'Mario Porras',
-        telefono: 9998555,
-        correo: 'mario@gmail.com',
+        nombre: 'Imprerial',
+        telefono: 2555555,
+        correo: 'imperial@gmail.com',
         cedula: 1012345679,
+        Contacto: [{
+            nombre: 'Carlos quesada',
+            telefono: 88989899,
+            correo: 'carlos@gmail.com',
+            cedula: 1012345678,
+          },
+          {
+            nombre: 'Juan Porras',
+            telefono: 9998555,
+            correo: 'juan@gmail.com',
+            cedula: 1012345679,
+          }
+        ]
       }
-      ]
-    },
-    {
-      nombre: 'Imprerial',
-      telefono: 2555555,
-      correo: 'imperial@gmail.com',
-      cedula: 1012345679,
-      Contacto: [{
-        nombre: 'Carlos quesada',
-        telefono: 88989899,
-        correo: 'carlos@gmail.com',
-        cedula: 1012345678,
-      },
-      {
-        nombre: 'Juan Porras',
-        telefono: 9998555,
-        correo: 'juan@gmail.com',
-        cedula: 1012345679,
-      }
-      ]
-    }
     ],
     informacion: {},
     l_verModalEditar: false,
@@ -64,14 +66,16 @@ parasails.registerPage('clientes', {
     l_verModalAgregarContactos: false,
     l_verModalAyuda: false,
     l_edito: false,
-    l_buscarCliente:'',
-    l_actualizar:false,
+    l_buscarCliente: '',
+    l_actualizar: false,
     l_filtro: {},
     l_editarUnContacto: {
       nombre: undefined,
       telefono: undefined,
       correo: undefined,
-      cedula: undefined
+      cedula: undefined,
+      cliente: undefined,
+      activo: undefined
     },
     l_cliente: undefined,
     //cliente editado
@@ -81,14 +85,17 @@ parasails.registerPage('clientes', {
       telefono: undefined,
       correo: undefined,
       cedula: undefined,
-      cliente: undefined
+      cliente: undefined,
+      activo: undefined
     },
 
     // Datos del form
-    formData: { /* … */ },
+    formData: {
+      /* … */ },
     syncing: false,
     cloudError: '',
-    formErrors: { /* … */ },
+    formErrors: {
+      /* … */ },
     formRules: {
       nombre: {
         required: true
@@ -126,7 +133,18 @@ parasails.registerPage('clientes', {
         nombre: undefined,
         telefono: undefined,
         correo: undefined,
-        cedula: undefined
+        cedula: undefined,
+        activo: undefined
+      }
+    },
+    limpiar_o_contacto: async function () {
+      this.o_contacto = {
+        nombre: undefined,
+        telefono: undefined,
+        correo: undefined,
+        cedula: undefined,
+        cliente: undefined,
+        activo: undefined
       }
     },
     //…
@@ -137,12 +155,10 @@ parasails.registerPage('clientes', {
     clickCerrarModalEditar: async function () {
       this.l_verModalEditar = false
     },
-    clickVerModalAyuda: async function()
-    {
+    clickVerModalAyuda: async function () {
       this.l_verModalAyuda = true;
     },
-    clickCerrarModalAyuda: async function()
-    {
+    clickCerrarModalAyuda: async function () {
       this.l_verModalAyuda = false;
     },
     clickVerModalEliminar: async function (p_cliente) {
@@ -154,6 +170,7 @@ parasails.registerPage('clientes', {
       this.l_actualizar = false
     },
     clickVerModalAgregar: async function () {
+      this.limpiar_o_cliente();
       this.l_verModalAgregar = true
     },
     clickCerrarModalAgregar: async function () {
@@ -161,13 +178,12 @@ parasails.registerPage('clientes', {
       this.formErrors = {};
       this.limpiar_o_cliente();
     },
-    clickVerModalAgregarContactos: async function(p_cliente)
-    {
+    clickVerModalAgregarContactos: async function (p_cliente) {
+      this.o_contacto.cliente = p_cliente.id;
       this.l_verModalAgregarContactos = true;
-      this.l_cliente = p_cliente;
     },
-    clickCerrarModalAgregarContactos: async function()
-    {
+    clickCerrarModalAgregarContactos: async function () {
+      this.limpiar_o_contacto();
       this.l_verModalAgregarContactos = false;
     },
     clickVerModalContactos: async function (p_cliente) {
@@ -176,19 +192,25 @@ parasails.registerPage('clientes', {
     },
     clickCerrarModalContactos: async function () {
       this.l_verModalContactos = false;
-      this.o_contacto = {nombre: undefined,
+      this.o_contacto = {
+        nombre: undefined,
         telefono: undefined,
         correo: undefined,
-        cedula: undefined};
-        this.l_contacto = {nombre: undefined,
-          telefono: undefined,
-          correo: undefined,
-          cedula: undefined};
-      this.l_editarUnContacto= {nombre: undefined,
+        cedula: undefined
+      };
+      this.l_contacto = {
+        nombre: undefined,
         telefono: undefined,
         correo: undefined,
-        cedula: undefined};
-      this.l_edito=false;
+        cedula: undefined
+      };
+      this.l_editarUnContacto = {
+        nombre: undefined,
+        telefono: undefined,
+        correo: undefined,
+        cedula: undefined
+      };
+      this.l_edito = false;
 
     },
     clickEditar: async function (p_contacto) {
@@ -210,16 +232,17 @@ parasails.registerPage('clientes', {
       this.o_cliente.cedula = parseInt(this.o_cliente.cedula);
       */
       this.p_cliente = {};
+      this.o_cliente.activo = true;
       this.modelo.clientes.push(this.o_cliente);
 
       this.$forceUpdate();
       this.clickCerrarModalAgregar();
 
     },
-    actualizarContacto: async function(p_contacto){
+    actualizarContacto: async function (p_contacto) {
 
     },
-    actualizarCliente: async function(p_cliente){
+    actualizarCliente: async function (p_cliente) {
 
       this.$forceUpdate();
       this.clickCerrarModalEditar();
@@ -228,7 +251,7 @@ parasails.registerPage('clientes', {
       this.$forceUpdate();
       this.clickCerrarModalAgregarContactos();
     },
-    eliminarContacto: async function(){
+    eliminarContacto: async function () {
       await Cloud.eliminarContacto.with(this.o_contacto);
       this.modelo.contactos = this.modelo.contactos.map(contacto => {
         if (contacto.cedula === this.o_contacto.cedula) {
@@ -237,8 +260,7 @@ parasails.registerPage('clientes', {
         return contacto;
       });
     },
-    eliminarCliente: async function()
-    {
+    eliminarCliente: async function () {
       await Cloud.eliminarCliente.with(this.o_cliente);
       this.modelo.clientes = this.modelo.clientes.map(cliente => {
         if (cliente.cedula === this.o_cliente.cedula) {
@@ -251,20 +273,35 @@ parasails.registerPage('clientes', {
       this.$forceUpdate();
 
     },
-    activarCliente: async function(p_cliente){
+    activarCliente: async function (p_cliente) {
       p_cliente.activo = true;
       await Cloud.actualizarCliente.with(p_cliente);
       this.actualizarUnCliente(p_cliente);
     },
-    actualizarUnCliente: async function(p_cliente){
-      
+    actualizarUnCliente: async function (p_cliente) {
+
       this.modelo.clientes = this.modelo.clientes.map(cliente => {
         if (cliente.cedula === this.o_cliente.cedula) {
           cliente = this.o_cliente;
         }
         return cliente;
       });
-      
+
+      this.$forceUpdate();
+    },
+    activarContacto: async function (p_contacto) {
+      p_contacto.activo = true;
+      await Cloud.actualizarContacto.with(p_contacto);
+      this.actualizarUnContacto(p_contacto);
+    },
+    actualizarUnContacto: async function (p_contacto) {
+      this.modelo.contactos = this.modelo.contactos.map(contacto => {
+        if (contacto.cedula === this.o_contacto.cedula) {
+          contacto = this.o_contacto;
+        }
+        return contacto;
+      });
+
       this.$forceUpdate();
     }
 

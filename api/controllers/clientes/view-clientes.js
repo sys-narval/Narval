@@ -20,9 +20,9 @@ module.exports = {
     let modelo = {
       l_errorNombre: 'El Nombre es requerido',
       l_errorCorreo: 'El Correo es requerido',
-      l_errorCedula: 'El Cedula es requerido',
-      l_errorTelefono: 'El Telefono es requerido',
-      l_errorIdRepetido: 'La cedula ya existe',
+      l_errorCedula: 'La Cédula es requerida',
+      l_errorTelefono: 'El Teléfono es requerido',
+      l_errorIdRepetido: 'La cédula ya existe',
     }
     // Respond with view.
 
