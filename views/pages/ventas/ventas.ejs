@@ -71,11 +71,17 @@
               </option>
             </datalist>
             <br>
-            <div v-if="filteredContactos.length === 0 && l_buscarContacto.length >= 3">
+            <div v-if="filteredContactos.length === 0 && l_buscarContacto.length >= 3 && filteredClientes[0] === undefined">
               <h5><span class="badge badge-pill badge-warning">
-                  No se encuentra ningún contacto con ese nombre</h5>
-              <input class="btn btn-primary" type="button" value="Agregar" @click="clickVerModalAgregarC()" />
-            </div>
+                  No añadió ningún cliente</h5>
+              
+                </div>
+                <div v-if="filteredClientes[0] !== undefined && filteredContactos.length === 0 && l_buscarContacto.length >= 3">
+                    <h5><span class="badge badge-pill badge-warning">
+                        No se encuentra ningún contacto con ese nombre</h5>
+                  <input class="btn btn-primary" type="button" value="Agregar" @click="clickVerModalAgregarC()" />
+
+                </div>
             <br>
             <ul v-if="filteredContactos.length !== 0" v-for="vContacto in filteredContactos">
               <div v-if="filteredContactos.length === 1 && l_buscarContacto.length > 3">
@@ -357,7 +363,7 @@
   <modal v-if="l_verModalAgregarC" id="modalAgregar">
 
       <div class="modal-header">
-        <button type="button" class="close" @click="clickCerrarModalAgregarContactos()">&times</button>
+        <button type="button" class="close" @click="clickCerrarModalAgregarC">&times</button>
         <h5 class="modal-title" id="exampleModalLabel">Agregando un Contacto</h5>
       </div>
       <ajax-form action="insertarContacto" :syncing.sync="syncing" :cloud-error.sync="cloudError" :form-data="o_contacto"
