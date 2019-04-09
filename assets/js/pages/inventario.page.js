@@ -56,8 +56,10 @@ parasails.registerPage('inventario', {
   beforeMount: async function () {
     // Attach any initial data from the server.
     _.extend(this, SAILS_LOCALS);
+
+    let respArticulos = await Cloud.extraerInventario();
     
-    this.modelo.articulos = await Cloud.extraerInventario();
+    this.modelo.articulos = respArticulos.articulos;
   },
   mounted: async function () {
     //…
