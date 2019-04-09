@@ -127,7 +127,8 @@ parasails.registerPage('ventas', {
       this.l_verModalAgregar = false
     },
     clickVerModalAgregarC: async function(){
-      this.l_verModalAgregarC = true
+      this.o_contacto.cliente = this.filteredClientes[0].id;
+      this.l_verModalAgregarC = true;
     },
     clickCerrarModalAgregarC: async function(){
       this.l_verModalAgregarC = false;
