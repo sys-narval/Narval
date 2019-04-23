@@ -49,7 +49,8 @@ parasails.registerPage('ventas', {
       nombre: undefined,
       telefono: undefined,
       correo: undefined,
-      cedula: undefined
+      cedula: undefined,
+      cliente: undefined
     },
     l_precioTotal: 0,
       l_cantidadSolicitada: 0,
@@ -63,6 +64,7 @@ parasails.registerPage('ventas', {
     l_sumatoria: 0,
     txtCliente: '',
     txtEmpresa: '',
+    l_cliente: undefined,
     clientes: [{
       name: ''
     }],
@@ -121,13 +123,22 @@ parasails.registerPage('ventas', {
       }
     },
     clickVerModalAgregar: async function () {
+      this.o_cliente.nombre = this.l_buscarCliente;
       this.l_verModalAgregar = true
     },
     clickCerrarModalAgregar: async function () {
       this.l_verModalAgregar = false
     },
     clickVerModalAgregarC: async function(){
-      this.o_contacto.cliente = this.filteredClientes[0].id;
+      this.o_contacto.nombre = this.l_buscarContacto;
+      if(this.filteredClientes[0].id !== undefined)
+      {
+        this.o_contacto.cliente = this.filteredClientes[0].id;
+      }else
+      {
+        this.l_cliente = await Cloud.extraerCliente(this.filteredClientes[0].cedula);
+        this.o_contacto.cliente = this.l_cliente.id; 
+      }
       this.l_verModalAgregarC = true;
     },
     clickCerrarModalAgregarC: async function(){
@@ -284,6 +295,7 @@ parasails.registerPage('ventas', {
       }
     },
     filteredClientes: function () {
+      
       const c_limpiaFiltro = objeto => {
         for (let t_atributo in objeto)
           if (objeto[t_atributo] === null || objeto[t_atributo] === undefined || objeto[t_atributo] === '')
@@ -295,6 +307,7 @@ parasails.registerPage('ventas', {
        * Filtramos las articulos que cumplan con el filtro preestablecido por el usuario y que cumpla con
        * que la barra de búsqueda tenga más de un dígito y coincida con la descripción o ubicación.
        */
+     
       if (this.l_buscarCliente.length > 3 && this.l_actualizar === false) {
         return _.filter(this.modelo.clientes, c_limpiaFiltro(this.l_filtro))
           .filter(cliente => cliente.nombre.match(this.l_buscarCliente) || cliente.telefono.includes(this.l_buscarCliente) || cliente.cedula.includes(this.l_buscarCliente));
