@@ -341,6 +341,10 @@
                 class="form-control" id="emaCliNuevo" placeholder="Digite el email" v-model="o_cliente.correo" :class="[(formErrors.correo || o_cliente.correo !== undefined) && !o_cliente.correo ?
                 'is-invalid' : '']">
               <div class="invalid-feedback" v-text="modelo.l_errorCorreo"></div>
+              <div v-if="o_cliente.correo !== undefined">
+
+                <div style="color:red" v-if="!(o_cliente.correo.indexOf('@') > -1) && o_cliente.correo.length >= 1"><p>Introduzca un correo válido</p></div>
+              </div>
             </div>
             <div class="form-group col">
               <label for="cedula">Cédula(Jurídica o Física)</label>
@@ -393,6 +397,10 @@
                 class="form-control" id="emaCliNuevo" placeholder="Digite el email" v-model="o_contacto.correo" :class="[(formErrors.correo || o_contacto.correo !== undefined) && !o_contacto.correo ?
                   'is-invalid' : '']">
               <div class="invalid-feedback" v-text="modelo.l_errorCorreo"></div>
+              <div v-if="o_contacto.correo !== undefined">
+
+                <div style="color:red" v-if="!(o_contacto.correo.indexOf('@') > -1) && o_contacto.correo.length >= 1"><p>Introduzca un correo válido</p></div>
+              </div>
             </div>
             <div class="form-group col">
               <label for="cedula">Cédula(Jurídica o Física)</label>

@@ -148,16 +148,16 @@
   <!--Modal EDitar Contactos-->
   <modal v-if="l_verModalContactos" id="modalEditar">
     <div class="modal-header">
-      <button v-if="!l_edito " type="button" class="close" @click="clickCerrarModalContactos">&times</button>
+      <button type="button" class="close" @click="clickCerrarModalContactos">&times</button>
       <h2 class="modal-title">Ver Contactos</h2>
     </div>
     <div class="modal-body" v-for="empresa in modelo.contactos">
       <div class="row" v-if="o_cliente.id==empresa.cliente">
 
-        <div class="row" v-if="l_contacto.cedula==empresa.cedula">
+        <div class="row" v-if="l_contacto.cedula==empresa.cedula && l_edito">
           <div class="col-9">
             <ajax-form action="actualizarContacto" :syncing.sync="syncing" :cloud-error.sync="cloudError"
-              :form-data="o_contacto" :form-errors.sync="formErrors" :form-rules="formRules" @submitted="">
+              :form-data="o_contacto" :form-errors.sync="formErrors" :form-rules="formRules" @submitted="actualizarContacto">
               <div class="row">
                 <div class="form-group col">
                   <label for="nombre">Nombre: </label>
@@ -196,7 +196,7 @@
               </div>
               <div class="row" v-if="o_contacto.activo">
                 <div class="col">
-                  <ajax-button type="submit" :syncing="syncing" class="btn btn-primary" @click="actualizarContacto">Guardar</ajax-button>
+                  <ajax-button type="submit" :syncing="syncing" class="btn btn-primary">Guardar</ajax-button>
                   <button type="button" class="btn btn-danger" @click="eliminarContacto">Borrar</button>
                 </div>
               </div>
