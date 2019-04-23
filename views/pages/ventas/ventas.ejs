@@ -49,10 +49,10 @@
             <ul v-if="filteredClientes.length !== 0" v-for="vEmpresa in filteredClientes">
               <div v-if="filteredClientes.length === 1 && l_buscarCliente.length > 3 ">
                 <li>
-                  Teléfono: {{vEmpresa.telefono}}
+                  <p>Teléfono: {{vEmpresa.telefono}} </p> 
                 </li>
                 <li>
-                  Correo: {{vEmpresa.correo}}
+                  <p>Correo: {{vEmpresa.correo}} </p>
                 </li>
               </div>
             </ul>
@@ -86,10 +86,10 @@
             <ul v-if="filteredContactos.length !== 0" v-for="vContacto in filteredContactos">
               <div v-if="filteredContactos.length === 1 && l_buscarContacto.length > 3">
                 <li>
-                  Teléfono: {{vContacto.telefono}}
+                  <p> Teléfono: {{vContacto.telefono}}</p> 
                 </li>
                 <li>
-                  Correo: {{vContacto.correo}}
+                  <p> Correo: {{vContacto.correo}}</p> 
                 </li>
               </div>
             </ul>
