@@ -9,7 +9,8 @@ parasails.registerPage('clientes', {
       telefono: undefined,
       correo: undefined,
       cedula: undefined,
-      activo: undefined
+      activo: undefined,
+      id: undefined
     },
     o_contacto: {
       nombre: undefined,
@@ -19,45 +20,7 @@ parasails.registerPage('clientes', {
       cliente: undefined,
       activo: undefined
     },
-    contactos: [{
-        nombre: 'Coca-Cola',
-        telefono: 25555555,
-        correo: 'coca@gmail.com',
-        cedula: 1012345678,
-        Contacto: [{
-            nombre: 'Jose quesada',
-            telefono: 88989899,
-            correo: 'jose@gmail.com',
-            cedula: 1012345678,
-          },
-          {
-            nombre: 'Mario Porras',
-            telefono: 9998555,
-            correo: 'mario@gmail.com',
-            cedula: 1012345679,
-          }
-        ]
-      },
-      {
-        nombre: 'Imprerial',
-        telefono: 2555555,
-        correo: 'imperial@gmail.com',
-        cedula: 1012345679,
-        Contacto: [{
-            nombre: 'Carlos quesada',
-            telefono: 88989899,
-            correo: 'carlos@gmail.com',
-            cedula: 1012345678,
-          },
-          {
-            nombre: 'Juan Porras',
-            telefono: 9998555,
-            correo: 'juan@gmail.com',
-            cedula: 1012345679,
-          }
-        ]
-      }
-    ],
+   
     informacion: {},
     l_verModalEditar: false,
     l_verModalAgregar: false,
@@ -134,7 +97,8 @@ parasails.registerPage('clientes', {
         telefono: undefined,
         correo: undefined,
         cedula: undefined,
-        activo: undefined
+        activo: undefined,
+        id: undefined
       }
     },
     limpiar_o_contacto: async function () {
@@ -153,6 +117,7 @@ parasails.registerPage('clientes', {
       this.l_verModalEditar = true;
     },
     clickCerrarModalEditar: async function () {
+      this.limpiar_o_cliente();
       this.l_verModalEditar = false
     },
     clickVerModalAyuda: async function () {
@@ -223,6 +188,7 @@ parasails.registerPage('clientes', {
       this.l_verModalContactos = false;
       this.l_edito = false;
       this.p_contacto = {};
+      this.o_contacto.activo = true;
       this.modelo.contactos.push(this.o_contacto);
       this.clickCerrarModalAgregarContactos();
     },
@@ -239,8 +205,8 @@ parasails.registerPage('clientes', {
       this.clickCerrarModalAgregar();
 
     },
-    actualizarContacto: async function (p_contacto) {
-
+    actualizarContacto: async function () {
+      alert("Editado Correctamente");
     },
     actualizarCliente: async function (p_cliente) {
 
