@@ -207,6 +207,7 @@ parasails.registerPage('clientes', {
     },
     actualizarContacto: async function () {
       alert("Editado Correctamente");
+      this.l_edito = false;
     },
     actualizarCliente: async function (p_cliente) {
 
