@@ -87,9 +87,9 @@ module.exports = {
 
     };
 
-    modelo.articulos = await Articulos.find();
+   /* modelo.articulos = await Articulos.find();
     modelo.clientes = await Clientes.find();
-    modelo.contactos = await Contactos.find();
+    modelo.contactos = await Contactos.find();*/
     // Respond with view.
     return exits.success({
       modelo

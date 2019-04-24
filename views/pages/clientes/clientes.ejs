@@ -152,7 +152,9 @@
       <h2 class="modal-title">Ver Contactos</h2>
     </div>
     <div class="modal-body" v-for="empresa in modelo.contactos">
-      <div class="row" v-if="o_cliente.id==empresa.cliente">
+        
+      <div class="row" v-if="o_cliente.id==empresa.cliente.id">
+         
 
         <div class="row" v-if="l_contacto.cedula==empresa.cedula && l_edito">
           <div class="col-9">
