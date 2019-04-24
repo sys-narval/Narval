@@ -26,8 +26,8 @@ module.exports = {
     }
     // Respond with view.
 
-    modelo.clientes=await Clientes.find();
-    modelo.contactos = await Contactos.find();
+    /*modelo.clientes=await Clientes.find();
+    modelo.contactos = await Contactos.find();*/
     return exits.success({modelo});
 
   }

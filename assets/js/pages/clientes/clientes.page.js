@@ -78,9 +78,16 @@ parasails.registerPage('clientes', {
   //  ╦  ╦╔═╗╔═╗╔═╗╦ ╦╔═╗╦  ╔═╗
   //  ║  ║╠╣ ║╣ ║  ╚╦╝║  ║  ║╣
   //  ╩═╝╩╚  ╚═╝╚═╝ ╩ ╚═╝╩═╝╚═╝
-  beforeMount: function () {
+  beforeMount: async function () {
     // Attach any initial data from the server.
     _.extend(this, SAILS_LOCALS);
+
+    let respClientes = await Cloud.extraerClientes();
+    let respContactos = await Cloud.extraerContactos();
+
+    this.modelo.clientes = respClientes;
+    this.modelo.contactos = respContactos;
+    console.log(respContactos);
   },
   mounted: async function () {
     //…
@@ -190,6 +197,7 @@ parasails.registerPage('clientes', {
       this.p_contacto = {};
       this.o_contacto.activo = true;
       this.modelo.contactos.push(this.o_contacto);
+     // this.modelo.clientes.find(cliente=> cliente.id === this.o_contacto.cliente).contactos.push(this.o_contacto); 
       this.clickCerrarModalAgregarContactos();
     },
     guardarCliente: async function (p_cliente) {
