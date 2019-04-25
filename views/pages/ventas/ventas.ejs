@@ -148,12 +148,24 @@
           <input class="form-control" type="date" id="date"
             :min="l_date.getFullYear() + '-' + '0'+ (l_date.getMonth()+1) + '-' + l_date.getDate()" v-model="l_fechaEvento" >
 
+            <div v-if="Date.parse(l_fechaEvento) < Date.parse(l_date.getFullYear() + '-' + '0'+ (l_date.getMonth()+1) + '-' + l_date.getDate())" style="color:red"> La fecha de inicio no puede ser una fecha pasada</div>
         </div>
 
         <div class="form-group col">
           <label class="col-form-label">Fin del evento</label>
-          <input class="form-control" type="date" id="date"
-            :min="l_date.getFullYear() + '-' + '0'+ (l_date.getMonth()+1) + '-' + l_date.getDate()" v-model="l_fechaFinEvento">
+          <div v-if="l_fechaEvento !== ''">
+
+            <input class="form-control" type="date" id="date"
+              :min="l_fechaEvento" v-model="l_fechaFinEvento">  
+          </div>
+          <div v-else>
+              <input class="form-control" type="date" id="date"
+              :min="l_date.getFullYear() + '-' + '0'+ (l_date.getMonth()+1) + '-' + l_date.getDate()" v-model="l_fechaFinEvento"> 
+          </div>
+          <div v-if="Date.parse(l_fechaEvento) > Date.parse(l_fechaFinEvento)" style="color:red"> La fecha de inicio no puede ser menor a la fecha final del evento </div>
+          
+
+            
         </div>
 
 
@@ -164,12 +176,22 @@
           <label class="col-form-label">Fecha de montaje</label>
           <input class="form-control" type="date" id="date"
             :min="l_date.getFullYear() + '-' + '0'+ (l_date.getMonth()+1) + '-' + l_date.getDate()"v-model="l_fechaMontaje">
+            <div v-if="Date.parse(l_fechaMontaje) < Date.parse(l_date.getFullYear() + '-' + '0'+ (l_date.getMonth()+1) + '-' + l_date.getDate())" style="color:red"> La fecha de montaje no puede ser una fecha pasada</div>
         </div>
 
         <div class="form-group col">
           <label class="col-form-label">Fecha de desmontaje </label>
-          <input id="date" class="form-control" required type="date"
-            :min="l_date.getFullYear() + '-' + '0'+ (l_date.getMonth()+1) + '-' + l_date.getDate()" v-model="l_fechaDesmontaje">
+          <div v-if="l_fechaMontaje !== ''">
+            
+            <input id="date" class="form-control" required type="date"
+              :min="l_fechaMontaje" v-model="l_fechaDesmontaje">
+          </div>
+          <div v-else>
+              <input id="date" class="form-control" required type="date"
+              :min="l_date.getFullYear() + '-' + '0'+ (l_date.getMonth()+1) + '-' + l_date.getDate()" v-model="l_fechaDesmontaje">
+          </div>
+          
+          <div v-if="Date.parse(l_fechaMontaje) > Date.parse(l_fechaDesmontaje)" style="color:red"> La fecha de montaje no puede ser menor a la fecha de desmontaje </div>
         </div>
       </div>
 
