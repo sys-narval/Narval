@@ -93,6 +93,15 @@ module.exports = {
 
   fn: async function (inputs, exits) {
     try {
+
+      // Verificación de las fechas del evento
+
+      // Verificación fecha del evento debe ser menor a la
+      // fecha del final del evento
+      if (inputs.fechaEvento > inputs.fechaFinEvento) {
+        
+      }
+
       let cotizacion = await Cotizaciones.create(inputs);
       return exits.success(cotizacion);
     } catch (error) {
