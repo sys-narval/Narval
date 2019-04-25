@@ -32,14 +32,14 @@ parasails.registerPage('ventas', {
       esMontaje: undefined,
       esAlquiler: undefined,
       descripcion: undefined,
-      fechaEvento: undefined,
-      fechaFinEvento: undefined,
-      fechaMontaje: undefined,
-      fechaDesmontaje: undefined,
+      fechaEvento: 0,
+      fechaFinEvento: 0,
+      fechaMontaje: 0,
+      fechaDesmontaje: 0,
       encargado: undefined,
       cliente: undefined,
       contacto: undefined,
-      articulos: this.l_articulosTabla
+      articulos: undefined
     },
     o_cliente: {
       nombre: undefined,
@@ -86,8 +86,8 @@ parasails.registerPage('ventas', {
     l_error: false,
     l_date: new Date,
     l_date2: "",
-    l_buscarCliente: '',
-    l_buscarContacto: '',
+    l_buscarCliente: undefined,
+    l_buscarContacto: undefined,
     l_actualizar: false,
     l_filtro: {},
     l_verModalAgregarC: false,
@@ -136,6 +136,24 @@ parasails.registerPage('ventas', {
         cantidadSolicitada: 0
       }
     },
+    limpiar_o_cotizacion: async function()
+    {
+      this.o_cotizacion = {
+        lugarEvento: undefined,
+      esDiseno: undefined,
+      esMontaje: undefined,
+      esAlquiler: undefined,
+      descripcion: undefined,
+      fechaEvento: 0,
+      fechaFinEvento: 0,
+      fechaMontaje: 0,
+      fechaDesmontaje: 0,
+      encargado: undefined,
+      cliente: undefined,
+      contacto: undefined,
+      articulos: undefined
+      }
+    },
     clickVerModalAgregar: async function () {
       this.o_cliente.nombre = this.l_buscarCliente;
       this.l_verModalAgregar = true
@@ -163,14 +181,24 @@ parasails.registerPage('ventas', {
       this.o_cotizacion.esAlquiler = this.l_sAlquiler;
       this.o_cotizacion.esMontaje = this.l_sMontaje;
       this.o_cotizacion.encargado = this.me.id;
-      this.o_cotizacion.fechaEvento = Date.parse(this.l_fechaEvento);
-      this.o_cotizacion.fechaFinEvento = Date.parse(this.l_fechaFinEvento);
-      this.o_cotizacion.fechaMontaje = Date.parse(this.l_fechaMontaje);
-      this.o_cotizacion.fechaDesmontaje = Date.parse(this.l_fechaDesmontaje);
+      this.o_cotizacion.articulos = this.l_selecArticulo;
+      if(this.l_fechaEvento !== '' && this.fechaFinEvento !== '')
+      {
+
+        this.o_cotizacion.fechaEvento = Date.parse(this.l_fechaEvento);
+        this.o_cotizacion.fechaFinEvento = Date.parse(this.l_fechaFinEvento);
+      }
+      if(this.l_fechaMontaje !== '' && this.l_fechaDesmontaje !== '')
+      {
+        this.o_cotizacion.fechaMontaje = Date.parse(this.l_fechaMontaje);
+        this.o_cotizacion.fechaDesmontaje = Date.parse(this.l_fechaDesmontaje);
+      }
       this.l_verModalAgregarCotizacion = true;
     },
     clickCerrarModalAgregarCotizacion: async function()
     {
+      this.limpiar_o_cotizacion();
+      location.reload();
       this.l_verModalAgregarCotizacion = false;
     },
     clickVerModalGuardar: async function () {
@@ -326,17 +354,24 @@ parasails.registerPage('ventas', {
        * Filtramos las articulos que cumplan con el filtro preestablecido por el usuario y que cumpla con
        * que la barra de búsqueda tenga más de un dígito y coincida con la descripción o ubicación.
        */
-      if (this.l_buscarContacto.length > 3 && this.l_actualizar === false) {
-        if (_.filter(this.modelo.contactos, c_limpiaFiltro(this.l_filtro))
-        .filter(contacto => contacto.nombre.match(this.l_buscarContacto))[0] !== undefined) {
+      if(this.l_buscarContacto !== undefined)
+      {
 
-
-        this.o_cotizacion.contacto = _.filter(this.modelo.contactos, c_limpiaFiltro(this.l_filtro))
-        .filter(contacto => contacto.nombre.match(this.l_buscarContacto))[0].id;
-      }
-        return _.filter(this.modelo.contactos, c_limpiaFiltro(this.l_filtro))
-          .filter(contacto => contacto.nombre.match(this.l_buscarContacto));
-      } else {
+        if (this.l_buscarContacto.length > 3 && this.l_actualizar === false) {
+          if (_.filter(this.modelo.contactos, c_limpiaFiltro(this.l_filtro))
+          .filter(contacto => contacto.nombre.match(this.l_buscarContacto))[0] !== undefined) {
+  
+  
+          this.o_cotizacion.contacto = _.filter(this.modelo.contactos, c_limpiaFiltro(this.l_filtro))
+          .filter(contacto => contacto.nombre.match(this.l_buscarContacto))[0].id;
+        }
+          return _.filter(this.modelo.contactos, c_limpiaFiltro(this.l_filtro))
+            .filter(contacto => contacto.nombre.match(this.l_buscarContacto));
+        } else {
+          return new Array();
+        }
+      }else
+      {
         return new Array();
       }
     },
@@ -353,20 +388,28 @@ parasails.registerPage('ventas', {
        * Filtramos las articulos que cumplan con el filtro preestablecido por el usuario y que cumpla con
        * que la barra de búsqueda tenga más de un dígito y coincida con la descripción o ubicación.
        */
+     
+        if(this.l_buscarCliente !== undefined)
+        {
 
-      if (this.l_buscarCliente.length > 3 && this.l_actualizar === false) {
-        if (_.filter(this.modelo.clientes, c_limpiaFiltro(this.l_filtro))
-        .filter(cliente => cliente.nombre.match(this.l_buscarCliente) || cliente.telefono.includes(this.l_buscarCliente) || cliente.cedula.includes(this.l_buscarCliente))[0] !== undefined) {
-
-
-        this.o_cotizacion.cliente =  _.filter(this.modelo.clientes, c_limpiaFiltro(this.l_filtro))
-          .filter(cliente => cliente.nombre.match(this.l_buscarCliente) || cliente.telefono.includes(this.l_buscarCliente) || cliente.cedula.includes(this.l_buscarCliente))[0].id;
-      }
-        return _.filter(this.modelo.clientes, c_limpiaFiltro(this.l_filtro))
-          .filter(cliente => cliente.nombre.match(this.l_buscarCliente) || cliente.telefono.includes(this.l_buscarCliente) || cliente.cedula.includes(this.l_buscarCliente));
-      } else {
-        return new Array();
-      }
+          if (this.l_buscarCliente.length > 3 && this.l_actualizar === false) {
+            if (_.filter(this.modelo.clientes, c_limpiaFiltro(this.l_filtro))
+            .filter(cliente => cliente.nombre.match(this.l_buscarCliente) || cliente.telefono.includes(this.l_buscarCliente) || cliente.cedula.includes(this.l_buscarCliente))[0] !== undefined) {
+    
+    
+            this.o_cotizacion.cliente =  _.filter(this.modelo.clientes, c_limpiaFiltro(this.l_filtro))
+              .filter(cliente => cliente.nombre.match(this.l_buscarCliente) || cliente.telefono.includes(this.l_buscarCliente) || cliente.cedula.includes(this.l_buscarCliente))[0].id;
+          }
+            return _.filter(this.modelo.clientes, c_limpiaFiltro(this.l_filtro))
+              .filter(cliente => cliente.nombre.match(this.l_buscarCliente) || cliente.telefono.includes(this.l_buscarCliente) || cliente.cedula.includes(this.l_buscarCliente));
+          } else {
+            return new Array();
+          }
+        }else
+        {
+          return new Array();
+        }
+      
     },
 
     filtroCategorias: function () {
