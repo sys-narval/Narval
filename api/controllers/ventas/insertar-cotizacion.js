@@ -62,18 +62,21 @@ module.exports = {
     //  ║╣ ║║║╠╩╗║╣  ║║╚═╗
     //  ╚═╝╩ ╩╚═╝╚═╝═╩╝╚═╝
     encargado: {
-      type: "json",
-      required: true
+      type: "number",
+      required: true,
+      description: "ID del encargado del evento"
     },
 
     cliente: {
-      type: "json",
-      required: true
+      type: "number",
+      required: true,
+      description: "ID del cliente del evento"
     },
 
     contacto: {
-      type: "json",
-      required: true
+      type: "number",
+      required: true,
+      description: "ID del contacto del evento"
     },
 
     articulos: {
