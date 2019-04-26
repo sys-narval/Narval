@@ -1,7 +1,7 @@
 module.exports = {
 
 
-  friendlyName: 'Insertar cotizacion',
+  friendlyName: 'Insertar cotización',
 
 
   description: '',
@@ -62,18 +62,21 @@ module.exports = {
     //  ║╣ ║║║╠╩╗║╣  ║║╚═╗
     //  ╚═╝╩ ╩╚═╝╚═╝═╩╝╚═╝
     encargado: {
-      type: "json",
-      required: true
+      type: "number",
+      required: true,
+      description: "ID del encargado del evento"
     },
 
     cliente: {
-      type: "json",
-      required: true
+      type: "number",
+      required: true,
+      description: "ID del cliente del evento"
     },
 
     contacto: {
-      type: "json",
-      required: true
+      type: "number",
+      required: true,
+      description: "ID del contacto del evento"
     },
 
     articulos: {
@@ -90,6 +93,21 @@ module.exports = {
 
   fn: async function (inputs, exits) {
     try {
+
+      // Verificación de las fechas del evento
+
+      // Verificación fecha del evento debe ser menor a la
+      // fecha del final del evento
+      if (inputs.fechaEvento && inputs.fechaFinEvento && inputs.fechaEvento > inputs.fechaFinEvento) {
+        return exits.error("No se puede crear cotización cuya fecha de inicio sea mayor a la fecha final");
+      }
+      
+      // Verificación fecha del montaje debe ser menor a la 
+      // fecha del desmontaje
+      if (inputs.fechaMontaje && inputs.fechaDesmontaje && inputs.fechaMontaje > inputs.fechaDesmontaje) {
+        return exits.error("No se puede crear cotización cuya fecha de montaje sea mayor a la fecha desmontaje");
+      }
+
       let cotizacion = await Cotizaciones.create(inputs);
       return exits.success(cotizacion);
     } catch (error) {
