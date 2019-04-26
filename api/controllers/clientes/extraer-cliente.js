@@ -30,12 +30,13 @@ module.exports = {
 
     try {
 
-      let cliente = await Clientes.findOne({ cedula: inputs.cedula }).populate("contactos");
+      let cliente = await Clientes.findOne({
+        cedula: inputs.cedula
+      }).populate("contactos");
 
       if (cliente === undefined) {
         return exits.clienteNoEncontrado(`Cliente ${inputs.cedula} no encontrado`);
-      }
-      else {
+      } else {
         return exits.success(cliente);
       }
 
