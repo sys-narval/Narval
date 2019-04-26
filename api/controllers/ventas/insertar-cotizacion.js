@@ -79,7 +79,7 @@ module.exports = {
       description: "ID del contacto del evento"
     },
 
-    articulos: {
+    jsonArticulos: {
       type: "json"
     }
 
@@ -94,25 +94,43 @@ module.exports = {
   fn: async function (inputs, exits) {
     try {
 
-      // Verificación de las fechas del evento
+      /**
+       * Verificación de las fechas en la cotización
+       */
 
       // Verificación fecha del evento debe ser menor a la
       // fecha del final del evento
       if (inputs.fechaEvento && inputs.fechaFinEvento && inputs.fechaEvento > inputs.fechaFinEvento) {
         return exits.error("No se puede crear cotización cuya fecha de inicio sea mayor a la fecha final");
       }
-      
+
       // Verificación fecha del montaje debe ser menor a la 
       // fecha del desmontaje
       if (inputs.fechaMontaje && inputs.fechaDesmontaje && inputs.fechaMontaje > inputs.fechaDesmontaje) {
         return exits.error("No se puede crear cotización cuya fecha de montaje sea mayor a la fecha desmontaje");
       }
 
-      let cotizacion = await Cotizaciones.create(inputs);
-      return exits.success(cotizacion);
+      /**
+       * Verificación del inventario en caso de ser alquiler o montaje
+       */
+      if ((inputs.esMontaje || inputs.esAlquiler) && inputs.jsonArticulos === undefined) {
+        return exits.error("En caso de Alquiler o Montaje, por favor ingrese artículos");
+      } else {
+        inputs.articulos = inputs.jsonArticulos.articulos.map(articulo => articulo.id);
+      }
+
+
+
+
+      await Cotizaciones.create(inputs);
+      return exits.success();
+
     } catch (error) {
-      return exits.error(error);
+
+      return exits.error(error.message);
+
     }
+
   }
 
 };
