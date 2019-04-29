@@ -19,7 +19,7 @@ module.exports = {
   fn: async function (inputs, exits) {
 
     let modelo = {
-      cotizaciones: [{
+    /*  cotizaciones: [{
           id: 1,
           encargado: 'Adrian Chavarria',
           cliente: 'Coca-Cola',
@@ -44,7 +44,7 @@ module.exports = {
           fechaFin: '2018-12-05',
           descripcion: 'Fiesta Imperial'
         }
-      ]
+      ]*/
     };
 
     // Respond with view.
