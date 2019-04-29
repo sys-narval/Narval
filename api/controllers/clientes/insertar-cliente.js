@@ -16,6 +16,12 @@ module.exports = {
       description: "Nombre del cliente"
     },
 
+    nombreReal: {
+      type: "string",
+      maxLength: 20,
+      description: "Nombre real del cliente con respecto a documentos jurídicos"
+    },
+
     cedula: {
       type: "string",
       maxLength: 10,
