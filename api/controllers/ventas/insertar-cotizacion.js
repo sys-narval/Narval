@@ -113,9 +113,10 @@ module.exports = {
       /**
        * Verificación del inventario en caso de ser alquiler o montaje
        */
-      if ((inputs.esMontaje || inputs.esAlquiler) && inputs.jsonArticulos === undefined) {
+      
+      if ((inputs.esMontaje || inputs.esAlquiler) && inputs.jsonArticulos.articulos === undefined) {
         return exits.error("En caso de Alquiler o Montaje, por favor ingrese artículos");
-      } else {
+      } else if(inputs.jsonArticulos.articulos !== undefined){
         inputs.articulos = inputs.jsonArticulos.articulos.map(articulo => articulo.id);
       }
 
