@@ -9,7 +9,7 @@
               aria-haspopup="true" aria-expanded="false">Filtros</button>
             <div class="dropdown-menu p-4">
               <div class="form-check mb-2">
-                <input type="checkbox" name="mis cotizaciones" id="misCotizaciones" class="form-check-input" v-model="l_filtro.misCotizaciones">
+                <input type="checkbox" name="mis cotizaciones" id="misCotizaciones" class="form-check-input" v-model="l_filtro.misCotizaciones" @click="l_myId = me.id">
                 <label for="misCotizaciones" class="form-check-label">Mis Cotizaciones</label>
               </div>
               <div class="form-group">
@@ -97,18 +97,69 @@
                 <h1 class="text-center">Cotización #{{o_cotizacion.id}}</h1>
               </div>
           <div class="row">
-            <!-- Encargado del evento -->
-            <div class="form-group col">
-              <label for="encargado">Encargado</label>
-              <input type="text" id="encargado" class="form-control" :value="o_cotizacion.encargado.fullName" readonly>
-            </div>
             <!-- Cliente del evento -->
             <div class="form-group col">
               <label for="cliente">Cliente</label>
               <input type="text" id="cliente" class="form-control" :value="o_cotizacion.cliente.nombre">
+              <ul >
+                  <div>
+                    <li>
+                      <p > Teléfono: {{o_cotizacion.cliente.telefono}}</p> 
+                    </li>
+                    <li>
+                      <p> Correo: {{o_cotizacion.cliente.correo}}</p> 
+                    </li>
+                  </div>
+                </ul>
+            </div>
+            <!-- Contacto del evento -->
+            <div class="form-group col">
+              <label for="contacto">Contacto</label>
+              <input type="text" id="contacto" class="form-control" :value="o_cotizacion.contacto.nombre" >
+
+              <ul >
+                  <div>
+                    <li>
+                      <p > Teléfono: {{o_cotizacion.contacto.telefono}}</p> 
+                    </li>
+                    <li>
+                      <p> Correo: {{o_cotizacion.contacto.correo}}</p> 
+                    </li>
+                  </div>
+                </ul>
             </div>
           </div>
-          <div class="row" v-if="o_cotizacion.fechaEvento !== 0">
+          <div class="row">
+            <div class="form-group col">
+                <label>Tipo de servicio </label>
+              <div>
+                <div class="form-check">
+                    <label class="form-check-label">
+                      <input type="checkbox" class="form-check-input" v-if="o_cotizacion.esDiseno" checked>
+                      <input type="checkbox" class="form-check-input" v-else>
+                      Otros Servicios
+                    </label>
+                  </div>
+                  <div class="form-check">
+                    <label class="form-check-label">
+                      <input type="checkbox" class="form-check-input" v-if="o_cotizacion.esMontaje" checked>
+                      <input type="checkbox" class="form-check-input" v-else>
+                      Servicio de producción
+                    </label>
+                  </div>
+                  <div class="form-check">
+                    <label class="form-check-label">
+                      <input type="checkbox" class="form-check-input" v-if="o_cotizacion.esAlquiler" checked>
+                      <input type="checkbox" class="form-check-input" v-else>
+                      Servicio de alquiler
+                    </label>
+                  </div>
+
+              </div>
+
+            </div>
+          </div>
+          <div class="row" v-if="o_cotizacion.esMontaje || o_cotizacion.esAlquiler">
             <!-- Fecha del Evento -->
             <div class="form-group col">
               <label for="fechaEvento">Fecha del Evento</label>
@@ -120,7 +171,7 @@
               <input type="date" name="Fecha Fin" id="fechaFin" :value="o_cotizacion.fechaFinEvento" class="form-control">
             </div>
           </div>
-          <div class="row" v-if="o_cotizacion.fechaMontaje !== 0">
+          <div class="row" v-if="o_cotizacion.esMontaje">
             <!-- Fecha de Montaje -->
             <div class="form-group col">
               <label for="fechaEvento">Fecha de Montaje</label>
@@ -132,13 +183,13 @@
               <input type="date" name="Fecha Desmontaje" id="fechaDesmontaje" :value="o_cotizacion.fechaDesmontaje" class="form-control">
             </div>
           </div>
-          <div class="row">
+          <div class="row" v-if="o_cotizacion.esMontaje || o_cotizacion.esDiseno || o_cotizacion.esAlquiler">
             <div class="form-group col">
               <label for="descipcion">Descripción:</label>
               <textarea name="Descripción" id="descripcion" cols="30" rows="3" class="form-control" :value="o_cotizacion.descripcion"></textarea>
             </div>
           </div>
-          <div class="row" v-if="o_cotizacion.articulos">
+          <div class="row" v-if="o_cotizacion.esMontaje || o_cotizacion.esAlquiler">
             <div class="form-group col">
               <table class="table table-bordered table-striped table-hover">
                 <thead class="thead-light">
