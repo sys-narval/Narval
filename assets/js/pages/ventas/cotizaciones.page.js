@@ -9,6 +9,7 @@ parasails.registerPage('cotizaciones', {
     l_modBorrarEvento: false,
     l_modCopiarEvento: false,
     l_busquedaCotizacion: '',
+    l_myId: '',
     l_filtro: {},
      // Datos del form
      formData: {
@@ -65,7 +66,7 @@ parasails.registerPage('cotizaciones', {
             this.o_cotizacion.fechaDesmontaje = t_fechaDesmontaje.getFullYear() + '-' + '0'+ (t_fechaDesmontaje.getMonth()+1) + '-' + t_fechaDesmontaje.getDate();
           }
 
-
+          console.log(this.me.id);
           this.l_verModal = true;
         },
 
@@ -131,9 +132,11 @@ parasails.registerPage('cotizaciones', {
         * Filtramos las cotizaciones que cumplan con el filtro preestablecido por el usuario y que cumpla con
         * que la barra de búsqueda tenga más de un dígito y coincida con la descripción o ubicación.
         */
-        if (this.l_busquedaCotizacion.length > 3) {
+
+        if (this.l_busquedaCotizacion.length > 3 ) {
+          
           return _.filter(this.modelo.cotizaciones, limpiaFiltro(this.l_filtro))
-            .filter(cotizacion => cotizacion.descripcion.includes(this.l_busquedaCotizacion) || cotizacion.lugarEvento.includes(this.l_busquedaCotizacion));
+            .filter(cotizacion => cotizacion.encargado.fullName.includes(this.l_busquedaCotizacion) ||cotizacion.descripcion.includes(this.l_busquedaCotizacion) || cotizacion.lugarEvento.includes(this.l_busquedaCotizacion));
         }else if(this.l_busquedaCotizacion === "*")
         {
           return this.modelo.cotizaciones;
