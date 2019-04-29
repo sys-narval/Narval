@@ -31,9 +31,9 @@ module.exports = {
         .populate("articulos");
 
       if (cotizaciones === undefined) {
-        return exits.success(cotizaciones)
-      } else {
         return exits.noHayCotizaciones(`No existen cotizaciones.`);
+      } else {
+        return exits.success(cotizaciones)
       }
 
     } catch (error) {
@@ -41,7 +41,5 @@ module.exports = {
       return exits.error(error.message);
 
     }
-
   }
-
 };
