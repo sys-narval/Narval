@@ -57,10 +57,10 @@ module.exports.routes = {
   'POST  /api/v1/entrance/update-password-and-login':     { action: 'entrance/update-password-and-login' },
   'POST  /api/v1/deliver-contact-form-message':           { action: 'deliver-contact-form-message' },
 
-  'GET /api/v1/inventario/extraer-inventario':            {action: 'inventario/extraer-inventario'},
+  'GET /api/v1/inventario/extraer-inventario':            { action: 'inventario/extraer-inventario'},
   'POST /api/v1/inventario/insertar-un-articulo':         { action: 'inventario/insertar-un-articulo' },
-  'POST /api/v1/inventario/actualizar-un-articulo':       {action: 'inventario/actualizar-un-articulo'},
-  'DELETE /api/v1/inventario/eliminar-un-articulo':       {action: 'inventario/eliminar-un-articulo'},
+  'POST /api/v1/inventario/actualizar-un-articulo':       { action: 'inventario/actualizar-un-articulo'},
+  'DELETE /api/v1/inventario/eliminar-un-articulo':       { action: 'inventario/eliminar-un-articulo'},
 
   'GET /api/v1/clientes/extraer-cliente':                 { action: 'clientes/extraer-cliente' },
   'GET /api/v1/clientes/extraer-clientes':                { action: 'clientes/extraer-clientes' },
@@ -68,14 +68,15 @@ module.exports.routes = {
   'POST /api/v1/clientes/actualizar-cliente':             { action: 'clientes/actualizar-cliente' },
   'POST /api/v1/clientes/eliminar-cliente':               { action: 'clientes/eliminar-cliente' },
 
-  'GET /api/v1/contactos/extraer-contactos':                 { action: 'contactos/extraer-contactos' },
-  'POST /api/v1/contactos/insertar-contacto':               { action: 'contactos/insertar-contacto' },
-  'POST /api/v1/contactos/actualizar-contacto':               { action: 'contactos/actualizar-contacto' },
-  'POST /api/v1/contactos/eliminar-contacto':               { action: 'contactos/eliminar-contacto' },
+  'GET /api/v1/contactos/extraer-contactos':              { action: 'contactos/extraer-contactos' },
+  'POST /api/v1/contactos/insertar-contacto':             { action: 'contactos/insertar-contacto' },
+  'POST /api/v1/contactos/actualizar-contacto':           { action: 'contactos/actualizar-contacto' },
+  'POST /api/v1/contactos/eliminar-contacto':             { action: 'contactos/eliminar-contacto' },
 
   'GET /api/v1/ventas/extraer-cotizacion':                { action: 'ventas/extraer-cotizacion' },
   'GET /api/v1/ventas/extraer-cotizaciones':              { action: 'ventas/extraer-cotizaciones' },
   'POST /api/v1/ventas/insertar-cotizacion':              { action: 'ventas/insertar-cotizacion' },
+  'POST /api/v1/ventas/actualizar-cotizacion':           { action: 'ventas/actualizar-cotizacion' },
 
   //  ╦ ╦╔═╗╔╗ ╦ ╦╔═╗╔═╗╦╔═╔═╗
   //  ║║║║╣ ╠╩╗╠═╣║ ║║ ║╠╩╗╚═╗
