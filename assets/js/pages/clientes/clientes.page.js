@@ -6,6 +6,7 @@ parasails.registerPage('clientes', {
     //…
     o_cliente: {
       nombre: undefined,
+      nombreReal: undefined,
       telefono: undefined,
       correo: undefined,
       cedula: undefined,
@@ -101,6 +102,7 @@ parasails.registerPage('clientes', {
     limpiar_o_cliente: async function () {
       this.o_cliente = {
         nombre: undefined,
+        nombreReal: undefined,
         telefono: undefined,
         correo: undefined,
         cedula: undefined,

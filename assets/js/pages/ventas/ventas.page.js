@@ -39,10 +39,11 @@ parasails.registerPage('ventas', {
       encargado: undefined,
       cliente: undefined,
       contacto: undefined,
-      articulos: undefined
+      jsonArticulos: {articulos: undefined} 
     },
     o_cliente: {
       nombre: undefined,
+      nombreReal: undefined,
       telefono: undefined,
       correo: undefined,
       cedula: undefined
@@ -181,7 +182,7 @@ parasails.registerPage('ventas', {
       this.o_cotizacion.esAlquiler = this.l_sAlquiler;
       this.o_cotizacion.esMontaje = this.l_sMontaje;
       this.o_cotizacion.encargado = this.me.id;
-      this.o_cotizacion.articulos = this.l_selecArticulo;
+     // this.o_cotizacion.articulos = this.l_selecArticulo;
       if(this.l_fechaEvento !== '' && this.fechaFinEvento !== '')
       {
 
