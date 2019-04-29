@@ -55,6 +55,7 @@ parasails.registerPage('ventas', {
       cedula: undefined,
       cliente: undefined
     },
+    l_prueba: [],
     l_precioTotal: 0,
     l_cantidadSolicitada: 0,
     l_precioUnitario: 0,
@@ -182,7 +183,7 @@ parasails.registerPage('ventas', {
       this.o_cotizacion.esAlquiler = this.l_sAlquiler;
       this.o_cotizacion.esMontaje = this.l_sMontaje;
       this.o_cotizacion.encargado = this.me.id;
-     // this.o_cotizacion.articulos = this.l_selecArticulo;
+      this.o_cotizacion.jsonArticulos.articulos = this.l_prueba;
       if(this.l_fechaEvento !== '' && this.fechaFinEvento !== '')
       {
 
@@ -250,6 +251,7 @@ parasails.registerPage('ventas', {
       if (!esta) {
 
         this.l_selecArticulo.push(p_articulo.id);
+        this.l_prueba.push({id:p_articulo.id, cantidad: p_articulo.cantidadSolicitada});
         this.l_articulosTabla.push(p_articulo);
         this.sumatoria();
       }
@@ -257,6 +259,7 @@ parasails.registerPage('ventas', {
     quitarArticuloTabla: async function (p_articulo) {
       let t_arregloSalida = [];
       let t_arregloSalida2 = [];
+      let t_prueba = [];
       for (let index = 0; index < this.l_selecArticulo.length; index++) {
         if (this.l_selecArticulo[index] !== p_articulo.id) {
           t_arregloSalida.push(this.l_selecArticulo[index]);
@@ -267,8 +270,12 @@ parasails.registerPage('ventas', {
         if (this.l_articulosTabla[index].id !== p_articulo.id) {
           t_arregloSalida2.push(this.l_articulosTabla[index]);
         }
+        if(this.l_prueba[index].id !== p_articulo.id)
+        {
+          t_prueba.push(this.l_prueba[index]);
+        }
       }
-
+     this.l_prueba = t_prueba;
       this.l_selecArticulo = t_arregloSalida;
       this.l_articulosTabla = t_arregloSalida2;
       this.sumatoria();
