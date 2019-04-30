@@ -183,10 +183,9 @@ parasails.registerPage('ventas', {
       this.o_cotizacion.esAlquiler = this.l_sAlquiler;
       this.o_cotizacion.esMontaje = this.l_sMontaje;
       this.o_cotizacion.encargado = this.me.id;
-      this.o_cotizacion.jsonArticulos.articulos = this.l_prueba;
       if(this.l_fechaEvento !== '' && this.fechaFinEvento !== '')
       {
-
+        
         this.o_cotizacion.fechaEvento = Date.parse(this.l_fechaEvento);
         this.o_cotizacion.fechaFinEvento = Date.parse(this.l_fechaFinEvento);
       }
@@ -195,12 +194,22 @@ parasails.registerPage('ventas', {
         this.o_cotizacion.fechaMontaje = Date.parse(this.l_fechaMontaje);
         this.o_cotizacion.fechaDesmontaje = Date.parse(this.l_fechaDesmontaje);
       }
+      if(this.l_articulosTabla.length !== 0)
+      {
+        for(let index = 0; index < this.l_articulosTabla.length; index++)
+        {
+          this.l_prueba.push({id:this.l_articulosTabla[index].id, cantidad: this.l_articulosTabla[index].cantidadSolicitada, precio: this.l_articulosTabla[index].precioTotal});
+        }
+      }
+      this.o_cotizacion.jsonArticulos.articulos = this.l_prueba;
+
       this.l_verModalAgregarCotizacion = true;
     },
     clickCerrarModalAgregarCotizacion: async function()
     {
       this.limpiar_o_cotizacion();
       location.reload();
+      this.l_prueba = [];
       this.l_verModalAgregarCotizacion = false;
     },
     clickVerModalGuardar: async function () {
@@ -251,7 +260,7 @@ parasails.registerPage('ventas', {
       if (!esta) {
 
         this.l_selecArticulo.push(p_articulo.id);
-        this.l_prueba.push({id:p_articulo.id, cantidad: p_articulo.cantidadSolicitada});
+       // this.l_prueba.push({id:p_articulo.id, cantidad: p_articulo.cantidadSolicitada});
         this.l_articulosTabla.push(p_articulo);
         this.sumatoria();
       }
@@ -259,7 +268,7 @@ parasails.registerPage('ventas', {
     quitarArticuloTabla: async function (p_articulo) {
       let t_arregloSalida = [];
       let t_arregloSalida2 = [];
-      let t_prueba = [];
+     // let t_prueba = [];
       for (let index = 0; index < this.l_selecArticulo.length; index++) {
         if (this.l_selecArticulo[index] !== p_articulo.id) {
           t_arregloSalida.push(this.l_selecArticulo[index]);
@@ -270,12 +279,12 @@ parasails.registerPage('ventas', {
         if (this.l_articulosTabla[index].id !== p_articulo.id) {
           t_arregloSalida2.push(this.l_articulosTabla[index]);
         }
-        if(this.l_prueba[index].id !== p_articulo.id)
+       /* if(this.l_prueba[index].id !== p_articulo.id)
         {
           t_prueba.push(this.l_prueba[index]);
-        }
+        }*/
       }
-     this.l_prueba = t_prueba;
+     //this.l_prueba = t_prueba;
       this.l_selecArticulo = t_arregloSalida;
       this.l_articulosTabla = t_arregloSalida2;
       this.sumatoria();

@@ -342,7 +342,7 @@
       
       <modal v-if="l_verModalAgregarCotizacion" id="modalAgregar">
         <div class="modal-header">
-          <button type="button" class="close" @click="l_verModalAgregarCotizacion = false">&times</button>
+          <button type="button" class="close" @click="l_verModalAgregarCotizacion = false; l_prueba = [];">&times</button>
           <h5 class="modal-title" id="exampleModalLabel">¿Desea guardar la cotización? </h5>
         </div>
       
@@ -353,7 +353,7 @@
         </div>
         <div class="modal-footer">
           <button type="submit" :syncing="syncing" class="btn btn-primary">Aceptar</button>
-          <button type="button" class="btn btn-danger" data-dismiss="modal" @click="l_verModalAgregarCotizacion = false">Cancelar</button>
+          <button type="button" class="btn btn-danger" data-dismiss="modal" @click="l_verModalAgregarCotizacion = false; l_prueba = [];">Cancelar</button>
         </div>
       
       </modal>
