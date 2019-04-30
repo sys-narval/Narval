@@ -20,7 +20,7 @@
                       v-model="l_filtro.telefono">
                   </div>
                   <div class="form-group">
-                    <label for="busquedaPorCedula">Cédula: </label>
+                    <label for="busquedaPorCedula">Identificación: </label>
                     <input type="text" class="form-control" id="l_cedula" placeholder="Cédula" maxlength="20"
                       v-model="l_filtro.cedula">
                   </div>
@@ -54,14 +54,16 @@
           <table v-if="filtroClientes.length != 0" class="table table-hover table-striped table-bordered">
             <thead class="thead-light">
               <th>Nombre</th>
+              <th>Nombre Jurídico</th>
               <th>Correo de facturación</th>
               <th>Número telefónico</th>
-              <th>Cédula(Física/Jurídica)</th>
+              <th>Identificación</th>
               <th>Opciones</th>
             </thead>
             <tbody v-for="empresa in filtroClientes" >
               <tr>
                 <td> {{empresa.nombre}} </td>
+                <td>{{empresa.nombreReal}}</td>
                 <td> {{empresa.correo}} </td>
                 <td> {{empresa.telefono}} </td>
                 <td> {{empresa.cedula}} </td>
@@ -88,7 +90,7 @@
     </div>
   </form>
   <button type="button" class="btn btn-primary" @click="clickVerModalAgregar">Agregar</button>
-
+  
   <!-----Modal Editar Cliente-->
   <modal v-if="l_verModalEditar" id="modalEditar">
     <div class="modal-header">
@@ -107,31 +109,43 @@
             <div class="invalid-feedback" v-text="modelo.l_errorNombre"></div>
           </div>
           <div class="form-group col">
-            <label for="telefono">Teléfono: </label>
-            <input type="number" max="99999999" class="form-control" id="telCliNuevo"
-              placeholder="Digite el numero telefónico" v-model="o_cliente.telefono" :class="[(formErrors.telefono || o_cliente.telefono !== undefined) && !o_cliente.telefono ?
-              'is-invalid' : '']">
-            <div class="invalid-feedback" v-text="modelo.l_errorTelefono"></div>
+            <label for="nombre">Nombre Jurídico: </label>
+            <input type="text" class="form-control" id="nomCliNuevo" placeholder="Digite el nombre jurídico"
+              v-model="o_cliente.nombreReal" >
           </div>
         </div>
         <div class="row">
           <div class="form-group col">
             <label for="email">Email: </label>
             <input type="email" name="email"
-              pattern="[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*@[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*[.][a-zA-Z]{1,5}"
-              class="form-control" id="emaCliNuevo" placeholder="Digite el email" v-model="o_cliente.correo" :class="[(formErrors.correo || o_cliente.correo !== undefined) && !o_cliente.correo ?
+            pattern="[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*@[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*[.][a-zA-Z]{1,5}"
+            class="form-control" id="emaCliNuevo" placeholder="Digite el email" v-model="o_cliente.correo" :class="[(formErrors.correo || o_cliente.correo !== undefined) && !o_cliente.correo ?
               'is-invalid' : '']">
             <div class="invalid-feedback" v-text="modelo.l_errorCorreo"></div>
+            <div v-if="o_cliente.correo !== undefined">
+
+              <div style="color:red" v-if="!(o_cliente.correo.indexOf('@') > -1) && o_cliente.correo.length >= 1"><p>Introduzca un correo válido</p></div>
+            </div>
           </div>
           <div class="form-group col">
-            <label for="cedula">Cédula(Jurídica o Física)</label>
+            <label for="cedula">Identificación</label>
             <input type="number" name="cedula" max="9999999999" placeholder="Digite la cédula" class="form-control"
-              id="cedNuevo" v-model="o_cliente.cedula" :class="[(formErrors.cedula || o_cliente.cedula !== undefined) && !o_cliente.cedula ?
-              'is-invalid' : '']" readonly>
+            id="cedNuevo" v-model="o_cliente.cedula" :class="[(formErrors.cedula || o_cliente.cedula !== undefined) && !o_cliente.cedula ?
+            'is-invalid' : '']" readonly>
             <div class="invalid-feedback" v-text="modelo.l_errorCedula"></div>
           </div>
-
-
+          
+          
+        </div>
+        <div class="row">
+          <div class="form-group col-6">
+            <label for="telefono">Teléfono: </label>
+            <input type="number" max="99999999" class="form-control" id="telCliNuevo"
+              placeholder="Digite el número telefónico" v-model="o_cliente.telefono" :class="[(formErrors.telefono || o_cliente.telefono !== undefined) && !o_cliente.telefono ?
+              'is-invalid' : '']">
+            <div class="invalid-feedback" v-text="modelo.l_errorTelefono"></div>
+          </div>
+          
         </div>
       </div>
       <div class="modal-footer">
@@ -141,19 +155,21 @@
     </ajax-form>
   </modal>
 
-  <!--Modal Contactos-->
+  <!--Modal EDitar Contactos-->
   <modal v-if="l_verModalContactos" id="modalEditar">
     <div class="modal-header">
-      <button v-if="!l_edito " type="button" class="close" @click="clickCerrarModalContactos">&times</button>
+      <button type="button" class="close" @click="clickCerrarModalContactos">&times</button>
       <h2 class="modal-title">Ver Contactos</h2>
     </div>
     <div class="modal-body" v-for="empresa in modelo.contactos">
-      <div class="row" v-if="o_cliente.id==empresa.cliente">
+        
+      <div class="row" v-if="o_cliente.id==empresa.cliente.id">
+         
 
-        <div class="row" v-if="l_contacto.cedula==empresa.cedula">
+        <div class="row" v-if="l_contacto.cedula==empresa.cedula && l_edito">
           <div class="col-9">
             <ajax-form action="actualizarContacto" :syncing.sync="syncing" :cloud-error.sync="cloudError"
-              :form-data="o_contacto" :form-errors.sync="formErrors" :form-rules="formRules" @submitted="">
+              :form-data="o_contacto" :form-errors.sync="formErrors" :form-rules="formRules" @submitted="actualizarContacto">
               <div class="row">
                 <div class="form-group col">
                   <label for="nombre">Nombre: </label>
@@ -174,11 +190,15 @@
                   <label for="email">Email: </label>
                   <input type="email" name="email"
                     pattern="[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*@[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*[.][a-zA-Z]{1,5}"
-                    class="form-control" id="emaCliNuevo" v-model="o_contacto.correo" :class="[((formErrors.cedula || o_contacto.cedula !== undefined) && !o_contacto.cliente)  ? 'is-invalid' : '']">
+                    class="form-control" id="emaCliNuevo" v-model="o_contacto.correo" :class="[((formErrors.cedula || o_contacto.cedula !== '') && !o_contacto.cliente)  ? 'is-invalid' : '']">
                   <div class="invalid-feedback" v-text="modelo.l_errorCorreo"></div>
+                  <div v-if="o_contacto.correo !== undefined">
+
+                    <div style="color:red" v-if="!(o_contacto.correo.indexOf('@') > -1) && o_contacto.correo.length >= 1"><p>Introduzca un correo válido</p></div>
+                  </div>
                 </div>
                 <div class="form-group col">
-                  <label for="cedula">Cédula(Jurídica o Física)</label>
+                  <label for="cedula">Identificación</label>
                   <input type="number" name="cedula" max="9999999999" class="form-control" id="cedNuevo"
                     v-model="o_contacto.cedula" :class="[(formErrors.cedula || o_contacto.cedula !== undefined) && !o_contacto.cedula || cloudError === 'cedulaRepetido' ?
                             'is-invalid' : '']" readonly>
@@ -228,7 +248,7 @@
                     readonly>
                 </div>
                 <div class="form-group col">
-                  <label for="cedula">Cédula(Jurídica o Física)</label>
+                  <label for="cedula">Identificación</label>
                   <input type="number" name="cedula" :value="empresa.cedula" class="form-control" id="cedNuevo"
                     readonly>
                 </div>
@@ -280,32 +300,44 @@
             <div class="invalid-feedback" v-text="modelo.l_errorNombre"></div>
           </div>
           <div class="form-group col">
-            <label for="telefono">Teléfono: </label>
-            <input type="number" max="99999999" class="form-control" id="telCliNuevo"
-              placeholder="Digite el numero telefónico" v-model="o_cliente.telefono" :class="[(formErrors.telefono || o_cliente.telefono !== undefined) && !o_cliente.telefono  ?
-              'is-invalid' : '']">
-            <div class="invalid-feedback" v-text="modelo.l_errorTelefono"></div>
+            <label for="nombre">Nombre Jurídico: </label>
+            <input type="text" class="form-control" id="nomCliNuevo" placeholder="Digite el nombre jurídico"
+              v-model="o_cliente.nombreReal" >
           </div>
         </div>
         <div class="row">
           <div class="form-group col">
             <label for="email">Email: </label>
             <input type="email" name="email"
-              pattern="[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*@[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*[.][a-zA-Z]{1,5}"
-              class="form-control" id="emaCliNuevo" placeholder="Digite el email" v-model="o_cliente.correo" :class="[(formErrors.correo || o_cliente.correo !== undefined) && !o_cliente.correo ?
-              'is-invalid' : '']">
+            pattern="[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*@[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*[.][a-zA-Z]{1,5}"
+            class="form-control" id="emaCliNuevo" placeholder="Digite el email" v-model="o_cliente.correo" :class="[(formErrors.correo || o_cliente.correo !== undefined) && !o_cliente.correo ?
+            'is-invalid' : '']">
             <div class="invalid-feedback" v-text="modelo.l_errorCorreo"></div>
+            <div v-if="o_cliente.correo !== undefined">
+              
+              <div style="color:red" v-if="!(o_cliente.correo.indexOf('@') > -1) && o_cliente.correo.length >= 1"><p>Introduzca un correo válido</p></div>
+            </div>
           </div>
           <div class="form-group col">
-            <label for="cedula">Cédula(Jurídica o Física)</label>
+            <label for="cedula">Identificación</label>
             <input type="number" name="cedula" max="9999999999" placeholder="Digite la cédula" class="form-control"
               id="cedNuevo" v-model="o_cliente.cedula" :class="[(formErrors.cedula || o_cliente.cedula !== undefined) && !o_cliente.cedula || cloudError === 'nombreRepetido'  ?
               'is-invalid' : '']">
               <div class="invalid-feedback" v-if="(formErrors.cedula || o_cliente.cedula !== undefined) && !o_cliente.cedula" v-text="modelo.l_errorCedula"></div>
-            <div class="invalid-feedback" v-if="cloudError === 'nombreRepetido'" v-text='modelo.l_errorIdRepetido'></div>
+              <div class="invalid-feedback" v-if="cloudError === 'nombreRepetido'" v-text='modelo.l_errorIdRepetido'></div>
 
+            </div>
           </div>
-        </div>
+          <div class="row">
+            <div class="form-group col-6">
+              <label for="telefono">Teléfono: </label>
+              <input type="number" max="99999999" class="form-control" id="telCliNuevo"
+                placeholder="Digite el número telefónico" v-model="o_cliente.telefono" :class="[(formErrors.telefono || o_cliente.telefono !== undefined) && !o_cliente.telefono  ?
+                'is-invalid' : '']">
+              <div class="invalid-feedback" v-text="modelo.l_errorTelefono"></div>
+            </div>
+            
+          </div>
       </div>
       <div class="modal-footer">
         <ajax-button type="submit" :syncing="syncing" class="btn btn-primary">Guardar</ajax-button>
@@ -336,7 +368,7 @@
           <div class="form-group col">
             <label for="telefono">Teléfono: </label>
             <input type="number" max="99999999" class="form-control" id="telConNuevo"
-              placeholder="Digite el numero telefónico" v-model="o_contacto.telefono" :class="[(formErrors.telefono || o_contacto.telefono !== undefined) && !o_contacto.telefono ?
+              placeholder="Digite el número telefónico" v-model="o_contacto.telefono" :class="[(formErrors.telefono || o_contacto.telefono !== undefined) && !o_contacto.telefono ?
               'is-invalid' : '']">
             <div class="invalid-feedback" v-text="modelo.l_errorTelefono"></div>
           </div>
@@ -349,9 +381,13 @@
               class="form-control" id="emaCliNuevo" placeholder="Digite el email" v-model="o_contacto.correo" :class="[(formErrors.correo || o_contacto.correo !== undefined) && !o_contacto.correo ?
               'is-invalid' : '']">
             <div class="invalid-feedback" v-text="modelo.l_errorCorreo"></div>
+            <div v-if="o_contacto.correo !== undefined">
+
+              <div style="color:red" v-if="!(o_contacto.correo.indexOf('@') > -1) && o_contacto.correo.length >= 1"><p>Introduzca un correo válido</p></div>
+            </div>
           </div>
           <div class="form-group col">
-            <label for="cedula">Cédula(Jurídica o Física)</label>
+            <label for="cedula">Identificación</label>
             <input type="number" name="cedula" max="9999999999" placeholder="Digite la cédula" class="form-control"
               id="cedNuevo" v-model="o_contacto.cedula" :class="[(formErrors.cedula || o_contacto.cedula !== undefined) && !o_contacto.cedula || cloudError === 'cedulaRepetido' ?
               'is-invalid' : '']">
@@ -379,7 +415,7 @@
       <p class="text-center">Si no encuentras este cliente; ten encuenta lo siguiente: </p>
       <ul>
         <li>Revisa los filtros si es el correcto o si esta bien escrito</li>
-        <li>El buscador utiliza el Número Telefónico o la Cédula (Física/Jurídica) para realizar la búsqueda</li>
+        <li>El buscador utiliza el Número Telefónico o la Identificación para realizar la búsqueda</li>
         <li>El buscador dispara la búsqueda apartir de los 3 primeros caracteres</li>
       </ul>
     </div>

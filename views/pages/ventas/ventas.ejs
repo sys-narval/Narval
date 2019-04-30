@@ -4,7 +4,7 @@
     <h1>Ventas</h1>
   </div>
   <ajax-form action="insertarCotizacion" :syncing.sync="syncing" :cloud-error.sync="cloudError"
-    :form-data="o_cotizacion" :form-errors.sync="formErrors" :form-rules="formRules" @submitted="clickVerModalGuardar">
+    :form-data="o_cotizacion" :form-errors.sync="formErrors" :form-rules="formRules" @submitted="clickCerrarModalAgregarCotizacion">
     <div class="col">
 
       <div class="row">
@@ -28,8 +28,10 @@
         <div class="form-group col">
           <label>Cliente</label>
           <div>
-            <input type="text" name="l_buscarCliente" id="l_clientes" list="listaClientes" placeholder="Buscar Cliente"
-              class="form-control" v-model="l_buscarCliente">
+            <input type="text" name="l_buscarCliente" id="l_clientes" list="listaClientes" placeholder="Buscar Cliente" required
+              class="form-control" v-model="l_buscarCliente" :class="[(formErrors.cliente || l_buscarCliente !== undefined) && !l_buscarCliente ?
+              'is-invalid' : '']">
+              <div class="invalid-feedback" v-text="modelo.l_errorCliente"></div>
             <!--Input de Buscador-->
             <datalist id="listaClientes">
               <div v-for="l_cliente in modelo.clientes">
@@ -39,20 +41,22 @@
             </datalist>
             <br>
 
-            <div v-if="filteredClientes.length === 0 && l_buscarCliente.length >= 3">
-              <h5><span class="badge badge-pill badge-warning">
-                  No se encuentra ningún cliente con ese nombre</h5>
-              <input class="btn btn-primary" type="button" value="Agregar" @click="clickVerModalAgregar()" />
+            <div v-if="l_buscarCliente !== undefined">
+              <div v-if="filteredClientes.length === 0 && l_buscarCliente.length >= 3">
+                <h5><span class="badge badge-pill badge-warning">
+                    No se encuentra ningún cliente con ese nombre</h5>
+                <input class="btn btn-primary" type="button" value="Agregar" @click="clickVerModalAgregar()" />
+              </div>
             </div>
 
             <br>
             <ul v-if="filteredClientes.length !== 0" v-for="vEmpresa in filteredClientes">
               <div v-if="filteredClientes.length === 1 && l_buscarCliente.length > 3 ">
                 <li>
-                  Teléfono: {{vEmpresa.telefono}}
+                  <p>Teléfono: {{vEmpresa.telefono}} </p> 
                 </li>
                 <li>
-                  Correo: {{vEmpresa.correo}}
+                  <p>Correo: {{vEmpresa.correo}} </p>
                 </li>
               </div>
             </ul>
@@ -62,8 +66,10 @@
         <div class="form-group col">
           <label>Contacto</label>
           <div class="dropdown">
-            <input class="form-control" name="l_buscarContacto" type="text" placeholder="Persona de Contacto"
-              v-model="l_buscarContacto" list="listContactos" />
+            <input class="form-control" name="l_buscarContacto" type="text" placeholder="Persona de Contacto" required
+              v-model="l_buscarContacto" list="listContactos" :class="[(formErrors.contacto || l_buscarContacto !== undefined) && !l_buscarContacto ?
+              'is-invalid' : '']" />
+              <div class="invalid-feedback" v-text="modelo.l_errorContacto"></div>
             <datalist id="listContactos">
               <div v-for="l_contacto in modelo.contactos">
                 <option v-bind:value="l_contacto.nombre">
@@ -71,31 +77,36 @@
               </option>
             </datalist>
             <br>
-            <div v-if="filteredContactos.length === 0 && l_buscarContacto.length >= 3 && filteredClientes[0] === undefined">
-              <h5><span class="badge badge-pill badge-warning">
-                  No añadió ningún cliente</h5>
-              
-                </div>
-                <div v-if="filteredClientes[0] !== undefined && filteredContactos.length === 0 && l_buscarContacto.length >= 3">
-                    <h5><span class="badge badge-pill badge-warning">
-                        No se encuentra ningún contacto con ese nombre</h5>
-                  <input class="btn btn-primary" type="button" value="Agregar" @click="clickVerModalAgregarC()" />
+            <div v-if="l_buscarContacto !== undefined">
 
+              <div v-if="filteredContactos.length === 0 && l_buscarContacto.length >= 3 && filteredClientes[0] === undefined">
+                <h5><span class="badge badge-pill badge-warning">
+                    No añadió ningún cliente</h5>
+                
+                  </div>
+                  <div v-if="filteredClientes[0] !== undefined && filteredContactos.length === 0 && l_buscarContacto.length >= 3">
+                      <h5><span class="badge badge-pill badge-warning">
+                          No se encuentra ningún contacto con ese nombre</h5>
+                    <input class="btn btn-primary" type="button" value="Agregar" @click="clickVerModalAgregarC()" />
+  
+                  </div>
+              <br>
+              <ul v-if="filteredContactos.length !== 0" v-for="vContacto in filteredContactos">
+                <div v-if="filteredContactos.length === 1 && l_buscarContacto.length > 3">
+                  <li>
+                    <p > Teléfono: {{vContacto.telefono}}</p> 
+                  </li>
+                  <li>
+                    <p> Correo: {{vContacto.correo}}</p> 
+                  </li>
                 </div>
-            <br>
-            <ul v-if="filteredContactos.length !== 0" v-for="vContacto in filteredContactos">
-              <div v-if="filteredContactos.length === 1 && l_buscarContacto.length > 3">
-                <li>
-                  Teléfono: {{vContacto.telefono}}
-                </li>
-                <li>
-                  Correo: {{vContacto.correo}}
-                </li>
-              </div>
-            </ul>
+              </ul>
+            </div>
+
+
           </div>
         </div>
-
+      
       </div>
 
       <div class="row">
@@ -106,7 +117,7 @@
             <div class="form-check">
               <label class="form-check-label">
                 <input type="checkbox" class="form-check-input" v-model="l_sDiseno">
-                Servicio diseño
+                Otros Servicios
               </label>
             </div>
             <div class="form-check">
@@ -124,7 +135,7 @@
             <br>
             <div class="row" v-if="l_sMontaje  || l_sAlquiler || l_sDiseno">
               <label class="form-check-label">Descripción de los servicios </label>
-              <textarea class="form-control" id="exampleTextarea" rows="3" placeholder="Descripción"></textarea>
+              <textarea class="form-control" id="exampleTextarea" rows="3" placeholder="Descripción" v-model="o_cotizacion.descripcion"></textarea>
             </div>
             <br>
           </div>
@@ -135,14 +146,26 @@
         <div class="form-group col">
           <label class="col-form-label">Fecha del evento </label>
           <input class="form-control" type="date" id="date"
-            :min="l_date.getFullYear() + '-' + '0'+ (l_date.getMonth()+1) + '-' + l_date.getDate()">
+            :min="l_date.getFullYear() + '-' + '0'+ (l_date.getMonth()+1) + '-' + l_date.getDate()" v-model="l_fechaEvento" >
 
+            <div v-if="Date.parse(l_fechaEvento) < Date.parse(l_date.getFullYear() + '-' + '0'+ (l_date.getMonth()+1) + '-' + l_date.getDate())" style="color:red"> La fecha de inicio no puede ser una fecha pasada</div>
         </div>
 
         <div class="form-group col">
           <label class="col-form-label">Fin del evento</label>
-          <input class="form-control" type="date" id="date"
-            :min="l_date.getFullYear() + '-' + '0'+ (l_date.getMonth()+1) + '-' + l_date.getDate()">
+          <div v-if="l_fechaEvento !== ''">
+
+            <input class="form-control" type="date" id="date"
+              :min="l_fechaEvento" v-model="l_fechaFinEvento">  
+          </div>
+          <div v-else>
+              <input class="form-control" type="date" id="date"
+              :min="l_date.getFullYear() + '-' + '0'+ (l_date.getMonth()+1) + '-' + l_date.getDate()" v-model="l_fechaFinEvento"> 
+          </div>
+          <div v-if="Date.parse(l_fechaEvento) > Date.parse(l_fechaFinEvento)" style="color:red"> La fecha de inicio no puede ser menor a la fecha final del evento </div>
+          
+
+            
         </div>
 
 
@@ -152,13 +175,23 @@
         <div class="form-group col">
           <label class="col-form-label">Fecha de montaje</label>
           <input class="form-control" type="date" id="date"
-            :min="l_date.getFullYear() + '-' + '0'+ (l_date.getMonth()+1) + '-' + l_date.getDate()">
+            :min="l_date.getFullYear() + '-' + '0'+ (l_date.getMonth()+1) + '-' + l_date.getDate()"v-model="l_fechaMontaje">
+            <div v-if="Date.parse(l_fechaMontaje) < Date.parse(l_date.getFullYear() + '-' + '0'+ (l_date.getMonth()+1) + '-' + l_date.getDate())" style="color:red"> La fecha de montaje no puede ser una fecha pasada</div>
         </div>
 
         <div class="form-group col">
           <label class="col-form-label">Fecha de desmontaje </label>
-          <input id="date" class="form-control" required type="date"
-            :min="l_date.getFullYear() + '-' + '0'+ (l_date.getMonth()+1) + '-' + l_date.getDate()">
+          <div v-if="l_fechaMontaje !== ''">
+            
+            <input id="date" class="form-control" required type="date"
+              :min="l_fechaMontaje" v-model="l_fechaDesmontaje">
+          </div>
+          <div v-else>
+              <input id="date" class="form-control" required type="date"
+              :min="l_date.getFullYear() + '-' + '0'+ (l_date.getMonth()+1) + '-' + l_date.getDate()" v-model="l_fechaDesmontaje">
+          </div>
+          
+          <div v-if="Date.parse(l_fechaMontaje) > Date.parse(l_fechaDesmontaje)" style="color:red"> La fecha de montaje no puede ser menor a la fecha de desmontaje </div>
         </div>
       </div>
 
@@ -300,9 +333,30 @@
           </tbody>
         </table>
       </div>
-      <button type="submit" :syncing="syncing" class="btn btn-primary">
+      
+      <button type="button" class="btn btn-primary" @click="clickVerModalGuardarCotizacion">
         Guardar
       </button>
+      <!-- Modal Guardar-->
+      
+      
+      <modal v-if="l_verModalAgregarCotizacion" id="modalAgregar">
+        <div class="modal-header">
+          <button type="button" class="close" @click="l_verModalAgregarCotizacion = false; l_prueba = [];">&times</button>
+          <h5 class="modal-title" id="exampleModalLabel">¿Desea guardar la cotización? </h5>
+        </div>
+      
+        <div class="modal-body">
+          <h6>La cotización estará disponible por 30 días; después de este tiempo será borrada del sistema </h6>
+          <p>Si se desea hacer cambios sobre esta cotización después de ser guardada, se podrán ver el área "Ver
+            Cotizaciones"</p>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" :syncing="syncing" class="btn btn-primary">Aceptar</button>
+          <button type="button" class="btn btn-danger" data-dismiss="modal" @click="l_verModalAgregarCotizacion = false; l_prueba = [];">Cancelar</button>
+        </div>
+      
+      </modal>
   </ajax-form>
 
 
@@ -326,62 +380,75 @@
               <div class="invalid-feedback" v-text="modelo.l_errorNombre"></div>
             </div>
             <div class="form-group col">
-              <label for="telefono">Teléfono: </label>
-              <input type="number" max="99999999" class="form-control" id="telCliNuevo"
-                placeholder="Digite el numero telefónico" v-model="o_cliente.telefono" :class="[(formErrors.telefono || o_cliente.telefono !== undefined) && !o_cliente.telefono ?
-                'is-invalid' : '']">
-              <div class="invalid-feedback" v-text="modelo.l_errorTelefono"></div>
+                <label for="nombre">Nombre Jurídico: </label>
+                <input type="text" class="form-control" id="nomCliNuevo" placeholder="Digite el nombre jurídico"
+                  v-model="o_cliente.nombreReal">
+               
+              </div>
             </div>
-          </div>
-          <div class="row">
-            <div class="form-group col">
-              <label for="email">Email: </label>
-              <input type="email" name="email"
-                pattern="[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*@[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*[.][a-zA-Z]{1,5}"
+            <div class="row">
+              <div class="form-group col">
+                <label for="email">Email: </label>
+                <input type="email" name="email"
+              pattern="[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*@[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*[.][a-zA-Z]{1,5}"
                 class="form-control" id="emaCliNuevo" placeholder="Digite el email" v-model="o_cliente.correo" :class="[(formErrors.correo || o_cliente.correo !== undefined) && !o_cliente.correo ?
                 'is-invalid' : '']">
               <div class="invalid-feedback" v-text="modelo.l_errorCorreo"></div>
+              <div v-if="o_cliente.correo !== undefined">
+                
+                <div style="color:red" v-if="!(o_cliente.correo.indexOf('@') > -1) && o_cliente.correo.length >= 1"><p>Introduzca un correo válido</p></div>
+              </div>
             </div>
             <div class="form-group col">
               <label for="cedula">Cédula(Jurídica o Física)</label>
               <input type="number" name="cedula" max="9999999999" placeholder="Digite la cédula" class="form-control"
                 id="cedNuevo" v-model="o_cliente.cedula" :class="[(formErrors.cedula || o_cliente.cedula !== undefined) && !o_cliente.cedula ?
                 'is-invalid' : '']">
-              <div class="invalid-feedback" v-text="modelo.l_errorCedula"></div>
+                <div class="invalid-feedback" v-text="modelo.l_errorCedula"></div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="form-group col-6">
+                <label for="telefono">Teléfono: </label>
+                <input type="number" max="99999999" class="form-control" id="telCliNuevo"
+                  placeholder="Digite el numero telefónico" v-model="o_cliente.telefono" :class="[(formErrors.telefono || o_cliente.telefono !== undefined) && !o_cliente.telefono ?
+                  'is-invalid' : '']">
+                <div class="invalid-feedback" v-text="modelo.l_errorTelefono"></div>
+              </div>
+              
             </div>
           </div>
-        </div>
-        <div class="modal-footer">
-          <ajax-button type="submit" :syncing="syncing" class="btn btn-primary">Guardar</ajax-button>
+          <div class="modal-footer">
+          <ajax-button type="submit" :syncing="syncing" class="btn btn-primary" >Guardar</ajax-button>
           <button type="button" class="btn btn-danger" @click="clickCerrarModalGuardar">Cancelar</button>
         </div>
       </ajax-form>
-  
+      
   </modal>
   
   <!-- Modal Contactos Agregar-->
   <modal v-if="l_verModalAgregarC" id="modalAgregar">
 
-      <div class="modal-header">
+    <div class="modal-header">
         <button type="button" class="close" @click="clickCerrarModalAgregarC">&times</button>
         <h5 class="modal-title" id="exampleModalLabel">Agregando un Contacto</h5>
       </div>
       <ajax-form action="insertarContacto" :syncing.sync="syncing" :cloud-error.sync="cloudError" :form-data="o_contacto"
-        :form-errors.sync="formErrors" :form-rules="formRules" @submitted="guardarContacto">
-        <div class="modal-body">
+      :form-errors.sync="formErrors" :form-rules="formRules" @submitted="guardarContacto">
+      <div class="modal-body">
           <div class="row">
             <div class="form-group col">
               <label for="nombre">Nombre: </label>
               <input type="text" class="form-control" id="nomConNuevo" placeholder="Digite el nombre"
                 v-model="o_contacto.nombre" :class="[(formErrors.nombre || o_contacto.nombre !== undefined) && !o_contacto.nombre ?
                  'is-invalid' : '']">
-              <div class="invalid-feedback" v-text="modelo.l_errorNombre"></div>
-            </div>
+                 <div class="invalid-feedback" v-text="modelo.l_errorNombre"></div>
+                </div>
             <div class="form-group col">
               <label for="telefono">Teléfono: </label>
               <input type="number" max="99999999" class="form-control" id="telConNuevo"
                 placeholder="Digite el numero telefónico" v-model="o_contacto.telefono" :class="[(formErrors.telefono || o_contacto.telefono !== undefined) && !o_contacto.telefono ?
-                  'is-invalid' : '']">
+                'is-invalid' : '']">
               <div class="invalid-feedback" v-text="modelo.l_errorTelefono"></div>
             </div>
           </div>
@@ -391,15 +458,19 @@
               <input type="email" name="email"
                 pattern="[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*@[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*[.][a-zA-Z]{1,5}"
                 class="form-control" id="emaCliNuevo" placeholder="Digite el email" v-model="o_contacto.correo" :class="[(formErrors.correo || o_contacto.correo !== undefined) && !o_contacto.correo ?
-                  'is-invalid' : '']">
+                'is-invalid' : '']">
               <div class="invalid-feedback" v-text="modelo.l_errorCorreo"></div>
+              <div v-if="o_contacto.correo !== undefined">
+
+                <div style="color:red" v-if="!(o_contacto.correo.indexOf('@') > -1) && o_contacto.correo.length >= 1"><p>Introduzca un correo válido</p></div>
+              </div>
             </div>
             <div class="form-group col">
               <label for="cedula">Cédula(Jurídica o Física)</label>
               <input type="number" name="cedula" max="9999999999" placeholder="Digite la cédula" class="form-control"
                 id="cedNuevo" v-model="o_contacto.cedula" :class="[(formErrors.cedula || o_contacto.cedula !== undefined) && !o_contacto.cedula ?
                   'is-invalid' : '']">
-              <div class="invalid-feedback" v-text="modelo.l_errorCedula"></div>
+                  <div class="invalid-feedback" v-text="modelo.l_errorCedula"></div>
             </div>
           </div>
         </div>
@@ -409,30 +480,10 @@
         </div>
       </ajax-form>
       
-    
+      
     </modal>
 
-  <!-- Modal Guardar-->
-
-
-  <modal v-if="l_verModalGuardar" id="modalAgregar">
-    <div class="modal-header">
-      <button type="button" class="close" @click="clickCerrarModalGuardar">&times</button>
-      <h5 class="modal-title" id="exampleModalLabel">¿Desea guardar la cotización? </h5>
-    </div>
-
-    <div class="modal-body">
-      <h6>La cotización estará disponible por 30 días; después de este tiempo será borrada del sistema </h6>
-      <p>Si se desea hacer cambios sobre esta cotización después de ser guardada, se podrán ver el área "Ver
-        Cotizaciones"</p>
-    </div>
-    <div class="modal-footer">
-      <button type="button" class="btn btn-primary">Aceptar</button>
-      <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
-    </div>
-
-  </modal>
-
+    
   <!-- Modal Ver  -->
   <!-- Aqui inicia el modal ver-->
   <modal v-if="l_verModalVer" id="modalVer">
@@ -453,58 +504,58 @@
             <label for="categoria">Producto: </label>
             <input type="text" class="form-control" id="categoria" :value="o_articulo.tipo"
               v-model="o_articulo.categoria" readonly>
-          </div>
+            </div>
           <div class="form-group col">
             <label for="descripcion">Descripción: </label>
             <input type="text" class="form-control" id="descripcionArticulo" :value="o_articulo.descripcion"
               v-model="o_articulo.descripcion" maxlength="32" readonly>
-          </div>
+            </div>
         </div>
         <div class="row">
           <div class="form-group col">
             <label for="cantidadLibre">Cantidad stock: </label>
             <input type="text" class="form-control" id="cantidadLibre" :value="o_articulo.cantidadLibre"
-              v-model="o_articulo.cantidadLibre" readonly>
+            v-model="o_articulo.cantidadLibre" readonly>
           </div>
           <div class="form-group col">
             <label for="cantidadLibre">Cantidad Solicitada: </label>
             <input type="number" min="0" :max="_.find(this.modelo.articulos, {id: this.o_articulo.id}).cantidadLibre"
-              class="form-control" id="cantidadSolicitada" v-model="l_cantidadSolicitada"
+            class="form-control" id="cantidadSolicitada" v-model="l_cantidadSolicitada"
               :class="[l_cantidadSolicitada !== undefined && !l_cantidadSolicitada &&l_error ? 'is-invalid' : '']">
-            <div class="invalid-feedback">La cantidad solicitada deber ser menor o igual a {{o_articulo.cantidadLibre}}
-              y mayor a 0</div>
+              <div class="invalid-feedback">La cantidad solicitada deber ser menor o igual a {{o_articulo.cantidadLibre}}
+                y mayor a 0</div>
           </div>
         </div>
 
         <div class="row">
           <div class="form-group col">
-
+            
             <label for="precio">Precio Unitario:</label>
             <input type="number" min="0" step="1" max="9999" class="form-control" id="precio" :value="l_precioUnitario"
-              v-model="l_precioUnitario">
+            v-model="l_precioUnitario">
           </div>
           <div class="form-group col">
             <label for="precio">Precio Total:</label>
             <input type="number" class="form-control" id="precioTotal" :value="o_articulo.precioTotal"
-              v-model="o_articulo.precioTotal" readonly>
+            v-model="o_articulo.precioTotal" readonly>
           </div>
         </div>
 
-
+        
 
         <div class="modal-footer">
-
+          
           <button type="button" class="btn btn-primary" @click="modificarTabla(o_articulo)">Aceptar</button>
-
+          
           <button type="button" class="btn btn-danger" @click="cerrarModalVer">Cancelar</button>
         </div>
       </form>
     </div>
-
+    
   </modal>
   <!--Aqui termina el modal de Actualizar-->
 
-
+  
 </div>
 
 </div>

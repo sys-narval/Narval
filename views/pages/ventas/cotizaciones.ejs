@@ -9,37 +9,37 @@
               aria-haspopup="true" aria-expanded="false">Filtros</button>
             <div class="dropdown-menu p-4">
               <div class="form-check mb-2">
-                <input type="checkbox" name="mis cotizaciones" id="misCotizaciones" class="form-check-input" v-model="filtro.misCotizaciones">
+                <input type="checkbox" name="mis cotizaciones" id="misCotizaciones" class="form-check-input" v-model="l_filtro.misCotizaciones" @click="l_myId = me.id">
                 <label for="misCotizaciones" class="form-check-label">Mis Cotizaciones</label>
               </div>
               <div class="form-group">
                 <label for="encargado">Encargado:</label>
-                <input type="text" id="encargado" class="form-control" placeholder="Nombre Encargado" v-model="filtro.encargado">
+                <input type="text" id="encargado" class="form-control" placeholder="Nombre Encargado" v-model="l_filtro.encargado">
               </div>
               <div class="form-group">
                 <label for="encargado">Cliente:</label>
-                <input type="text" id="cliente" class="form-control" placeholder="Cliente" v-model="filtro.cliente">
+                <input type="text" id="cliente" class="form-control" placeholder="Cliente" v-model="l_filtro.cliente">
               </div>
               <div class="form-group">
                 <label for="fechaInicio">Fecha Evento:</label>
-                <input type="date" name="Fecha Inicio" id="fechaEvento" class="form-control" v-model="filtro.fechaEvento">
+                <input type="date" name="Fecha Inicio" id="fechaEvento" class="form-control" v-model="l_filtro.fechaEvento">
               </div>
               <div class="form-group">
                 <label for="fechaMontaje">Fecha Montaje:</label>
-                <input type="date" name="Fecha Inicio" id="fechaMontaje" class="form-control" v-model="filtro.fechaMontaje">
+                <input type="date" name="Fecha Inicio" id="fechaMontaje" class="form-control" v-model="l_filtro.fechaMontaje">
               </div>
               <div class="form-group">
                 <label for="fechaDesmontaje">Fecha Desmontaje:</label>
-                <input type="date" name="Fecha Inicio" id="fechaDesmontaje" class="form-control" v-model="filtro.fechaDesmontaje">
+                <input type="date" name="Fecha Inicio" id="fechaDesmontaje" class="form-control" v-model="l_filtro.fechaDesmontaje">
               </div>
               <div class="form-group">
                 <label for="fechaFin">Fecha Fin:</label>
-                <input type="date" name="Fecha Inicio" id="fechaFin" class="form-control" v-model="filtro.fechaFin">
+                <input type="date" name="Fecha Inicio" id="fechaFin" class="form-control" v-model="l_filtro.fechaFin">
               </div>
             </div>
           </div>
           <input type="text" name="Buscar Cotización" id="cotizacion" placeholder="Buscar Cotización" class="form-control"
-            v-model.trim="busquedaCotizacion">
+            v-model.trim="l_busquedaCotizacion">
           <div class="input-group-append">
             <span class="input-group-text"><i class="fa fa-search"></i></span>
           </div>
@@ -49,24 +49,28 @@
   </div>
   <div class="row">
     <div class="col">
+        <h5><span class="badge badge-pill badge-warning" v-if="filtroCotizacion.length === 0 && l_busquedaCotizacion !== '' ">
+            No se encuentra ninguna cotización <button class="btn btn-primary" type="button" @click="clickVerModalAyuda"><i class="fa fa-question"></i></button></span></h5>
+
       <table class="table table-hover table-striped table-bordered" v-if="filtroCotizacion.length != 0">
         <thead class="thead-light">
           <th>Encargado</th>
           <th>Cliente</th>
+          <th>Contacto</th>
           <th>Ubicación</th>
           <th>Descripción</th>
-          <th>Fecha de Montaje</th>
-          <th>Fin de evento</th>
+          <th>Estado</th>
           <th>Opciones</th>
         </thead>
         <tbody>
+          
           <tr v-for="cotizacion in filtroCotizacion">
-            <td v-text="cotizacion.encargado"></td>
-            <td v-text="cotizacion.cliente"></td>
-            <td v-text="cotizacion.ubicacion"></td>
+            <td v-text="cotizacion.encargado.fullName"></td>
+            <td v-text="cotizacion.cliente.nombre"></td>
+            <td v-text="cotizacion.contacto.nombre"></td>
+            <td v-text="cotizacion.lugarEvento"></td>
             <td v-text="cotizacion.descripcion"></td>
-            <td v-text="cotizacion.fechaMontaje"></td>
-            <td v-text="cotizacion.fechaFin"></td>
+            <td v-text="cotizacion.estado"></td>
             <td class="text-center">
               <div class="btn-group ">
                 <label for="ver" class="btn btn-primary" @click="verEvento(cotizacion)">
@@ -75,82 +79,135 @@
                 <label for="copiar" class="btn btn-success" @click="copiarEvento(cotizacion)">
                   Copiar
                 </label>
-                <label for="borrar" class="btn btn-danger" @click="borrarEvento(cotizacion)">
-                  Borrar
+                <label for="borrar" class="btn btn-danger" @click="cambioEstado(cotizacion)">
+                  Cambiar Estado
                 </label>
               </div>
             </td>
+          
           </tr>
         </tbody>
       </table>
     </div>
   </div>
-
-  <modal v-if="verModal" id="verEvento">
+  <modal v-if="l_verModal" id="verEvento">
     <div class="row">
       <div class="col">
         <form action="">
             <div class="modal-header">
                 <button type="button" class="close" @click="cerrarEvento()">&times</button>
-                <h1 class="text-center">Cotización #{{cotizacion.id}}</h1>
+                <h1 class="text-center">Cotización #{{o_cotizacion.id}}</h1>
               </div>
           <div class="row">
-            <!-- Encargado del evento -->
-            <div class="form-group col">
-              <label for="encargado">Encargado</label>
-              <input type="text" id="encargado" class="form-control" :value="cotizacion.encargado">
-            </div>
             <!-- Cliente del evento -->
             <div class="form-group col">
               <label for="cliente">Cliente</label>
-              <input type="text" id="cliente" class="form-control" :value="cotizacion.cliente">
+              <input type="text" id="cliente" class="form-control" :value="o_cotizacion.cliente.nombre">
+              <ul >
+                  <div>
+                    <li>
+                      <p > Teléfono: {{o_cotizacion.cliente.telefono}}</p> 
+                    </li>
+                    <li>
+                      <p> Correo: {{o_cotizacion.cliente.correo}}</p> 
+                    </li>
+                  </div>
+                </ul>
+            </div>
+            <!-- Contacto del evento -->
+            <div class="form-group col">
+              <label for="contacto">Contacto</label>
+              <input type="text" id="contacto" class="form-control" :value="o_cotizacion.contacto.nombre" >
+
+              <ul >
+                  <div>
+                    <li>
+                      <p > Teléfono: {{o_cotizacion.contacto.telefono}}</p> 
+                    </li>
+                    <li>
+                      <p> Correo: {{o_cotizacion.contacto.correo}}</p> 
+                    </li>
+                  </div>
+                </ul>
             </div>
           </div>
           <div class="row">
+            <div class="form-group col">
+                <label>Tipo de servicio </label>
+              <div>
+                <div class="form-check">
+                    <label class="form-check-label">
+                      <input type="checkbox" class="form-check-input" v-if="o_cotizacion.esDiseno" checked>
+                      <input type="checkbox" class="form-check-input" v-else>
+                      Otros Servicios
+                    </label>
+                  </div>
+                  <div class="form-check">
+                    <label class="form-check-label">
+                      <input type="checkbox" class="form-check-input" v-if="o_cotizacion.esMontaje" checked>
+                      <input type="checkbox" class="form-check-input" v-else>
+                      Servicio de producción
+                    </label>
+                  </div>
+                  <div class="form-check">
+                    <label class="form-check-label">
+                      <input type="checkbox" class="form-check-input" v-if="o_cotizacion.esAlquiler" checked>
+                      <input type="checkbox" class="form-check-input" v-else>
+                      Servicio de alquiler
+                    </label>
+                  </div>
+
+              </div>
+
+            </div>
+          </div>
+          <div class="row" v-if="o_cotizacion.esMontaje || o_cotizacion.esAlquiler">
             <!-- Fecha del Evento -->
             <div class="form-group col">
               <label for="fechaEvento">Fecha del Evento</label>
-              <input type="date" id="fechaEvento" class="form-control" :value="cotizacion.fechaEvento">
+              <input type="date" id="fechaEvento" class="form-control" :value="o_cotizacion.fechaEvento">
             </div>
-            <!-- Fecha de Montaje -->
-            <div class="form-group col">
-              <label for="fechaEvento">Fecha de Montaje</label>
-              <input type="date" id="fechaEvento" class="form-control" :value="cotizacion.fechaMontaje">
-            </div>
-          </div>
-          <div class="row">
             <!-- Fecha fin de evento -->
             <div class="form-group col">
               <label for="fechaFin">Fin de Evento</label>
-              <input type="date" name="Fecha Fin" id="fechaFin" :value="cotizacion.fechaFin" class="form-control">
+              <input type="date" name="Fecha Fin" id="fechaFin" :value="o_cotizacion.fechaFinEvento" class="form-control">
+            </div>
+          </div>
+          <div class="row" v-if="o_cotizacion.esMontaje">
+            <!-- Fecha de Montaje -->
+            <div class="form-group col">
+              <label for="fechaEvento">Fecha de Montaje</label>
+              <input type="date" id="fechaEvento" class="form-control" :value="o_cotizacion.fechaMontaje">
             </div>
             <!-- Fecha desmontaje -->
             <div class="form-group col">
               <label for="fechaDesmontaje">Fecha Desmontaje</label>
-              <input type="date" name="Fecha Desmontaje" id="fechaDesmontaje" :value="cotizacion.fechaDesmontaje" class="form-control">
+              <input type="date" name="Fecha Desmontaje" id="fechaDesmontaje" :value="o_cotizacion.fechaDesmontaje" class="form-control">
             </div>
           </div>
-          <div class="row">
+          <div class="row" v-if="o_cotizacion.esMontaje || o_cotizacion.esDiseno || o_cotizacion.esAlquiler">
             <div class="form-group col">
               <label for="descipcion">Descripción:</label>
-              <textarea name="Descripción" id="descripcion" cols="30" rows="3" class="form-control"></textarea>
+              <textarea name="Descripción" id="descripcion" cols="30" rows="3" class="form-control" :value="o_cotizacion.descripcion"></textarea>
             </div>
           </div>
-          <div class="row" v-if="cotizacion.materiales">
+          <div class="row" v-if="o_cotizacion.esMontaje || o_cotizacion.esAlquiler">
             <div class="form-group col">
               <table class="table table-bordered table-striped table-hover">
                 <thead class="thead-light">
                   <tr>
-                    <th>Código</th>
+                    <th>ID</th>
                     <th>Descripción</th>
                     <th>Cantidad</th>
+                    <th>Precio Total</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr v-for="material in cotizacion.materiales">
-                    <td v-text="material.codigo"></td>
+                  <tr v-for="material in o_cotizacion.articulos">
+                    <td v-text="material.id"></td>
                     <td v-text="material.descripcion"></td>
                     <td v-text="material.cantidad"></td>
+                    <td>{{material.precio |formatoMoneda}}</td>
                   </tr>
                 </tbody>
               </table>
@@ -165,36 +222,25 @@
     </div>
   </modal>
 
-  <modal v-if="modBorrarEvento" id="borrarEvento">
+  <modal v-if="l_modBorrarEvento" id="borrarEvento">
     <div class="row">
       <div class="col">
           <div class="modal-header">
-              <button type="button" class="close" @click="cancelarBorrar">&times</button>
-        <h1>¿Seguro que desea borrar la cotización?</h1>
+              <button type="button" class="close" @click="cancelarEstado">&times</button>
+        <h1>¿Seguro que desea cambiar el estado de la cotización?</h1>
         </div>
         <form action="" readonly>
-          <div class="form-row">
-            <!-- Encargado del evento -->
-            <div class="form-group col">
-              <label for="encargado">Encargado</label>
-              <input type="text" id="encargado" class="form-control" :value="cotizacion.encargado">
-            </div>
-            <!-- Cliente del evento -->
-            <div class="form-group col">
-              <label for="cliente">Cliente</label>
-              <input type="text" id="cliente" class="form-control" :value="cotizacion.cliente">
-            </div>
-          </div>
-          <div class="form-row">
-            <div class="form-group col">
-              <label for="descipcion">Descripción:</label>
-              <textarea name="Descripción" id="descripcion" cols="30" rows="3" class="form-control"></textarea>
-            </div>
+          <div class="modal-body">
+           <p>En estos momentos la cotización tiene un estado: <b> "{{o_cotizacion.estado}}"</b></p>
           </div>
           <div class="modal-footer">
-            
-              <input type="button" value="Aceptar" class="btn btn-primary" @click="confirmarBorrar">
-              <input type="button" value="Cancelar" class="btn btn-danger" @click="cancelarBorrar">
+              
+                <input v-if="o_cotizacion.estado !== 'Activo'" type="button" value="Confirmar" class="btn btn-success" @click="confirmarEvento">
+                <input v-if="o_cotizacion.estado !== 'Pendiente'" type="button" value="Pendiente" class="btn btn-warning" @click="pendienteEvento">
+                <input v-if="o_cotizacion.estado !== 'Cancelado'" type="button" value="Cancelado" class="btn btn-danger" @click="canceladoEvento">
+                <input v-if="o_cotizacion.estado !== 'Finalizado'" type="button" value="Terminado" class="btn btn-secondary" @click="terminadoEvento">
+              
+              
           
             
           </div>
@@ -203,7 +249,7 @@
     </div>
   </modal>
 
-  <modal v-if="modCopiarEvento" id="copiarEvento">
+  <modal v-if="l_modCopiarEvento" id="copiarEvento">
     <div class="row">
       <div class="col">
           <div class="modal-header">
@@ -215,18 +261,18 @@
             <!-- Encargado del evento -->
             <div class="form-group col">
               <label for="encargado">Encargado</label>
-              <input type="text" id="encargado" class="form-control" :value="cotizacion.encargado">
+              <input type="text" id="encargado" class="form-control" :value="o_cotizacion.encargado.fullName">
             </div>
             <!-- Cliente del evento -->
             <div class="form-group col">
               <label for="cliente">Cliente</label>
-              <input type="text" id="cliente" class="form-control" :value="cotizacion.cliente">
+              <input type="text" id="cliente" class="form-control" :value="o_cotizacion.cliente.nombre">
             </div>
           </div>
           <div class="form-row">
             <div class="form-group col">
               <label for="descipcion">Descripción:</label>
-              <textarea name="Descripción" id="descripcion" cols="30" rows="3" class="form-control"></textarea>
+              <textarea name="Descripción" id="descripcion" cols="30" rows="3" class="form-control" :value="o_cotizacion.descripcion"></textarea>
             </div>
           </div>
           <div class="modal-footer">
@@ -238,6 +284,26 @@
       </div>
     </div>
   </modal>
-
+  <!--Aca inicia el modal ayuda-->
+  <modal v-if="l_verModalAyuda" id="verAyuda">
+      <div class="modal-header">
+        <button type="button" class="close" @click="clickCerrarModalAyuda">&times</button>
+        <h2 class="modal-title">Ayuda</h2>
+      </div>
+      <div class="modal-body">
+        <!-- Aquí va el contenido del modal -->
+        <p class="text-center">Si no encuentras esta cotización; ten encuenta lo siguiente: </p>
+        <ul>
+          <li>Revisa los filtros si es el correcto o si esta bien escrito</li>
+          <li>El buscador utiliza la Ubicación o la descripción para realizar la búsqueda</li>
+          <li>El buscador dispara la búsqueda apartir de los 3 primeros caracteres</li>
+          <li>Para ver todas las cotizaciones digite un * en el buscador</li>
+        </ul>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-dark" type="button" id="Borrar" @click="clickCerrarModalAyuda">Cerrar</button>
+      </div>
+    </modal>
+    <!--Aca termina el modal de ayuda-->
 </div>
 <%- /* Expose server-rendered data as window.SAILS_LOCALS :: */ exposeLocalsToBrowser() %>

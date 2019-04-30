@@ -6,10 +6,12 @@ parasails.registerPage('clientes', {
     //…
     o_cliente: {
       nombre: undefined,
+      nombreReal: undefined,
       telefono: undefined,
       correo: undefined,
       cedula: undefined,
-      activo: undefined
+      activo: undefined,
+      id: undefined
     },
     o_contacto: {
       nombre: undefined,
@@ -19,45 +21,7 @@ parasails.registerPage('clientes', {
       cliente: undefined,
       activo: undefined
     },
-    contactos: [{
-        nombre: 'Coca-Cola',
-        telefono: 25555555,
-        correo: 'coca@gmail.com',
-        cedula: 1012345678,
-        Contacto: [{
-            nombre: 'Jose quesada',
-            telefono: 88989899,
-            correo: 'jose@gmail.com',
-            cedula: 1012345678,
-          },
-          {
-            nombre: 'Mario Porras',
-            telefono: 9998555,
-            correo: 'mario@gmail.com',
-            cedula: 1012345679,
-          }
-        ]
-      },
-      {
-        nombre: 'Imprerial',
-        telefono: 2555555,
-        correo: 'imperial@gmail.com',
-        cedula: 1012345679,
-        Contacto: [{
-            nombre: 'Carlos quesada',
-            telefono: 88989899,
-            correo: 'carlos@gmail.com',
-            cedula: 1012345678,
-          },
-          {
-            nombre: 'Juan Porras',
-            telefono: 9998555,
-            correo: 'juan@gmail.com',
-            cedula: 1012345679,
-          }
-        ]
-      }
-    ],
+   
     informacion: {},
     l_verModalEditar: false,
     l_verModalAgregar: false,
@@ -115,9 +79,16 @@ parasails.registerPage('clientes', {
   //  ╦  ╦╔═╗╔═╗╔═╗╦ ╦╔═╗╦  ╔═╗
   //  ║  ║╠╣ ║╣ ║  ╚╦╝║  ║  ║╣
   //  ╩═╝╩╚  ╚═╝╚═╝ ╩ ╚═╝╩═╝╚═╝
-  beforeMount: function () {
+  beforeMount: async function () {
     // Attach any initial data from the server.
     _.extend(this, SAILS_LOCALS);
+
+    let respClientes = await Cloud.extraerClientes();
+    let respContactos = await Cloud.extraerContactos();
+
+    this.modelo.clientes = respClientes;
+    this.modelo.contactos = respContactos;
+    console.log(respContactos);
   },
   mounted: async function () {
     //…
@@ -131,10 +102,12 @@ parasails.registerPage('clientes', {
     limpiar_o_cliente: async function () {
       this.o_cliente = {
         nombre: undefined,
+        nombreReal: undefined,
         telefono: undefined,
         correo: undefined,
         cedula: undefined,
-        activo: undefined
+        activo: undefined,
+        id: undefined
       }
     },
     limpiar_o_contacto: async function () {
@@ -153,6 +126,7 @@ parasails.registerPage('clientes', {
       this.l_verModalEditar = true;
     },
     clickCerrarModalEditar: async function () {
+      this.limpiar_o_cliente();
       this.l_verModalEditar = false
     },
     clickVerModalAyuda: async function () {
@@ -223,7 +197,9 @@ parasails.registerPage('clientes', {
       this.l_verModalContactos = false;
       this.l_edito = false;
       this.p_contacto = {};
+      this.o_contacto.activo = true;
       this.modelo.contactos.push(this.o_contacto);
+     // this.modelo.clientes.find(cliente=> cliente.id === this.o_contacto.cliente).contactos.push(this.o_contacto); 
       this.clickCerrarModalAgregarContactos();
     },
     guardarCliente: async function (p_cliente) {
@@ -239,8 +215,9 @@ parasails.registerPage('clientes', {
       this.clickCerrarModalAgregar();
 
     },
-    actualizarContacto: async function (p_contacto) {
-
+    actualizarContacto: async function () {
+      alert("Editado Correctamente");
+      this.l_edito = false;
     },
     actualizarCliente: async function (p_cliente) {
 
