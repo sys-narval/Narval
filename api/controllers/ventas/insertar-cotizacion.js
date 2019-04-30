@@ -126,7 +126,7 @@ module.exports = {
       /**
        * Verificación del inventario en caso de ser alquiler o montaje
        */
-      
+
       if ((inputs.esMontaje || inputs.esAlquiler) && inputs.jsonArticulos.articulos === undefined) {
         return exits.error("En caso de Alquiler o Montaje, por favor ingrese artículos");
       }
@@ -156,7 +156,6 @@ module.exports = {
          * Validamos los precios 
          * en caso de no tener se le asigna el original del la BD
          */
-
         inputs.jsonArticulos.articulos.forEach((articulo, index) => {
           if (articulo.precio === undefined) {
             inputs.jsonArticulos.articulos[index].precio = _.find(dbArticulos, (dbArticulo) => {
@@ -165,19 +164,9 @@ module.exports = {
             }).precio;
           }
         });
+        inputs.articulos = inputs.jsonArticulos.articulos;
+        delete inputs.jsonArticulos;
       }
-
-      /**
-       * Validamos el caso en que solo es diseño
-       * no puede tener articulos
-       */
-      if (inputs.esDiseno && !(inputs.esMontaje || inputs.esAlquiler) && inputs.jsonArticulos !== undefined) {
-        return exits.error('En caso que es solo servicio de diseño por favor no ingresar articulos.');
-
-      }
-
-
-
 
       await Cotizaciones.create(inputs);
       return exits.success();
