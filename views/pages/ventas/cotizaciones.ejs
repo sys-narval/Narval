@@ -205,7 +205,7 @@
                     <td v-text="material.id"></td>
                     <td v-text="material.descripcion"></td>
                     <td v-text="material.cantidad"></td>
-                    <td v-text="material.precio"></td>
+                    <td>{{material.precio |formatoMoneda}}</td>
                   </tr>
                 </tbody>
               </table>
