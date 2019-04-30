@@ -60,10 +60,27 @@ module.exports = {
       description: "Fecha del desmontaje del evento"
     },
 
+    estado: {
+      type: "string",
+      isIn: ["Activo", "Cancelado", "Pendiente", "Finalizado"],
+      defaultsTo: "Pendiente",
+      description: "Estado actual de la cotización, unicamente permitidos los mencionados anteriormente"
+    },
+
 
     //  ╔═╗╔╦╗╔╗ ╔═╗╔╦╗╔═╗
     //  ║╣ ║║║╠╩╗║╣  ║║╚═╗
     //  ╚═╝╩ ╩╚═╝╚═╝═╩╝╚═╝
+    articulos: {
+      type: 'json',
+      description: `JSON con los artículos requeridos para la cotización (en caso de ser tipo alquiler o montaje).
+                        Se espera un JSON con la estructura { articulos: [ { id, cantidad, precio? } ] } Donde el precio es opcional
+                        en caso de no incluirse, se asigna el precio que tiene el articulo en la BD`
+    },
+
+    //  ╔═╗╔═╗╔═╗╔═╗╔═╗╦╔═╗╔╦╗╦╔═╗╔╗╔╔═╗
+    //  ╠═╣╚═╗╚═╗║ ║║  ║╠═╣ ║ ║║ ║║║║╚═╗
+    //  ╩ ╩╚═╝╚═╝╚═╝╚═╝╩╩ ╩ ╩ ╩╚═╝╝╚╝╚═╝
     encargado: {
       model: "User"
     },
@@ -75,16 +92,6 @@ module.exports = {
     contacto: {
       model: "Contactos"
     },
-
-    articulos:{
-      collection: "Articulos"
-    }
-
-    //  ╔═╗╔═╗╔═╗╔═╗╔═╗╦╔═╗╔╦╗╦╔═╗╔╗╔╔═╗
-    //  ╠═╣╚═╗╚═╗║ ║║  ║╠═╣ ║ ║║ ║║║║╚═╗
-    //  ╩ ╩╚═╝╚═╝╚═╝╚═╝╩╩ ╩ ╩ ╩╚═╝╝╚╝╚═╝
-
   },
 
 };
-
