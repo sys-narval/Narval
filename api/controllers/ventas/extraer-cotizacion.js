@@ -38,14 +38,27 @@ module.exports = {
         })
         .populate("encargado")
         .populate("cliente")
-        .populate("contacto")
-        .populate("articulos");
+        .populate("contacto");
 
       if (cotizacion === undefined) {
         return exits.cotizacionNoEncontrada(`Cotización ${inputs.id} no encontrada`);
-      } else {
-        return exits.success(cotizacion);
       }
+
+      if (cotizacion.esMontaje || cotizacion.esAlquiler) {
+        let dbArticulos = await Articulos.find({
+          where: {
+            id: {
+              in: cotizacion.articulos.map(articulo => articulo.id)
+            }
+          },
+          select: ["id", "descripcion", "categoria", "unidadMedida"]
+        });
+
+        cotizacion.articulos = cotizacion.articulos.map((articulo, index) => Object.assign(articulo, dbArticulos[index]));
+      }
+
+      return exits.success(cotizacion);
+
 
     } catch (error) {
       return exits.error(error.message);
