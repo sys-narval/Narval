@@ -59,6 +59,7 @@
           <th>Contacto</th>
           <th>Ubicación</th>
           <th>Descripción</th>
+          <th>Estado</th>
           <th>Opciones</th>
         </thead>
         <tbody>
@@ -69,6 +70,7 @@
             <td v-text="cotizacion.contacto.nombre"></td>
             <td v-text="cotizacion.lugarEvento"></td>
             <td v-text="cotizacion.descripcion"></td>
+            <td v-text="cotizacion.estado"></td>
             <td class="text-center">
               <div class="btn-group ">
                 <label for="ver" class="btn btn-primary" @click="verEvento(cotizacion)">
@@ -77,8 +79,8 @@
                 <label for="copiar" class="btn btn-success" @click="copiarEvento(cotizacion)">
                   Copiar
                 </label>
-                <label for="borrar" class="btn btn-danger" @click="borrarEvento(cotizacion)">
-                  Borrar
+                <label for="borrar" class="btn btn-danger" @click="cambioEstado(cotizacion)">
+                  Cambiar Estado
                 </label>
               </div>
             </td>
@@ -224,32 +226,21 @@
     <div class="row">
       <div class="col">
           <div class="modal-header">
-              <button type="button" class="close" @click="cancelarBorrar">&times</button>
-        <h1>¿Seguro que desea borrar la cotización?</h1>
+              <button type="button" class="close" @click="cancelarEstado">&times</button>
+        <h1>¿Seguro que desea cambiar el estado de la cotización?</h1>
         </div>
         <form action="" readonly>
-          <div class="form-row">
-            <!-- Encargado del evento -->
-            <div class="form-group col">
-              <label for="encargado">Encargado</label>
-              <input type="text" id="encargado" class="form-control" :value="o_cotizacion.encargado.fullName">
-            </div>
-            <!-- Cliente del evento -->
-            <div class="form-group col">
-              <label for="cliente">Cliente</label>
-              <input type="text" id="cliente" class="form-control" :value="o_cotizacion.cliente.nombre">
-            </div>
-          </div>
-          <div class="form-row">
-            <div class="form-group col">
-              <label for="descipcion">Descripción:</label>
-              <textarea name="Descripción" id="descripcion" cols="30" rows="3" class="form-control" :value="o_cotizacion.descripcion"></textarea>
-            </div>
+          <div class="modal-body">
+           <p>En estos momentos la cotización tiene un estado: <b> "{{o_cotizacion.estado}}"</b></p>
           </div>
           <div class="modal-footer">
-            
-              <input type="button" value="Aceptar" class="btn btn-primary" @click="confirmarBorrar">
-              <input type="button" value="Cancelar" class="btn btn-danger" @click="cancelarBorrar">
+              
+                <input v-if="o_cotizacion.estado !== 'Activo'" type="button" value="Confirmar" class="btn btn-success" @click="confirmarEvento">
+                <input v-if="o_cotizacion.estado !== 'Pendiente'" type="button" value="Pendiente" class="btn btn-warning" @click="pendienteEvento">
+                <input v-if="o_cotizacion.estado !== 'Cancelado'" type="button" value="Cancelado" class="btn btn-danger" @click="canceladoEvento">
+                <input v-if="o_cotizacion.estado !== 'Finalizado'" type="button" value="Terminado" class="btn btn-secondary" @click="terminadoEvento">
+              
+              
           
             
           </div>
