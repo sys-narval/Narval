@@ -58,6 +58,13 @@ module.exports = {
             description: "Fecha del desmontaje del evento"
         },
 
+        estado: {
+            type: "string",
+            isIn: ["Activo", "Cancelado", "Pendiente", "Finalizado"],
+            defaultsTo: "Pendiente",
+            description: "Estado actual de la cotización, unicamente permitidos los mencionados anteriormente"
+          },
+
         //  ╔═╗╔╦╗╔╗ ╔═╗╔╦╗╔═╗
         //  ║╣ ║║║╠╩╗║╣  ║║╚═╗
         //  ╚═╝╩ ╩╚═╝╚═╝═╩╝╚═╝
