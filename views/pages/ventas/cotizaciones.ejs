@@ -197,13 +197,15 @@
                     <th>ID</th>
                     <th>Descripción</th>
                     <th>Cantidad</th>
+                    <th>Precio Total</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr v-for="material in o_cotizacion.articulos">
                     <td v-text="material.id"></td>
                     <td v-text="material.descripcion"></td>
-                    <td v-text="material.cantidadLibre"></td>
+                    <td v-text="material.cantidad"></td>
+                    <td v-text="material.precio"></td>
                   </tr>
                 </tbody>
               </table>
