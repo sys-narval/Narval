@@ -108,7 +108,7 @@ module.exports = {
                 .populate("encargado")
                 .populate("cliente")
                 .populate("contacto")
-                .populate("articulos");
+                //.populate("articulos");
 
             if (contizacion === undefined) {
                 return exits.cotizacionNoEncontrado(`Cotización ${inputs.id} no encontrado`);

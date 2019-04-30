@@ -66,7 +66,7 @@ parasails.registerPage('cotizaciones', {
             this.o_cotizacion.fechaDesmontaje = t_fechaDesmontaje.getFullYear() + '-' + '0'+ (t_fechaDesmontaje.getMonth()+1) + '-' + t_fechaDesmontaje.getDate();
           }
 
-          console.log(this.me.id);
+          
           this.l_verModal = true;
         },
 
@@ -90,17 +90,31 @@ parasails.registerPage('cotizaciones', {
                   this.l_modCopiarEvento = false;
                 },
 
-                borrarEvento: async function (cotizacion) {
+                cambioEstado: async function (cotizacion) {
                     this.o_cotizacion = cotizacion;
                     this.l_modBorrarEvento = true;
                   },
 
-                  confirmarBorrar: async function () {
+                  confirmarEvento: async function () {
                       //this.cotizaciones = this.cotizaciones.filter(cotizacion => cotizacion !== this.cotizacion)
-                      this.cancelarBorrar();
+                      this.o_cotizacion.estado = 'Activo';
+                    //  await Cloud.actualizarCotizacion(this.o_cotizacion);
+                    this.l_modBorrarEvento = false;
+                    },
+                    pendienteEvento: async function(){
+                      this.o_cotizacion.estado = 'Pendiente';
+                      this.l_modBorrarEvento = false;
+                    },
+                    canceladoEvento: async function(){
+                      this.o_cotizacion.estado = 'Cancelado';
+                      this.l_modBorrarEvento = false;
+                    },
+                    terminadoEvento: async function(){
+                      this.o_cotizacion.estado = 'Finalizado';
+                      this.l_modBorrarEvento = false;
                     },
 
-                    cancelarBorrar: async function () {
+                    cancelarEstado: async function () {
                       this.o_cotizacion = { /*_*/ };
                       this.l_modBorrarEvento = false;
                     },
