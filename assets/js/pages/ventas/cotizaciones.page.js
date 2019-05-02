@@ -12,6 +12,7 @@ parasails.registerPage('cotizaciones', {
     l_myId: '',
     l_filtro: {
       cliente:{},
+      encargado:{}
     },
      // Datos del form
      formData: {
