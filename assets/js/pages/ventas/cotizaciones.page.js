@@ -10,7 +10,9 @@ parasails.registerPage('cotizaciones', {
     l_modCopiarEvento: false,
     l_busquedaCotizacion: '',
     l_myId: '',
-    l_filtro: {},
+    l_filtro: {
+      cliente:{},
+    },
      // Datos del form
      formData: {
       /* … */ },
@@ -162,7 +164,9 @@ parasails.registerPage('cotizaciones', {
         */
 
         if (this.l_busquedaCotizacion.length > 3 ) {
+          console.log(this.l_filtro);
           console.log(limpiaFiltro(this.l_filtro));
+          console.log(this.modelo.cotizaciones)
           return _.filter(this.modelo.cotizaciones, limpiaFiltro(this.l_filtro))
             .filter(cotizacion =>cotizacion.encargado.fullName.includes(this.l_busquedaCotizacion) ||cotizacion.descripcion.includes(this.l_busquedaCotizacion) || cotizacion.lugarEvento.includes(this.l_busquedaCotizacion));
             }else if(this.l_busquedaCotizacion === "*")
