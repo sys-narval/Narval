@@ -301,6 +301,7 @@ parasails.registerPage('clientes', {
        * que la barra de búsqueda tenga más de un dígito y coincida con la descripción o ubicación.
        */
       if (this.l_buscarCliente.length > 3 && this.l_actualizar === false) {
+        console.log( c_limpiaFiltro(this.l_filtro));
         return _.filter(this.modelo.clientes, c_limpiaFiltro(this.l_filtro))
           .filter(cliente => cliente.nombre.includes(this.l_buscarCliente) || cliente.telefono.includes(this.l_buscarCliente) || cliente.cedula.includes(this.l_buscarCliente));
       } else if (this.l_buscarCliente === "*" && this.l_actualizar === false) {
