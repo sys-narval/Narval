@@ -18,11 +18,13 @@ parasails.registerPage('ventas', {
 
     // Datos del form
     formData: {
-      /* … */ },
+      /* … */
+    },
     syncing: false,
     cloudError: '',
     formErrors: {
-      /* … */ },
+      /* … */
+    },
     formRules: {
 
     },
@@ -39,7 +41,7 @@ parasails.registerPage('ventas', {
       encargado: undefined,
       cliente: undefined,
       contacto: undefined,
-      jsonArticulos: {articulos: undefined} 
+      jsonArticulos: { articulos: undefined }
     },
     o_cliente: {
       nombre: undefined,
@@ -97,7 +99,8 @@ parasails.registerPage('ventas', {
     l_fechaFinEvento: '',
     l_fechaMontaje: '',
     l_fechaDesmontaje: '',
-    l_verModalAgregarCotizacion: false
+    l_verModalAgregarCotizacion: false,
+    l_getValor: false,
 
   },
 
@@ -114,6 +117,9 @@ parasails.registerPage('ventas', {
     this.modelo.articulos = respArticulos.articulos;
     this.modelo.clientes = respClientes;
     this.modelo.contactos = respContactos;
+
+   this.getGET();
+
   },
   mounted: async function () {
     //…
@@ -124,7 +130,6 @@ parasails.registerPage('ventas', {
   //  ╩╝╚╝ ╩ ╚═╝╩╚═╩ ╩╚═╝ ╩ ╩╚═╝╝╚╝╚═╝
   methods: {
     //…
-
 
     limpiar_o_articulo: async function () {
       this.o_articulo = {
@@ -138,22 +143,21 @@ parasails.registerPage('ventas', {
         cantidadSolicitada: 0
       }
     },
-    limpiar_o_cotizacion: async function()
-    {
+    limpiar_o_cotizacion: async function () {
       this.o_cotizacion = {
         lugarEvento: undefined,
-      esDiseno: undefined,
-      esMontaje: undefined,
-      esAlquiler: undefined,
-      descripcion: undefined,
-      fechaEvento: 0,
-      fechaFinEvento: 0,
-      fechaMontaje: 0,
-      fechaDesmontaje: 0,
-      encargado: undefined,
-      cliente: undefined,
-      contacto: undefined,
-      articulos: undefined
+        esDiseno: undefined,
+        esMontaje: undefined,
+        esAlquiler: undefined,
+        descripcion: undefined,
+        fechaEvento: 0,
+        fechaFinEvento: 0,
+        fechaMontaje: 0,
+        fechaDesmontaje: 0,
+        encargado: undefined,
+        cliente: undefined,
+        contacto: undefined,
+        articulos: undefined
       }
     },
     clickVerModalAgregar: async function () {
@@ -165,55 +169,49 @@ parasails.registerPage('ventas', {
     },
     clickVerModalAgregarC: async function () {
       this.o_contacto.nombre = this.l_buscarContacto;
-     /* if (this.filteredClientes[0].id !== undefined) {
-
-    } else {
-      this.l_cliente = await Cloud.extraerCliente(this.filteredClientes[0].cedula);
-      this.o_contacto.cliente = this.l_cliente.id;
-    }*/
-    this.o_contacto.cliente = this.filteredClientes[0].id;
-    this.l_verModalAgregarC = true;
+      /* if (this.filteredClientes[0].id !== undefined) {
+ 
+     } else {
+       this.l_cliente = await Cloud.extraerCliente(this.filteredClientes[0].cedula);
+       this.o_contacto.cliente = this.l_cliente.id;
+     }*/
+      this.o_contacto.cliente = this.filteredClientes[0].id;
+      this.l_verModalAgregarC = true;
     },
     clickCerrarModalAgregarC: async function () {
       this.l_verModalAgregarC = false;
     },
-    clickVerModalGuardarCotizacion: async function()
-    {
+    clickVerModalGuardarCotizacion: async function () {
       this.o_cotizacion.esDiseno = this.l_sDiseno;
       this.o_cotizacion.esAlquiler = this.l_sAlquiler;
       this.o_cotizacion.esMontaje = this.l_sMontaje;
       this.o_cotizacion.encargado = this.me.id;
-      if(this.l_fechaEvento !== '' && this.fechaFinEvento !== '')
-      {
-        
+      if (this.l_fechaEvento !== '' && this.fechaFinEvento !== '') {
+
         this.o_cotizacion.fechaEvento = Date.parse(this.l_fechaEvento);
         this.o_cotizacion.fechaFinEvento = Date.parse(this.l_fechaFinEvento);
       }
-      if(this.l_fechaMontaje !== '' && this.l_fechaDesmontaje !== '')
-      {
+      if (this.l_fechaMontaje !== '' && this.l_fechaDesmontaje !== '') {
         this.o_cotizacion.fechaMontaje = Date.parse(this.l_fechaMontaje);
         this.o_cotizacion.fechaDesmontaje = Date.parse(this.l_fechaDesmontaje);
       }
-      if(this.l_articulosTabla.length !== 0)
-      {
-        for(let index = 0; index < this.l_articulosTabla.length; index++)
-        {
-          this.l_prueba.push({id:this.l_articulosTabla[index].id, cantidad: this.l_articulosTabla[index].cantidadSolicitada, precio: this.l_articulosTabla[index].precioTotal});
+      if (this.l_articulosTabla.length !== 0) {
+        for (let index = 0; index < this.l_articulosTabla.length; index++) {
+          this.l_prueba.push({ id: this.l_articulosTabla[index].id, cantidad: this.l_articulosTabla[index].cantidadSolicitada, precio: this.l_articulosTabla[index].precioTotal });
         }
       }
       this.o_cotizacion.jsonArticulos.articulos = this.l_prueba;
 
       this.l_verModalAgregarCotizacion = true;
     },
-    clickCerrarModalAgregarCotizacion: async function()
-    {
+    clickCerrarModalAgregarCotizacion: async function () {
       this.limpiar_o_cotizacion();
       location.reload();
       this.l_prueba = [];
       this.l_verModalAgregarCotizacion = false;
     },
     clickVerModalGuardar: async function () {
-     
+
       this.l_verModalGuardar = true;
     },
     clickCerrarModalGuardar: async function () {
@@ -260,7 +258,7 @@ parasails.registerPage('ventas', {
       if (!esta) {
 
         this.l_selecArticulo.push(p_articulo.id);
-       // this.l_prueba.push({id:p_articulo.id, cantidad: p_articulo.cantidadSolicitada});
+        // this.l_prueba.push({id:p_articulo.id, cantidad: p_articulo.cantidadSolicitada});
         this.l_articulosTabla.push(p_articulo);
         this.sumatoria();
       }
@@ -268,7 +266,7 @@ parasails.registerPage('ventas', {
     quitarArticuloTabla: async function (p_articulo) {
       let t_arregloSalida = [];
       let t_arregloSalida2 = [];
-     // let t_prueba = [];
+      // let t_prueba = [];
       for (let index = 0; index < this.l_selecArticulo.length; index++) {
         if (this.l_selecArticulo[index] !== p_articulo.id) {
           t_arregloSalida.push(this.l_selecArticulo[index]);
@@ -279,12 +277,12 @@ parasails.registerPage('ventas', {
         if (this.l_articulosTabla[index].id !== p_articulo.id) {
           t_arregloSalida2.push(this.l_articulosTabla[index]);
         }
-       /* if(this.l_prueba[index].id !== p_articulo.id)
-        {
-          t_prueba.push(this.l_prueba[index]);
-        }*/
+        /* if(this.l_prueba[index].id !== p_articulo.id)
+         {
+           t_prueba.push(this.l_prueba[index]);
+         }*/
       }
-     //this.l_prueba = t_prueba;
+      //this.l_prueba = t_prueba;
       this.l_selecArticulo = t_arregloSalida;
       this.l_articulosTabla = t_arregloSalida2;
       this.sumatoria();
@@ -317,7 +315,7 @@ parasails.registerPage('ventas', {
       this.o_cliente.cedula = parseInt(this.o_cliente.cedula);
       */
       this.p_cliente = {};
-    //  this.modelo.clientes.push(this.o_cliente);
+      //  this.modelo.clientes.push(this.o_cliente);
 
       this.$forceUpdate();
       this.filtroIDCliente();
@@ -326,21 +324,64 @@ parasails.registerPage('ventas', {
     },
     guardarContacto: async function (p_contacto) {
       this.p_contacto = {};
-   //   this.modelo.contactos.push(this.o_contacto);
+      //   this.modelo.contactos.push(this.o_contacto);
       this.$forceUpdate();
       this.filtroIDContacto();
       this.clickCerrarModalAgregarC();
     },
-    filtroIDCliente: async function()
-    {
+    filtroIDCliente: async function () {
       let respClientes = await Cloud.extraerClientes();
       this.modelo.clientes = respClientes;
     },
-    filtroIDContacto: async function()
-    {
+    filtroIDContacto: async function () {
       let respContactos = await Cloud.extraerContactos();
       this.modelo.contactos = respContactos;
-    }
+    },
+    getGET: async function () {
+      // capturamos la url
+      var loc = document.location.href;
+      // si existe el interrogante
+      if (loc.indexOf('?') > 0) {
+        // cogemos la parte de la url que hay despues del interrogante
+        var getString = loc.split('?')[1];
+        // obtenemos un array con cada clave=valor
+        var GET = getString.split('&');
+        var get = {};
+        // recorremos todo el array de valores
+        for (var i = 0, l = GET.length; i < l; i++) {
+          var tmp = GET[i].split('=');
+          get[tmp[0]] = unescape(decodeURI(tmp[1]));
+        }
+        get.variable = parseInt(get.variable);
+        let respCotizacion;
+        if (get.variable) {
+          l_getValor = true;
+          console.log(get);
+          respCotizacion = await Cloud.extraerCotizacion("Ryan Dahl",1);
+          this.o_cotizacion = respCotizacion;
+         console.log(this.o_cotizacion);
+          this.l_sDiseno = this.o_cotizacion.esDiseno;
+          this.l_sMontaje = this.o_cotizacion.esMontaje;
+          this.l_sAlquiler = this.o_cotizacion.esAlquiler;
+          this.l_selecArticulo.push("1234");
+        }
+        
+        //return get.variable;
+      }
+    },
+    setValores: async function () {
+      let t_idCotizacion;
+      let respCotizacion;
+      t_idCotizacion = this.getGET();
+      console.log(t_idCotizacion);
+      if (t_idCotizacion) {
+        for (var index in t_idCotizacion) {
+          //console.log(t_idCotizacion[index]);
+          respCotizacion = await Cloud.extraerCotizacion(t_idCotizacion[index]);
+        }
+        //this.o_cotizacion = respCotizacion;
+      }
+    },
   },
   filters: {
     formatoMoneda: function (cantidad) {
@@ -371,28 +412,26 @@ parasails.registerPage('ventas', {
        * Filtramos las articulos que cumplan con el filtro preestablecido por el usuario y que cumpla con
        * que la barra de búsqueda tenga más de un dígito y coincida con la descripción o ubicación.
        */
-      if(this.l_buscarContacto !== undefined)
-      {
+      if (this.l_buscarContacto !== undefined) {
 
         if (this.l_buscarContacto.length > 3 && this.l_actualizar === false) {
           if (_.filter(this.modelo.contactos, c_limpiaFiltro(this.l_filtro))
-          .filter(contacto => contacto.nombre.match(this.l_buscarContacto))[0] !== undefined) {
-  
-  
-          this.o_cotizacion.contacto = _.filter(this.modelo.contactos, c_limpiaFiltro(this.l_filtro))
-          .filter(contacto => contacto.nombre.match(this.l_buscarContacto))[0].id;
-        }
+            .filter(contacto => contacto.nombre.match(this.l_buscarContacto))[0] !== undefined) {
+
+
+            this.o_cotizacion.contacto = _.filter(this.modelo.contactos, c_limpiaFiltro(this.l_filtro))
+              .filter(contacto => contacto.nombre.match(this.l_buscarContacto))[0].id;
+          }
           return _.filter(this.modelo.contactos, c_limpiaFiltro(this.l_filtro))
             .filter(contacto => contacto.nombre.match(this.l_buscarContacto));
         } else {
           return new Array();
         }
-      }else
-      {
+      } else {
         return new Array();
       }
     },
-    filteredClientes:  function () {
+    filteredClientes: function () {
 
       const c_limpiaFiltro = objeto => {
         for (let t_atributo in objeto)
@@ -405,28 +444,26 @@ parasails.registerPage('ventas', {
        * Filtramos las articulos que cumplan con el filtro preestablecido por el usuario y que cumpla con
        * que la barra de búsqueda tenga más de un dígito y coincida con la descripción o ubicación.
        */
-     
-        if(this.l_buscarCliente !== undefined)
-        {
 
-          if (this.l_buscarCliente.length > 3 && this.l_actualizar === false) {
-            if (_.filter(this.modelo.clientes, c_limpiaFiltro(this.l_filtro))
+      if (this.l_buscarCliente !== undefined) {
+
+        if (this.l_buscarCliente.length > 3 && this.l_actualizar === false) {
+          if (_.filter(this.modelo.clientes, c_limpiaFiltro(this.l_filtro))
             .filter(cliente => cliente.nombre.match(this.l_buscarCliente) || cliente.telefono.includes(this.l_buscarCliente) || cliente.cedula.includes(this.l_buscarCliente))[0] !== undefined) {
-    
-    
-            this.o_cotizacion.cliente =  _.filter(this.modelo.clientes, c_limpiaFiltro(this.l_filtro))
+
+
+            this.o_cotizacion.cliente = _.filter(this.modelo.clientes, c_limpiaFiltro(this.l_filtro))
               .filter(cliente => cliente.nombre.match(this.l_buscarCliente) || cliente.telefono.includes(this.l_buscarCliente) || cliente.cedula.includes(this.l_buscarCliente))[0].id;
           }
-            return _.filter(this.modelo.clientes, c_limpiaFiltro(this.l_filtro))
-              .filter(cliente => cliente.nombre.match(this.l_buscarCliente) || cliente.telefono.includes(this.l_buscarCliente) || cliente.cedula.includes(this.l_buscarCliente));
-          } else {
-            return new Array();
-          }
-        }else
-        {
+          return _.filter(this.modelo.clientes, c_limpiaFiltro(this.l_filtro))
+            .filter(cliente => cliente.nombre.match(this.l_buscarCliente) || cliente.telefono.includes(this.l_buscarCliente) || cliente.cedula.includes(this.l_buscarCliente));
+        } else {
           return new Array();
         }
-      
+      } else {
+        return new Array();
+      }
+
     },
 
     filtroCategorias: function () {
@@ -489,10 +526,16 @@ parasails.registerPage('ventas', {
     filtroDeTabla: function () {
 
       let t_articulosTabla = [];
-      for (let t_tempID in this.l_selecArticulo) {
+      if(l_getValor){
+        for (let t_tempID in this.l_selecArticulo) {
+          t_articulosTabla.push(this.modelo.articulos.filter(t_articulo => t_articulo.id.includes(this.l_selecArticulo[t_tempID]))[0]);
+        }
+      }else{
+        for (let t_tempID in this.l_selecArticulo) {
         t_articulosTabla.push(this.modelo.articulos.filter(t_articulo => t_articulo.id.includes(this.l_selecArticulo[t_tempID]))[0]);
-
       }
+      }
+      
       return t_articulosTabla;
     },
   },
