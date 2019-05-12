@@ -207,7 +207,8 @@ parasails.registerPage('ventas', {
     },
     clickCerrarModalAgregarCotizacion: async function () {
       this.limpiar_o_cotizacion();
-      location.reload();
+     // location.reload();
+     location.href = "ventas";
       this.l_prueba = [];
       this.l_verModalAgregarCotizacion = false;
     },
