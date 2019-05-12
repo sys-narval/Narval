@@ -59,7 +59,7 @@ parasails.registerPage('ventas', {
     },
     l_prueba: [],
     l_precioTotal: 0,
-    l_cantidadSolicitada: 0,
+    l_cantidadSolicitada: 1,
     l_precioUnitario: 0,
     l_verModalVer: false,
     l_sMontaje: false,
@@ -101,6 +101,7 @@ parasails.registerPage('ventas', {
     l_fechaDesmontaje: '',
     l_verModalAgregarCotizacion: false,
     l_getValor: false,
+    t_cotizacion: undefined,
 
   },
 
@@ -118,7 +119,7 @@ parasails.registerPage('ventas', {
     this.modelo.clientes = respClientes;
     this.modelo.contactos = respContactos;
 
-   this.getGET();
+    this.getGET();
 
   },
   mounted: async function () {
@@ -233,7 +234,7 @@ parasails.registerPage('ventas', {
     },
     verArticulo: async function (p_Articulo) {
       this.o_articulo = p_Articulo
-      this.l_cantidadSolicitada = 1;
+      this.l_cantidadSolicitada = p_Articulo.cantidadSolicitada;
       this.l_precioUnitario = parseInt(p_Articulo.precio)
       this.o_articulo.precio = parseInt(this.o_articulo.precio)
       this.l_verModalVer = true
@@ -354,18 +355,26 @@ parasails.registerPage('ventas', {
         }
         get.variable = parseInt(get.variable);
         let respCotizacion;
+        //let t_cotizacion;
         if (get.variable) {
-          l_getValor = true;
+          this.l_getValor = true;
           console.log(get);
-          respCotizacion = await Cloud.extraerCotizacion("Ryan Dahl",1);
-          this.o_cotizacion = respCotizacion;
-         console.log(this.o_cotizacion);
-          this.l_sDiseno = this.o_cotizacion.esDiseno;
-          this.l_sMontaje = this.o_cotizacion.esMontaje;
-          this.l_sAlquiler = this.o_cotizacion.esAlquiler;
-          this.l_selecArticulo.push("1234");
+          respCotizacion = await Cloud.extraerCotizacion("Ryan Dahl", get.variable);
+          this.t_cotizacion = respCotizacion;
+          console.log(this.t_cotizacion);
+          this.o_cotizacion.lugarEvento = this.t_cotizacion.lugarEvento;
+          this.o_cotizacion.descripcion = this.t_cotizacion.descripcion;
+          this.l_sDiseno = this.t_cotizacion.esDiseno;
+          this.l_sMontaje = this.t_cotizacion.esMontaje;
+          this.l_sAlquiler = this.t_cotizacion.esAlquiler;
+          for (let t_tempID in this.t_cotizacion.articulos) {
+            this.l_selecArticulo.push(this.t_cotizacion.articulos[t_tempID].id);
+          }
+          this.l_buscarCliente = this.t_cotizacion.cliente.nombre;
+          this.l_buscarContacto = this.t_cotizacion.contacto.nombre;
+
         }
-        
+
         //return get.variable;
       }
     },
@@ -526,16 +535,31 @@ parasails.registerPage('ventas', {
     filtroDeTabla: function () {
 
       let t_articulosTabla = [];
-      if(l_getValor){
+
+      if (this.l_getValor) {
+        for (let t_tempID in this.l_selecArticulo) {
+
+          for (let t_val in this.modelo.articulos) {
+            let t_cantidad;
+            let t_precio;
+            t_cantidad = this.t_cotizacion.articulos.filter(t_articulo => t_articulo.id.includes(this.l_selecArticulo[t_tempID]))[0].cantidad;
+            t_precio = this.t_cotizacion.articulos.filter(t_articulo => t_articulo.id.includes(this.l_selecArticulo[t_tempID]))[0].precio;
+            if (this.modelo.articulos[t_val].id === this.l_selecArticulo[t_tempID]) {
+              this.modelo.articulos[t_val].cantidadSolicitada = t_cantidad;
+              this.modelo.articulos[t_val].precioTotal = t_precio;
+            }
+          }
+          t_articulosTabla.push(this.modelo.articulos.filter(t_articulo => t_articulo.id.includes(this.l_selecArticulo[t_tempID]))[0]);
+          this.l_articulosTabla.push(this.modelo.articulos.filter(t_articulo => t_articulo.id.includes(this.l_selecArticulo[t_tempID]))[0]);
+          this.sumatoria();
+        }
+        this.l_getValor = false;
+      } else {
         for (let t_tempID in this.l_selecArticulo) {
           t_articulosTabla.push(this.modelo.articulos.filter(t_articulo => t_articulo.id.includes(this.l_selecArticulo[t_tempID]))[0]);
         }
-      }else{
-        for (let t_tempID in this.l_selecArticulo) {
-        t_articulosTabla.push(this.modelo.articulos.filter(t_articulo => t_articulo.id.includes(this.l_selecArticulo[t_tempID]))[0]);
       }
-      }
-      
+
       return t_articulosTabla;
     },
   },
