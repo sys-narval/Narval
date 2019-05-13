@@ -12,17 +12,19 @@ parasails.registerPage('cotizaciones', {
     l_myId: '',
     l_filtro: {
       cliente: {},
-      encargado: {}
+      encargado: {},
+      fechaInicio: "",
+      fechaFin: "",
     },
     // Datos del form
     formData: {
       /* … */
-},
+    },
     syncing: false,
     cloudError: '',
     formErrors: {
       /* … */
-},
+    },
     formRules: {
 
     },
@@ -53,20 +55,20 @@ parasails.registerPage('cotizaciones', {
       if (this.o_cotizacion.fechaEvento !== 0) {
         let t_fechaEvento = this.o_cotizacion.fechaEvento;
         t_fechaEvento = new Date(t_fechaEvento);
-        this.o_cotizacion.fechaEvento = t_fechaEvento.getFullYear() + '-' + '0' + (t_fechaEvento.getMonth() + 1) + '-' + (t_fechaEvento.getDate()+1);
+        this.o_cotizacion.fechaEvento = t_fechaEvento.getFullYear() + '-' + '0' + (t_fechaEvento.getMonth() + 1) + '-' + (t_fechaEvento.getDate() + 1);
 
         let t_fechaFinEvento = this.o_cotizacion.fechaFinEvento;
         t_fechaFinEvento = new Date(t_fechaFinEvento);
-        this.o_cotizacion.fechaFinEvento = t_fechaFinEvento.getFullYear() + '-' + '0' + (t_fechaFinEvento.getMonth() + 1) + '-' + (t_fechaFinEvento.getDate()+1);
+        this.o_cotizacion.fechaFinEvento = t_fechaFinEvento.getFullYear() + '-' + '0' + (t_fechaFinEvento.getMonth() + 1) + '-' + (t_fechaFinEvento.getDate() + 1);
       }
       if (this.o_cotizacion.fechaMontaje !== 0) {
         let t_fechaMontaje = this.o_cotizacion.fechaMontaje;
         t_fechaMontaje = new Date(t_fechaMontaje);
-        this.o_cotizacion.fechaMontaje = t_fechaMontaje.getFullYear() + '-' + '0' + (t_fechaMontaje.getMonth() + 1) + '-' + (t_fechaMontaje.getDate()+1);
+        this.o_cotizacion.fechaMontaje = t_fechaMontaje.getFullYear() + '-' + '0' + (t_fechaMontaje.getMonth() + 1) + '-' + (t_fechaMontaje.getDate() + 1);
 
         let t_fechaDesmontaje = this.o_cotizacion.fechaDesmontaje;
         t_fechaDesmontaje = new Date(t_fechaDesmontaje);
-        this.o_cotizacion.fechaDesmontaje = t_fechaDesmontaje.getFullYear() + '-' + '0' + (t_fechaDesmontaje.getMonth() + 1) + '-' + (t_fechaDesmontaje.getDate()+1);
+        this.o_cotizacion.fechaDesmontaje = t_fechaDesmontaje.getFullYear() + '-' + '0' + (t_fechaDesmontaje.getMonth() + 1) + '-' + (t_fechaDesmontaje.getDate() + 1);
       }
 
 
@@ -127,11 +129,11 @@ parasails.registerPage('cotizaciones', {
     clickCerrarModalAyuda: async function () {
       this.l_verModalAyuda = false;
     },
-    pasarVariable: async function(idCotizacion){
+    pasarVariable: async function (idCotizacion) {
       location.href = "ventas?variable=" + idCotizacion + "";
     },
-    btnActualizarCotizacion: async function(o_cotizacion){
-      location.href = "actualizarCotizacion?variable="+o_cotizacion.id+"";
+    btnActualizarCotizacion: async function (o_cotizacion) {
+      location.href = "actualizarCotizacion?variable=" + o_cotizacion.id + "";
     },
   },
   filters: {
@@ -157,11 +159,13 @@ parasails.registerPage('cotizaciones', {
       * eliminamos ese atributo del objeto para que no sea evaluado
       */
       const limpiaFiltro = objeto => {
-        for (let atributo in objeto)
+        for (let atributo in objeto) {
           if (objeto[atributo] === null || objeto[atributo] === undefined || objeto[atributo] === '')
             delete objeto[atributo];
+        }
         return objeto;
       }
+
 
       /*
       * Filtramos las cotizaciones que cumplan con el filtro preestablecido por el usuario y que cumpla con
@@ -169,16 +173,36 @@ parasails.registerPage('cotizaciones', {
       */
 
       if (this.l_busquedaCotizacion.length > 3) {
+        if (this.l_filtro.cliente.nombre === '') {
+          this.l_filtro.cliente = {};
+        }
+        if (this.l_filtro.encargado.fullName === '') {
+          this.l_filtro.encargado = {};
+        }
         return _.filter(this.modelo.cotizaciones, limpiaFiltro(this.l_filtro))
           .filter(cotizacion => cotizacion.encargado.fullName.includes(this.l_busquedaCotizacion) || cotizacion.descripcion.includes(this.l_busquedaCotizacion) || cotizacion.lugarEvento.includes(this.l_busquedaCotizacion));
       } else if (this.l_busquedaCotizacion === "*") {
         return this.modelo.cotizaciones;
       } else if (this.l_busquedaCotizacion == "/") {
-        return _.filter(this.modelo.cotizaciones, limpiaFiltro(this.l_filtro)).filter(
-          cotizacion => cotizacion.fechaMontaje >= this.l_busquedaCotizacion);
+        let t_inicio = Date.parse(this.l_filtro.fechaInicio);
+        let t_fin =Date.parse(this.l_filtro.fechaFin);
+        for (let index = 0; index <this.modelo.cotizaciones.length; index++) {
+          if (t_inicio < this.modelo.cotizaciones[index].fechaEvento) {
+            this.modelo.cotizaciones[index].fechaInicio=t_inicio;
+            this.l_filtro.fechaInicio=t_inicio;
+          }
+        }
+        for (let index = 0; index <this.modelo.cotizaciones.length; index++) {
+          if (t_fin > this.modelo.cotizaciones[index].fechaFinEvento) {
+            this.modelo.cotizaciones[index].fechaFin=t_fin;
+            this.l_filtro.fechaFin=t_fin;
+          }
+        }   
+        console.log(this.modelo.cotizaciones)
+        return _.filter(this.modelo.cotizaciones , limpiaFiltro(this.l_filtro));
       } else {
         return new Array();
       }
     }
-  }
+  },
 });
