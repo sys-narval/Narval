@@ -151,9 +151,17 @@ parasails.registerPage('clientes', {
       this.l_verModalAgregar = false
       this.formErrors = {};
       this.limpiar_o_cliente();
+      
     },
     clickVerModalAgregarContactos: async function (p_cliente) {
-      this.o_contacto.cliente = p_cliente.id;
+      if(p_cliente.id)
+      {
+        this.o_contacto.cliente = p_cliente.id;
+
+      }else{
+        p_cliente =  await Cloud.extraerCliente(p_cliente.cedula);
+        this.o_contacto.cliente = p_cliente.id;
+      }
       this.l_verModalAgregarContactos = true;
     },
     clickCerrarModalAgregarContactos: async function () {
@@ -161,6 +169,7 @@ parasails.registerPage('clientes', {
       this.l_verModalAgregarContactos = false;
     },
     clickVerModalContactos: async function (p_cliente) {
+      this.modelo.contactos = await Cloud.extraerContactos();
       this.o_cliente = p_cliente;
       this.l_verModalContactos = true
     },
