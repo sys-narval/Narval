@@ -527,7 +527,7 @@ parasails.registerPage('ventas', {
           }
         }
         return t_arregloSalida2;
-      } else if (this.l_buscarArticulo === "*" && this.l_actualizar === false) {
+      } else if (this.l_buscarArticulo === "*") {
         return this.modelo.articulos;
       } else {
         return new Array();
