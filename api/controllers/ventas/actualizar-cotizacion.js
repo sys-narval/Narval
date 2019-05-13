@@ -8,6 +8,13 @@ module.exports = {
 
 
     inputs: {
+        id: {
+            type: 'string',
+            required: true,
+            unique: true,
+            description: 'ID único  para identificar la cotización dentro de la base de datos',
+        },
+
         lugarEvento: {
             type: "string",
             maxLength: 200,
@@ -104,7 +111,7 @@ module.exports = {
     fn: async function (inputs, exits) {
         try {
 
-            let contizacion = await Cotizaciones.find({ id: inputs.id })
+            let contizacion = await Cotizaciones.findOne({ id: inputs.id })
                 .populate("encargado")
                 .populate("cliente")
                 .populate("contacto")
