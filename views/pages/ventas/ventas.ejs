@@ -258,29 +258,21 @@
               <th>Opciones</th>
             </tr>
           </thead>
-          <tbody v-for="t_Categoria in filtroCategorias">
-            <tr v-if="t_Categoria == filtroArticulos[0].categoria">
-              <td v-text="filtroArticulos[0].id"></td>
-              <td v-text="filtroArticulos[0].categoria"></td>
-              <td v-text="filtroArticulos[0].descripcion"> </td>
-              <td v-text="filtroArticulos[0].cantidadLibre"></td>
-              <td> {{filtroArticulos[0].precio |formatoMoneda}}</td>
+          <tbody v-for="t_articulos in filtroArticulos">
+            
+            <tr>
+              <td v-text="t_articulos.id"></td>
+              <td v-text="t_articulos.categoria"></td>
+              <td v-text="t_articulos.descripcion"> </td>
+              <td v-text="t_articulos.cantidadLibre"></td>
+              <td> {{t_articulos.precio |formatoMoneda}}</td>
               <td><input type="button" value="Agregar" class="btn btn-primary"
-                  @click=" agregarArticuloTemp(filtroArticulos[0])">
+                  @click=" agregarArticuloTemp(t_articulos)">
 
 
               </td>
             </tr>
-            <tr v-if="filtroArticulos.length > 1&&t_Categoria == filtroArticulos[1].categoria">
-              <td v-text="filtroArticulos[1].id"></td>
-              <td v-text="filtroArticulos[1].categoria"></td>
-              <td v-text="filtroArticulos[1].descripcion"> </td>
-              <td v-text="filtroArticulos[1].cantidadLibre"></td>
-              <td> {{filtroArticulos[1].precio |formatoMoneda}}</td>
-              <td><input type="button" value="Agregar" class="btn btn-primary"
-                  @click=" agregarArticuloTemp(filtroArticulos[1]); ">
-              </td>
-            </tr>
+            
           </tbody>
         </table>
 
