@@ -8,16 +8,10 @@ module.exports = {
 
 
   inputs: {
-    encargado: {
-      type: "string",
-      description: "Nombre de la persona encargada"
-    },
-
     id: {
       type: "number",
       description: "ID de la cotización a extraer (en caso de conocerlo)"
     }
-
   },
 
 

@@ -21,7 +21,7 @@ module.exports.routes = {
   'GET /legal/terms':        { view:   'pages/legal/terms' },
   'GET /legal/privacy':      { view:   'pages/legal/privacy' },
   'GET /contact':            { view:   'pages/contact' },
-  'GET /acerca':              {view: 'pages/acerca'},
+  'GET /acerca':             { view:   'pages/acerca'},
 
   'GET /signup':             { action: 'entrance/view-signup' },
   'GET /email/confirm':      { action: 'entrance/confirm-email' },
@@ -76,8 +76,8 @@ module.exports.routes = {
   'GET /api/v1/ventas/extraer-cotizacion':                { action: 'ventas/extraer-cotizacion' },
   'GET /api/v1/ventas/extraer-cotizaciones':              { action: 'ventas/extraer-cotizaciones' },
   'POST /api/v1/ventas/insertar-cotizacion':              { action: 'ventas/insertar-cotizacion' },
-  'POST /api/v1/ventas/actualizar-cotizacion':           { action: 'ventas/actualizar-cotizacion' },
-  'DELETE /api/v1/ventas/eliminar-cotizacion':             { action: 'ventas/eliminar-cotizacion' },
+  'POST /api/v1/ventas/actualizar-cotizacion':            { action: 'ventas/actualizar-cotizacion' },
+  'DELETE /api/v1/ventas/eliminar-cotizacion':            { action: 'ventas/eliminar-cotizacion' },
 
   //  ╦ ╦╔═╗╔╗ ╦ ╦╔═╗╔═╗╦╔═╔═╗
   //  ║║║║╣ ╠╩╗╠═╣║ ║║ ║╠╩╗╚═╗
