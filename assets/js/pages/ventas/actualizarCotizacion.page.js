@@ -211,7 +211,7 @@ parasails.registerPage('actualizar-cotizacion', {
       console.log(this.o_cotizacion);
       this.limpiar_o_cotizacion();
       // location.reload();
-      //location.href = "ventas";
+      location.href = "ventas";
       this.l_prueba = [];
       this.l_verModalAgregarCotizacion = false;
     },
@@ -365,6 +365,7 @@ parasails.registerPage('actualizar-cotizacion', {
           respCotizacion = await Cloud.extraerCotizacion(get.variable);
           this.t_cotizacion = respCotizacion;
           console.log(this.t_cotizacion.encargado.fullName);
+          this.o_cotizacion.id = this.t_cotizacion.id.toString();
           this.o_cotizacion.encargado = this.t_cotizacion.encargado.fullName;
           this.o_cotizacion.lugarEvento = this.t_cotizacion.lugarEvento;
           this.o_cotizacion.descripcion = this.t_cotizacion.descripcion;
