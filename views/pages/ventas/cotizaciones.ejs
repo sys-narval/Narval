@@ -95,7 +95,7 @@
             <!-- Cliente del evento -->
             <div class="form-group col">
               <label for="cliente">Cliente</label>
-              <input type="text" id="cliente" class="form-control" :value="o_cotizacion.cliente.nombre">
+              <input type="text" id="cliente" class="form-control" :value="o_cotizacion.cliente.nombre" readonly>
               <ul >
                   <div>
                     <li>
@@ -110,7 +110,7 @@
             <!-- Contacto del evento -->
             <div class="form-group col">
               <label for="contacto">Contacto</label>
-              <input type="text" id="contacto" class="form-control" :value="o_cotizacion.contacto.nombre" >
+              <input type="text" id="contacto" class="form-control" :value="o_cotizacion.contacto.nombre"  readonly>
 
               <ul >
                   <div>
@@ -130,22 +130,22 @@
               <div>
                 <div class="form-check">
                     <label class="form-check-label">
-                      <input type="checkbox" class="form-check-input" v-if="o_cotizacion.esDiseno" checked>
-                      <input type="checkbox" class="form-check-input" v-else>
+                      <input type="checkbox" class="form-check-input" v-if="o_cotizacion.esDiseno" checked readonly>
+                      <input type="checkbox" class="form-check-input" v-else readonly>
                       Otros Servicios
                     </label>
                   </div>
                   <div class="form-check">
                     <label class="form-check-label">
-                      <input type="checkbox" class="form-check-input" v-if="o_cotizacion.esMontaje" checked>
-                      <input type="checkbox" class="form-check-input" v-else>
+                      <input type="checkbox" class="form-check-input" v-if="o_cotizacion.esMontaje" checked readonly>
+                      <input type="checkbox" class="form-check-input" v-else readonly>
                       Servicio de producción
                     </label>
                   </div>
                   <div class="form-check">
                     <label class="form-check-label">
-                      <input type="checkbox" class="form-check-input" v-if="o_cotizacion.esAlquiler" checked>
-                      <input type="checkbox" class="form-check-input" v-else>
+                      <input type="checkbox" class="form-check-input" v-if="o_cotizacion.esAlquiler" checked readonly>
+                      <input type="checkbox" class="form-check-input" v-else readonly>
                       Servicio de alquiler
                     </label>
                   </div>
@@ -158,30 +158,30 @@
             <!-- Fecha del Evento -->
             <div class="form-group col">
               <label for="fechaEvento">Fecha del Evento</label>
-              <input type="date" id="fechaEvento" class="form-control" :value="o_cotizacion.fechaEvento">
+              <input type="date" id="fechaEvento" class="form-control" :value="o_cotizacion.fechaEvento" readonly>
             </div>
             <!-- Fecha fin de evento -->
             <div class="form-group col">
               <label for="fechaFin">Fin de Evento</label>
-              <input type="date" name="Fecha Fin" id="fechaFin" :value="o_cotizacion.fechaFinEvento" class="form-control">
+              <input type="date" name="Fecha Fin" id="fechaFin" :value="o_cotizacion.fechaFinEvento" class="form-control" readonly>
             </div>
           </div>
           <div class="row" v-if="o_cotizacion.esMontaje">
             <!-- Fecha de Montaje -->
             <div class="form-group col">
               <label for="fechaEvento">Fecha de Montaje</label>
-              <input type="date" id="fechaEvento" class="form-control" :value="o_cotizacion.fechaMontaje">
+              <input type="date" id="fechaEvento" class="form-control" :value="o_cotizacion.fechaMontaje" readonly>
             </div>
             <!-- Fecha desmontaje -->
             <div class="form-group col">
               <label for="fechaDesmontaje">Fecha Desmontaje</label>
-              <input type="date" name="Fecha Desmontaje" id="fechaDesmontaje" :value="o_cotizacion.fechaDesmontaje" class="form-control">
+              <input type="date" name="Fecha Desmontaje" id="fechaDesmontaje" :value="o_cotizacion.fechaDesmontaje" class="form-control" readonly>
             </div>
           </div>
           <div class="row" v-if="o_cotizacion.esMontaje || o_cotizacion.esDiseno || o_cotizacion.esAlquiler">
             <div class="form-group col">
               <label for="descipcion">Descripción:</label>
-              <textarea name="Descripción" id="descripcion" cols="30" rows="3" class="form-control" :value="o_cotizacion.descripcion"></textarea>
+              <textarea name="Descripción" id="descripcion" cols="30" rows="3" class="form-control" :value="o_cotizacion.descripcion" readonly></textarea>
             </div>
           </div>
           <div class="row" v-if="o_cotizacion.esMontaje || o_cotizacion.esAlquiler">
@@ -254,18 +254,18 @@
             <!-- Encargado del evento -->
             <div class="form-group col">
               <label for="encargado">Encargado</label>
-              <input type="text" id="encargado" class="form-control" :value="o_cotizacion.encargado.fullName">
+              <input type="text" id="encargado" class="form-control" :value="o_cotizacion.encargado.fullName" readonly>
             </div>
             <!-- Cliente del evento -->
             <div class="form-group col">
               <label for="cliente">Cliente</label>
-              <input type="text" id="cliente" class="form-control" :value="o_cotizacion.cliente.nombre">
+              <input type="text" id="cliente" class="form-control" :value="o_cotizacion.cliente.nombre" readonly>
             </div>
           </div>
           <div class="form-row">
             <div class="form-group col">
               <label for="descipcion">Descripción:</label>
-              <textarea name="Descripción" id="descripcion" cols="30" rows="3" class="form-control" :value="o_cotizacion.descripcion"></textarea>
+              <textarea name="Descripción" id="descripcion" cols="30" rows="3" class="form-control" :value="o_cotizacion.descripcion" readonly></textarea>
             </div>
           </div>
           <div class="modal-footer">
