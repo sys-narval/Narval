@@ -53,20 +53,20 @@ parasails.registerPage('cotizaciones', {
       if (this.o_cotizacion.fechaEvento !== 0) {
         let t_fechaEvento = this.o_cotizacion.fechaEvento;
         t_fechaEvento = new Date(t_fechaEvento);
-        this.o_cotizacion.fechaEvento = t_fechaEvento.getFullYear() + '-' + '0' + (t_fechaEvento.getMonth() + 1) + '-' + t_fechaEvento.getDate();
+        this.o_cotizacion.fechaEvento = t_fechaEvento.getFullYear() + '-' + '0' + (t_fechaEvento.getMonth() + 1) + '-' + (t_fechaEvento.getDate()+1);
 
         let t_fechaFinEvento = this.o_cotizacion.fechaFinEvento;
         t_fechaFinEvento = new Date(t_fechaFinEvento);
-        this.o_cotizacion.fechaFinEvento = t_fechaFinEvento.getFullYear() + '-' + '0' + (t_fechaFinEvento.getMonth() + 1) + '-' + t_fechaFinEvento.getDate();
+        this.o_cotizacion.fechaFinEvento = t_fechaFinEvento.getFullYear() + '-' + '0' + (t_fechaFinEvento.getMonth() + 1) + '-' + (t_fechaFinEvento.getDate()+1);
       }
       if (this.o_cotizacion.fechaMontaje !== 0) {
         let t_fechaMontaje = this.o_cotizacion.fechaMontaje;
         t_fechaMontaje = new Date(t_fechaMontaje);
-        this.o_cotizacion.fechaMontaje = t_fechaMontaje.getFullYear() + '-' + '0' + (t_fechaMontaje.getMonth() + 1) + '-' + t_fechaMontaje.getDate();
+        this.o_cotizacion.fechaMontaje = t_fechaMontaje.getFullYear() + '-' + '0' + (t_fechaMontaje.getMonth() + 1) + '-' + (t_fechaMontaje.getDate()+1);
 
         let t_fechaDesmontaje = this.o_cotizacion.fechaDesmontaje;
         t_fechaDesmontaje = new Date(t_fechaDesmontaje);
-        this.o_cotizacion.fechaDesmontaje = t_fechaDesmontaje.getFullYear() + '-' + '0' + (t_fechaDesmontaje.getMonth() + 1) + '-' + t_fechaDesmontaje.getDate();
+        this.o_cotizacion.fechaDesmontaje = t_fechaDesmontaje.getFullYear() + '-' + '0' + (t_fechaDesmontaje.getMonth() + 1) + '-' + (t_fechaDesmontaje.getDate()+1);
       }
 
 
@@ -129,6 +129,9 @@ parasails.registerPage('cotizaciones', {
     },
     pasarVariable: async function(idCotizacion){
       location.href = "ventas?variable=" + idCotizacion + "";
+    },
+    btnActualizarCotizacion: async function(o_cotizacion){
+      location.href = "actualizarCotizacion?variable="+o_cotizacion.id+"";
     },
   },
   filters: {

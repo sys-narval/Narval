@@ -207,7 +207,7 @@
             </div>
           </div>
           <div class="modal-footer">
-          <input type="button" value="Guardar" class="btn btn-primary">
+          <input type="button" value="Actualizar" @click="btnActualizarCotizacion(o_cotizacion)" class="btn btn-primary">
           <input type="button" value="Cancelar" class="btn btn-danger" @click="cerrarEvento()">
           </div>
         </form>
@@ -225,6 +225,10 @@
         <form action="" readonly>
           <div class="modal-body">
            <p>En estos momentos la cotización tiene un estado: <b> "{{o_cotizacion.estado}}"</b></p>
+           <p>Seleccione el estado de la cotizacion</p>
+           <select name="chEstado" id="chEstado">
+             <option value="Pendiente o enviado"></option>
+           </select>
           </div>
           <div class="modal-footer">
               
@@ -232,10 +236,6 @@
                 <input v-if="o_cotizacion.estado !== 'Pendiente'" type="button" value="Pendiente" class="btn btn-warning" @click="pendienteEvento">
                 <input v-if="o_cotizacion.estado !== 'Cancelado'" type="button" value="Cancelado" class="btn btn-danger" @click="canceladoEvento">
                 <input v-if="o_cotizacion.estado !== 'Finalizado'" type="button" value="Terminado" class="btn btn-secondary" @click="terminadoEvento">
-              
-              
-          
-            
           </div>
         </form>
       </div>
