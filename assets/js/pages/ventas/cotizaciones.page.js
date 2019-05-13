@@ -15,6 +15,7 @@ parasails.registerPage('cotizaciones', {
       encargado: {},
       fechaInicio: "",
       fechaFin: "",
+      misCotizaciones: false
     },
     // Datos del form
     formData: {
@@ -160,9 +161,17 @@ parasails.registerPage('cotizaciones', {
       */
       const limpiaFiltro = objeto => {
         for (let atributo in objeto) {
-          if (objeto[atributo] === null || objeto[atributo] === undefined || objeto[atributo] === '')
-            delete objeto[atributo];
+         if (objeto[atributo] === null || objeto[atributo] === undefined || objeto[atributo] === '' || objeto[atributo] === false)
+         {
+           delete objeto[atributo];
+         }
+            
+
+            
         }
+        
+
+        
         return objeto;
       }
 
@@ -181,7 +190,7 @@ parasails.registerPage('cotizaciones', {
         }
         return _.filter(this.modelo.cotizaciones, limpiaFiltro(this.l_filtro))
           .filter(cotizacion => cotizacion.encargado.fullName.includes(this.l_busquedaCotizacion) || cotizacion.descripcion.includes(this.l_busquedaCotizacion) || cotizacion.lugarEvento.includes(this.l_busquedaCotizacion));
-      } else if (this.l_busquedaCotizacion === "*") {
+      } else if (this.l_busquedaCotizacion === "*" && this.l_filtro.misCotizaciones === false) {
         return this.modelo.cotizaciones;
       } else if (this.l_busquedaCotizacion == "/") {
         let t_inicio = Date.parse(this.l_filtro.fechaInicio);
@@ -200,7 +209,19 @@ parasails.registerPage('cotizaciones', {
         }   
         console.log(this.modelo.cotizaciones)
         return _.filter(this.modelo.cotizaciones , limpiaFiltro(this.l_filtro));
-      } else {
+      }else if(this.l_filtro.misCotizaciones === true && this.l_busquedaCotizacion === "*")
+      {
+        let t_cotizaciones = [];
+        for(let index = 0; index < this.modelo.cotizaciones.length; index++)
+        {
+          if(this.me.id === this.modelo.cotizaciones[index].encargado.id)
+          {
+              t_cotizaciones.push(this.modelo.cotizaciones[index]);
+          }
+        }
+        return t_cotizaciones;
+
+      }else {
         return new Array();
       }
     }
