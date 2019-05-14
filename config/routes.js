@@ -78,6 +78,7 @@ module.exports.routes = {
   'GET /api/v1/ventas/extraer-cotizaciones':              { action: 'ventas/extraer-cotizaciones' },
   'POST /api/v1/ventas/insertar-cotizacion':              { action: 'ventas/insertar-cotizacion' },
   'POST /api/v1/ventas/actualizar-cotizacion':            { action: 'ventas/actualizar-cotizacion' },
+  'POST /api/v1/ventas/reservar-una-cotazacion':          { action: 'ventas/reservar-una-cotazacion' },
   'DELETE /api/v1/ventas/eliminar-cotizacion':            { action: 'ventas/eliminar-cotizacion' },
 
   //  ╦ ╦╔═╗╔╗ ╦ ╦╔═╗╔═╗╦╔═╔═╗
