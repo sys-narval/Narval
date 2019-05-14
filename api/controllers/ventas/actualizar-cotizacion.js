@@ -115,7 +115,6 @@ module.exports = {
                 .populate("encargado")
                 .populate("cliente")
                 .populate("contacto")
-            //.populate("articulos");
 
             if (contizacion === undefined) {
                 return exits.cotizacionNoEncontrado(`Cotización ${inputs.id} no encontrado`);
@@ -146,7 +145,7 @@ module.exports = {
                     return exits.error("En caso de Alquiler o Montaje, por favor ingrese artículos");
 
                 }
-                
+
                 /**
                 * En caso de montaje o alquiler y trae inventario
                 * normalizamos el inventario recibido
