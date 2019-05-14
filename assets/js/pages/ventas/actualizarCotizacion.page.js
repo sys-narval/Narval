@@ -1,4 +1,4 @@
-parasails.registerPage('ventas', {
+parasails.registerPage('actualizar-cotizacion', {
   //  ╦╔╗╔╦╔╦╗╦╔═╗╦    ╔═╗╔╦╗╔═╗╔╦╗╔═╗
   //  ║║║║║ ║ ║╠═╣║    ╚═╗ ║ ╠═╣ ║ ║╣
   //  ╩╝╚╝╩ ╩ ╩╩ ╩╩═╝  ╚═╝ ╩ ╩ ╩ ╩ ╚═╝
@@ -101,7 +101,9 @@ parasails.registerPage('ventas', {
     l_fechaDesmontaje: '',
     l_verModalAgregarCotizacion: false,
     l_getValor: false,
-    t_cotizacion: undefined,
+    t_cotizacion: {encargado:{
+      fullName:"",
+    }},
 
   },
 
@@ -186,7 +188,7 @@ parasails.registerPage('ventas', {
       this.o_cotizacion.esDiseno = this.l_sDiseno;
       this.o_cotizacion.esAlquiler = this.l_sAlquiler;
       this.o_cotizacion.esMontaje = this.l_sMontaje;
-      this.o_cotizacion.encargado = this.me.id;
+      this.o_cotizacion.encargado = this.t_cotizacion.encargado.id;
       if (this.l_fechaEvento !== '' && this.fechaFinEvento !== '') {
 
         this.o_cotizacion.fechaEvento = Date.parse(this.l_fechaEvento);
@@ -206,9 +208,10 @@ parasails.registerPage('ventas', {
       this.l_verModalAgregarCotizacion = true;
     },
     clickCerrarModalAgregarCotizacion: async function () {
+      console.log(this.o_cotizacion);
       this.limpiar_o_cotizacion();
-     // location.reload();
-     location.href = "ventas";
+      // location.reload();
+      location.href = "ventas";
       this.l_prueba = [];
       this.l_verModalAgregarCotizacion = false;
     },
@@ -359,10 +362,11 @@ parasails.registerPage('ventas', {
         //let t_cotizacion;
         if (get.variable) {
           this.l_getValor = true;
-          console.log(get);
           respCotizacion = await Cloud.extraerCotizacion(get.variable);
           this.t_cotizacion = respCotizacion;
-          console.log(this.t_cotizacion);
+          console.log(this.t_cotizacion.encargado.fullName);
+          this.o_cotizacion.id = this.t_cotizacion.id.toString();
+          this.o_cotizacion.encargado = this.t_cotizacion.encargado.fullName;
           this.o_cotizacion.lugarEvento = this.t_cotizacion.lugarEvento;
           this.o_cotizacion.descripcion = this.t_cotizacion.descripcion;
           this.l_sDiseno = this.t_cotizacion.esDiseno;
@@ -373,23 +377,28 @@ parasails.registerPage('ventas', {
           }
           this.l_buscarCliente = this.t_cotizacion.cliente.nombre;
           this.l_buscarContacto = this.t_cotizacion.contacto.nombre;
+          if (this.t_cotizacion.fechaEvento !== 0) {
+            let t_fechaEvento = this.t_cotizacion.fechaEvento;
+            t_fechaEvento = new Date(t_fechaEvento);
+            this.l_fechaEvento = t_fechaEvento.getFullYear() + '-' + '0' + (t_fechaEvento.getMonth() + 1) + '-' + (t_fechaEvento.getDate()+1);
+
+            let t_fechaFinEvento = this.t_cotizacion.fechaFinEvento;
+            t_fechaFinEvento = new Date(t_fechaFinEvento);
+            this.l_fechaFinEvento = t_fechaFinEvento.getFullYear() + '-' + '0' + (t_fechaFinEvento.getMonth() + 1) + '-' + (t_fechaFinEvento.getDate()+1);
+          }
+          if (this.t_cotizacion.fechaMontaje !== 0) {
+            let t_fechaMontaje = this.t_cotizacion.fechaMontaje;
+            t_fechaMontaje = new Date(t_fechaMontaje);
+            this.l_fechaMontaje = t_fechaMontaje.getFullYear() + '-' + '0' + (t_fechaMontaje.getMonth() + 1) + '-' + (t_fechaMontaje.getDate()+1);
+
+            let t_fechaDesmontaje = this.t_cotizacion.fechaDesmontaje;
+            t_fechaDesmontaje = new Date(t_fechaDesmontaje);
+            this.l_fechaDesmontaje = t_fechaDesmontaje.getFullYear() + '-' + '0' + (t_fechaDesmontaje.getMonth() + 1) + '-' + (t_fechaDesmontaje.getDate()+1);
+          }
 
         }
 
         //return get.variable;
-      }
-    },
-    setValores: async function () {
-      let t_idCotizacion;
-      let respCotizacion;
-      t_idCotizacion = this.getGET();
-      console.log(t_idCotizacion);
-      if (t_idCotizacion) {
-        for (var index in t_idCotizacion) {
-          //console.log(t_idCotizacion[index]);
-          respCotizacion = await Cloud.extraerCotizacion(t_idCotizacion[index]);
-        }
-        //this.o_cotizacion = respCotizacion;
       }
     },
   },
@@ -527,7 +536,7 @@ parasails.registerPage('ventas', {
           }
         }
         return t_arregloSalida2;
-      } else if (this.l_buscarArticulo === "*") {
+      } else if (this.l_buscarArticulo === "*" && this.l_actualizar === false) {
         return this.modelo.articulos;
       } else {
         return new Array();

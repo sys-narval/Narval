@@ -151,9 +151,17 @@ parasails.registerPage('clientes', {
       this.l_verModalAgregar = false
       this.formErrors = {};
       this.limpiar_o_cliente();
+      
     },
     clickVerModalAgregarContactos: async function (p_cliente) {
-      this.o_contacto.cliente = p_cliente.id;
+      if(p_cliente.id)
+      {
+        this.o_contacto.cliente = p_cliente.id;
+
+      }else{
+        p_cliente =  await Cloud.extraerCliente(p_cliente.cedula);
+        this.o_contacto.cliente = p_cliente.id;
+      }
       this.l_verModalAgregarContactos = true;
     },
     clickCerrarModalAgregarContactos: async function () {
@@ -161,6 +169,7 @@ parasails.registerPage('clientes', {
       this.l_verModalAgregarContactos = false;
     },
     clickVerModalContactos: async function (p_cliente) {
+      this.modelo.contactos = await Cloud.extraerContactos();
       this.o_cliente = p_cliente;
       this.l_verModalContactos = true
     },
@@ -301,6 +310,7 @@ parasails.registerPage('clientes', {
        * que la barra de búsqueda tenga más de un dígito y coincida con la descripción o ubicación.
        */
       if (this.l_buscarCliente.length > 3 && this.l_actualizar === false) {
+        console.log( c_limpiaFiltro(this.l_filtro));
         return _.filter(this.modelo.clientes, c_limpiaFiltro(this.l_filtro))
           .filter(cliente => cliente.nombre.includes(this.l_buscarCliente) || cliente.telefono.includes(this.l_buscarCliente) || cliente.cedula.includes(this.l_buscarCliente));
       } else if (this.l_buscarCliente === "*" && this.l_actualizar === false) {
