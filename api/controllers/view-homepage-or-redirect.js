@@ -35,15 +35,15 @@ module.exports = {
       jumbotron_titulo: 'Bienvenido al Sistema Narval!',
       jumbotron_texto: 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Fugiat corporis maxime at adipisci sint ipsum incidunt quasi labore possimus quae amet quidem voluptatum id, recusandae nobis quis. Minima, laboriosam expedita?',
       avisos: [{
-          titulo: '<i class="fa fa-info-circle"></i> Alguna información del sistema:',
+          titulo: '<i class="fa fa-info-circle"></i> Algua informacion del sistema:',
           mensaje: 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Fugiat corporis maxime at adipisci sint ipsum incidunt quasi labore possimus quae amet quidem oluptatum id, recusandae nobis quis. Minima, laboriosam expedita?'
         },
         {
-          titulo: '<i class="fa fa-stack-exchange"></i> Últimos cambios:',
+          titulo: '<i class="fa fa-stack-exchange"></i> Ultimos cambios:',
           mensaje: 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Facere, aspernatur animi voluptas doloribus eaque non. Dolores ipsum voluptate ducimus aspernatur vero nobis ipsa illo perferendis accusamus laboriosam ea, impedit temporibus?'
         },
         {
-          titulo: '<i class="fa fa-exclamation-circle"></i> Más datos importantes:',
+          titulo: '<i class="fa fa-exclamation-circle"></i> Mas datos importantes:',
           mensaje: 'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Veniam ducimus recusandae vel cum excepturi praesentium id ratione eos numquam corporis magnam totam esse voluptas voluptate temporibus, aliquam sapiente placeat cupiditate?'
         }
       ]

@@ -29,14 +29,14 @@ module.exports = {
     }
 
     let modelo = {
-      titulo: 'Iniciar Sesión',
+      titulo: 'Iniciar Sesion',
       errorCorreo: 'Por favor ingresar un correo valido.',
       errorContrasena: 'Por favor ingrese su contraseña.',
       recordarme: 'Recordarme',
-      errorCredenciales: 'Las credenciales no están asociadas a ninguna cuenta. Por favor revise el correo o la contraseña.',
+      errorCredenciales: 'Las cedenciales no estan asociadas a ninguna cuenta. Por favor revise el correo o la contraseña.',
       errorCargar: 'Se ha producido un error al cargar la pagina por favor intente de nuevo, o <a href="/contact">contacte a soporte</a> si el error persiste.',
       ingresar: 'Ingresar',
-      olvidoContrasena: 'Olvidé Contraseña'
+      olvidoContrasena: 'Olvide Contraseña'
     }
 
     return exits.success({
