@@ -42,7 +42,7 @@ module.exports = {
         return exits.cotizacionNoEncontrada(`Cotización ${inputs.id} no encontrada`);
       }
 
-      if(cotizacion.estado !== "Pendiente"){
+      if (cotizacion.estado !== "Pendiente") {
         return exits.error(`No se puede reservar una cotizacion en estado ${cotizacion.estado}`);
       }
 
@@ -84,6 +84,8 @@ module.exports = {
       }, {
         estado: "Activo"
       });
+
+      return exits.success();
 
     } catch (error) {
 
