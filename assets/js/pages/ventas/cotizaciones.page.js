@@ -13,8 +13,8 @@ parasails.registerPage('cotizaciones', {
     l_filtro: {
       cliente: {},
       encargado: {},
-      fechaInicio: "",
-      fechaFin: "",
+      fechaInicioF: "",
+      fechaFinF: "",
       misCotizaciones: false
     },
     // Datos del form
@@ -190,25 +190,44 @@ parasails.registerPage('cotizaciones', {
         }
         return _.filter(this.modelo.cotizaciones, limpiaFiltro(this.l_filtro))
           .filter(cotizacion => cotizacion.encargado.fullName.includes(this.l_busquedaCotizacion) || cotizacion.descripcion.includes(this.l_busquedaCotizacion) || cotizacion.lugarEvento.includes(this.l_busquedaCotizacion));
-      } else if (this.l_busquedaCotizacion === "*" && this.l_filtro.misCotizaciones === false) {
+      } else if (this.l_busquedaCotizacion === "*" && (this.l_filtro.misCotizaciones === false || this.l_filtro.misCotizaciones === undefined)) {
         return this.modelo.cotizaciones;
       } else if (this.l_busquedaCotizacion == "/") {
-        let t_inicio = Date.parse(this.l_filtro.fechaInicio);
-        let t_fin =Date.parse(this.l_filtro.fechaFin);
-        for (let index = 0; index <this.modelo.cotizaciones.length; index++) {
-          if (t_inicio < this.modelo.cotizaciones[index].fechaEvento) {
-            this.modelo.cotizaciones[index].fechaInicio=t_inicio;
-            this.l_filtro.fechaInicio=t_inicio;
+        let t_inicio = 0;
+        t_inicio = Date.parse(this.l_filtro.fechaInicioF); // fecha recopilada del filtro
+        let t_fin = 0;
+        t_fin = Date.parse(this.l_filtro.fechaFinF); // fecha recopilada del filtro
+        let t_cotizaciones = [];
+        for (let index = 0; index <this.modelo.cotizaciones.length; index++) { //for que recorre todo el modelo de las cotizaciones
+          console.log("----------------")
+          console.log(index)
+          console.log( t_inicio <= this.modelo.cotizaciones[index].fechaEvento);
+          console.log(t_fin >= this.modelo.cotizaciones[index].fechaEvento);
+          console.log("---------------");
+         /* if(index == 5)
+          {
+            console.log(this.modelo.cotizaciones[index].fechaEvento);
+            console.log(new Date(this.modelo.cotizaciones[index].fechaEvento));
+            console.log(new Date(t_inicio));
+            console.log(this.modelo.cotizaciones[index]);
+          }*/
+          if(typeof(this.modelo.cotizaciones[index].fechaEvento) !== "number")
+          {
+            let t_f = new Date(this.modelo.cotizaciones[index].fechaEvento);
+            t_f = Date.parse(t_f);
+            //this.modelo.cotizaciones[index].fechaEvento = t_f;
+            if (t_inicio <= t_f && t_f <= t_fin) { //Si la fecha de inicio es menor a la fecha del evento de la cotizacion del modelo
+              t_cotizaciones.push(this.modelo.cotizaciones[index]);
+            }
+          }else
+          {
+            if (t_inicio <= this.modelo.cotizaciones[index].fechaEvento && this.modelo.cotizaciones[index].fechaEvento <= t_fin) { //Si la fecha de inicio es menor a la fecha del evento de la cotizacion del modelo
+              t_cotizaciones.push(this.modelo.cotizaciones[index]);
+            }
           }
         }
-        for (let index = 0; index <this.modelo.cotizaciones.length; index++) {
-          if (t_fin > this.modelo.cotizaciones[index].fechaFinEvento) {
-            this.modelo.cotizaciones[index].fechaFin=t_fin;
-            this.l_filtro.fechaFin=t_fin;
-          }
-        }   
-        console.log(this.modelo.cotizaciones)
-        return _.filter(this.modelo.cotizaciones , limpiaFiltro(this.l_filtro));
+        return t_cotizaciones;
+       
       }else if(this.l_filtro.misCotizaciones === true && this.l_busquedaCotizacion === "*")
       {
         let t_cotizaciones = [];
