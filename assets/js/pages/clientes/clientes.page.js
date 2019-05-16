@@ -170,7 +170,15 @@ parasails.registerPage('clientes', {
     },
     clickVerModalContactos: async function (p_cliente) {
       this.modelo.contactos = await Cloud.extraerContactos();
-      this.o_cliente = p_cliente;
+      if(p_cliente.id)
+      {
+        this.o_cliente = p_cliente;
+
+      }else
+      {
+        p_cliente = await Cloud.extraerCliente(p_cliente.cedula);
+        this.o_cliente = p_cliente;
+      }
       this.l_verModalContactos = true
     },
     clickCerrarModalContactos: async function () {
