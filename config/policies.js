@@ -10,6 +10,7 @@
 
 module.exports.policies = {
 
+
   '*': 'is-logged-in',
 
   // Bypass the `is-logged-in` policy for:

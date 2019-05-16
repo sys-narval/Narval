@@ -1,0 +1,203 @@
+<div id="usuarios" v-cloak>
+
+  <h1>Usuarios</h1>
+  <!--Buscador-->
+  <div class="row">
+    <div class="col-6">
+      <div class="form-group">
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <button class="btn btn-outline-secondary dropdown-toggle" title="Búsqueda" type="button" data-toggle="dropdown"
+              aria-haspopup="true" aria-expanded="false">Filtro</button>
+            <div class="dropdown-menu p-4">
+              <div class="form-group">
+                <th>Rol del Usuario:</th>
+              </div>
+              <div class="form-check mb-2">
+                <input type="checkbox" name="rol Administrador" id="rolAdministrador" class="form-check-input">
+                <label for="rolAdministrador" class="form-check-label">Administrador</label>
+              </div>
+              <div class="form-check mb-2">
+                <input type="checkbox" name="rol TI" id="rolTI" class="form-check-input">
+                <label for="rolTI" class="form-check-label">TI</label>
+              </div>
+              <div class="form-check mb-2">
+                <input type="checkbox" name="rol Secretario" id="rolSecretario" class="form-check-input">
+                <label for="rolSecretario" class="form-check-label">Secretario</label>
+              </div>
+              <div class="form-check mb-2">
+                <input type="checkbox" name="rol Vendedor" id="rolVendedor" class="form-check-input">
+                <label for="rolVendedor" class="form-check-label">Vendedor</label>
+              </div>
+              <div class="form-check mb-2">
+                <input type="checkbox" name="rol Bodega" id="rolBodega" class="form-check-input">
+                <label for="rolBodega" class="form-check-label">Bodega</label>
+              </div>
+            </div>
+          </div>
+          <input type="text" name="Buscar Usuario" id="usuario" list="listaUsuarios" placeholder="Buscar Usuario" class="form-control" maxlength="42" v-model.trim="busquedaUsuario">
+          <datalist id="listaUsuarios">
+              <div v-for="usuario in modelo.usuarios">
+                <option v-bind:value="usuario.nombre">
+              </div>
+            </datalist>
+          <div class="input-group-append">
+            <span class="input-group-text" title="Búsqueda"><i class="fa fa-search"></i></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!--Tabla-->
+  <h5><span class="badge badge-pill badge-warning" v-if="filtroUsuario.length === 0 && busquedaUsuario !== ''">
+      No se encuentra ningún usuario  <button class="btn btn-primary" type="button" @click="modalAyuda()"><i class="fa fa-question"></i></button></span></h5>
+  <table class="table table-hover table-striped table-bordered" v-if="filtroUsuario.length != 0">
+    <thead class="thead-light">
+      <th>Nombre</th>
+      <th>Correo</th>
+      <th>Rol</th>
+      <th>Fecha</th>
+      <th title="Opciones" class="text-center">Opciones</th>
+    </thead>
+    <tbody>
+      <tr v-for="usuario in modelo.usuarios">
+        <tr v-for="usuario in filtroUsuario">
+        <td v-text="usuario.nombre"></td>
+        <td v-text="usuario.correo"></td>
+        <td v-text="usuario.rol"></td>
+        <td v-text="usuario.fecha"></td>
+        <td class="text-center">
+          <button href="" class="btn btn-success" title="Editar fila" @click="modalEditar(usuario)"><span class="fa fa-pencil"></span> Editar</button>
+          <button class="btn btn-danger" type="button" id="Deshabilitar" @click="modalDeshabilitar()" title="Deshabilitar">Deshabilitar</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="pull-left">
+    <button class="btn btn-sm btn-primary btn-block boton boton1" type="button" id="Agregar" @click="modalAgregar()" title="Agregar">Agregar</button>
+  </div>
+
+  <!--Modal Editar-->
+  <modal v-if="verModalEditar" id="modalEditar">
+    <div class="modal-header">
+      <button type="button" class="close" @click="cerrarEditar()"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+    </div>
+    <div class="row">
+      <div class="col">
+        <form action="">
+          <h1 class="text-center">Editando Usuario</h1>
+          <div class="row">
+            <div class="form-group col">
+              <label for="nombre">Nombre</label>
+              <input type="text" id="nombre" class="form-control" :value="usuario.nombre">
+            </div>
+            <div class="form-group col">
+              <label for="correo">Correo</label>
+              <input type="text" id="correo" class="form-control" :value="usuario.correo">
+            </div>
+          </div>
+          <div class="row">
+            <div class="form-group col">
+              <label for="ingresarRol">Rol del Usuario</label><br />
+              <select name="Rol">
+                <option>Administrador</option>
+                <option>Secretario</option>
+                <option>TI</option>
+                <option>Vendedor</option>
+                <option>Bodega</option>
+              </select>
+            </div>
+          </div>
+          <div class="pull-right">
+            <button type="button" id="Guardar" class="btn btn-primary" @click="cerrarEditar()" title="Guardar">Guardar</button>
+            <input type="button" value="Cancelar" class="btn btn-danger" @click="cerrarEditar()" title="Cancelar">
+          </div>
+        </form>
+      </div>
+    </div>
+  </modal>
+
+  <!--Modal Deshabilitar-->
+  <modal v-if="verModalDeshabilitar" id="modalDeshabilitar">
+    <div class="modal-header">
+      <button type="button" class="close" @click="cerrarDeshabilitar()"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+    </div>
+    <div class="row">
+      <div class="col">
+        <form action="">
+          <h1 class="text-center">Deshabilitando Usuario</h1>
+          <div class="row">
+            <div class="form-group col">
+              <h6 class="modal-title text-center" id="AdvertenciaDeshabilitar">¿Está seguro que desea deshabilitar este Usuario?</h6>
+            </div>
+          </div>
+          <div class="pull-right">
+            <button type="button" id="Aceptar" class="btn btn-primary" @click="cerrarDeshabilitar()" title="Aceptar">Aceptar</button>
+            <input type="button" value="Cancelar" class="btn btn-danger" @click="cerrarDeshabilitar()" title="Cancelar">
+          </div>
+        </form>
+      </div>
+    </div>
+  </modal>
+
+  <!--Modal Agregar-->
+  <modal v-if="verModalAgregar" id="modalAgregar">
+    <div class="modal-header">
+      <button type="button" class="close" @click="cerrarAgregar()"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+    </div>
+    <div class="row">
+      <div class="col">
+        <form action="">
+          <h1 class="text-center">Agregando Usuario</h1>
+          <div class="row">
+            <div class="form-group col">
+              <label for="nombre">Nombre</label>
+              <input type="nombre" class="form-control" id="ingresarNombre" placeholder="Nombre del Usuario">
+            </div>
+            <div class="form-group col">
+              <label for="correo">Correo</label>
+              <input type="correo" class="form-control" id="ingresarCorreo" placeholder="Correo del Usuario">
+            </div>
+          </div>
+          <div class="row">
+            <div class="form-group col">
+              <label for="ingresarRol">Rol del Usuario</label><br />
+              <select name="Rol">
+                <option>Administrador</option>
+                <option>Secretario</option>
+                <option>TI</option>
+                <option>Vendedor</option>
+                <option>Bodega</option>
+              </select>
+            </div>
+          </div>
+          <div class="pull-right">
+            <button type="button" id="Agregar" class="btn btn-primary" @click="cerrarAgregar()" title="Agregar">Agregar</button>
+            <input type="button" value="Cancelar" class="btn btn-danger" @click="cerrarAgregar()" title="Cancelar">
+          </div>
+        </form>
+      </div>
+    </div>
+  </modal>
+
+  <!--Modal Ayuda-->
+  <modal v-if="verModalAyuda" id="modalAyuda">
+    <div class="modal-header">
+      <button type="button" class="close" @click="cerrarAyuda()">&times</button>
+      <h2 class="modal-title">Ayuda</h2>
+    </div>
+    <div class="modal-body">
+      <p class="text-center">Si no encuentras el usuario, revisa los siguientes aspectos: </p>
+      <ul>
+        <li>Revisa si tus filtros son los correctos o si esta bien escrito.</li>
+        <li>El buscador utiliza "Nombre" o "Correo"  para realizar la búsqueda.</li>
+        <li>El buscador muestra los resultados desde el primer carácter digitado.</li>
+      </ul>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-danger" type="button" id="cancelarAyuda" @click="cerrarAyuda()">Cancelar</button>
+    </div>
+  </modal>
+</div>
+<%- /* Expose server-rendered data as window.SAILS_LOCALS :: */ exposeLocalsToBrowser() %>
