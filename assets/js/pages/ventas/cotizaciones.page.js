@@ -7,11 +7,29 @@ parasails.registerPage('cotizaciones', {
     o_cotizacion: {
       /* */
     },
+    t_cotizacion:
+    {
+      lugarEvento: undefined,
+      esDiseno: undefined,
+      esMontaje: undefined,
+      esAlquiler: undefined,
+      descripcion: undefined,
+      fechaEvento: 0,
+      fechaFinEvento: 0,
+      fechaMontaje: 0,
+      fechaDesmontaje: 0,
+      estado:'',
+      encargado: undefined,
+      cliente: undefined,
+      contacto: undefined,
+      jsonArticulos: {articulos:undefined}
+    },
     l_verModal: false,
     l_modBorrarEvento: false,
     l_modCopiarEvento: false,
     l_busquedaCotizacion: '',
     l_myId: '',
+    l_verificaEstado: '',
     l_filtro: {
       cliente: {},
       encargado: {},
@@ -20,14 +38,10 @@ parasails.registerPage('cotizaciones', {
       misCotizaciones: false
     },
     // Datos del form
-    formData: {
-      /* … */
-    },
+    formData: { /* … */},
     syncing: false,
     cloudError: '',
-    formErrors: {
-      /* … */
-    },
+    formErrors: { /* … */},
     formRules: {
 
     },
@@ -276,20 +290,20 @@ parasails.registerPage('cotizaciones', {
           if (t_fechaDesmontaje.getMonth() + 1 > 9) {
             if(t_fechaDesmontaje.getDate() + 1 > 9)
             {
-              this.o_cotizacion.fechaDesmontaje = t_fechaDesmontaje.getFullYear() + '-' + (t_fechaDesmontaje.getMonth() + 1) + '-' + '0'+ (t_fechaDesmontaje.getDate() + 1);
+              this.o_cotizacion.fechaDesmontaje = t_fechaDesmontaje.getFullYear() + '-' + (t_fechaDesmontaje.getMonth() + 1) + '-' + (t_fechaDesmontaje.getDate() + 1);
             }else
             {
-              this.o_cotizacion.fechaDesmontaje = t_fechaDesmontaje.getFullYear() + '-' + (t_fechaDesmontaje.getMonth() + 1) + '-' + (t_fechaDesmontaje.getDate() + 1);
+              this.o_cotizacion.fechaDesmontaje = t_fechaDesmontaje.getFullYear() + '-' + (t_fechaDesmontaje.getMonth() + 1) + '-' +'0'+ (t_fechaDesmontaje.getDate() + 1);
             }
 
           } else {
             if(t_fechaDesmontaje.getDate() + 1 > 9)
             {
-              this.o_cotizacion.fechaDesmontaje = t_fechaDesmontaje.getFullYear() + '-' + '0' + (t_fechaDesmontaje.getMonth() + 1) + '-' +'0'+ (t_fechaDesmontaje.getDate() + 1);
+              this.o_cotizacion.fechaDesmontaje = t_fechaDesmontaje.getFullYear() + '-' + '0' + (t_fechaDesmontaje.getMonth() + 1) + '-' + (t_fechaDesmontaje.getDate() + 1);
             }else
             {
               
-              this.o_cotizacion.fechaDesmontaje = t_fechaDesmontaje.getFullYear() + '-' + '0' + (t_fechaDesmontaje.getMonth() + 1) + '-' +(t_fechaDesmontaje.getDate() + 1);
+              this.o_cotizacion.fechaDesmontaje = t_fechaDesmontaje.getFullYear() + '-' + '0' + (t_fechaDesmontaje.getMonth() + 1) + '-'+'0' +(t_fechaDesmontaje.getDate() + 1);
             }
 
           }
@@ -326,16 +340,47 @@ parasails.registerPage('cotizaciones', {
       this.l_modCopiarEvento = false;
     },
 
-    cambioEstado: async function (cotizacion) {
-      this.o_cotizacion = cotizacion;
+    cambioEstado: async function (p_cotizacion) {
+      //this.o_cotizacion = p_cotizacion;
+      this.t_cotizacion.id = p_cotizacion.id;
+      this.t_cotizacion.encargado = p_cotizacion.encargado.id;
+      this.t_cotizacion.lugarEvento = p_cotizacion.lugarEvento;
+      this.t_cotizacion.descripcion = p_cotizacion.descripcion;
+      this.t_cotizacion.esDiseno = p_cotizacion.esDiseno;
+      this.t_cotizacion.esMontaje= p_cotizacion.esMontaje;
+      this.t_cotizacion.esAlquiler = p_cotizacion.esAlquiler;
+      let l_prueba = [];
+     // this.t_cotizacion.jsonArticulos = [];
+     if(p_cotizacion.articulos.length != 0)
+     {
+       for(let index = 0; index < p_cotizacion.articulos.length; index++){
+        l_prueba.push({ id: p_cotizacion.articulos[index].id, cantidad: p_cotizacion.articulos[index].cantidad, precio: p_cotizacion.articulos[index].precioTotal });
+  
+       }
+
+     }
+     this.t_cotizacion.jsonArticulos.articulos = l_prueba;
+      this.t_cotizacion.cliente = p_cotizacion.cliente.id;
+      this.t_cotizacion.contacto = p_cotizacion.contacto.id;
+      this.t_cotizacion.fechaEvento = p_cotizacion.fechaFinEvento;
+      this.t_cotizacion.fechaFinEvento = p_cotizacion.fechaFinEvento;
+      this.t_cotizacion.fechaMontaje = p_cotizacion.fechaFinEvento;
+      this.t_cotizacion.fechaDesmontaje = p_cotizacion.fechaFinEvento;
+      this.t_cotizacion.estado = p_cotizacion.estado;
+     this.l_verificaEstado = p_cotizacion.estado;
+      
       this.l_modBorrarEvento = true;
     },
 
     confirmarEvento: async function () {
-      if(this.o_cotizacion.estado == "Activo")
+      /*let error = '';
+      if(this.t_cotizacion.estado == "Activo")
       {
-        await Cloud.reservarUnaCotazacion(this.o_cotizacion.id);
-      }
+         await Cloud.reservarUnaCotazacion(this.t_cotizacion.id);
+      }*/
+      location.href = "cotizaciones";
+      
+     console.log(this.t_cotizacion.estado);
       this.l_modBorrarEvento = false;
     },
     pendienteEvento: async function () {
