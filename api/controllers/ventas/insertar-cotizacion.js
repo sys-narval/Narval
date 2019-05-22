@@ -65,6 +65,14 @@ module.exports = {
       description: "Estado actual de la cotización, unicamente permitidos los mencionados anteriormente"
     },
 
+    comentario: {
+      type: 'string',
+      defaultsTo: '',
+      maxLength: 200,
+      description: 'Comentario de la cotización al momento de cambiar el estado a Cancelado o Finalizado',
+      example: 'La cotización se cancelo ya que no se acepto la cotización planteada.'
+    },
+
     //  ╔═╗╔╦╗╔╗ ╔═╗╔╦╗╔═╗
     //  ║╣ ║║║╠╩╗║╣  ║║╚═╗
     //  ╚═╝╩ ╩╚═╝╚═╝═╩╝╚═╝
