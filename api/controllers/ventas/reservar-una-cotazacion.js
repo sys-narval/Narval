@@ -11,6 +11,7 @@ module.exports = {
 
     id: {
       type: "number",
+      required: true,
       description: "ID de la cotización a reservar los artículos"
     }
 
@@ -20,7 +21,7 @@ module.exports = {
   exits: {
 
     cotizacionNoEncontrada: {
-      message: "No se encuentra el cliente solicitado",
+      message: "No se encuentra la cotización solicitada",
       responseType: "notFound"
     }
 
@@ -32,11 +33,11 @@ module.exports = {
     try {
 
       let cotizacion = await Cotizaciones.findOne({
+        where: {
           id: inputs.id
-        })
-        .populate("encargado")
-        .populate("cliente")
-        .populate("contacto");
+        },
+        select: ["estado", "esMontaje", "esAlquiler", "articulos"]
+      });
 
       if (cotizacion === undefined) {
         return exits.cotizacionNoEncontrada(`Cotización ${inputs.id} no encontrada`);
@@ -61,9 +62,7 @@ module.exports = {
 
         //Verificamos si están disponibles las cantidades requeridas
         if (cotizacion.articulos.some(function (articulo) {
-            return articulo.cantidad > _.find(dbArticulos, {
-              id: articulo.id
-            }).cantidadLibre;
+            return articulo.cantidad > articulo.cantidadLibre;
           })) {
           return exits.error(`No se cuenta con la cantidad suficiente de articulos`);
         }
@@ -79,10 +78,12 @@ module.exports = {
 
       }
 
+      cotizacion.estado = "Activo";
+
       await Cotizaciones.update({
         id: inputs.id
       }, {
-        estado: "Activo"
+        estado: cotizacion.estado
       });
 
       return exits.success();

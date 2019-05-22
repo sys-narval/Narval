@@ -72,6 +72,13 @@ module.exports = {
             description: "Estado actual de la cotización, unicamente permitidos los mencionados anteriormente"
         },
 
+        comentario: {
+            type: 'string',
+            maxLength: 200,
+            description: 'Comentario de la cotización al momento de cambiar el estado a Cancelado o Finalizado',
+            example: 'La cotización se cancelo ya que no se acepto la cotización planteada.'
+        },
+
         //  ╔═╗╔╦╗╔╗ ╔═╗╔╦╗╔═╗
         //  ║╣ ║║║╠╩╗║╣  ║║╚═╗
         //  ╚═╝╩ ╩╚═╝╚═╝═╩╝╚═╝
@@ -144,6 +151,13 @@ module.exports = {
                 if ((inputs.esMontaje || inputs.esAlquiler) && inputs.jsonArticulos.articulos === undefined) {
                     return exits.error("En caso de Alquiler o Montaje, por favor ingrese artículos");
 
+                }
+
+                /**
+                 * Verificación del comentario en caso de que el estado de la cotización sea Cancelado
+                 */
+                if ((inputs.estado === "Cancelado") && inputs.comentario === undefined){
+                    return exits.error("Es necesario ingresar un comentario cuando el estado de la cotización es Cancelado");
                 }
 
                 /**
