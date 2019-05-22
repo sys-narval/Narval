@@ -3,7 +3,7 @@ parasails.registerPage('usuarios', {
   //  ║║║║║ ║ ║╠═╣║    ╚═╗ ║ ╠═╣ ║ ║╣
   //  ╩╝╚╝╩ ╩ ╩╩ ╩╩═╝  ╚═╝ ╩ ╩ ╩ ╩ ╚═╝
   data: {
-    usuario: { /* */ },
+    o_usuario: { /* */ },
     verModalEditar: false,
     verModalDeshabilitar: false,
     verModalAgregar: false,
@@ -29,8 +29,8 @@ parasails.registerPage('usuarios', {
   //  ╩╝╚╝ ╩ ╚═╝╩╚═╩ ╩╚═╝ ╩ ╩╚═╝╝╚╝╚═╝
   methods: {
     //…
-    modalEditar: async function(usuario){
-      this.usuario = usuario;
+    modalEditar: async function(p_usuario){
+      this.o_usuario = p_usuario;
       this.verModalEditar = true;
     },
 
@@ -73,10 +73,15 @@ parasails.registerPage('usuarios', {
           return objeto;
         }
 
-        if (this.busquedaUsuario) {
+        if (this.busquedaUsuario.length > 3) {
           return _.filter(this.modelo.usuarios, limpiaFiltro(this.filtro))
             .filter(usuario => usuario.nombre.includes(this.busquedaUsuario) || usuario.correo.includes(this.busquedaUsuario));
-        } else {
+        } else if(this.busquedaUsuario  == "*") 
+        {
+          return this.modelo.usuarios;
+
+        }
+        else{
           return new Array();
         }
       }
