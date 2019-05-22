@@ -154,10 +154,10 @@ module.exports = {
                 }
 
                 /**
-                 * Verificación del comentario en caso de que el estado de la cotización sea Finalizado o Cancelado
+                 * Verificación del comentario en caso de que el estado de la cotización sea Cancelado
                  */
-                if ((inputs.estado === "Finalizado" || "Cancelado") && inputs.comentario === undefined){
-                    return exits.error("Es necesario ingresar un comentario cuando el estado es Finalizado o Cancelado");
+                if ((inputs.estado === "Cancelado") && inputs.comentario === undefined){
+                    return exits.error("Es necesario ingresar un comentario cuando el estado de la cotización es Cancelado");
                 }
 
                 /**
