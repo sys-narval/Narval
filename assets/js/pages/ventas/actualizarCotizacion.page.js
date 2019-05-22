@@ -211,7 +211,7 @@ parasails.registerPage('actualizar-cotizacion', {
       console.log(this.o_cotizacion);
       this.limpiar_o_cotizacion();
       // location.reload();
-      location.href = "ventas";
+      location.href = "cotizaciones";
       this.l_prueba = [];
       this.l_verModalAgregarCotizacion = false;
     },
@@ -369,6 +369,7 @@ parasails.registerPage('actualizar-cotizacion', {
           this.o_cotizacion.encargado = this.t_cotizacion.encargado.fullName;
           this.o_cotizacion.lugarEvento = this.t_cotizacion.lugarEvento;
           this.o_cotizacion.descripcion = this.t_cotizacion.descripcion;
+          this.o_cotizacion.estado = this.t_cotizacion.estado;
           this.l_sDiseno = this.t_cotizacion.esDiseno;
           this.l_sMontaje = this.t_cotizacion.esMontaje;
           this.l_sAlquiler = this.t_cotizacion.esAlquiler;
@@ -596,20 +597,20 @@ parasails.registerPage('actualizar-cotizacion', {
               if (t_fechaDesmontaje.getMonth() + 1 > 9) {
                 if(t_fechaDesmontaje.getDate() + 1 > 9)
                 {
-                  this.l_fechaDesmontaje = t_fechaDesmontaje.getFullYear() + '-' + (t_fechaDesmontaje.getMonth() + 1) + '-' + '0'+ (t_fechaDesmontaje.getDate() + 1);
+                  this.l_fechaDesmontaje = t_fechaDesmontaje.getFullYear() + '-' + (t_fechaDesmontaje.getMonth() + 1) + '-' + (t_fechaDesmontaje.getDate() + 1);
                 }else
                 {
-                  this.l_fechaDesmontaje = t_fechaDesmontaje.getFullYear() + '-' + (t_fechaDesmontaje.getMonth() + 1) + '-' + (t_fechaDesmontaje.getDate() + 1);
+                  this.l_fechaDesmontaje = t_fechaDesmontaje.getFullYear() + '-' + (t_fechaDesmontaje.getMonth() + 1) + '-' +'0' + (t_fechaDesmontaje.getDate() + 1);
                 }
     
               } else {
                 if(t_fechaDesmontaje.getDate() + 1 > 9)
                 {
-                  this.l_fechaDesmontaje = t_fechaDesmontaje.getFullYear() + '-' + '0' + (t_fechaDesmontaje.getMonth() + 1) + '-' +'0'+ (t_fechaDesmontaje.getDate() + 1);
+                  this.l_fechaDesmontaje = t_fechaDesmontaje.getFullYear() + '-' + '0' + (t_fechaDesmontaje.getMonth() + 1) + '-' + (t_fechaDesmontaje.getDate() + 1);
                 }else
                 {
                   
-                  this.l_fechaDesmontaje = t_fechaDesmontaje.getFullYear() + '-' + '0' + (t_fechaDesmontaje.getMonth() + 1) + '-' +(t_fechaDesmontaje.getDate() + 1);
+                  this.l_fechaDesmontaje = t_fechaDesmontaje.getFullYear() + '-' + '0' + (t_fechaDesmontaje.getMonth() + 1) + '-'+'0' +(t_fechaDesmontaje.getDate() + 1);
                 }
     
               }
