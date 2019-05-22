@@ -1,7 +1,7 @@
 module.exports = {
 
 
-  friendlyName: 'Reservar una cotazacion',
+  friendlyName: 'Reservar una cotizacion',
 
 
   description: '',
