@@ -234,133 +234,146 @@
           <button type="button" class="close" @click="cancelarEstado">&times</button>
           <h1>¿Seguro que desea cambiar el estado de la cotización?</h1>
         </div>
-        
+
         <ajax-form action="actualizarCotizacion" :syncing.sync="syncing" :cloud-error.sync="cloudError"
-          :form-data="t_cotizacion" :form-errors.sync="formErrors" :form-rules="formRules"
-          @submitted="confirmarEvento">
+          :form-data="t_cotizacion" :form-errors.sync="formErrors" :form-rules="formRules" @submitted="confirmarEvento">
           <div class="modal-body">
-              <div class="row">
-               
-                <div>
-                  <p>Seleccione el estado de la cotización</p>
-                </div>
-                <div class="col">
-                  <select name="chEstado" id="chEstado" v-model="t_cotizacion.estado">
-                    <option value="Pendiente">Pendiente</option>
-                    <option value="Activo">Activo</option>
-                    <option value="Cancelado">Cancelado</option>
-                    <option value="Finalizado">Finalizado</option>
-                  </select>
+            <div class="row">
 
-                </div>
-                
-                
-                
+              <div>
+                <p>Seleccione el estado de la cotización</p>
               </div>
-              <p v-if="l_verificaEstado == 'Activo' && t_cotizacion.estado == 'Activo'" style="color:red"> ** Recuerde que no se puede activar una cotización previamente activa **</p>
-              <p v-if="l_verificaEstado == 'Cancelado' && t_cotizacion.estado == 'Activo'" style="color:red"> ** Recuerde que no se puede activar una cotización previamente cancelada **</p>
-              <p v-if="l_verificaEstado == 'Finalizado' && t_cotizacion.estado == 'Activo'" style="color:red"> ** Recuerde que no se puede activar una cotización previamente finalizada **</p>
-              <p v-if="l_verificaEstado == 'Cancelado' && t_cotizacion.estado == 'Pendiente'" style="color:red"> ** Recuerde que no se puede poner pendiente una cotización previamente cancelada **</p>
-              <p v-if="l_verificaEstado == 'Cancelado' && t_cotizacion.estado == 'Finalizado'" style="color:red"> ** Recuerde que no se puede cancelar una cotización previamente finalizada **</p>
-              <p v-if="l_verificaEstado == 'Finalizado' && t_cotizacion.estado == 'Pendiente'" style="color:red"> ** Recuerde que no se puede poner pendiente una cotización previamente finalizada **</p>
-              <p v-if="l_verificaEstado == 'Finalizado' && t_cotizacion.estado == 'Cancelado'" style="color:red"> ** Recuerde que no se puede cancelar una cotización previamente finalizada **</p>
-              <p v-if="l_verificaEstado == 'Pendiente' && t_cotizacion.estado == 'Pendiente'" style="color:red"> ** Recuerde que no se puede poner pendiente una cotización previamente pendiente **</p>
-              <p v-if="l_verificaEstado == 'Cancelado' && t_cotizacion.estado == 'Cancelado'" style="color:red"> ** Recuerde que no se puede cancelar una cotización previamente cancelada **</p>
-              <p v-if="l_verificaEstado == 'Finalizado' && t_cotizacion.estado == 'Finalizado'" style="color:red"> ** Recuerde que no se puede finalizar una cotización previamente finalizada **</p>
+              <div class="col">
+                <select name="chEstado" id="chEstado" v-model="t_cotizacion.estado">
+                  <option value="Pendiente">Pendiente</option>
+                  <option value="Activo">Activo</option>
+                  <option value="Cancelado">Cancelado</option>
+                  <option value="Finalizado">Finalizado</option>
+                </select>
 
-              <div class="row" v-if="t_cotizacion.estado == 'Cancelado' || t_cotizacion.estado == 'Finalizado'">
-                <textarea name="Comentario" placeholder="Escriba un comentario final de la cotización" id="Comentario"
-                  cols="30" rows="3" class="form-control" v-model="t_cotizacion.comentario"></textarea>
               </div>
+
+
+
+            </div>
+            <p v-if="l_verificaEstado == 'Activo' && t_cotizacion.estado == 'Activo'" style="color:red"> ** Recuerde que
+              no se puede activar una cotización previamente activa **</p>
+            <p v-if="l_verificaEstado == 'Cancelado' && t_cotizacion.estado == 'Activo'" style="color:red"> ** Recuerde
+              que no se puede activar una cotización previamente cancelada **</p>
+            <p v-if="l_verificaEstado == 'Finalizado' && t_cotizacion.estado == 'Activo'" style="color:red"> ** Recuerde
+              que no se puede activar una cotización previamente finalizada **</p>
+            <p v-if="l_verificaEstado == 'Cancelado' && t_cotizacion.estado == 'Pendiente'" style="color:red"> **
+              Recuerde que no se puede poner pendiente una cotización previamente cancelada **</p>
+            <p v-if="l_verificaEstado == 'Cancelado' && t_cotizacion.estado == 'Finalizado'" style="color:red"> **
+              Recuerde que no se puede cancelar una cotización previamente finalizada **</p>
+            <p v-if="l_verificaEstado == 'Finalizado' && t_cotizacion.estado == 'Pendiente'" style="color:red"> **
+              Recuerde que no se puede poner pendiente una cotización previamente finalizada **</p>
+            <p v-if="l_verificaEstado == 'Finalizado' && t_cotizacion.estado == 'Cancelado'" style="color:red"> **
+              Recuerde que no se puede cancelar una cotización previamente finalizada **</p>
+            <p v-if="l_verificaEstado == 'Pendiente' && t_cotizacion.estado == 'Pendiente'" style="color:red"> **
+              Recuerde que no se puede poner pendiente una cotización previamente pendiente **</p>
+            <p v-if="l_verificaEstado == 'Cancelado' && t_cotizacion.estado == 'Cancelado'" style="color:red"> **
+              Recuerde que no se puede cancelar una cotización previamente cancelada **</p>
+            <p v-if="l_verificaEstado == 'Finalizado' && t_cotizacion.estado == 'Finalizado'" style="color:red"> **
+              Recuerde que no se puede finalizar una cotización previamente finalizada **</p>
+
+            <div class="row" v-if="t_cotizacion.estado == 'Cancelado' || t_cotizacion.estado == 'Finalizado'">
+              <textarea name="Comentario" placeholder="Escriba un comentario final de la cotización" id="Comentario"
+                cols="30" rows="3" class="form-control" v-model="t_cotizacion.comentario"></textarea>
+            </div>
           </div>
-          <div class="modal-footer" v-if="t_cotizacion.estado == 'Pendiente'"> <!--Estado Pendiente-->
+          <div class="modal-footer" v-if="t_cotizacion.estado == 'Pendiente'">
+            <!--Estado Pendiente-->
 
-            <ajax-button v-if="l_verificaEstado != 'Cancelado' && l_verificaEstado != 'Finalizado'"  type="submit" :syncing="syncing" class="btn btn-primary">Aceptar</ajax-button>
-          </ajax-form>
-          <input type="button" value="Cancelar" class="btn btn-danger" @click="cancelarEstado">
-        </div>
-        <div class="modal-footer" v-if="t_cotizacion.estado == 'Activo'"> <!--Estado activo-->
-
-          <ajax-form action="reservarUnaCotazacion" :syncing.sync="syncing" :cloud-error.sync="cloudError"
-          :form-data="t_cotizacion" :form-errors.sync="formErrors" :form-rules="formRules"
-          @submitted="confirmarEvento">
-            <ajax-button v-if="l_verificaEstado == 'Pendiente'"  type="submit" :syncing="syncing" class="btn btn-primary">Aceptar</ajax-button>
-          </ajax-form>
-          <input type="button" value="Cancelar" class="btn btn-danger" @click="cancelarEstado">
-        </div>
-        <div class="modal-footer" v-if="t_cotizacion.estado == 'Cancelado' || t_cotizacion.estado == 'Finalizado'"> <!--Estado cancelado o finalizado-->
-
-          <ajax-form action="terminarUnaCotizacion" :syncing.sync="syncing" :cloud-error.sync="cloudError"
-          :form-data="t_cotizacion" :form-errors.sync="formErrors" :form-rules="formRules"
-          @submitted="confirmarEvento">
-            <ajax-button v-if="l_verificaEstado != 'Cancelado' || l_verificaEstado != 'Finalizado'"  type="submit" :syncing="syncing" class="btn btn-primary">Aceptar</ajax-button>
-          </ajax-form>
-          <input type="button" value="Cancelar" class="btn btn-danger" @click="cancelarEstado">
-        </div>
-
-
-               
-          
+            <ajax-button v-if="l_verificaEstado != 'Cancelado' && l_verificaEstado != 'Finalizado'" type="submit"
+              :syncing="syncing" class="btn btn-primary">Aceptar</ajax-button>
+        </ajax-form>
+        <input type="button" value="Cancelar" class="btn btn-danger" @click="cancelarEstado">
       </div>
-    </div>
-  </modal>
+      <div class="modal-footer" v-if="t_cotizacion.estado == 'Activo'">
+        <!--Estado activo-->
 
-  <modal v-if="l_modCopiarEvento" id="copiarEvento">
-    <div class="row">
-      <div class="col">
-        <div class="modal-header">
-          <button type="button" class="close" @click="cancelarCopiar">&times</button>
-          <h1>¿Seguro que desea copiar la cotización?</h1>
-        </div>
-        <form action="" readonly>
-          <div class="form-row">
-            <!-- Encargado del evento -->
-            <div class="form-group col">
-              <label for="encargado">Encargado</label>
-              <input type="text" id="encargado" class="form-control" :value="o_cotizacion.encargado.fullName" readonly>
-            </div>
-            <!-- Cliente del evento -->
-            <div class="form-group col">
-              <label for="cliente">Cliente</label>
-              <input type="text" id="cliente" class="form-control" :value="o_cotizacion.cliente.nombre" readonly>
-            </div>
-          </div>
-          <div class="form-row">
-            <div class="form-group col">
-              <label for="descipcion">Descripción:</label>
-              <textarea name="Descripción" id="descripcion" cols="30" rows="3" class="form-control"
-                :value="o_cotizacion.descripcion" readonly></textarea>
-            </div>
-          </div>
-          <div class="modal-footer">
-            <input type="button" value="Copiar" class="btn btn-primary" @click="pasarVariable(o_cotizacion.id)">
-            <input type="button" value="Cancelar" class="btn btn-danger" @click="cancelarCopiar">
-
-          </div>
-        </form>
+        <ajax-form action="reservarUnaCotazacion" :syncing.sync="syncing" :cloud-error.sync="cloudError"
+          :form-data="t_cotizacion" :form-errors.sync="formErrors" :form-rules="formRules" @submitted="confirmarEvento">
+          <ajax-button v-if="l_verificaEstado == 'Pendiente'" type="submit" :syncing="syncing" class="btn btn-primary">
+            Aceptar</ajax-button>
+        </ajax-form>
+        <input type="button" value="Cancelar" class="btn btn-danger" @click="cancelarEstado">
       </div>
+      <div class="modal-footer" v-if="t_cotizacion.estado == 'Cancelado' || t_cotizacion.estado == 'Finalizado'">
+        <!--Estado cancelado o finalizado-->
+
+        <ajax-form action="terminarUnaCotizacion" :syncing.sync="syncing" :cloud-error.sync="cloudError"
+          :form-data="t_cotizacion" :form-errors.sync="formErrors" :form-rules="formRules" @submitted="confirmarEvento">
+          <ajax-button v-if="l_verificaEstado != 'Cancelado' || l_verificaEstado != 'Finalizado'" type="submit"
+            :syncing="syncing" class="btn btn-primary">Aceptar</ajax-button>
+        </ajax-form>
+        <input type="button" value="Cancelar" class="btn btn-danger" @click="cancelarEstado">
+      </div>
+
+
+
+
     </div>
-  </modal>
-  <!--Aca inicia el modal ayuda-->
-  <modal v-if="l_verModalAyuda" id="verAyuda">
-    <div class="modal-header">
-      <button type="button" class="close" @click="clickCerrarModalAyuda">&times</button>
-      <h2 class="modal-title">Ayuda</h2>
+</div>
+</modal>
+
+<modal v-if="l_modCopiarEvento" id="copiarEvento">
+  <div class="row">
+    <div class="col">
+      <div class="modal-header">
+        <button type="button" class="close" @click="cancelarCopiar">&times</button>
+        <h1>¿Seguro que desea copiar la cotización?</h1>
+      </div>
+      <form action="" readonly>
+        <div class="form-row">
+          <!-- Encargado del evento -->
+          <div class="form-group col">
+            <label for="encargado">Encargado</label>
+            <input type="text" id="encargado" class="form-control" :value="o_cotizacion.encargado.fullName" readonly>
+          </div>
+          <!-- Cliente del evento -->
+          <div class="form-group col">
+            <label for="cliente">Cliente</label>
+            <input type="text" id="cliente" class="form-control" :value="o_cotizacion.cliente.nombre" readonly>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group col">
+            <label for="descipcion">Descripción:</label>
+            <textarea name="Descripción" id="descripcion" cols="30" rows="3" class="form-control"
+              :value="o_cotizacion.descripcion" readonly></textarea>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <input type="button" value="Copiar" class="btn btn-primary" @click="pasarVariable(o_cotizacion.id)">
+          <input type="button" value="Cancelar" class="btn btn-danger" @click="cancelarCopiar">
+
+        </div>
+      </form>
     </div>
-    <div class="modal-body">
-      <!-- Aquí va el contenido del modal -->
-      <p class="text-center">Si no encuentras esta cotización; ten encuenta lo siguiente: </p>
-      <ul>
-        <li>Revisa los filtros si es el correcto o si esta bien escrito</li>
-        <li>El buscador utiliza la Ubicación o la descripción para realizar la búsqueda</li>
-        <li>El buscador dispara la búsqueda apartir de los 3 primeros caracteres</li>
-        <li>Para ver todas las cotizaciones digite un * en el buscador</li>
-      </ul>
-    </div>
-    <div class="modal-footer">
-      <button class="btn btn-dark" type="button" id="Borrar" @click="clickCerrarModalAyuda">Cerrar</button>
-    </div>
-  </modal>
-  <!--Aca termina el modal de ayuda-->
+  </div>
+</modal>
+<!--Aca inicia el modal ayuda-->
+<modal v-if="l_verModalAyuda" id="verAyuda">
+  <div class="modal-header">
+    <button type="button" class="close" @click="clickCerrarModalAyuda">&times</button>
+    <h2 class="modal-title">Ayuda</h2>
+  </div>
+  <div class="modal-body">
+    <!-- Aquí va el contenido del modal -->
+    <p class="text-center">Si no encuentras esta cotización; ten encuenta lo siguiente: </p>
+    <ul>
+      <li>Revisa los filtros si es el correcto o si esta bien escrito</li>
+      <li>El buscador utiliza la Ubicación o la descripción para realizar la búsqueda</li>
+      <li>El buscador dispara la búsqueda apartir de los 3 primeros caracteres</li>
+      <li>Para ver todas las cotizaciones digite un * en el buscador</li>
+    </ul>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-dark" type="button" id="Borrar" @click="clickCerrarModalAyuda">Cerrar</button>
+  </div>
+</modal>
+<!--Aca termina el modal de ayuda-->
 </div>
 <%- /* Expose server-rendered data as window.SAILS_LOCALS :: */ exposeLocalsToBrowser() %>
