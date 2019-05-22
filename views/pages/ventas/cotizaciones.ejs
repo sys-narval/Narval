@@ -293,7 +293,7 @@
       <div class="modal-footer" v-if="t_cotizacion.estado == 'Activo'">
         <!--Estado activo-->
 
-        <ajax-form action="reservarUnaCotazacion" :syncing.sync="syncing" :cloud-error.sync="cloudError"
+        <ajax-form action="reservarUnaCotizacion" :syncing.sync="syncing" :cloud-error.sync="cloudError"
           :form-data="t_cotizacion" :form-errors.sync="formErrors" :form-rules="formRules" @submitted="confirmarEvento">
           <ajax-button v-if="l_verificaEstado == 'Pendiente'" type="submit" :syncing="syncing" class="btn btn-primary">
             Aceptar</ajax-button>
@@ -305,7 +305,7 @@
 
         <ajax-form action="terminarUnaCotizacion" :syncing.sync="syncing" :cloud-error.sync="cloudError"
           :form-data="t_cotizacion" :form-errors.sync="formErrors" :form-rules="formRules" @submitted="confirmarEvento">
-          <ajax-button v-if="l_verificaEstado != 'Cancelado' || l_verificaEstado != 'Finalizado'" type="submit"
+          <ajax-button v-if="l_verificaEstado != 'Cancelado' && l_verificaEstado != 'Finalizado'" type="submit"
             :syncing="syncing" class="btn btn-primary">Aceptar</ajax-button>
         </ajax-form>
         <input type="button" value="Cancelar" class="btn btn-danger" @click="cancelarEstado">
@@ -368,6 +368,8 @@
       <li>El buscador utiliza la Ubicación o la descripción para realizar la búsqueda</li>
       <li>El buscador dispara la búsqueda apartir de los 3 primeros caracteres</li>
       <li>Para ver todas las cotizaciones digite un * en el buscador</li>
+      <li>Para ver todas las cotizaciones con el filtro de las fechas digite un '/' en el buscador</li>
+      <li>Para ver todas las cotizaciones con el filtro "mis Cotizaciones" digite un '*' en el buscador</li>
     </ul>
   </div>
   <div class="modal-footer">

@@ -353,13 +353,16 @@ parasails.registerPage('cotizaciones', {
       this.t_cotizacion.comentario = p_cotizacion.comentario;
       let l_prueba = [];
      // this.t_cotizacion.jsonArticulos = [];
-     if(p_cotizacion.articulos.length != 0)
+     if(p_cotizacion.articulos != undefined)
      {
-       for(let index = 0; index < p_cotizacion.articulos.length; index++){
-        l_prueba.push({ id: p_cotizacion.articulos[index].id, cantidad: p_cotizacion.articulos[index].cantidad, precio: p_cotizacion.articulos[index].precioTotal });
+       if(p_cotizacion.articulos.length != 0)
+       {
+         for(let index = 0; index < p_cotizacion.articulos.length; index++){
+          l_prueba.push({ id: p_cotizacion.articulos[index].id, cantidad: p_cotizacion.articulos[index].cantidad, precio: p_cotizacion.articulos[index].precioTotal });
+    
+         }
   
        }
-
      }
      this.t_cotizacion.jsonArticulos.articulos = l_prueba;
       this.t_cotizacion.cliente = p_cotizacion.cliente.id;
