@@ -258,24 +258,42 @@
                 
               </div>
               <p v-if="l_verificaEstado == 'Activo' && t_cotizacion.estado == 'Activo'" style="color:red"> ** Recuerde que no se puede activar una cotización previamente activa **</p>
+              <p v-if="l_verificaEstado == 'Cancelado' && t_cotizacion.estado == 'Activo'" style="color:red"> ** Recuerde que no se puede activar una cotización previamente cancelada **</p>
+              <p v-if="l_verificaEstado == 'Finalizado' && t_cotizacion.estado == 'Activo'" style="color:red"> ** Recuerde que no se puede activar una cotización previamente finalizada **</p>
+              <p v-if="l_verificaEstado == 'Cancelado' && t_cotizacion.estado == 'Pendiente'" style="color:red"> ** Recuerde que no se puede poner pendiente una cotización previamente cancelada **</p>
+              <p v-if="l_verificaEstado == 'Cancelado' && t_cotizacion.estado == 'Finalizado'" style="color:red"> ** Recuerde que no se puede cancelar una cotización previamente finalizada **</p>
+              <p v-if="l_verificaEstado == 'Finalizado' && t_cotizacion.estado == 'Pendiente'" style="color:red"> ** Recuerde que no se puede poner pendiente una cotización previamente finalizada **</p>
+              <p v-if="l_verificaEstado == 'Finalizado' && t_cotizacion.estado == 'Cancelado'" style="color:red"> ** Recuerde que no se puede cancelar una cotización previamente finalizada **</p>
+              <p v-if="l_verificaEstado == 'Pendiente' && t_cotizacion.estado == 'Pendiente'" style="color:red"> ** Recuerde que no se puede poner pendiente una cotización previamente pendiente **</p>
+              <p v-if="l_verificaEstado == 'Cancelado' && t_cotizacion.estado == 'Cancelado'" style="color:red"> ** Recuerde que no se puede cancelar una cotización previamente cancelada **</p>
+              <p v-if="l_verificaEstado == 'Finalizado' && t_cotizacion.estado == 'Finalizado'" style="color:red"> ** Recuerde que no se puede finalizar una cotización previamente finalizada **</p>
 
               <div class="row" v-if="t_cotizacion.estado == 'Cancelado' || t_cotizacion.estado == 'Finalizado'">
                 <textarea name="Comentario" placeholder="Escriba un comentario final de la cotización" id="Comentario"
-                  cols="30" rows="3" class="form-control"></textarea>
+                  cols="30" rows="3" class="form-control" v-model="t_cotizacion.comentario"></textarea>
               </div>
           </div>
-          <div class="modal-footer" v-if="t_cotizacion.estado != 'Activo'">
+          <div class="modal-footer" v-if="t_cotizacion.estado == 'Pendiente'"> <!--Estado Pendiente-->
 
-            <ajax-button  type="submit" :syncing="syncing" class="btn btn-primary">Aceptar</ajax-button>
+            <ajax-button v-if="l_verificaEstado != 'Cancelado' && l_verificaEstado != 'Finalizado'"  type="submit" :syncing="syncing" class="btn btn-primary">Aceptar</ajax-button>
           </ajax-form>
           <input type="button" value="Cancelar" class="btn btn-danger" @click="cancelarEstado">
         </div>
-        <div class="modal-footer" v-if="t_cotizacion.estado == 'Activo'">
+        <div class="modal-footer" v-if="t_cotizacion.estado == 'Activo'"> <!--Estado activo-->
 
           <ajax-form action="reservarUnaCotazacion" :syncing.sync="syncing" :cloud-error.sync="cloudError"
           :form-data="t_cotizacion" :form-errors.sync="formErrors" :form-rules="formRules"
           @submitted="confirmarEvento">
-            <ajax-button v-if="l_verificaEstado != 'Activo'"  type="submit" :syncing="syncing" class="btn btn-primary">Aceptar</ajax-button>
+            <ajax-button v-if="l_verificaEstado == 'Pendiente'"  type="submit" :syncing="syncing" class="btn btn-primary">Aceptar</ajax-button>
+          </ajax-form>
+          <input type="button" value="Cancelar" class="btn btn-danger" @click="cancelarEstado">
+        </div>
+        <div class="modal-footer" v-if="t_cotizacion.estado == 'Cancelado' || t_cotizacion.estado == 'Finalizado'"> <!--Estado cancelado o finalizado-->
+
+          <ajax-form action="terminarUnaCotizacion" :syncing.sync="syncing" :cloud-error.sync="cloudError"
+          :form-data="t_cotizacion" :form-errors.sync="formErrors" :form-rules="formRules"
+          @submitted="confirmarEvento">
+            <ajax-button v-if="l_verificaEstado != 'Cancelado' || l_verificaEstado != 'Finalizado'"  type="submit" :syncing="syncing" class="btn btn-primary">Aceptar</ajax-button>
           </ajax-form>
           <input type="button" value="Cancelar" class="btn btn-danger" @click="cancelarEstado">
         </div>

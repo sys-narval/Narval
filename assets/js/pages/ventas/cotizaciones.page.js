@@ -18,6 +18,7 @@ parasails.registerPage('cotizaciones', {
       fechaFinEvento: 0,
       fechaMontaje: 0,
       fechaDesmontaje: 0,
+      comentario: '',
       estado:'',
       encargado: undefined,
       cliente: undefined,
@@ -349,6 +350,7 @@ parasails.registerPage('cotizaciones', {
       this.t_cotizacion.esDiseno = p_cotizacion.esDiseno;
       this.t_cotizacion.esMontaje= p_cotizacion.esMontaje;
       this.t_cotizacion.esAlquiler = p_cotizacion.esAlquiler;
+      this.t_cotizacion.comentario = p_cotizacion.comentario;
       let l_prueba = [];
      // this.t_cotizacion.jsonArticulos = [];
      if(p_cotizacion.articulos.length != 0)
