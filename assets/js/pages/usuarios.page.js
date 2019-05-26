@@ -8,6 +8,7 @@ parasails.registerPage('usuarios', {
     verModalDeshabilitar: false,
     verModalAgregar: false,
     verModalAyuda: false,
+    verModalHabilitar: false,
     busquedaUsuario: '',
     filtro:{
       administrador: false,
@@ -59,6 +60,10 @@ parasails.registerPage('usuarios', {
       this.o_usuario = p_usuario;
       this.verModalDeshabilitar = true;
     },
+    modalHabilitar: async function(p_usuario){
+      this.o_usuario = p_usuario;
+      this.verModalHabilitar = true;
+    },
 
     modalAgregar: async function(){
     //  this.verModalAgregar = true;
@@ -80,7 +85,10 @@ parasails.registerPage('usuarios', {
     cerrarAgregar: async function(){
       this.verModalAgregar = false;
     },
-
+    cerrarHabilitar: async function()
+    {
+      this.verModalHabilitar = false;
+    },
     cerrarAyuda: async function(){
       this.verModalAyuda = false;
     }
