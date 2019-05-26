@@ -68,7 +68,7 @@
         <td class="text-center">
           <button  class="btn btn-success" title="Editar fila" @click="modalEditar(usuario)"> Editar Rol</button>
           <button v-if="usuario.activo == true" class="btn btn-danger" type="button" id="Deshabilitar" @click="modalDeshabilitar(usuario)" title="Deshabilitar">Deshabilitar</button>
-          <button v-if="usuario.activo == false"  class="btn btn-secondary" type="button" id="Deshabilitar" @click="modalHabilitar(usuario)" title="Deshabilitar">Habilitar</button>
+          <button v-if="usuario.activo == false"  class="btn btn-secondary" type="button" id="Deshabilitar" @click="modalDeshabilitar(usuario)" title="Deshabilitar">Habilitar</button>
         </td>
       </tr>
     </tbody>
@@ -142,24 +142,6 @@
       </div>
     
   </modal>
-
-  <!--Modal Habilitar-->
-  <modal v-if="verModalHabilitar" id="modalhabilitar">
-      <div class="modal-header">
-        <button type="button" class="close" @click="cerrarHabilitar()">&times</button>
-        <h6 class="text-center" id="AdvertenciaDeshabilitar">¿Está seguro que desea habilitar este Usuario?</h6>
-      </div>
-      <div class="modal-footer">
-          <ajax-form action="habilitaUsuario" :syncing.sync="syncing" :cloud-error.sync="cloudError"
-          :form-data="o_usuario" :form-errors.sync="formErrors" :form-rules="formRules" @submitted="cerrarHabilitar">
-              <ajax-button type="submit" :syncing="syncing" class="btn btn-primary">Aceptar</ajax-button>
-            </ajax-form>
-                
-                <input type="button" value="Cancelar" class="btn btn-danger" @click="cerrarHabilitar()" title="Cancelar">
-          
-        </div>
-      
-    </modal>
 
   <!--Modal Agregar-->
   

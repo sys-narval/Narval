@@ -8,7 +8,6 @@ parasails.registerPage('usuarios', {
     verModalDeshabilitar: false,
     verModalAgregar: false,
     verModalAyuda: false,
-    verModalHabilitar: false,
     busquedaUsuario: '',
     filtro:{
       administrador: false,
@@ -84,17 +83,6 @@ parasails.registerPage('usuarios', {
 
     cerrarAyuda: async function(){
       this.verModalAyuda = false;
-    },
-    modalHabilitar: async function(p_usuario)
-    {
-      this.o_usuario = p_usuario;
-      this.verModalHabilitar = true;
-
-    },
-    cerrarHabilitar: async function()
-    {
-      this.verModalHabilitar = false;
-
     }
   },
 
