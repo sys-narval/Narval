@@ -108,6 +108,20 @@ email status until they click the link in the confirmation email.`
       example: 1502844074211
     },
 
+    activo: {
+      type: 'boolean',
+      defaultsTo: true,
+      description: 'Atributo para definir si un usuario esta activo o desactivo dentro de la aplicación',
+      example: true
+    },
+
+    rol: {
+      type: 'string',
+      defaultsTo: 'Ninguno',
+      description: 'El rol que el usuario tendrá dentro de la aplicación segun su puesto de trabajo',
+      example: 'Bodeguero'
+    }
+
     //  ╔═╗╔╦╗╔╗ ╔═╗╔╦╗╔═╗
     //  ║╣ ║║║╠╩╗║╣  ║║╚═╗
     //  ╚═╝╩ ╩╚═╝╚═╝═╩╝╚═╝
