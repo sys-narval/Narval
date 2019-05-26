@@ -9,16 +9,37 @@ parasails.registerPage('usuarios', {
     verModalAgregar: false,
     verModalAyuda: false,
     busquedaUsuario: '',
-    filtro:{}
+    filtro:{
+      administrador: false,
+      ti: false,
+      secretario: false,
+      vendedor: false,
+      bodega: false
+    },
+    formData: { /* … */ },
+    syncing: false,
+    cloudError: '',
+    formErrors: { /* … */ },
+    formRules: {
+      id: {
+        required: true
+      },
+      rol: {
+        required: true
+      }
+
+    }
     //…
   },
 
   //  ╦  ╦╔═╗╔═╗╔═╗╦ ╦╔═╗╦  ╔═╗
   //  ║  ║╠╣ ║╣ ║  ╚╦╝║  ║  ║╣
   //  ╩═╝╩╚  ╚═╝╚═╝ ╩ ╚═╝╩═╝╚═╝
-  beforeMount: function() {
+  beforeMount: async function() {
     // Attach any initial data from the server.
     _.extend(this, SAILS_LOCALS);
+    let respUsuarios = await Cloud.extraerUsuarios();
+    this.modelo.usuarios = respUsuarios;
   },
   mounted: async function() {
     //…
@@ -34,12 +55,14 @@ parasails.registerPage('usuarios', {
       this.verModalEditar = true;
     },
 
-    modalDeshabilitar: async function(){
+    modalDeshabilitar: async function(p_usuario){
+      this.o_usuario = p_usuario;
       this.verModalDeshabilitar = true;
     },
 
     modalAgregar: async function(){
-      this.verModalAgregar = true;
+    //  this.verModalAgregar = true;
+    location.href="logout";
     },
 
     modalAyuda: async function(){
@@ -80,7 +103,73 @@ parasails.registerPage('usuarios', {
         {
           return this.modelo.usuarios;
 
+        }else if(this.busquedaUsuario == "**" && this.filtro.administrador)
+        {
+          let t_usuarios = [];
+          for(let index = 0; index < this.modelo.usuarios.length; index++)
+          {
+            if(this.modelo.usuarios[index].rol == "Administrador")
+            {
+              t_usuarios.push(this.modelo.usuarios[index]);
+
+            }
+          }
+          return t_usuarios;
+
+        }else if(this.busquedaUsuario == "**" && this.filtro.ti)
+        {
+          let t_usuarios = [];
+          for(let index = 0; index < this.modelo.usuarios.length; index++)
+          {
+            if(this.modelo.usuarios[index].rol == "TI")
+            {
+              t_usuarios.push(this.modelo.usuarios[index]);
+
+            }
+          }
+          return t_usuarios;
+
+        }else if(this.busquedaUsuario == "**" && this.filtro.secretario)
+        {
+          let t_usuarios = [];
+          for(let index = 0; index < this.modelo.usuarios.length; index++)
+          {
+            if(this.modelo.usuarios[index].rol == "Secretario")
+            {
+              t_usuarios.push(this.modelo.usuarios[index]);
+
+            }
+          }
+          return t_usuarios;
+
+        }else if(this.busquedaUsuario == "**" && this.filtro.vendedor)
+        {
+          let t_usuarios = [];
+          for(let index = 0; index < this.modelo.usuarios.length; index++)
+          {
+            if(this.modelo.usuarios[index].rol == "Vendedor")
+            {
+              t_usuarios.push(this.modelo.usuarios[index]);
+
+            }
+          }
+          return t_usuarios;
+
+        }else if(this.busquedaUsuario == "**" && this.filtro.bodega)
+        {
+          let t_usuarios = [];
+          for(let index = 0; index < this.modelo.usuarios.length; index++)
+          {
+            if(this.modelo.usuarios[index].rol == "Bodega")
+            {
+              t_usuarios.push(this.modelo.usuarios[index]);
+
+            }
+          }
+          return t_usuarios;
+
         }
+
         else{
           return new Array();
         }
