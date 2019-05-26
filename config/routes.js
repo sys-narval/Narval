@@ -83,6 +83,10 @@ module.exports.routes = {
   'POST /api/v1/ventas/terminar-una-cotizacion':          { action: 'ventas/terminar-una-cotizacion' },
   'DELETE /api/v1/ventas/eliminar-cotizacion':            { action: 'ventas/eliminar-cotizacion' },
 
+  'POST /api/v1/usuarios/actualiza-rol':                  { action: 'usuarios/actualiza-rol' },
+  'POST /api/v1/usuarios/deshabilitar-usuario':           { action: 'usuarios/deshabilitar-usuario' },
+  'GET /api/v1/usuarios/extraer-usuarios':                { action: 'usuarios/extraer-usuarios' },
+
   //  ╦ ╦╔═╗╔╗ ╦ ╦╔═╗╔═╗╦╔═╔═╗
   //  ║║║║╣ ╠╩╗╠═╣║ ║║ ║╠╩╗╚═╗
   //  ╚╩╝╚═╝╚═╝╩ ╩╚═╝╚═╝╩ ╩╚═╝
