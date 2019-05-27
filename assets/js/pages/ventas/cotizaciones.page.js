@@ -57,7 +57,6 @@ parasails.registerPage('cotizaciones', {
     _.extend(this, SAILS_LOCALS);
     let respCotizaciones = await Cloud.extraerCotizaciones();
     this.modelo.cotizaciones = respCotizaciones;
-    console.log(this.modelo.cotizaciones)
   },
   mounted: async function () {
     //…
