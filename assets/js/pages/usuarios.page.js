@@ -81,6 +81,17 @@ parasails.registerPage('usuarios', {
     cerrarDeshabilitar: async function(){
       this.verModalDeshabilitar = false;
     },
+    confirmarCerrarDeshabilitar: async function()
+    {
+      this.o_usuario.activo = false;
+      this.verModalDeshabilitar = false;
+
+    },
+    confirmarCerrarHabilitar: async function()
+    {
+      this.o_usuario.activo = true;
+      this.verModalHabilitar = false;
+    },
 
     cerrarAgregar: async function(){
       this.verModalAgregar = false;

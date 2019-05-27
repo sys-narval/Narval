@@ -132,8 +132,8 @@
       <h6 class="text-center" id="AdvertenciaDeshabilitar">¿Está seguro que desea deshabilitar este Usuario?</h6>
     </div>
     <div class="modal-footer">
-        <ajax-form action="deshabilitarUsuario" :syncing.sync="syncing" :cloud-error.sync="cloudError"
-        :form-data="o_usuario" :form-errors.sync="formErrors" :form-rules="formRules" @submitted="cerrarDeshabilitar">
+        <ajax-form action="actividadUsuario" :syncing.sync="syncing" :cloud-error.sync="cloudError"
+        :form-data="o_usuario" :form-errors.sync="formErrors" :form-rules="formRules" @submitted="confirmarCerrarDeshabilitar">
             <ajax-button type="submit" :syncing="syncing" class="btn btn-primary">Aceptar</ajax-button>
           </ajax-form>
               
@@ -149,8 +149,8 @@
     <h6 class="text-center" id="AdvertenciaDeshabilitar">¿Está seguro que desea habilitar este Usuario?</h6>
   </div>
   <div class="modal-footer">
-      <ajax-form action="habilitaUsuario" :syncing.sync="syncing" :cloud-error.sync="cloudError"
-      :form-data="o_usuario" :form-errors.sync="formErrors" :form-rules="formRules" @submitted="cerrarHabilitar">
+      <ajax-form action="actividadUsuario" :syncing.sync="syncing" :cloud-error.sync="cloudError"
+      :form-data="o_usuario" :form-errors.sync="formErrors" :form-rules="formRules" @submitted="confirmarCerrarHabilitar">
           <ajax-button type="submit" :syncing="syncing" class="btn btn-primary">Aceptar</ajax-button>
         </ajax-form>
             
