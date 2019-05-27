@@ -99,14 +99,14 @@ parasails.registerPage('usuarios', {
       filtroUsuario: function () {
         const limpiaFiltro = objeto => {
           for (let atributo in objeto)
-            if (objeto[atributo] === null || objeto[atributo] === undefined || objeto[atributo] === '')
+            if (objeto[atributo] === null || objeto[atributo] === undefined || objeto[atributo] === '' || objeto[atributo] === false)
               delete objeto[atributo];
           return objeto;
         }
 
         if (this.busquedaUsuario.length > 3) {
           return _.filter(this.modelo.usuarios, limpiaFiltro(this.filtro))
-            .filter(usuario => usuario.nombre.includes(this.busquedaUsuario) || usuario.correo.includes(this.busquedaUsuario));
+            .filter(usuario => usuario.fullName.includes(this.busquedaUsuario) || usuario.emailAddress.includes(this.busquedaUsuario));
         } else if(this.busquedaUsuario  == "*") 
         {
           return this.modelo.usuarios;
