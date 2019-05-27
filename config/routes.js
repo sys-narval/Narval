@@ -84,7 +84,7 @@ module.exports.routes = {
   'DELETE /api/v1/ventas/eliminar-cotizacion':            { action: 'ventas/eliminar-cotizacion' },
 
   'POST /api/v1/usuarios/actualiza-rol':                  { action: 'usuarios/actualiza-rol' },
-  'POST /api/v1/usuarios/deshabilitar-usuario':           { action: 'usuarios/deshabilitar-usuario' },
+  'POST /api/v1/usuarios/actividad-usuario':              { action: 'usuarios/actividad-usuario' },
   'GET /api/v1/usuarios/extraer-usuarios':                { action: 'usuarios/extraer-usuarios' },
 
   //  ╦ ╦╔═╗╔╗ ╦ ╦╔═╗╔═╗╦╔═╔═╗

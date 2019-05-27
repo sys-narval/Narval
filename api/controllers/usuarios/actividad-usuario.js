@@ -1,7 +1,7 @@
 module.exports = {
 
 
-    friendlyName: 'Deshabilitar Usuario',
+    friendlyName: 'Actividad Usuario',
   
   
     description: '',
@@ -31,8 +31,11 @@ module.exports = {
         let usuario = await User.findOne({ id: inputs.id });
         if (usuario === undefined) {
           return exits.idNoEncontrado(`Usuario ${inputs.id} no encontrado`);
-        } else {
+        } else if(usuario.activo === true){
           await User.update({ id: inputs.id }, {activo: false}); // deshabilita el usuario en la base de datos
+          return exits.success();
+        } else {
+          await User.update({ id: inputs.id }, {activo: true}); // habilita el usuario en la base de datos
           return exits.success();
         }
   
