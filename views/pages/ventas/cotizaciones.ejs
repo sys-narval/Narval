@@ -311,6 +311,10 @@
               Recuerde que no se puede cancelar una cotización previamente cancelada **</p>
             <p v-if="l_verificaEstado == 'Finalizado' && t_cotizacion.estado == 'Finalizado'" style="color:red"> **
               Recuerde que no se puede finalizar una cotización previamente finalizada **</p>
+              <p v-if="cloudError == 'error' && t_cotizacion.estado == 'Activo'" style="color:red"> **
+                No se cuenta con el material suficiente para esta cotización **</p>
+
+
 
             <div class="row" v-if="t_cotizacion.estado == 'Cancelado' || t_cotizacion.estado == 'Finalizado'">
               <textarea name="Comentario" placeholder="Escriba un comentario final de la cotización" id="Comentario"
