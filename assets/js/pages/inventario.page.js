@@ -58,7 +58,7 @@ parasails.registerPage('inventario', {
     _.extend(this, SAILS_LOCALS);
 
     let respArticulos = await Cloud.extraerInventario();
-    
+
     this.modelo.articulos = respArticulos.articulos;
   },
   mounted: async function () {
@@ -69,6 +69,51 @@ parasails.registerPage('inventario', {
   //  ║║║║ ║ ║╣ ╠╦╝╠═╣║   ║ ║║ ║║║║╚═╗
   //  ╩╝╚╝ ╩ ╚═╝╩╚═╩ ╩╚═╝ ╩ ╩╚═╝╝╚╝╚═╝
   methods: {
+    guardar:async function(tableID, filename = ''){
+      var downloadLink;
+      var dataType = 'application/vnd.ms-excel';
+      var tableSelect = document.getElementById(tableID);
+      var tableHTML = tableSelect.outerHTML.replace(/ /g, '%20');
+      
+      // Specify file name
+      filename = filename?filename+'.xls':'excel_data.xls';
+      
+      // Create download link element
+      downloadLink = document.createElement("a");
+      
+      document.body.appendChild(downloadLink);
+      
+      if(navigator.msSaveOrOpenBlob){
+          var blob = new Blob(['ufeff', tableHTML], {
+              type: dataType
+          });
+          navigator.msSaveOrOpenBlob( blob, filename);
+      }else{
+          // Create a link to the file
+          downloadLink.href = 'data:' + dataType + ', ' + tableHTML;
+      
+          // Setting the file name
+          downloadLink.download = filename;
+          
+          //triggering the function
+          downloadLink.click();
+      }
+  
+  
+    },
+    crear: async function () {
+     debugger;
+      this.excel;
+      var workbook = new this.excel.Workbook();
+
+      var worksheet = workbook.addWorksheet('Sheet 1');
+      var worksheet2 = workbook.addWorksheet('Sheet 2');
+
+      worksheet.cell(1, 1).string('content for display');
+
+      workbook.write('report.xlsx');
+
+    },
     limpiar_o_articulo: async function () {
       this.o_articulo = {
         id: undefined,
