@@ -14,23 +14,23 @@
                 <th>Rol del Usuario:</th>
               </div>
               <div class="form-check mb-2">
-                <input type="checkbox" name="rol Administrador" id="rolAdministrador" class="form-check-input">
+                <input type="checkbox" name="rol Administrador" id="rolAdministrador" class="form-check-input" v-model="filtro.administrador">
                 <label for="rolAdministrador" class="form-check-label">Administrador</label>
               </div>
               <div class="form-check mb-2">
-                <input type="checkbox" name="rol TI" id="rolTI" class="form-check-input">
+                <input type="checkbox" name="rol TI" id="rolTI" class="form-check-input" v-model="filtro.ti">
                 <label for="rolTI" class="form-check-label">TI</label>
               </div>
               <div class="form-check mb-2">
-                <input type="checkbox" name="rol Secretario" id="rolSecretario" class="form-check-input">
+                <input type="checkbox" name="rol Secretario" id="rolSecretario" class="form-check-input" v-model="filtro.secretario">
                 <label for="rolSecretario" class="form-check-label">Secretario</label>
               </div>
               <div class="form-check mb-2">
-                <input type="checkbox" name="rol Vendedor" id="rolVendedor" class="form-check-input">
+                <input type="checkbox" name="rol Vendedor" id="rolVendedor" class="form-check-input" v-model="filtro.vendedor">
                 <label for="rolVendedor" class="form-check-label">Vendedor</label>
               </div>
               <div class="form-check mb-2">
-                <input type="checkbox" name="rol Bodega" id="rolBodega" class="form-check-input">
+                <input type="checkbox" name="rol Bodega" id="rolBodega" class="form-check-input"v-model="filtro.bodega">
                 <label for="rolBodega" class="form-check-label">Bodega</label>
               </div>
             </div>
@@ -57,129 +57,110 @@
       <th>Nombre</th>
       <th>Correo</th>
       <th>Rol</th>
-      <th>Fecha</th>
       <th title="Opciones" class="text-center">Opciones</th>
     </thead>
     <tbody>
       <tr v-for="usuario in modelo.usuarios">
         <tr v-for="usuario in filtroUsuario">
-        <td v-text="usuario.nombre"></td>
-        <td v-text="usuario.correo"></td>
+        <td v-text="usuario.fullName"></td>
+        <td v-text="usuario.emailAddress"></td>
         <td v-text="usuario.rol"></td>
-        <td v-text="usuario.fecha"></td>
         <td class="text-center">
-          <button href="" class="btn btn-success" title="Editar fila" @click="modalEditar(usuario)"><span class="fa fa-pencil"></span> Editar</button>
-          <button class="btn btn-danger" type="button" id="Deshabilitar" @click="modalDeshabilitar()" title="Deshabilitar">Deshabilitar</button>
+          <button  class="btn btn-success" title="Editar fila" @click="modalEditar(usuario)"> Editar Rol</button>
+          <button v-if="usuario.activo == true" class="btn btn-danger" type="button" id="Deshabilitar" @click="modalDeshabilitar(usuario)" title="Deshabilitar">Deshabilitar</button>
+          <button v-if="usuario.activo == false"  class="btn btn-secondary" type="button" id="Deshabilitar" @click="modalHabilitar(usuario)" title="Deshabilitar">Habilitar</button>
         </td>
       </tr>
     </tbody>
   </table>
   <div class="pull-left">
-    <button class="btn btn-sm btn-primary btn-block boton boton1" type="button" id="Agregar" @click="modalAgregar()" title="Agregar">Agregar</button>
+   <!-- <button class="btn btn-sm btn-primary btn-block boton boton1" type="button" id="Agregar" @click="modalAgregar()" title="Agregar">Agregar</button> -->
   </div>
 
   <!--Modal Editar-->
   <modal v-if="verModalEditar" id="modalEditar">
     <div class="modal-header">
-      <button type="button" class="close" @click="cerrarEditar()"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+      <button type="button" class="close" @click="cerrarEditar()">&times</button>
+      <h5 class="text-center">Editando Usuario</h5>
     </div>
-    <div class="row">
-      <div class="col">
-        <form action="">
-          <h1 class="text-center">Editando Usuario</h1>
+    <div class="modal-body">
+      <div class="row">
+        <div class="col">
+          <!--Aca iria el ajax-form-->
           <div class="row">
             <div class="form-group col">
               <label for="nombre">Nombre</label>
-              <input type="text" id="nombre" class="form-control" :value="usuario.nombre">
+              <input type="text" id="nombre" class="form-control" v-model="o_usuario.fullName" readonly>
             </div>
             <div class="form-group col">
-              <label for="correo">Correo</label>
-              <input type="text" id="correo" class="form-control" :value="usuario.correo">
+                <label for="correo">Correo</label>
+                <input type="text" id="correo" class="form-control" v-model="o_usuario.emailAddress" readonly>
+              </div>
             </div>
-          </div>
-          <div class="row">
-            <div class="form-group col">
-              <label for="ingresarRol">Rol del Usuario</label><br />
-              <select name="Rol">
-                <option>Administrador</option>
-                <option>Secretario</option>
-                <option>TI</option>
-                <option>Vendedor</option>
-                <option>Bodega</option>
-              </select>
+            <div class="row">
+              <div class="form-group col">
+                <label for="ingresarRol">Rol del Usuario</label><br />
+                <select name="Rol" v-model="o_usuario.rol">
+                  <option>Administrador</option>
+                  <option>Secretario</option>
+                  <option>TI</option>
+                  <option>Vendedor</option>
+                  <option>Bodega</option>
+                </select>
+              </div>
             </div>
+            <!--Aqui cierra el ajax form-->
           </div>
-          <div class="pull-right">
-            <button type="button" id="Guardar" class="btn btn-primary" @click="cerrarEditar()" title="Guardar">Guardar</button>
-            <input type="button" value="Cancelar" class="btn btn-danger" @click="cerrarEditar()" title="Cancelar">
-          </div>
-        </form>
+        </div>
+        
       </div>
-    </div>
+      <div class="modal-footer">
+        
+        <ajax-form action="actualizaRol" :syncing.sync="syncing" :cloud-error.sync="cloudError"
+        :form-data="o_usuario" :form-errors.sync="formErrors" :form-rules="formRules" @submitted="cerrarEditar">
+            <ajax-button type="submit" :syncing="syncing" class="btn btn-primary">Guardar</ajax-button>
+          </ajax-form>
+            <input type="button" value="Cancelar" class="btn btn-danger" @click="cerrarEditar()" title="Cancelar">
+            
+          </div>
   </modal>
 
   <!--Modal Deshabilitar-->
   <modal v-if="verModalDeshabilitar" id="modalDeshabilitar">
     <div class="modal-header">
-      <button type="button" class="close" @click="cerrarDeshabilitar()"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+      <button type="button" class="close" @click="cerrarDeshabilitar()">&times</button>
+      <h6 class="text-center" id="AdvertenciaDeshabilitar">¿Está seguro que desea deshabilitar este Usuario?</h6>
     </div>
-    <div class="row">
-      <div class="col">
-        <form action="">
-          <h1 class="text-center">Deshabilitando Usuario</h1>
-          <div class="row">
-            <div class="form-group col">
-              <h6 class="modal-title text-center" id="AdvertenciaDeshabilitar">¿Está seguro que desea deshabilitar este Usuario?</h6>
-            </div>
-          </div>
-          <div class="pull-right">
-            <button type="button" id="Aceptar" class="btn btn-primary" @click="cerrarDeshabilitar()" title="Aceptar">Aceptar</button>
-            <input type="button" value="Cancelar" class="btn btn-danger" @click="cerrarDeshabilitar()" title="Cancelar">
-          </div>
-        </form>
+    <div class="modal-footer">
+        <ajax-form action="actividadUsuario" :syncing.sync="syncing" :cloud-error.sync="cloudError"
+        :form-data="o_usuario" :form-errors.sync="formErrors" :form-rules="formRules" @submitted="confirmarCerrarDeshabilitar">
+            <ajax-button type="submit" :syncing="syncing" class="btn btn-primary">Aceptar</ajax-button>
+          </ajax-form>
+              
+              <input type="button" value="Cancelar" class="btn btn-danger" @click="cerrarDeshabilitar()" title="Cancelar">
+        
       </div>
-    </div>
+    
   </modal>
-
+<!--Modal Deshabilitar-->
+<modal v-if="verModalHabilitar" id="modalDeshabilitar">
+  <div class="modal-header">
+    <button type="button" class="close" @click="cerrarHabilitar()">&times</button>
+    <h6 class="text-center" id="AdvertenciaDeshabilitar">¿Está seguro que desea habilitar este Usuario?</h6>
+  </div>
+  <div class="modal-footer">
+      <ajax-form action="actividadUsuario" :syncing.sync="syncing" :cloud-error.sync="cloudError"
+      :form-data="o_usuario" :form-errors.sync="formErrors" :form-rules="formRules" @submitted="confirmarCerrarHabilitar">
+          <ajax-button type="submit" :syncing="syncing" class="btn btn-primary">Aceptar</ajax-button>
+        </ajax-form>
+            
+            <input type="button" value="Cancelar" class="btn btn-danger" @click="cerrarHabilitar()" title="Cancelar">
+      
+    </div>
+  
+</modal>
   <!--Modal Agregar-->
-  <modal v-if="verModalAgregar" id="modalAgregar">
-    <div class="modal-header">
-      <button type="button" class="close" @click="cerrarAgregar()"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
-    </div>
-    <div class="row">
-      <div class="col">
-        <form action="">
-          <h1 class="text-center">Agregando Usuario</h1>
-          <div class="row">
-            <div class="form-group col">
-              <label for="nombre">Nombre</label>
-              <input type="nombre" class="form-control" id="ingresarNombre" placeholder="Nombre del Usuario">
-            </div>
-            <div class="form-group col">
-              <label for="correo">Correo</label>
-              <input type="correo" class="form-control" id="ingresarCorreo" placeholder="Correo del Usuario">
-            </div>
-          </div>
-          <div class="row">
-            <div class="form-group col">
-              <label for="ingresarRol">Rol del Usuario</label><br />
-              <select name="Rol">
-                <option>Administrador</option>
-                <option>Secretario</option>
-                <option>TI</option>
-                <option>Vendedor</option>
-                <option>Bodega</option>
-              </select>
-            </div>
-          </div>
-          <div class="pull-right">
-            <button type="button" id="Agregar" class="btn btn-primary" @click="cerrarAgregar()" title="Agregar">Agregar</button>
-            <input type="button" value="Cancelar" class="btn btn-danger" @click="cerrarAgregar()" title="Cancelar">
-          </div>
-        </form>
-      </div>
-    </div>
-  </modal>
+  
 
   <!--Modal Ayuda-->
   <modal v-if="verModalAyuda" id="modalAyuda">
@@ -192,7 +173,9 @@
       <ul>
         <li>Revisa si tus filtros son los correctos o si esta bien escrito.</li>
         <li>El buscador utiliza "Nombre" o "Correo"  para realizar la búsqueda.</li>
-        <li>El buscador muestra los resultados desde el primer carácter digitado.</li>
+        <li>El buscador muestra los resultados desde el tercer carácter digitado.</li>
+        <li>Para buscar con filtro, selecciona el filtro, seguidamente en el buscador digita "**"</li>
+        <li>Para mostrar todos los registros digita "*"</li>
       </ul>
     </div>
     <div class="modal-footer">
