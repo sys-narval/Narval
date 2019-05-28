@@ -98,6 +98,11 @@
           <th>Ubicacion</th>
           <th>Descripcion</th>
           <th>Estado</th>
+          <th>Disenno</th>
+          <th>Montaje</th>
+          <th>Alquiler</th>
+          <th>Fecha Evento</th>
+          <th>Fecha Fin Evento</th>
         </thead>
         <tbody>
 
@@ -108,6 +113,11 @@
             <td v-text="cotizacion.lugarEvento"></td>
             <td v-text="cotizacion.descripcion"></td>
             <td v-text="cotizacion.estado"></td>
+            <td v-text="cotizacion.esDiseno"></td>
+            <td v-text="cotizacion.esMontaje"></td>
+            <td v-text="cotizacion.esAlquiler"></td>
+            <td v-text="new Date(cotizacion.fechaEvento).split('T')"> </td>
+            <td v-text="new Date(cotizacion.fechaFinEvento).split('T')"> </td>
           </tr>
         </tbody>
       </table>

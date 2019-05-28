@@ -475,6 +475,11 @@ parasails.registerPage('cotizaciones', {
   },
   // Métodos de filtro
   computed: {
+
+    fechas: function(coti){
+      return coti;
+    },
+
     filtroCotizacion: function () {
 
       /*
