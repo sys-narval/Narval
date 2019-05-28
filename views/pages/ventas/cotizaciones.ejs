@@ -89,6 +89,31 @@
           </tr>
         </tbody>
       </table>
+
+      <table  v-show="false" id = "tbCoti" class="table table-hover table-striped table-bordered" >
+        <thead class="thead-light">
+          <th>Encargado</th>
+          <th>Cliente</th>
+          <th>Contacto</th>
+          <th>Ubicacion</th>
+          <th>Descripcion</th>
+          <th>Estado</th>
+        </thead>
+        <tbody>
+
+          <tr v-for="cotizacion in filtroCotizacion">
+            <td v-text="cotizacion.encargado.fullName"></td>
+            <td v-text="cotizacion.cliente.nombre"></td>
+            <td v-text="cotizacion.contacto.nombre"></td>
+            <td v-text="cotizacion.lugarEvento"></td>
+            <td v-text="cotizacion.descripcion"></td>
+            <td v-text="cotizacion.estado"></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <label v-if="filtroCotizacion.length != 0" for="guardar" class="btn btn-success" @click="guardar('tbCoti','Cotizacion' )"> Exportar </label>
+
     </div>
   </div>
   <modal v-if="l_verModal" id="verEvento">
