@@ -779,6 +779,7 @@ parasails.registerPage('actualizar-cotizacion', {
             t_precio = this.t_cotizacion.articulos.filter(t_articulo => t_articulo.id.includes(this.l_selecArticulo[t_tempID]))[0].precio;
             if (this.modelo.articulos[t_val].id === this.l_selecArticulo[t_tempID]) {
               this.modelo.articulos[t_val].cantidadSolicitada = t_cantidad;
+              this.modelo.articulos[t_val].precio = t_precio/t_cantidad;
               this.modelo.articulos[t_val].precioTotal = t_precio;
             }
           }
