@@ -7,11 +7,30 @@ parasails.registerPage('cotizaciones', {
     o_cotizacion: {
       /* */
     },
+    t_cotizacion:
+    {
+      lugarEvento: undefined,
+      esDiseno: undefined,
+      esMontaje: undefined,
+      esAlquiler: undefined,
+      descripcion: undefined,
+      fechaEvento: 0,
+      fechaFinEvento: 0,
+      fechaMontaje: 0,
+      fechaDesmontaje: 0,
+      comentario: '',
+      estado:'',
+      encargado: undefined,
+      cliente: undefined,
+      contacto: undefined,
+      jsonArticulos: {articulos:undefined}
+    },
     l_verModal: false,
     l_modBorrarEvento: false,
     l_modCopiarEvento: false,
     l_busquedaCotizacion: '',
     l_myId: '',
+    l_verificaEstado: '',
     l_filtro: {
       cliente: {},
       encargado: {},
@@ -20,14 +39,10 @@ parasails.registerPage('cotizaciones', {
       misCotizaciones: false
     },
     // Datos del form
-    formData: {
-      /* … */
-    },
+    formData: { /* … */},
     syncing: false,
     cloudError: '',
-    formErrors: {
-      /* … */
-    },
+    formErrors: { /* … */},
     formRules: {
 
     },
@@ -42,7 +57,7 @@ parasails.registerPage('cotizaciones', {
     _.extend(this, SAILS_LOCALS);
     let respCotizaciones = await Cloud.extraerCotizaciones();
     this.modelo.cotizaciones = respCotizaciones;
-    console.log(this.modelo.cotizaciones)
+    console.log( respCotizaciones);
   },
   mounted: async function () {
     //…
@@ -53,6 +68,38 @@ parasails.registerPage('cotizaciones', {
   //  ╩╝╚╝ ╩ ╚═╝╩╚═╩ ╩╚═╝ ╩ ╩╚═╝╝╚╝╚═╝
   methods: {
 
+    guardar:async function(tableID, filename = ''){
+      var downloadLink;
+      var dataType = 'application/vnd.ms-excel';
+      var tableSelect = document.getElementById(tableID);
+      var tableHTML = tableSelect.outerHTML.replace(/ /g, '%20');
+      
+      // Specify file name
+      filename = filename?filename+'.xls':'excel_data.xls';
+      
+      // Create download link element
+      downloadLink = document.createElement("a");
+      
+      document.body.appendChild(downloadLink);
+      
+      if(navigator.msSaveOrOpenBlob){
+          var blob = new Blob(['ufeff', tableHTML], {
+              type: dataType
+          });
+          navigator.msSaveOrOpenBlob( blob, filename);
+      }else{
+          // Create a link to the file
+          downloadLink.href = 'data:' + dataType + ', ' + tableHTML;
+      
+          // Setting the file name
+          downloadLink.download = filename;
+          
+          //triggering the function
+          downloadLink.click();
+      }
+  
+    },
+
     // Método para desplegar el modal y cargar la cotización
     verEvento: async function (cotizacion) {
       this.o_cotizacion = cotizacion;
@@ -60,45 +107,31 @@ parasails.registerPage('cotizaciones', {
         let t_fechaEvento = this.o_cotizacion.fechaEvento;
         t_fechaEvento = new Date(t_fechaEvento);
         let t_diasE = 0;
-        t_diasE = new Date(t_fechaEvento.getFullYear(), t_fechaEvento.getMonth() + 1, 0).getDate();
+        t_diasE = new Date(t_fechaEvento.getFullYear(), t_fechaEvento.getMonth() +1, 0).getDate();
         //Fecha inicio del evento validaciones  
-        if (t_fechaEvento.getDate() + 1 == 32 && t_diasE == 31) {
+        if (t_fechaEvento.getDate() + 1 == 32 && t_diasE == 31) { //Si es el primer dia de un mes o un año 
           t_fechaEvento.setDate(01);
-          if ((t_fechaEvento.getMonth() + 2) == 13) {
+          if ((t_fechaEvento.getMonth() + 2) == 13) { //Si es 31 de diciembre lo que llega
             t_fechaEvento.setMonth(1);
-            if (t_fechaEvento.getMonth() + 1 > 9) {
-              this.o_cotizacion.fechaEvento = (t_fechaEvento.getFullYear() + 1) + '-' + (t_fechaEvento.getMonth()) + '-' + '0' + (t_fechaEvento.getDate());
-
-            } else {
-
-
-
               this.o_cotizacion.fechaEvento = (t_fechaEvento.getFullYear() + 1) + '-' + '0' + (t_fechaEvento.getMonth()) + '-' + '0' + (t_fechaEvento.getDate());
 
-            }
-
           } else {
-            if (t_fechaEvento.getMonth() + 1 > 9) {
+            if (t_fechaEvento.getMonth() + 1 > 9) { //Si el mes es mayor a setiembre o mayor a 9 
               this.o_cotizacion.fechaEvento = t_fechaEvento.getFullYear() + '-' + (t_fechaEvento.getMonth() + 2) + '-' + '0' + (t_fechaEvento.getDate());
 
             } else {
-
-
               this.o_cotizacion.fechaEvento = t_fechaEvento.getFullYear() + '-' + '0' + (t_fechaEvento.getMonth() + 2) + '-' + '0' + (t_fechaEvento.getDate());
-
             }
           }
-        } else if (t_fechaEvento.getDate() + 1 == 31 && t_diasE == 30) {
+        } else if (t_fechaEvento.getDate() + 1 == 31 && t_diasE == 30) { //Si es el primer dia de un mes 
           t_fechaEvento.setDate(01);
-          if (t_fechaEvento.getMonth() + 1 > 9) {
+          if (t_fechaEvento.getMonth() + 2 > 9) {
             this.o_cotizacion.fechaEvento = t_fechaEvento.getFullYear() + '-' + (t_fechaEvento.getMonth() + 2) + '-' + '0' + (t_fechaEvento.getDate());
 
           } else {
-
             this.o_cotizacion.fechaEvento = t_fechaEvento.getFullYear() + '-' + '0' + (t_fechaEvento.getMonth() + 2) + '-' + '0' + (t_fechaEvento.getDate());
-
           }
-        } else if ((t_fechaEvento.getDate() + 1 == 29 && t_diasE == 28) || (t_fechaEvento.getDate() + 1 == 30 && t_diasE == 29)) {
+        } else if ((t_fechaEvento.getDate() + 1 == 29 && t_diasE == 28) || (t_fechaEvento.getDate() + 1 == 30 && t_diasE == 29)) { // Si el mes es febrero
           t_fechaEvento.setDate(01);
           if (t_fechaEvento.getMonth() + 1 == 13) {
             t_fechaEvento.setMonth(1);
@@ -109,13 +142,26 @@ parasails.registerPage('cotizaciones', {
           }
 
 
-        } else {
+        } else { //Cualquier fecha menos el 1er dia del mes
           if (t_fechaEvento.getMonth() + 1 > 9) {
-            this.o_cotizacion.fechaEvento = t_fechaEvento.getFullYear() + '-' + '0' + (t_fechaEvento.getMonth() + 1) + '-' + (t_fechaEvento.getDate() + 1);
+            if(t_fechaEvento.getDate()+1 > 9)
+            {
+              this.o_cotizacion.fechaEvento = t_fechaEvento.getFullYear() + '-' +  (t_fechaEvento.getMonth() + 1) + '-' +  (t_fechaEvento.getDate() + 1);
+
+            }else
+            {
+              this.o_cotizacion.fechaEvento = t_fechaEvento.getFullYear() + '-' +  (t_fechaEvento.getMonth() + 1) + '-' + '0'+(t_fechaEvento.getDate() + 1);
+            }
 
           } else {
 
-            this.o_cotizacion.fechaEvento = t_fechaEvento.getFullYear() + '-' + '0' + (t_fechaEvento.getMonth() + 1) + '-' + (t_fechaEvento.getDate() + 1);
+            if(t_fechaEvento.getDate()+1 > 9)
+            {
+              this.o_cotizacion.fechaEvento = t_fechaEvento.getFullYear() + '-' + '0' + (t_fechaEvento.getMonth() + 1) + '-' +  (t_fechaEvento.getDate() + 1);
+            }else
+            {
+              this.o_cotizacion.fechaEvento = t_fechaEvento.getFullYear() + '-' + '0' + (t_fechaEvento.getMonth() + 1) + '-' + '0' + (t_fechaEvento.getDate() + 1);
+            }
 
           }
         }
@@ -125,36 +171,27 @@ parasails.registerPage('cotizaciones', {
         t_fechaFinEvento = new Date(t_fechaFinEvento);
         let t_dias = 0;
         t_dias = new Date(t_fechaFinEvento.getFullYear(), t_fechaFinEvento.getMonth() + 1, 0).getDate();
+        console.log(t_fechaFinEvento.getMonth() + 1);
+        console.log(new Date(t_fechaFinEvento.getFullYear(), t_fechaFinEvento.getMonth() + 1, 0).getDate());
         //Fecha fin del evento validaciones  
-        if (t_fechaFinEvento.getDate() + 1 == 32 && t_dias == 31) {
-          t_fechaFinEvento.setDate(01);
-          console.log(t_fechaFinEvento.getMonth() + 1);
-          if ((t_fechaFinEvento.getMonth() + 2) == 13) {
+        if (t_fechaFinEvento.getDate() + 1 == 32 && t_dias == 31) { //Si es el primer dia de un mes o un año 
+          t_fechaFinEvento.setDate(01); 
+          if ((t_fechaFinEvento.getMonth() + 2) == 13) { //Si es diciembre
             t_fechaFinEvento.setMonth(1);
-            if (t_fechaFinEvento.getMonth() + 1 > 9) {
-              this.o_cotizacion.fechaFinEvento = (t_fechaFinEvento.getFullYear() + 1) + '-' + (t_fechaFinEvento.getMonth()) + '-' + '0' + (t_fechaFinEvento.getDate());
-
-            } else {
-
               this.o_cotizacion.fechaFinEvento = (t_fechaFinEvento.getFullYear() + 1) + '-' + '0' + (t_fechaFinEvento.getMonth()) + '-' + '0' + (t_fechaFinEvento.getDate());
 
-            }
-
-          } else {
+          } else { // Si no es diciembre
             if (t_fechaFinEvento.getMonth() + 1 > 9) {
               this.o_cotizacion.fechaFinEvento = t_fechaFinEvento.getFullYear() + '-' + '0' + (t_fechaFinEvento.getMonth() + 2) + '-' + '0' + (t_fechaFinEvento.getDate());
 
             } else {
-
-
               this.o_cotizacion.fechaFinEvento = t_fechaFinEvento.getFullYear() + '-' + '0' + (t_fechaFinEvento.getMonth() + 2) + '-' + '0' + (t_fechaFinEvento.getDate());
-
             }
           }
 
-        } else if (t_fechaFinEvento.getDate() + 1 == 31 && t_dias == 30) {
+        } else if (t_fechaFinEvento.getDate() + 1 == 31 && t_dias == 30) { //Primer dia de  un mes
           t_fechaFinEvento.setDate(01);
-          if (t_fechaFinEvento.getMonth() + 1 > 9) {
+          if (t_fechaFinEvento.getMonth() + 2 > 9) {
             this.o_cotizacion.fechaFinEvento = t_fechaFinEvento.getFullYear() + '-' + (t_fechaFinEvento.getMonth() + 2) + '-' + '0' + (t_fechaFinEvento.getDate());
 
           } else {
@@ -163,19 +200,30 @@ parasails.registerPage('cotizaciones', {
 
           }
 
-        } else if ((t_fechaFinEvento.getDate() + 1 == 29 && t_dias == 28) || (t_fechaFinEvento.getDate() + 1 == 30 && t_dias == 29)) {
+        } else if ((t_fechaFinEvento.getDate() + 1 == 29 && t_dias == 28) || (t_fechaFinEvento.getDate() + 1 == 30 && t_dias == 29)) { //Si es febrero
           t_fechaFinEvento.setDate(01);
           this.o_cotizacion.fechaFinEvento = t_fechaFinEvento.getFullYear() + '-' + '0' + (t_fechaFinEvento.getMonth() + 2) + '-' + '0' + (t_fechaFinEvento.getDate());
 
 
         } else {
           if (t_fechaFinEvento.getMonth() + 1 > 9) {
-            this.o_cotizacion.fechaFinEvento = t_fechaFinEvento.getFullYear() + '-' + (t_fechaFinEvento.getMonth() + 1) + '-' + (t_fechaFinEvento.getDate() + 1);
+            if(t_fechaFinEvento.getDate()+1 > 9)
+            {
+              this.o_cotizacion.fechaFinEvento = t_fechaFinEvento.getFullYear() + '-' + (t_fechaFinEvento.getMonth() + 1) + '-' + (t_fechaFinEvento.getDate() + 1);
+            }else
+            {
+              this.o_cotizacion.fechaFinEvento = t_fechaFinEvento.getFullYear() + '-' + (t_fechaFinEvento.getMonth() + 1) + '-' + '0'+(t_fechaFinEvento.getDate() + 1);
+            }
 
           } else {
-
-
-            this.o_cotizacion.fechaFinEvento = t_fechaFinEvento.getFullYear() + '-' + '0' + (t_fechaFinEvento.getMonth() + 1) + '-' + (t_fechaFinEvento.getDate() + 1);
+            if(t_fechaFinEvento.getDate()+1 > 9)
+            {
+              this.o_cotizacion.fechaFinEvento = t_fechaFinEvento.getFullYear() + '-' + '0' + (t_fechaFinEvento.getMonth() + 1) + '-' +  (t_fechaFinEvento.getDate() + 1);
+            }else
+            {
+             
+              this.o_cotizacion.fechaFinEvento = t_fechaFinEvento.getFullYear() + '-' + '0' + (t_fechaFinEvento.getMonth() + 1) + '-' + '0' + (t_fechaFinEvento.getDate() + 1);
+            }
 
           }
 
@@ -189,60 +237,51 @@ parasails.registerPage('cotizaciones', {
         let t_diasM = 0;
         t_diasM = new Date(t_fechaMontaje.getFullYear(), t_fechaMontaje.getMonth() + 1, 0).getDate();
         //Fecha iniicio del montaje validaciones  
-        if (t_fechaMontaje.getDate() + 1 == 32 && t_diasM == 31) {
+        if (t_fechaMontaje.getDate() + 1 == 32 && t_diasM == 31) { // Si es el primer dia de un mes o un año
           t_fechaMontaje.setDate(01);
-          if (t_fechaMontaje.getMonth() + 2 == 13) {
+          if (t_fechaMontaje.getMonth() + 2 == 13) { //Si es diciembre
             t_fechaMontaje.setMonth(1);
-            if (t_fechaMontaje.getMonth() + 1 > 9) {
-
-              this.o_cotizacion.fechaMontaje = (t_fechaMontaje.getFullYear() + 1) + '-' + (t_fechaMontaje.getMonth()) + '-' + '0' + (t_fechaMontaje.getDate());
-
-            } else {
-
-
-
               this.o_cotizacion.fechaMontaje = (t_fechaMontaje.getFullYear() + 1) + '-' + '0' + (t_fechaMontaje.getMonth()) + '-' + '0' + (t_fechaMontaje.getDate());
-
-            }
-
           } else {
             if (t_fechaMontaje.getMonth() + 1 > 9) {
-
               this.o_cotizacion.fechaMontaje = t_fechaMontaje.getFullYear() + '-' + (t_fechaMontaje.getMonth() + 2) + '-' + '0' + (t_fechaMontaje.getDate());
-
             } else {
-
               this.o_cotizacion.fechaMontaje = t_fechaMontaje.getFullYear() + '-' + '0' + (t_fechaMontaje.getMonth() + 2) + '-' + '0' + (t_fechaMontaje.getDate());
-
             }
-
-
           }
-
-        } else if (t_fechaMontaje.getDate() + 1 == 31 && t_diasM == 30) {
+        } else if (t_fechaMontaje.getDate() + 1 == 31 && t_diasM == 30) { //Primer dia de un mes
           t_fechaMontaje.setDate(01);
-          if (t_fechaMontaje.getMonth() + 1 > 9) {
+          if (t_fechaMontaje.getMonth() + 2 > 9) {
 
             this.o_cotizacion.fechaMontaje = t_fechaMontaje.getFullYear() + '-' + (t_fechaMontaje.getMonth() + 2) + '-' + '0' + (t_fechaMontaje.getDate());
 
           } else {
-
-
             this.o_cotizacion.fechaMontaje = t_fechaMontaje.getFullYear() + '-' + '0' + (t_fechaMontaje.getMonth() + 2) + '-' + '0' + (t_fechaMontaje.getDate());
-
           }
 
-        } else if ((t_fechaMontaje.getDate() + 1 == 29 && t_diasM == 28) || (t_fechaMontaje.getDate() + 1 == 30 && t_diasM == 29)) {
+        } else if ((t_fechaMontaje.getDate() + 1 == 29 && t_diasM == 28) || (t_fechaMontaje.getDate() + 1 == 30 && t_diasM == 29)) { //Si es febrero
           t_fechaMontaje.setDate(01);
           this.o_cotizacion.fechaMontaje = t_fechaMontaje.getFullYear() + '-' + '0' + (t_fechaMontaje.getMonth() + 2) + '-' + '0' + (t_fechaMontaje.getDate());
 
         } else {
           if (t_fechaMontaje.getMonth() + 1 > 9) {
-            this.o_cotizacion.fechaMontaje = t_fechaMontaje.getFullYear() + '-' + (t_fechaMontaje.getMonth() + 1) + '-' + (t_fechaMontaje.getDate() + 1);
+            if(t_fechaMontaje.getDate() + 1 > 9)
+            {
+              this.o_cotizacion.fechaMontaje = t_fechaMontaje.getFullYear() + '-' + (t_fechaMontaje.getMonth() + 1) + '-' + (t_fechaMontaje.getDate() + 1);
+            }else
+            {
+              this.o_cotizacion.fechaMontaje = t_fechaMontaje.getFullYear() + '-' + (t_fechaMontaje.getMonth() + 1) + '-' + '0' + (t_fechaMontaje.getDate() + 1);
+            }
 
           } else {
-
-            this.o_cotizacion.fechaMontaje = t_fechaMontaje.getFullYear() + '-' + '0' + (t_fechaMontaje.getMonth() + 1) + '-' + (t_fechaMontaje.getDate() + 1);
+            if(t_fechaMontaje.getDate() + 1 > 9)
+            {
+              this.o_cotizacion.fechaMontaje = t_fechaMontaje.getFullYear() + '-' + '0' + (t_fechaMontaje.getMonth() + 1) + '-' +(t_fechaMontaje.getDate() + 1);
+            }else
+            {
+              
+              this.o_cotizacion.fechaMontaje = t_fechaMontaje.getFullYear() + '-' + '0' + (t_fechaMontaje.getMonth() + 1) + '-' +'0'+(t_fechaMontaje.getDate() + 1);
+            }
 
           }
         }
@@ -252,33 +291,23 @@ parasails.registerPage('cotizaciones', {
         let t_diasD = 0;
         t_diasD = new Date(t_fechaDesmontaje.getFullYear(), t_fechaDesmontaje.getMonth() + 1, 0).getDate();
         //Fecha fin del montaje validaciones  
-        if (t_fechaDesmontaje.getDate() + 1 == 32 && t_diasD == 31) {
+        if (t_fechaDesmontaje.getDate() + 1 == 32 && t_diasD == 31) { //Si es el primer dia de un mes o un año
           t_fechaDesmontaje.setDate(01);
-          if (t_fechaDesmontaje.getMonth() + 2 == 13) {
+          if (t_fechaDesmontaje.getMonth() + 2 == 13) { // Si es diciembre
             t_fechaDesmontaje.setMonth(1);
-            if (t_fechaDesmontaje.getMonth() + 1 > 9) {
-              this.o_cotizacion.fechaDesmontaje = (t_fechaDesmontaje.getFullYear() + 1) + '-' + (t_fechaDesmontaje.getMonth()) + '-' + '0' + (t_fechaDesmontaje.getDate());
-
-            } else {
-
               this.o_cotizacion.fechaDesmontaje = (t_fechaDesmontaje.getFullYear() + 1) + '-' + '0' + (t_fechaDesmontaje.getMonth()) + '-' + '0' + (t_fechaDesmontaje.getDate());
-
-            }
 
           } else {
             if (t_fechaDesmontaje.getMonth() + 1 > 9) {
               this.o_cotizacion.fechaDesmontaje = t_fechaDesmontaje.getFullYear() + '-' + (t_fechaDesmontaje.getMonth() + 2) + '-' + '0' + (t_fechaDesmontaje.getDate());
 
             } else {
-
-
               this.o_cotizacion.fechaDesmontaje = t_fechaDesmontaje.getFullYear() + '-' + '0' + (t_fechaDesmontaje.getMonth() + 2) + '-' + '0' + (t_fechaDesmontaje.getDate());
-
             }
           }
-        } else if (t_fechaDesmontaje.getDate() + 1 == 31 && t_diasD == 30) {
+        } else if (t_fechaDesmontaje.getDate() + 1 == 31 && t_diasD == 30) { //Primer dia de un mes
           t_fechaDesmontaje.setDate(01);
-          if (t_fechaDesmontaje.getMonth() + 1 > 9) {
+          if (t_fechaDesmontaje.getMonth() + 2 > 9) {
             this.o_cotizacion.fechaDesmontaje = t_fechaDesmontaje.getFullYear() + '-' + (t_fechaDesmontaje.getMonth() + 2) + '-' + '0' + (t_fechaDesmontaje.getDate());
 
           } else {
@@ -286,17 +315,29 @@ parasails.registerPage('cotizaciones', {
             this.o_cotizacion.fechaDesmontaje = t_fechaDesmontaje.getFullYear() + '-' + '0' + (t_fechaDesmontaje.getMonth() + 2) + '-' + '0' + (t_fechaDesmontaje.getDate());
 
           }
-        } else if ((t_fechaDesmontaje.getDate() + 1 == 29 && t_diasD == 28) || (t_fechaDesmontaje.getDate() + 1 == 30 && t_diasD == 29)) {
+        } else if ((t_fechaDesmontaje.getDate() + 1 == 29 && t_diasD == 28) || (t_fechaDesmontaje.getDate() + 1 == 30 && t_diasD == 29)) { //Si es febrero
           t_fechaDesmontaje.setDate(01);
           this.o_cotizacion.fechaDesmontaje = t_fechaDesmontaje.getFullYear() + '-' + '0' + (t_fechaDesmontaje.getMonth() + 2) + '-' + '0' + (t_fechaDesmontaje.getDate());
 
         } else {
-          console.log(t_fechaDesmontaje.getMonth());
           if (t_fechaDesmontaje.getMonth() + 1 > 9) {
-            this.o_cotizacion.fechaDesmontaje = t_fechaDesmontaje.getFullYear() + '-' + (t_fechaDesmontaje.getMonth() + 1) + '-' + (t_fechaDesmontaje.getDate() + 1);
+            if(t_fechaDesmontaje.getDate() + 1 > 9)
+            {
+              this.o_cotizacion.fechaDesmontaje = t_fechaDesmontaje.getFullYear() + '-' + (t_fechaDesmontaje.getMonth() + 1) + '-' + (t_fechaDesmontaje.getDate() + 1);
+            }else
+            {
+              this.o_cotizacion.fechaDesmontaje = t_fechaDesmontaje.getFullYear() + '-' + (t_fechaDesmontaje.getMonth() + 1) + '-' +'0'+ (t_fechaDesmontaje.getDate() + 1);
+            }
 
           } else {
-            this.o_cotizacion.fechaDesmontaje = t_fechaDesmontaje.getFullYear() + '-' + '0' + (t_fechaDesmontaje.getMonth() + 1) + '-' + (t_fechaDesmontaje.getDate() + 1);
+            if(t_fechaDesmontaje.getDate() + 1 > 9)
+            {
+              this.o_cotizacion.fechaDesmontaje = t_fechaDesmontaje.getFullYear() + '-' + '0' + (t_fechaDesmontaje.getMonth() + 1) + '-' + (t_fechaDesmontaje.getDate() + 1);
+            }else
+            {
+              
+              this.o_cotizacion.fechaDesmontaje = t_fechaDesmontaje.getFullYear() + '-' + '0' + (t_fechaDesmontaje.getMonth() + 1) + '-'+'0' +(t_fechaDesmontaje.getDate() + 1);
+            }
 
           }
 
@@ -332,16 +373,51 @@ parasails.registerPage('cotizaciones', {
       this.l_modCopiarEvento = false;
     },
 
-    cambioEstado: async function (cotizacion) {
-      this.o_cotizacion = cotizacion;
+    cambioEstado: async function (p_cotizacion) {
+      //this.o_cotizacion = p_cotizacion;
+      this.t_cotizacion.id = p_cotizacion.id;
+      this.t_cotizacion.encargado = p_cotizacion.encargado.id;
+      this.t_cotizacion.lugarEvento = p_cotizacion.lugarEvento;
+      this.t_cotizacion.descripcion = p_cotizacion.descripcion;
+      this.t_cotizacion.esDiseno = p_cotizacion.esDiseno;
+      this.t_cotizacion.esMontaje= p_cotizacion.esMontaje;
+      this.t_cotizacion.esAlquiler = p_cotizacion.esAlquiler;
+      this.t_cotizacion.comentario = p_cotizacion.comentario;
+      let l_prueba = [];
+     // this.t_cotizacion.jsonArticulos = [];
+     if(p_cotizacion.articulos != undefined)
+     {
+       if(p_cotizacion.articulos.length != 0)
+       {
+         for(let index = 0; index < p_cotizacion.articulos.length; index++){
+          l_prueba.push({ id: p_cotizacion.articulos[index].id, cantidad: p_cotizacion.articulos[index].cantidad, precio: p_cotizacion.articulos[index].precioTotal });
+    
+         }
+  
+       }
+     }
+     this.t_cotizacion.jsonArticulos.articulos = l_prueba;
+      this.t_cotizacion.cliente = p_cotizacion.cliente.id;
+      this.t_cotizacion.contacto = p_cotizacion.contacto.id;
+      this.t_cotizacion.fechaEvento = p_cotizacion.fechaFinEvento;
+      this.t_cotizacion.fechaFinEvento = p_cotizacion.fechaFinEvento;
+      this.t_cotizacion.fechaMontaje = p_cotizacion.fechaFinEvento;
+      this.t_cotizacion.fechaDesmontaje = p_cotizacion.fechaFinEvento;
+      this.t_cotizacion.estado = p_cotizacion.estado;
+     this.l_verificaEstado = p_cotizacion.estado;
+      
       this.l_modBorrarEvento = true;
     },
 
     confirmarEvento: async function () {
-      if(this.o_cotizacion.estado == "Activo")
+      /*let error = '';
+      if(this.t_cotizacion.estado == "Activo")
       {
-        await Cloud.reservarUnaCotazacion(this.o_cotizacion.id);
-      }
+         await Cloud.reservarUnaCotazacion(this.t_cotizacion.id);
+      }*/
+      location.href = "cotizaciones";
+      
+     console.log(this.t_cotizacion.estado);
       this.l_modBorrarEvento = false;
     },
     pendienteEvento: async function () {
@@ -399,6 +475,11 @@ parasails.registerPage('cotizaciones', {
   },
   // Métodos de filtro
   computed: {
+
+    fechas: function(coti){
+      return coti;
+    },
+
     filtroCotizacion: function () {
 
       /*

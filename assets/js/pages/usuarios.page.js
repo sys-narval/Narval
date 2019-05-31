@@ -3,22 +3,44 @@ parasails.registerPage('usuarios', {
   //  ║║║║║ ║ ║╠═╣║    ╚═╗ ║ ╠═╣ ║ ║╣
   //  ╩╝╚╝╩ ╩ ╩╩ ╩╩═╝  ╚═╝ ╩ ╩ ╩ ╩ ╚═╝
   data: {
-    usuario: { /* */ },
+    o_usuario: { /* */ },
     verModalEditar: false,
     verModalDeshabilitar: false,
     verModalAgregar: false,
     verModalAyuda: false,
+    verModalHabilitar: false,
     busquedaUsuario: '',
-    filtro:{}
+    filtro:{
+      administrador: false,
+      ti: false,
+      secretario: false,
+      vendedor: false,
+      bodega: false
+    },
+    formData: { /* … */ },
+    syncing: false,
+    cloudError: '',
+    formErrors: { /* … */ },
+    formRules: {
+      id: {
+        required: true
+      },
+      rol: {
+        required: true
+      }
+
+    }
     //…
   },
 
   //  ╦  ╦╔═╗╔═╗╔═╗╦ ╦╔═╗╦  ╔═╗
   //  ║  ║╠╣ ║╣ ║  ╚╦╝║  ║  ║╣
   //  ╩═╝╩╚  ╚═╝╚═╝ ╩ ╚═╝╩═╝╚═╝
-  beforeMount: function() {
+  beforeMount: async function() {
     // Attach any initial data from the server.
     _.extend(this, SAILS_LOCALS);
+    let respUsuarios = await Cloud.extraerUsuarios();
+    this.modelo.usuarios = respUsuarios;
   },
   mounted: async function() {
     //…
@@ -29,17 +51,23 @@ parasails.registerPage('usuarios', {
   //  ╩╝╚╝ ╩ ╚═╝╩╚═╩ ╩╚═╝ ╩ ╩╚═╝╝╚╝╚═╝
   methods: {
     //…
-    modalEditar: async function(usuario){
-      this.usuario = usuario;
+    modalEditar: async function(p_usuario){
+      this.o_usuario = p_usuario;
       this.verModalEditar = true;
     },
 
-    modalDeshabilitar: async function(){
+    modalDeshabilitar: async function(p_usuario){
+      this.o_usuario = p_usuario;
       this.verModalDeshabilitar = true;
+    },
+    modalHabilitar: async function(p_usuario){
+      this.o_usuario = p_usuario;
+      this.verModalHabilitar = true;
     },
 
     modalAgregar: async function(){
-      this.verModalAgregar = true;
+    //  this.verModalAgregar = true;
+    location.href="logout";
     },
 
     modalAyuda: async function(){
@@ -53,11 +81,25 @@ parasails.registerPage('usuarios', {
     cerrarDeshabilitar: async function(){
       this.verModalDeshabilitar = false;
     },
+    confirmarCerrarDeshabilitar: async function()
+    {
+      this.o_usuario.activo = false;
+      this.verModalDeshabilitar = false;
+
+    },
+    confirmarCerrarHabilitar: async function()
+    {
+      this.o_usuario.activo = true;
+      this.verModalHabilitar = false;
+    },
 
     cerrarAgregar: async function(){
       this.verModalAgregar = false;
     },
-
+    cerrarHabilitar: async function()
+    {
+      this.verModalHabilitar = false;
+    },
     cerrarAyuda: async function(){
       this.verModalAyuda = false;
     }
@@ -68,15 +110,86 @@ parasails.registerPage('usuarios', {
       filtroUsuario: function () {
         const limpiaFiltro = objeto => {
           for (let atributo in objeto)
-            if (objeto[atributo] === null || objeto[atributo] === undefined || objeto[atributo] === '')
+            if (objeto[atributo] === null || objeto[atributo] === undefined || objeto[atributo] === '' || objeto[atributo] === false)
               delete objeto[atributo];
           return objeto;
         }
 
-        if (this.busquedaUsuario) {
+        if (this.busquedaUsuario.length > 3) {
           return _.filter(this.modelo.usuarios, limpiaFiltro(this.filtro))
-            .filter(usuario => usuario.nombre.includes(this.busquedaUsuario) || usuario.correo.includes(this.busquedaUsuario));
-        } else {
+            .filter(usuario => usuario.fullName.includes(this.busquedaUsuario) || usuario.emailAddress.includes(this.busquedaUsuario));
+        } else if(this.busquedaUsuario  == "*") 
+        {
+          return this.modelo.usuarios;
+
+        }else if(this.busquedaUsuario == "**" && this.filtro.administrador)
+        {
+          let t_usuarios = [];
+          for(let index = 0; index < this.modelo.usuarios.length; index++)
+          {
+            if(this.modelo.usuarios[index].rol == "Administrador")
+            {
+              t_usuarios.push(this.modelo.usuarios[index]);
+
+            }
+          }
+          return t_usuarios;
+
+        }else if(this.busquedaUsuario == "**" && this.filtro.ti)
+        {
+          let t_usuarios = [];
+          for(let index = 0; index < this.modelo.usuarios.length; index++)
+          {
+            if(this.modelo.usuarios[index].rol == "TI")
+            {
+              t_usuarios.push(this.modelo.usuarios[index]);
+
+            }
+          }
+          return t_usuarios;
+
+        }else if(this.busquedaUsuario == "**" && this.filtro.secretario)
+        {
+          let t_usuarios = [];
+          for(let index = 0; index < this.modelo.usuarios.length; index++)
+          {
+            if(this.modelo.usuarios[index].rol == "Secretario")
+            {
+              t_usuarios.push(this.modelo.usuarios[index]);
+
+            }
+          }
+          return t_usuarios;
+
+        }else if(this.busquedaUsuario == "**" && this.filtro.vendedor)
+        {
+          let t_usuarios = [];
+          for(let index = 0; index < this.modelo.usuarios.length; index++)
+          {
+            if(this.modelo.usuarios[index].rol == "Vendedor")
+            {
+              t_usuarios.push(this.modelo.usuarios[index]);
+
+            }
+          }
+          return t_usuarios;
+
+        }else if(this.busquedaUsuario == "**" && this.filtro.bodega)
+        {
+          let t_usuarios = [];
+          for(let index = 0; index < this.modelo.usuarios.length; index++)
+          {
+            if(this.modelo.usuarios[index].rol == "Bodega")
+            {
+              t_usuarios.push(this.modelo.usuarios[index]);
+
+            }
+          }
+          return t_usuarios;
+
+        }
+
+        else{
           return new Array();
         }
       }

@@ -29,9 +29,12 @@ module.exports = {
       l_errorUnidadMedida: 'Por favor seleccione una unidad de medida.',
       l_errorIdRepetido: 'Artículo con el mismo ID ya existe',
     };
-    
+
+    let excel = require("excel4node");
+
     return exits.success({
-      modelo
+      modelo,
+      excel
     });
 
 
