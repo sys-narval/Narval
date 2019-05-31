@@ -16,8 +16,10 @@
           <input class="form-check-input" type="checkbox" id="remember" name="rememberMe" v-model="formData.rememberMe"/>
           <label class="form-check-label" for="remember" v-text="modelo.recordarme"></label>
         </div>
+
         <p class="text-danger" v-if="cloudError==='badCombo'" v-text="modelo.errorCredenciales"><small></small></p>
-        <p class="text-danger" v-else-if="cloudError"><small v-html="modelo.errorCargar"></small></p>
+        <p class="text-danger" v-else-if="cloudError && cloudError !== 'noActivo'"><small v-html="modelo.errorCargar"></small></p>
+        <p class="text-danger" v-else-if="cloudError === 'noActivo'">Usuario no está activo</p>
         <div class="form-group">
           <ajax-button :syncing="syncing" class="btn-dark btn-lg btn-block">Ingresar</ajax-button>
         </div>

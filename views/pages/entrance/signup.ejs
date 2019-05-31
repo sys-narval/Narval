@@ -17,12 +17,12 @@
         </div>
         <div class="form-group">
           <label for="password" v-text="modelo.contrasena"></label>
-          <input class="form-control" id="password" type="password"  :class="[formErrors.password ? 'is-invalid' : '']" v-model.trim="formData.password" placeholder="••••••••" autocomplete="new-password">
+          <input class="form-control" id="password" type="password"  :class="[formErrors.password ? 'is-invalid' : '']" v-model.trim="formData.password"  autocomplete="new-password">
           <div class="invalid-feedback" v-if="formErrors.password" v-text="modelo.errorContrasena"></div>
         </div>
         <div class="form-group">
           <label for="confirm-password" v-text="modelo.confirmarContrasena"></label>
-          <input class="form-control" id="confirm-password" type="password"  :class="[formErrors.confirmPassword ? 'is-invalid' : '']" v-model.trim="formData.confirmPassword" placeholder="••••••••" autocomplete="new-password">
+          <input class="form-control" id="confirm-password" type="password"  :class="[formErrors.confirmPassword ? 'is-invalid' : '']" v-model.trim="formData.confirmPassword"  autocomplete="new-password">
           <div class="invalid-feedback" v-if="formErrors.confirmPassword" v-text="modelo.contrasenaNoCoincide"></div>
         </div>
         <div class="form-group form-check">
