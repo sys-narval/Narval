@@ -37,12 +37,12 @@
           <a class="nav-link dropdown-toggle" id="header-account-menu-link" data-toggle="dropdown" aria-haspopup="true"
             aria-expanded="false">Ventas</a>
           <div class="dropdown-menu account-menu" aria-labelledby="header-account-menu-link">
-            <a class="dropdown-item" href="/ventas">Ingresar Evento</a>
+            <% if(me.rol !== "Bodega") { %>  <a class="dropdown-item" href="/ventas">Ingresar Evento</a> <% } %>
             <a class="dropdown-item" href="/cotizaciones">Ver Cotizaciones</a>
             </div>
             </div>
           <a class="nav-item nav-link ml-2 ml-md-0 mr-2 mr-md-0" href="/inventario">Inventario</a>
-          <a class="nav-item nav-link ml-2 ml-md-0 mr-2 mr-md-0" href="/clientes">Clientes</a>
+          <% if(me.rol !== "Bodega") { %>  <a class="nav-item nav-link ml-2 ml-md-0 mr-2 mr-md-0" href="/clientes">Clientes</a> <% }%>
           <a class="nav-item nav-link ml-2 ml-md-0 mr-2 mr-md-0" href="/usuarios">Usuarios</a>
         <!-- Only in desktop nav -->
         <div class="nav-item dropdown d-none d-sm-block">
