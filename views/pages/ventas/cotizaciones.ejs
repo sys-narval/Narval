@@ -77,10 +77,10 @@
                 <label for="ver" class="btn btn-primary" @click="verEvento(cotizacion)">
                   Ver
                 </label>
-                <label for="copiar" class="btn btn-success" @click="copiarEvento(cotizacion)">
+                <label v-if="me.rol !== 'Bodega'" for="copiar" class="btn btn-success" @click="copiarEvento(cotizacion)">
                   Copiar
                 </label>
-                <label for="borrar" class="btn btn-danger" @click="cambioEstado(cotizacion)">
+                <label v-if="me.rol !== 'Bodega' && me.fullName === cotizacion.encargado.fullName" for="borrar" class="btn btn-danger" @click="cambioEstado(cotizacion)">
                   Cambiar Estado
                 </label>
               </div>
@@ -238,7 +238,7 @@
                     <th>ID</th>
                     <th>Descripción</th>
                     <th>Cantidad</th>
-                    <th>Precio Total</th>
+                    <th v-if="me.rol !== 'Bodega'">Precio Total</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -246,7 +246,7 @@
                     <td v-text="material.id"></td>
                     <td v-text="material.descripcion"></td>
                     <td v-text="material.cantidad"></td>
-                    <td>{{material.precio |formatoMoneda}}</td>
+                    <td v-if="me.rol !== 'Bodega'">{{material.precio |formatoMoneda}}</td>
                   </tr>
                 </tbody>
               </table>
