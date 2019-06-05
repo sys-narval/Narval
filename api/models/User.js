@@ -40,8 +40,7 @@ module.exports = {
     isSuperAdmin: {
       type: 'boolean',
       description: 'Whether this user is a "super admin" with extra permissions, etc.',
-      extendedDescription:
-        `Super admins might have extra permissions, see a different default home page when they log in,
+      extendedDescription: `Super admins might have extra permissions, see a different default home page when they log in,
 or even have a completely different feature set from normal users.  In this app, the \`isSuperAdmin\`
 flag is just here as a simple way to represent two different kinds of users.  Usually, it's a good idea
 to keep the data model as simple as possible, only adding attributes when you actually need them for
@@ -82,8 +81,7 @@ So, while this \`isSuperAdmin\` demarcation might not be the right approach fore
       isIn: ['unconfirmed', 'changeRequested', 'confirmed'],
       defaultsTo: 'confirmed',
       description: 'The confirmation status of the user\'s email address.',
-      extendedDescription:
-        `Users might be created as "unconfirmed" (e.g. normal signup) or as "confirmed" (e.g. hard-coded
+      extendedDescription: `Users might be created as "unconfirmed" (e.g. normal signup) or as "confirmed" (e.g. hard-coded
 admin users).  When the email verification feature is enabled, new users created via the
 signup form have \`emailStatus: 'unconfirmed'\` until they click the link in the confirmation email.
 Similarly, when an existing user changes their email address, they switch to the "changeRequested"
@@ -117,8 +115,9 @@ email status until they click the link in the confirmation email.`
 
     rol: {
       type: 'string',
+      isIn: ['Ninguno', 'Administrador', 'Secretario', 'Vendedor', 'Bodega', 'TI'],
       defaultsTo: 'Ninguno',
-      description: 'El rol que el usuario tendrá dentro de la aplicación segun su puesto de trabajo',
+      description: 'El rol que el usuario tendrá dentro de la aplicación según su puesto de trabajo',
       example: 'Bodeguero'
     }
 

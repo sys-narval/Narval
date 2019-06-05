@@ -41,7 +41,9 @@ parasails.registerPage('ventas', {
       encargado: undefined,
       cliente: undefined,
       contacto: undefined,
-      jsonArticulos: { articulos: undefined }
+      jsonArticulos: {
+        articulos: undefined
+      }
     },
     o_cliente: {
       nombre: undefined,
@@ -93,7 +95,6 @@ parasails.registerPage('ventas', {
     l_buscarCliente: undefined,
     l_buscarContacto: undefined,
     l_actualizar: false,
-    l_filtro: {},
     l_verModalAgregarC: false,
     l_fechaEvento: '',
     l_fechaFinEvento: '',
@@ -170,12 +171,6 @@ parasails.registerPage('ventas', {
     },
     clickVerModalAgregarC: async function () {
       this.o_contacto.nombre = this.l_buscarContacto;
-      /* if (this.filteredClientes[0].id !== undefined) {
- 
-     } else {
-       this.l_cliente = await Cloud.extraerCliente(this.filteredClientes[0].cedula);
-       this.o_contacto.cliente = this.l_cliente.id;
-     }*/
       this.o_contacto.cliente = this.filteredClientes[0].id;
       this.l_verModalAgregarC = true;
     },
@@ -198,7 +193,11 @@ parasails.registerPage('ventas', {
       }
       if (this.l_articulosTabla.length !== 0) {
         for (let index = 0; index < this.l_articulosTabla.length; index++) {
-          this.l_prueba.push({ id: this.l_articulosTabla[index].id, cantidad: this.l_articulosTabla[index].cantidadSolicitada, precio: this.l_articulosTabla[index].precioTotal });
+          this.l_prueba.push({
+            id: this.l_articulosTabla[index].id,
+            cantidad: this.l_articulosTabla[index].cantidadSolicitada,
+            precio: this.l_articulosTabla[index].precioTotal
+          });
         }
       }
       this.o_cotizacion.jsonArticulos.articulos = this.l_prueba;
@@ -207,8 +206,7 @@ parasails.registerPage('ventas', {
     },
     clickCerrarModalAgregarCotizacion: async function () {
       this.limpiar_o_cotizacion();
-     // location.reload();
-     location.href = "ventas";
+      location.href = "ventas";
       this.l_prueba = [];
       this.l_verModalAgregarCotizacion = false;
     },
@@ -241,12 +239,9 @@ parasails.registerPage('ventas', {
       this.l_verModalVer = true
     },
     cerrarModalVer: async function () {
-
       this.l_verModalVer = false
       this.sumatoria();
       this.limpiar_o_articulo();
-
-
     },
     agregarArticuloTemp: async function (p_articulo) {
       let esta = false;
@@ -258,9 +253,7 @@ parasails.registerPage('ventas', {
         }
       }
       if (!esta) {
-
         this.l_selecArticulo.push(p_articulo.id);
-        // this.l_prueba.push({id:p_articulo.id, cantidad: p_articulo.cantidadSolicitada});
         this.l_articulosTabla.push(p_articulo);
         this.sumatoria();
       }
@@ -268,7 +261,6 @@ parasails.registerPage('ventas', {
     quitarArticuloTabla: async function (p_articulo) {
       let t_arregloSalida = [];
       let t_arregloSalida2 = [];
-      // let t_prueba = [];
       for (let index = 0; index < this.l_selecArticulo.length; index++) {
         if (this.l_selecArticulo[index] !== p_articulo.id) {
           t_arregloSalida.push(this.l_selecArticulo[index]);
@@ -279,22 +271,15 @@ parasails.registerPage('ventas', {
         if (this.l_articulosTabla[index].id !== p_articulo.id) {
           t_arregloSalida2.push(this.l_articulosTabla[index]);
         }
-        /* if(this.l_prueba[index].id !== p_articulo.id)
-         {
-           t_prueba.push(this.l_prueba[index]);
-         }*/
       }
-      //this.l_prueba = t_prueba;
       this.l_selecArticulo = t_arregloSalida;
       this.l_articulosTabla = t_arregloSalida2;
       this.sumatoria();
-
     },
     modificarTabla: function (p_articulo) {
       for (let i = 0; i < this.l_articulosTabla.length; i++) {
         if (this.l_articulosTabla[i].id == p_articulo.id) {
           this.l_articulosTabla[i].precio = p_articulo.precio;
-          // this.cerrarModalVer();
         }
       }
       this.sumatoria();
@@ -308,25 +293,15 @@ parasails.registerPage('ventas', {
           this.l_sumatoria += parseInt(this.l_articulosTabla[i].precioTotal);
         }
       }
-
-      //return parseInt(this.l_sumatoria);
     },
     guardarCliente: async function (p_cliente) {
-      /*
-      this.o_cliente.telefono =  parseInt(this.o_cliente.telefono);
-      this.o_cliente.cedula = parseInt(this.o_cliente.cedula);
-      */
       this.p_cliente = {};
-      //  this.modelo.clientes.push(this.o_cliente);
-
       this.$forceUpdate();
       this.filtroIDCliente();
       this.clickCerrarModalAgregar();
-
     },
     guardarContacto: async function (p_contacto) {
       this.p_contacto = {};
-      //   this.modelo.contactos.push(this.o_contacto);
       this.$forceUpdate();
       this.filtroIDContacto();
       this.clickCerrarModalAgregarC();
@@ -343,8 +318,8 @@ parasails.registerPage('ventas', {
       // capturamos la url
       var loc = document.location.href;
       // si existe el interrogante
-      if (loc.indexOf('?') > 0) {
-        // cogemos la parte de la url que hay despues del interrogante
+      if (loc.includes('?')) {
+        // cogemos la parte de la url que hay después del interrogante
         var getString = loc.split('?')[1];
         // obtenemos un array con cada clave=valor
         var GET = getString.split('&');
@@ -356,13 +331,10 @@ parasails.registerPage('ventas', {
         }
         get.variable = parseInt(get.variable);
         let respCotizacion;
-        //let t_cotizacion;
         if (get.variable) {
           this.l_getValor = true;
-          console.log(get);
           respCotizacion = await Cloud.extraerCotizacion(get.variable);
           this.t_cotizacion = respCotizacion;
-          console.log(this.t_cotizacion);
           this.o_cotizacion.lugarEvento = this.t_cotizacion.lugarEvento;
           this.o_cotizacion.descripcion = this.t_cotizacion.descripcion;
           this.l_sDiseno = this.t_cotizacion.esDiseno;
@@ -373,23 +345,7 @@ parasails.registerPage('ventas', {
           }
           this.l_buscarCliente = this.t_cotizacion.cliente.nombre;
           this.l_buscarContacto = this.t_cotizacion.contacto.nombre;
-
         }
-
-        //return get.variable;
-      }
-    },
-    setValores: async function () {
-      let t_idCotizacion;
-      let respCotizacion;
-      t_idCotizacion = this.getGET();
-      console.log(t_idCotizacion);
-      if (t_idCotizacion) {
-        for (var index in t_idCotizacion) {
-          //console.log(t_idCotizacion[index]);
-          respCotizacion = await Cloud.extraerCotizacion(t_idCotizacion[index]);
-        }
-        //this.o_cotizacion = respCotizacion;
       }
     },
   },
@@ -496,7 +452,7 @@ parasails.registerPage('ventas', {
         }
       });
       return a_arregloCategoria;
-    }, //Metodo para filtrar por categorias
+    }, // Método para filtrar por categorías
     filtroArticulos: function () {
       /*
        * Función para limpiar el filtro a usar, en caso de que el atributo este vacío
@@ -566,8 +522,8 @@ parasails.registerPage('ventas', {
   },
   watch: {
     l_cantidadSolicitada(valNew, valOld) {
-      /* Esta variable resibe el filtro del articulo del modelo que es 
-              igual a el que se utiliza en cada actualizar*/
+      // Esta variable recibe el filtro del articulo del modelo que es 
+      // igual a el que se utiliza en cada actualizar
       let l_cantidadLibre = _.find(this.modelo.articulos, {
         id: this.o_articulo.id
       }).cantidadLibre;
