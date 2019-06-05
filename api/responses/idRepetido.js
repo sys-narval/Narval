@@ -28,8 +28,7 @@
 
 module.exports = function idRepetido(optionalData) {
 
-  // Get access to `req` and `res`
-  var req = this.req;
+  // Get access to `res`
   var res = this.res;
 
   // Define the status code to send in the response.
