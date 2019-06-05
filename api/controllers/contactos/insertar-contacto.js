@@ -58,7 +58,6 @@ module.exports = {
     }
   },
 
-
   fn: async function (inputs, exits) {
 
     try {
@@ -68,13 +67,11 @@ module.exports = {
 
     } catch (error) {
 
-      switch (error.code) {
-        case "E_UNIQUE":
-          return exits.cedulaRepetido(`El contacto ${inputs.cedula} ya existe`);
-        default:
-          throw exits.error();
+      if (error.code === "E_UNIQUE") {
+        return exits.nombreRepetido(`El contacto ${inputs.cedula} ya existe`);
+      } else {
+        return exits.error();
       }
-
     }
   }
 };
