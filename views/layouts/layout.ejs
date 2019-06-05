@@ -37,13 +37,13 @@
           <a class="nav-link dropdown-toggle" id="header-account-menu-link" data-toggle="dropdown" aria-haspopup="true"
             aria-expanded="false">Ventas</a>
           <div class="dropdown-menu account-menu" aria-labelledby="header-account-menu-link">
-            <a class="dropdown-item" href="/ventas">Ingresar Evento</a>
+            <% if(me.rol !== "Bodega") { %>  <a class="dropdown-item" href="/ventas">Ingresar Evento</a> <% } %>
             <a class="dropdown-item" href="/cotizaciones">Ver Cotizaciones</a>
             </div>
             </div>
           <a class="nav-item nav-link ml-2 ml-md-0 mr-2 mr-md-0" href="/inventario">Inventario</a>
-          <a class="nav-item nav-link ml-2 ml-md-0 mr-2 mr-md-0" href="/clientes">Clientes</a>
-          <a class="nav-item nav-link ml-2 ml-md-0 mr-2 mr-md-0" href="/usuarios">Usuarios</a>
+          <% if(me.rol !== "Bodega") { %>  <a class="nav-item nav-link ml-2 ml-md-0 mr-2 mr-md-0" href="/clientes">Clientes</a> <% }%>
+          <% if(me.rol === "Administrador" || me.rol === "TI") { %> <a class="nav-item nav-link ml-2 ml-md-0 mr-2 mr-md-0" href="/usuarios">Usuarios</a> <% }%>
         <!-- Only in desktop nav -->
         <div class="nav-item dropdown d-none d-sm-block">
           <a class="nav-link dropdown-toggle" id="header-account-menu-link" data-toggle="dropdown" aria-haspopup="true"
@@ -60,12 +60,12 @@
         <!-- LOGGED-OUT NAVIGATION -->
         <a class="nav-item nav-link ml-2 ml-md-0 mr-2" href="/faq">FAQ</a>
         <a class="nav-item nav-link ml-2 ml-md-0 mr-2" href="/login">Iniciar Sesión</a>
-        <!-- Only in desktop nav -->
+        <!-- Only in desktop nav 
         <div class="form-inline d-none ml-2 d-md-block">
           <a class="btn btn-outline-info" href="/signup">Registrarme</a>
-        </div>
-        <!-- Only in mobile nav -->
-        <a class="nav-item nav-link text-info ml-2 d-block d-md-none" href="/signup">Registrarse</a>
+        </div>-->
+        <!-- Only in mobile nav
+        <a class="nav-item nav-link text-info ml-2 d-block d-md-none" href="/signup">Registrarse</a> -->
         <% } %>
       </div>
     </header>

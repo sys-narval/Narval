@@ -19,6 +19,9 @@ password attempt.`,
       type: 'string',
       required: true
     },
+    activo:{
+      type: 'boolean'
+    },
 
     password: {
       description: 'The unencrypted password to try in this attempt, e.g. "passwordlol".',
@@ -60,6 +63,9 @@ and exposed as \`req.me\`.)`
       // To customize the response for _only this_ action, replace `responseType` with
       // something else.  For example, you might set `statusCode: 498` and change the
       // implementation below accordingly (see http://sailsjs.com/docs/concepts/controllers).
+    },
+    noActivo:{
+      description: 'You are unable'
     }
 
   },
@@ -73,10 +79,15 @@ and exposed as \`req.me\`.)`
     var userRecord = await User.findOne({
       emailAddress: inputs.emailAddress.toLowerCase(),
     });
+    var activo = userRecord.activo;
 
     // If there was no matching user, respond thru the "badCombo" exit.
     if (!userRecord) {
       throw 'badCombo';
+    }
+    if(!activo)
+    {
+      return exits.noActivo();
     }
 
     // If the password doesn't match, then also exit thru "badCombo".

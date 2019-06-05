@@ -30,15 +30,10 @@ module.exports = {
       l_errorIdRepetido: 'Artículo con el mismo ID ya existe',
     };
 
-    let excel = require("excel4node");
-
     return exits.success({
-      modelo,
-      excel
+      modelo
     });
 
-
   }
-
 
 };

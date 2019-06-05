@@ -17,12 +17,11 @@ module.exports = {
 
   fn: async function (inputs, exits) {
 
-    let excel = require("excel4node");
-    let modelo ={};
+    let modelo = {};
+
     // Respond with view.
     return exits.success({
-      modelo,
-      excel
+      modelo
     });
 
   }

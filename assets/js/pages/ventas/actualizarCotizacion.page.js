@@ -41,7 +41,9 @@ parasails.registerPage('actualizar-cotizacion', {
       encargado: undefined,
       cliente: undefined,
       contacto: undefined,
-      jsonArticulos: { articulos: undefined }
+      jsonArticulos: {
+        articulos: undefined
+      }
     },
     o_cliente: {
       nombre: undefined,
@@ -93,7 +95,6 @@ parasails.registerPage('actualizar-cotizacion', {
     l_buscarCliente: undefined,
     l_buscarContacto: undefined,
     l_actualizar: false,
-    l_filtro: {},
     l_verModalAgregarC: false,
     l_fechaEvento: '',
     l_fechaFinEvento: '',
@@ -101,9 +102,11 @@ parasails.registerPage('actualizar-cotizacion', {
     l_fechaDesmontaje: '',
     l_verModalAgregarCotizacion: false,
     l_getValor: false,
-    t_cotizacion: {encargado:{
-      fullName:"",
-    }},
+    t_cotizacion: {
+      encargado: {
+        fullName: "",
+      }
+    },
 
   },
 
@@ -132,8 +135,6 @@ parasails.registerPage('actualizar-cotizacion', {
   //  ║║║║ ║ ║╣ ╠╦╝╠═╣║   ║ ║║ ║║║║╚═╗
   //  ╩╝╚╝ ╩ ╚═╝╩╚═╩ ╩╚═╝ ╩ ╩╚═╝╝╚╝╚═╝
   methods: {
-    //…
-
     limpiar_o_articulo: async function () {
       this.o_articulo = {
         id: undefined,
@@ -172,12 +173,6 @@ parasails.registerPage('actualizar-cotizacion', {
     },
     clickVerModalAgregarC: async function () {
       this.o_contacto.nombre = this.l_buscarContacto;
-      /* if (this.filteredClientes[0].id !== undefined) {
- 
-     } else {
-       this.l_cliente = await Cloud.extraerCliente(this.filteredClientes[0].cedula);
-       this.o_contacto.cliente = this.l_cliente.id;
-     }*/
       this.o_contacto.cliente = this.filteredClientes[0].id;
       this.l_verModalAgregarC = true;
     },
@@ -200,7 +195,11 @@ parasails.registerPage('actualizar-cotizacion', {
       }
       if (this.l_articulosTabla.length !== 0) {
         for (let index = 0; index < this.l_articulosTabla.length; index++) {
-          this.l_prueba.push({ id: this.l_articulosTabla[index].id, cantidad: this.l_articulosTabla[index].cantidadSolicitada, precio: this.l_articulosTabla[index].precioTotal });
+          this.l_prueba.push({
+            id: this.l_articulosTabla[index].id,
+            cantidad: this.l_articulosTabla[index].cantidadSolicitada,
+            precio: this.l_articulosTabla[index].precioTotal
+          });
         }
       }
       this.o_cotizacion.jsonArticulos.articulos = this.l_prueba;
@@ -210,7 +209,6 @@ parasails.registerPage('actualizar-cotizacion', {
     clickCerrarModalAgregarCotizacion: async function () {
       console.log(this.o_cotizacion);
       this.limpiar_o_cotizacion();
-      // location.reload();
       location.href = "cotizaciones";
       this.l_prueba = [];
       this.l_verModalAgregarCotizacion = false;
@@ -263,7 +261,6 @@ parasails.registerPage('actualizar-cotizacion', {
       if (!esta) {
 
         this.l_selecArticulo.push(p_articulo.id);
-        // this.l_prueba.push({id:p_articulo.id, cantidad: p_articulo.cantidadSolicitada});
         this.l_articulosTabla.push(p_articulo);
         this.sumatoria();
       }
@@ -271,7 +268,6 @@ parasails.registerPage('actualizar-cotizacion', {
     quitarArticuloTabla: async function (p_articulo) {
       let t_arregloSalida = [];
       let t_arregloSalida2 = [];
-      // let t_prueba = [];
       for (let index = 0; index < this.l_selecArticulo.length; index++) {
         if (this.l_selecArticulo[index] !== p_articulo.id) {
           t_arregloSalida.push(this.l_selecArticulo[index]);
@@ -282,12 +278,7 @@ parasails.registerPage('actualizar-cotizacion', {
         if (this.l_articulosTabla[index].id !== p_articulo.id) {
           t_arregloSalida2.push(this.l_articulosTabla[index]);
         }
-        /* if(this.l_prueba[index].id !== p_articulo.id)
-         {
-           t_prueba.push(this.l_prueba[index]);
-         }*/
       }
-      //this.l_prueba = t_prueba;
       this.l_selecArticulo = t_arregloSalida;
       this.l_articulosTabla = t_arregloSalida2;
       this.sumatoria();
@@ -297,7 +288,6 @@ parasails.registerPage('actualizar-cotizacion', {
       for (let i = 0; i < this.l_articulosTabla.length; i++) {
         if (this.l_articulosTabla[i].id == p_articulo.id) {
           this.l_articulosTabla[i].precio = p_articulo.precio;
-          // this.cerrarModalVer();
         }
       }
       this.sumatoria();
@@ -311,17 +301,9 @@ parasails.registerPage('actualizar-cotizacion', {
           this.l_sumatoria += parseInt(this.l_articulosTabla[i].precioTotal);
         }
       }
-
-      //return parseInt(this.l_sumatoria);
     },
     guardarCliente: async function (p_cliente) {
-      /*
-      this.o_cliente.telefono =  parseInt(this.o_cliente.telefono);
-      this.o_cliente.cedula = parseInt(this.o_cliente.cedula);
-      */
       this.p_cliente = {};
-      //  this.modelo.clientes.push(this.o_cliente);
-
       this.$forceUpdate();
       this.filtroIDCliente();
       this.clickCerrarModalAgregar();
@@ -346,8 +328,8 @@ parasails.registerPage('actualizar-cotizacion', {
       // capturamos la url
       var loc = document.location.href;
       // si existe el interrogante
-      if (loc.indexOf('?') > 0) {
-        // cogemos la parte de la url que hay despues del interrogante
+      if (loc.includes('?')) {
+        // cogemos la parte de la url que hay después del interrogante
         var getString = loc.split('?')[1];
         // obtenemos un array con cada clave=valor
         var GET = getString.split('&');
@@ -382,18 +364,18 @@ parasails.registerPage('actualizar-cotizacion', {
             let t_fechaEvento = this.t_cotizacion.fechaEvento;
             t_fechaEvento = new Date(t_fechaEvento);
             let t_diasE = 0;
-            t_diasE = new Date(t_fechaEvento.getFullYear(), t_fechaEvento.getMonth()+1, 0).getDate();
+            t_diasE = new Date(t_fechaEvento.getFullYear(), t_fechaEvento.getMonth() + 1, 0).getDate();
             //Fecha inicio del evento validaciones  
             if (t_fechaEvento.getDate() + 1 == 32 && t_diasE == 31) { //Si es el primer dia de un mes o un año 
               t_fechaEvento.setDate(01);
               if ((t_fechaEvento.getMonth() + 2) == 13) { //Si es 31 de diciembre lo que llega
                 t_fechaEvento.setMonth(1);
-                  this.l_fechaEvento = (t_fechaEvento.getFullYear() + 1) + '-' + '0' + (t_fechaEvento.getMonth()) + '-' + '0' + (t_fechaEvento.getDate());
-    
+                this.l_fechaEvento = (t_fechaEvento.getFullYear() + 1) + '-' + '0' + (t_fechaEvento.getMonth()) + '-' + '0' + (t_fechaEvento.getDate());
+
               } else {
                 if (t_fechaEvento.getMonth() + 1 > 9) { //Si el mes es mayor a setiembre o mayor a 9 
                   this.l_fechaEvento = t_fechaEvento.getFullYear() + '-' + (t_fechaEvento.getMonth() + 2) + '-' + '0' + (t_fechaEvento.getDate());
-    
+
                 } else {
                   this.l_fechaEvento = t_fechaEvento.getFullYear() + '-' + '0' + (t_fechaEvento.getMonth() + 2) + '-' + '0' + (t_fechaEvento.getDate());
                 }
@@ -402,7 +384,7 @@ parasails.registerPage('actualizar-cotizacion', {
               t_fechaEvento.setDate(01);
               if (t_fechaEvento.getMonth() + 2 > 9) {
                 this.l_fechaEvento = t_fechaEvento.getFullYear() + '-' + (t_fechaEvento.getMonth() + 2) + '-' + '0' + (t_fechaEvento.getDate());
-    
+
               } else {
                 this.l_fechaEvento = t_fechaEvento.getFullYear() + '-' + '0' + (t_fechaEvento.getMonth() + 2) + '-' + '0' + (t_fechaEvento.getDate());
               }
@@ -411,110 +393,94 @@ parasails.registerPage('actualizar-cotizacion', {
               if (t_fechaEvento.getMonth() + 1 == 13) {
                 t_fechaEvento.setMonth(1);
                 this.l_fechaEvento = (t_fechaEvento.getFullYear() + 1) + '-' + '0' + (t_fechaEvento.getMonth()) + '-' + '0' + (t_fechaEvento.getDate());
-    
+
               } else {
                 this.l_fechaEvento = t_fechaEvento.getFullYear() + '-' + '0' + (t_fechaEvento.getMonth() + 2) + '-' + '0' + (t_fechaEvento.getDate());
               }
-    
-    
+
+
             } else { //Cualquier fecha menos el 1er dia del mes
               if (t_fechaEvento.getMonth() + 1 > 9) {
-                if(t_fechaEvento.getDate()+1 > 9)
-                {
-                  this.l_fechaEvento = t_fechaEvento.getFullYear() + '-' +  (t_fechaEvento.getMonth() + 1) + '-' +  (t_fechaEvento.getDate() + 1);
-    
-                }else
-                {
-                  this.l_fechaEvento = t_fechaEvento.getFullYear() + '-' +  (t_fechaEvento.getMonth() + 1) + '-' + '0'+(t_fechaEvento.getDate() + 1);
+                if (t_fechaEvento.getDate() + 1 > 9) {
+                  this.l_fechaEvento = t_fechaEvento.getFullYear() + '-' + (t_fechaEvento.getMonth() + 1) + '-' + (t_fechaEvento.getDate() + 1);
+
+                } else {
+                  this.l_fechaEvento = t_fechaEvento.getFullYear() + '-' + (t_fechaEvento.getMonth() + 1) + '-' + '0' + (t_fechaEvento.getDate() + 1);
                 }
-    
+
               } else {
-    
-                if(t_fechaEvento.getDate()+1 > 9)
-                {
-                  this.l_fechaEvento = t_fechaEvento.getFullYear() + '-' + '0' + (t_fechaEvento.getMonth() + 1) + '-' +  (t_fechaEvento.getDate() + 1);
-                }else
-                {
+
+                if (t_fechaEvento.getDate() + 1 > 9) {
+                  this.l_fechaEvento = t_fechaEvento.getFullYear() + '-' + '0' + (t_fechaEvento.getMonth() + 1) + '-' + (t_fechaEvento.getDate() + 1);
+                } else {
                   this.l_fechaEvento = t_fechaEvento.getFullYear() + '-' + '0' + (t_fechaEvento.getMonth() + 1) + '-' + '0' + (t_fechaEvento.getDate() + 1);
                 }
-    
+
               }
             }
-
-            //this.l_fechaEvento = t_fechaEvento.getFullYear() + '-' + '0' + (t_fechaEvento.getMonth() + 1) + '-' + (t_fechaEvento.getDate()+1);
 
             let t_fechaFinEvento = this.t_cotizacion.fechaFinEvento;
             t_fechaFinEvento = new Date(t_fechaFinEvento);
             let t_dias = 0;
-            t_dias = new Date(t_fechaFinEvento.getFullYear(), t_fechaFinEvento.getMonth()+1, 0).getDate();
+            t_dias = new Date(t_fechaFinEvento.getFullYear(), t_fechaFinEvento.getMonth() + 1, 0).getDate();
             //Fecha fin del evento validaciones  
             if (t_fechaFinEvento.getDate() + 1 == 32 && t_dias == 31) { //Si es el primer dia de un mes o un año 
-              t_fechaFinEvento.setDate(01); 
+              t_fechaFinEvento.setDate(01);
               if ((t_fechaFinEvento.getMonth() + 2) == 13) { //Si es diciembre
                 t_fechaFinEvento.setMonth(1);
-                  this.l_fechaFinEvento = (t_fechaFinEvento.getFullYear() + 1) + '-' + '0' + (t_fechaFinEvento.getMonth()) + '-' + '0' + (t_fechaFinEvento.getDate());
-    
+                this.l_fechaFinEvento = (t_fechaFinEvento.getFullYear() + 1) + '-' + '0' + (t_fechaFinEvento.getMonth()) + '-' + '0' + (t_fechaFinEvento.getDate());
+
               } else { // Si no es diciembre
-                if (t_fechaFinEvento.getMonth() + 1 > 9) {
-                  this.l_fechaFinEvento = t_fechaFinEvento.getFullYear() + '-' + '0' + (t_fechaFinEvento.getMonth() + 2) + '-' + '0' + (t_fechaFinEvento.getDate());
-    
-                } else {
-                  this.l_fechaFinEvento = t_fechaFinEvento.getFullYear() + '-' + '0' + (t_fechaFinEvento.getMonth() + 2) + '-' + '0' + (t_fechaFinEvento.getDate());
-                }
+                this.l_fechaFinEvento = t_fechaFinEvento.getFullYear() + '-' + '0' + (t_fechaFinEvento.getMonth() + 2) + '-' + '0' + (t_fechaFinEvento.getDate());
               }
-    
+
             } else if (t_fechaFinEvento.getDate() + 1 == 31 && t_dias == 30) { //Primer dia de  un mes
               t_fechaFinEvento.setDate(01);
               if (t_fechaFinEvento.getMonth() + 2 > 9) {
                 this.l_fechaFinEvento = t_fechaFinEvento.getFullYear() + '-' + (t_fechaFinEvento.getMonth() + 2) + '-' + '0' + (t_fechaFinEvento.getDate());
-    
+
               } else {
-    
+
                 this.l_fechaFinEvento = t_fechaFinEvento.getFullYear() + '-' + '0' + (t_fechaFinEvento.getMonth() + 2) + '-' + '0' + (t_fechaFinEvento.getDate());
-    
+
               }
-    
+
             } else if ((t_fechaFinEvento.getDate() + 1 == 29 && t_dias == 28) || (t_fechaFinEvento.getDate() + 1 == 30 && t_dias == 29)) { //Si es febrero
               t_fechaFinEvento.setDate(01);
               this.l_fechaFinEvento = t_fechaFinEvento.getFullYear() + '-' + '0' + (t_fechaFinEvento.getMonth() + 2) + '-' + '0' + (t_fechaFinEvento.getDate());
-    
-    
+
+
             } else {
               if (t_fechaFinEvento.getMonth() + 1 > 9) {
-                if(t_fechaFinEvento.getDate()+1 > 9)
-                {
+                if (t_fechaFinEvento.getDate() + 1 > 9) {
                   this.l_fechaFinEvento = t_fechaFinEvento.getFullYear() + '-' + (t_fechaFinEvento.getMonth() + 1) + '-' + (t_fechaFinEvento.getDate() + 1);
-                }else
-                {
-                  this.l_fechaFinEvento = t_fechaFinEvento.getFullYear() + '-' + (t_fechaFinEvento.getMonth() + 1) + '-' + '0'+(t_fechaFinEvento.getDate() + 1);
+                } else {
+                  this.l_fechaFinEvento = t_fechaFinEvento.getFullYear() + '-' + (t_fechaFinEvento.getMonth() + 1) + '-' + '0' + (t_fechaFinEvento.getDate() + 1);
                 }
-    
+
               } else {
-                if(t_fechaFinEvento.getDate()+1 > 9)
-                {
-                  this.l_fechaFinEvento = t_fechaFinEvento.getFullYear() + '-' + '0' + (t_fechaFinEvento.getMonth() + 1) + '-' +  (t_fechaFinEvento.getDate() + 1);
-                }else
-                {
-                 
+                if (t_fechaFinEvento.getDate() + 1 > 9) {
+                  this.l_fechaFinEvento = t_fechaFinEvento.getFullYear() + '-' + '0' + (t_fechaFinEvento.getMonth() + 1) + '-' + (t_fechaFinEvento.getDate() + 1);
+                } else {
+
                   this.l_fechaFinEvento = t_fechaFinEvento.getFullYear() + '-' + '0' + (t_fechaFinEvento.getMonth() + 1) + '-' + '0' + (t_fechaFinEvento.getDate() + 1);
                 }
-    
+
               }
-    
+
             }
-            //this.l_fechaFinEvento = t_fechaFinEvento.getFullYear() + '-' + '0' + (t_fechaFinEvento.getMonth() + 1) + '-' + (t_fechaFinEvento.getDate()+1);
           }
           if (this.t_cotizacion.fechaMontaje !== 0) {
             let t_fechaMontaje = this.t_cotizacion.fechaMontaje;
             t_fechaMontaje = new Date(t_fechaMontaje);
             let t_diasM = 0;
-            t_diasM = new Date(t_fechaMontaje.getFullYear(), t_fechaMontaje.getMonth()+1, 0).getDate();
+            t_diasM = new Date(t_fechaMontaje.getFullYear(), t_fechaMontaje.getMonth() + 1, 0).getDate();
             //Fecha iniicio del montaje validaciones  
             if (t_fechaMontaje.getDate() + 1 == 32 && t_diasM == 31) { // Si es el primer dia de un mes o un año
               t_fechaMontaje.setDate(01);
               if (t_fechaMontaje.getMonth() + 2 == 13) { //Si es diciembre
                 t_fechaMontaje.setMonth(1);
-                  this.l_fechaMontaje = (t_fechaMontaje.getFullYear() + 1) + '-' + '0' + (t_fechaMontaje.getMonth()) + '-' + '0' + (t_fechaMontaje.getDate());
+                this.l_fechaMontaje = (t_fechaMontaje.getFullYear() + 1) + '-' + '0' + (t_fechaMontaje.getMonth()) + '-' + '0' + (t_fechaMontaje.getDate());
               } else {
                 if (t_fechaMontaje.getMonth() + 1 > 9) {
                   this.l_fechaMontaje = t_fechaMontaje.getFullYear() + '-' + (t_fechaMontaje.getMonth() + 2) + '-' + '0' + (t_fechaMontaje.getDate());
@@ -525,56 +491,51 @@ parasails.registerPage('actualizar-cotizacion', {
             } else if (t_fechaMontaje.getDate() + 1 == 31 && t_diasM == 30) { //Primer dia de un mes
               t_fechaMontaje.setDate(01);
               if (t_fechaMontaje.getMonth() + 2 > 9) {
-    
-               this.l_fechaMontaje = t_fechaMontaje.getFullYear() + '-' + (t_fechaMontaje.getMonth() + 2) + '-' + '0' + (t_fechaMontaje.getDate());
-    
+
+                this.l_fechaMontaje = t_fechaMontaje.getFullYear() + '-' + (t_fechaMontaje.getMonth() + 2) + '-' + '0' + (t_fechaMontaje.getDate());
+
               } else {
                 this.l_fechaMontaje = t_fechaMontaje.getFullYear() + '-' + '0' + (t_fechaMontaje.getMonth() + 2) + '-' + '0' + (t_fechaMontaje.getDate());
               }
-    
+
             } else if ((t_fechaMontaje.getDate() + 1 == 29 && t_diasM == 28) || (t_fechaMontaje.getDate() + 1 == 30 && t_diasM == 29)) { //Si es febrero
               t_fechaMontaje.setDate(01);
               this.l_fechaMontaje = t_fechaMontaje.getFullYear() + '-' + '0' + (t_fechaMontaje.getMonth() + 2) + '-' + '0' + (t_fechaMontaje.getDate());
-    
+
             } else {
               if (t_fechaMontaje.getMonth() + 1 > 9) {
-                if(t_fechaMontaje.getDate() + 1 > 9)
-                {
+                if (t_fechaMontaje.getDate() + 1 > 9) {
                   this.l_fechaMontaje = t_fechaMontaje.getFullYear() + '-' + (t_fechaMontaje.getMonth() + 1) + '-' + (t_fechaMontaje.getDate() + 1);
-                }else
-                {
+                } else {
                   this.l_fechaMontaje = t_fechaMontaje.getFullYear() + '-' + (t_fechaMontaje.getMonth() + 1) + '-' + '0' + (t_fechaMontaje.getDate() + 1);
                 }
-    
+
               } else {
-                if(t_fechaMontaje.getDate() + 1 > 9)
-                {
-                  this.l_fechaMontaje = t_fechaMontaje.getFullYear() + '-' + '0' + (t_fechaMontaje.getMonth() + 1) + '-' +(t_fechaMontaje.getDate() + 1);
-                }else
-                {
-                  
-                  this.l_fechaMontaje = t_fechaMontaje.getFullYear() + '-' + '0' + (t_fechaMontaje.getMonth() + 1) + '-' +'0'+(t_fechaMontaje.getDate() + 1);
+                if (t_fechaMontaje.getDate() + 1 > 9) {
+                  this.l_fechaMontaje = t_fechaMontaje.getFullYear() + '-' + '0' + (t_fechaMontaje.getMonth() + 1) + '-' + (t_fechaMontaje.getDate() + 1);
+                } else {
+
+                  this.l_fechaMontaje = t_fechaMontaje.getFullYear() + '-' + '0' + (t_fechaMontaje.getMonth() + 1) + '-' + '0' + (t_fechaMontaje.getDate() + 1);
                 }
-    
+
               }
             }
-            //this.l_fechaMontaje = t_fechaMontaje.getFullYear() + '-' + '0' + (t_fechaMontaje.getMonth() + 1) + '-' + (t_fechaMontaje.getDate()+1);
 
             let t_fechaDesmontaje = this.t_cotizacion.fechaDesmontaje;
             t_fechaDesmontaje = new Date(t_fechaDesmontaje);
             let t_diasD = 0;
-            t_diasD = new Date(t_fechaDesmontaje.getFullYear(), t_fechaDesmontaje.getMonth()+1, 0).getDate();
+            t_diasD = new Date(t_fechaDesmontaje.getFullYear(), t_fechaDesmontaje.getMonth() + 1, 0).getDate();
             //Fecha fin del montaje validaciones  
             if (t_fechaDesmontaje.getDate() + 1 == 32 && t_diasD == 31) { //Si es el primer dia de un mes o un año
               t_fechaDesmontaje.setDate(01);
               if (t_fechaDesmontaje.getMonth() + 2 == 13) { // Si es diciembre
                 t_fechaDesmontaje.setMonth(1);
-                  this.l_fechaDesmontaje = (t_fechaDesmontaje.getFullYear() + 1) + '-' + '0' + (t_fechaDesmontaje.getMonth()) + '-' + '0' + (t_fechaDesmontaje.getDate());
-    
+                this.l_fechaDesmontaje = (t_fechaDesmontaje.getFullYear() + 1) + '-' + '0' + (t_fechaDesmontaje.getMonth()) + '-' + '0' + (t_fechaDesmontaje.getDate());
+
               } else {
                 if (t_fechaDesmontaje.getMonth() + 1 > 9) {
                   this.l_fechaDesmontaje = t_fechaDesmontaje.getFullYear() + '-' + (t_fechaDesmontaje.getMonth() + 2) + '-' + '0' + (t_fechaDesmontaje.getDate());
-    
+
                 } else {
                   this.l_fechaDesmontaje = t_fechaDesmontaje.getFullYear() + '-' + '0' + (t_fechaDesmontaje.getMonth() + 2) + '-' + '0' + (t_fechaDesmontaje.getDate());
                 }
@@ -583,45 +544,37 @@ parasails.registerPage('actualizar-cotizacion', {
               t_fechaDesmontaje.setDate(01);
               if (t_fechaDesmontaje.getMonth() + 2 > 9) {
                 this.l_fechaDesmontaje = t_fechaDesmontaje.getFullYear() + '-' + (t_fechaDesmontaje.getMonth() + 2) + '-' + '0' + (t_fechaDesmontaje.getDate());
-    
+
               } else {
-    
+
                 this.l_fechaDesmontaje = t_fechaDesmontaje.getFullYear() + '-' + '0' + (t_fechaDesmontaje.getMonth() + 2) + '-' + '0' + (t_fechaDesmontaje.getDate());
-    
+
               }
             } else if ((t_fechaDesmontaje.getDate() + 1 == 29 && t_diasD == 28) || (t_fechaDesmontaje.getDate() + 1 == 30 && t_diasD == 29)) { //Si es febrero
               t_fechaDesmontaje.setDate(01);
               this.l_fechaDesmontaje = t_fechaDesmontaje.getFullYear() + '-' + '0' + (t_fechaDesmontaje.getMonth() + 2) + '-' + '0' + (t_fechaDesmontaje.getDate());
-    
+
             } else {
               if (t_fechaDesmontaje.getMonth() + 1 > 9) {
-                if(t_fechaDesmontaje.getDate() + 1 > 9)
-                {
+                if (t_fechaDesmontaje.getDate() + 1 > 9) {
                   this.l_fechaDesmontaje = t_fechaDesmontaje.getFullYear() + '-' + (t_fechaDesmontaje.getMonth() + 1) + '-' + (t_fechaDesmontaje.getDate() + 1);
-                }else
-                {
-                  this.l_fechaDesmontaje = t_fechaDesmontaje.getFullYear() + '-' + (t_fechaDesmontaje.getMonth() + 1) + '-' +'0' + (t_fechaDesmontaje.getDate() + 1);
+                } else {
+                  this.l_fechaDesmontaje = t_fechaDesmontaje.getFullYear() + '-' + (t_fechaDesmontaje.getMonth() + 1) + '-' + '0' + (t_fechaDesmontaje.getDate() + 1);
                 }
-    
+
               } else {
-                if(t_fechaDesmontaje.getDate() + 1 > 9)
-                {
+                if (t_fechaDesmontaje.getDate() + 1 > 9) {
                   this.l_fechaDesmontaje = t_fechaDesmontaje.getFullYear() + '-' + '0' + (t_fechaDesmontaje.getMonth() + 1) + '-' + (t_fechaDesmontaje.getDate() + 1);
-                }else
-                {
-                  
-                  this.l_fechaDesmontaje = t_fechaDesmontaje.getFullYear() + '-' + '0' + (t_fechaDesmontaje.getMonth() + 1) + '-'+'0' +(t_fechaDesmontaje.getDate() + 1);
+                } else {
+
+                  this.l_fechaDesmontaje = t_fechaDesmontaje.getFullYear() + '-' + '0' + (t_fechaDesmontaje.getMonth() + 1) + '-' + '0' + (t_fechaDesmontaje.getDate() + 1);
                 }
-    
+
               }
-    
+
             }
-            //this.l_fechaDesmontaje = t_fechaDesmontaje.getFullYear() + '-' + '0' + (t_fechaDesmontaje.getMonth() + 1) + '-' + (t_fechaDesmontaje.getDate()+1);
           }
-
         }
-
-        //return get.variable;
       }
     }
   },
@@ -728,7 +681,7 @@ parasails.registerPage('actualizar-cotizacion', {
         }
       });
       return a_arregloCategoria;
-    }, //Metodo para filtrar por categorias
+    }, //Método para filtrar por categorías
     filtroArticulos: function () {
       /*
        * Función para limpiar el filtro a usar, en caso de que el atributo este vacío
@@ -779,6 +732,7 @@ parasails.registerPage('actualizar-cotizacion', {
             t_precio = this.t_cotizacion.articulos.filter(t_articulo => t_articulo.id.includes(this.l_selecArticulo[t_tempID]))[0].precio;
             if (this.modelo.articulos[t_val].id === this.l_selecArticulo[t_tempID]) {
               this.modelo.articulos[t_val].cantidadSolicitada = t_cantidad;
+              this.modelo.articulos[t_val].precio = t_precio / t_cantidad;
               this.modelo.articulos[t_val].precioTotal = t_precio;
             }
           }
@@ -798,8 +752,8 @@ parasails.registerPage('actualizar-cotizacion', {
   },
   watch: {
     l_cantidadSolicitada(valNew, valOld) {
-      /* Esta variable resibe el filtro del articulo del modelo que es 
-              igual a el que se utiliza en cada actualizar*/
+      // Esta variable recibe el filtro del articulo del modelo que es 
+      // igual a el que se utiliza en cada actualizar
       let l_cantidadLibre = _.find(this.modelo.articulos, {
         id: this.o_articulo.id
       }).cantidadLibre;

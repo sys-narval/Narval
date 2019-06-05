@@ -63,8 +63,8 @@
             <th>Cantidad Ocupado</th>
             <th>Cantidad Dañado</th>
             <th>Cantidad Total</th>
-            <th>Precio</th>
-            <th>Opciones</th>
+            <th v-if="me.rol !== 'Bodega'">Precio Unitario</th>
+            <th v-if="me.rol !== 'Bodega'">Opciones</th>
           </tr>
         </thead>
         <tbody v-for="t_articulo in filtroArticulos">
@@ -75,18 +75,18 @@
             <td v-text="t_articulo.cantidadUso"></td>
             <td v-text="t_articulo.cantidadDanado"></td>
             <td v-text="t_articulo.cantidadTotal"></td>
-            <td>{{t_articulo.precio | formatoMoneda}}</td>
-            <td v-if="t_articulo.activo">
+            <td v-if="me.rol !== 'Bodega'">{{t_articulo.precio | formatoMoneda}}</td>
+            <td v-if="t_articulo.activo && me.rol !== 'Bodega'">
               <input type="button" value="Actualizar" class="btn btn-info" @click="verModalActualizar(t_articulo)">
-              <input type="button" value="Borrar" class="btn btn-danger" @click="verModalEliminar(t_articulo)">
+              <input v-if="me.rol === 'Administrador' || me.rol === 'TI'" type="button" value="Borrar" class="btn btn-danger" @click="verModalEliminar(t_articulo)">
             </td>
-            <td v-else>
-              <input type="button" value="Reactivar" class="btn btn-success" @click="activarArticulo(t_articulo)">
+            <td v-if="!t_articulo.activo && me.rol !== 'Bodega'">
+              <input v-if="me.rol === 'Administrador' || me.rol === 'TI'" type="button" value="Reactivar" class="btn btn-success" @click="activarArticulo(t_articulo)">
             </td>
           </tr>
         </tbody>
       </table>
-      <button type="button" class="btn btn-sm btn-primary btn-block boton boton1"
+      <button v-if="me.rol === 'Administrador' || me.rol === 'TI'" type="button" class="btn btn-sm btn-primary btn-block boton boton1"
         @click="verModalAgregar()">Agregar</button>
 
       <table v-show="false" id="idtb" class="table table-striped table-hover table-condensed">
@@ -99,7 +99,7 @@
             <th>Cantidad Ocupado</th>
             <th>Cantidad Dannado</th>
             <th>Cantidad Total</th>
-            <th>Precio</th>
+            <th v-if="me.rol !== 'Bodega'">Precio Unitario</th>
           </tr>
         </thead>
         <tbody v-for="t_articulo in filtroArticulos">
@@ -115,7 +115,7 @@
         </tbody>
       </table>
       <br>
-      <button v-if="filtroArticulos.length > 0 " type="button" class="btn btn-sm btn-success btn-block boton boton1"
+      <button v-if="filtroArticulos.length > 0 && me.rol !== 'Bodega'" type="button" class="btn btn-sm btn-success btn-block boton boton1"
         @click="guardar('idtb','inventario')">Exportar</button>
     </div>
   </div>
@@ -157,7 +157,7 @@
             <div class="invalid-feedback" v-text="modelo.l_errorCantidadTotal"></div>
           </div>
           <div class="form-group col">
-            <label for="precio">Precio: </label>
+            <label for="precio">Precio Unitario: </label>
             <label>$</label>
             <input type="number" min="0" step="1" max="9999" v-bind:value="o_articulo.precio | formatoMoneda"
               class="form-control" id="precioArtNuevo" v-model="o_articulo.precio" placeholder="Precio Artículo Nuevo"
@@ -294,7 +294,7 @@
               v-model="o_articulo.categoria">
           </div>
           <div class="form-group col">
-            <label for="precio">Precio:</label>
+            <label for="precio">Precio Unitario:</label>
             <label>$</label>
             <input type="number" min="0" step="1" max="9999" class="form-control" id="precio" :value="o_articulo.precio"
               :class="[(formErrors.precio || o_articulo.precio !== undefined) && !o_articulo.precio ? 'is-invalid' : '']"

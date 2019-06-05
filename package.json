@@ -9,8 +9,6 @@
     "@sailshq/lodash": "^3.10.3",
     "@sailshq/socket.io-redis": "^5.2.0",
     "async": "^2.6.2",
-    "excel4node": "^1.7.2",
-    "nodemon": "^1.18.11",
     "sails": "^1.2.2",
     "sails-hook-apianalytics": "^2.0.0",
     "sails-hook-organics": "^0.16.0",
