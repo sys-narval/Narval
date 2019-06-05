@@ -28,10 +28,12 @@ parasails.registerPage('inventario', {
     l_cantidadTotalD: 0,
 
 
-    formData: { /* … */ },
+    formData: {
+      /* … */ },
     syncing: false,
     cloudError: '',
-    formErrors: { /* … */ },
+    formErrors: {
+      /* … */ },
     formRules: {
       id: {
         required: true
@@ -74,49 +76,36 @@ parasails.registerPage('inventario', {
   //  ║║║║ ║ ║╣ ╠╦╝╠═╣║   ║ ║║ ║║║║╚═╗
   //  ╩╝╚╝ ╩ ╚═╝╩╚═╩ ╩╚═╝ ╩ ╩╚═╝╝╚╝╚═╝
   methods: {
-    guardar:async function(tableID, filename = ''){
+    guardar: async function (tableID, filename = '') {
       var downloadLink;
       var dataType = 'application/vnd.ms-excel';
       var tableSelect = document.getElementById(tableID);
       var tableHTML = tableSelect.outerHTML.replace(/ /g, '%20');
-      
+
       // Specify file name
-      filename = filename?filename+'.xls':'excel_data.xls';
-      
+      filename = filename ? filename + '.xls' : 'excel_data.xls';
+
       // Create download link element
       downloadLink = document.createElement("a");
-      
+
       document.body.appendChild(downloadLink);
-      
-      if(navigator.msSaveOrOpenBlob){
-          var blob = new Blob(['ufeff', tableHTML], {
-              type: dataType
-          });
-          navigator.msSaveOrOpenBlob( blob, filename);
-      }else{
-          // Create a link to the file
-          downloadLink.href = 'data:' + dataType + ', ' + tableHTML;
-      
-          // Setting the file name
-          downloadLink.download = filename;
-          
-          //triggering the function
-          downloadLink.click();
+
+      if (navigator.msSaveOrOpenBlob) {
+        var blob = new Blob(['ufeff', tableHTML], {
+          type: dataType
+        });
+        navigator.msSaveOrOpenBlob(blob, filename);
+      } else {
+        // Create a link to the file
+        downloadLink.href = 'data:' + dataType + ', ' + tableHTML;
+
+        // Setting the file name
+        downloadLink.download = filename;
+
+        //triggering the function
+        downloadLink.click();
       }
-  
-  
-    },
-    crear: async function () {
-     debugger;
-      this.excel;
-      var workbook = new this.excel.Workbook();
 
-      var worksheet = workbook.addWorksheet('Sheet 1');
-      var worksheet2 = workbook.addWorksheet('Sheet 2');
-
-      worksheet.cell(1, 1).string('content for display');
-
-      workbook.write('report.xlsx');
 
     },
     limpiar_o_articulo: async function () {
@@ -136,18 +125,18 @@ parasails.registerPage('inventario', {
       this.l_actualizar = false;
       this.l_cantidadTotalG = 0;
       this.l_cantidadTotalD = 0;
-    }, //Metodo que cierra el modal de actualizar
+    }, //Método que cierra el modal de actualizar
     cerrarModalEliminar: async function () {
       this.l_verModalEliminar = false;
       this.limpiar_o_articulo();
       this.l_actualizar = false;
-    }, //Metodo que cierra el modal de Eliminar
+    }, //Método que cierra el modal de Eliminar
     cerrarNuevo: async function () {
       this.l_verModalAgregar = false;
       this.limpiar_o_articulo();
       this.formErrors = {};
       this.l_actualizar = false;
-    }, //Metodo que cierra el modal de Agregar Articulo
+    }, //Método que cierra el modal de Agregar Articulo
     cerrarModalAyuda: async function () {
       this.l_verModalAyuda = false;
     },
@@ -166,14 +155,14 @@ parasails.registerPage('inventario', {
       this.l_cantidadTotalD = _.find(this.modelo.articulos, {
         id: this.o_articulo.id
       }).cantidadDanado;
-    }, //Metodo que abre el modal Actualizar 
+    }, //Método que abre el modal Actualizar 
     verModalAgregar: async function () {
       this.l_verModalAgregar = true;
-    }, //Metodo que abre el modal Agregar
+    }, //Método que abre el modal Agregar
     verModalEliminar: async function (p_articulo) {
       this.o_articulo = p_articulo;
       this.l_verModalEliminar = true;
-    }, //Metodo que abre el modal Eliminar
+    }, //Método que abre el modal Eliminar
     crearArticulo: async function (p_articuloNuevo) {
       this.o_articulo.cantidadTotal = parseInt(this.o_articulo.cantidadTotal);
       this.o_articulo.cantidadLibre = parseInt(this.o_articulo.cantidadTotal);
@@ -186,14 +175,13 @@ parasails.registerPage('inventario', {
       if (this.o_articulo.categoria === 'Electrónico') {
         this.o_articulo.serialesBuenos = this.o_articulo.serialesTotal;
       }
-      //await Cloud.insertarUnArticulo.with(articuloNuevo);
       this.p_articuloNuevo = {};
       this.modelo.articulos.push(this.o_articulo);
       this.l_actualizar = true;
       this.cerrarNuevo();
       this.$forceUpdate();
       alert('Artículo ingresado correctamente!');
-    }, //Metodo que crea un articulo, primero analizar los valores enteros y después lo mete en un arreglo
+    }, //Método que crea un articulo, primero analizar los valores enteros y después lo mete en un arreglo
     eliminarUnArticulo: async function () {
       await Cloud.eliminarUnArticulo.with(this.o_articulo);
       this.modelo.articulos = this.modelo.articulos.map(articulo => {
@@ -205,7 +193,7 @@ parasails.registerPage('inventario', {
       this.l_actualizar = true;
       this.cerrarModalEliminar();
       this.$forceUpdate();
-    }, //Metodo que elimina un articulo de la base de datos local y despues lo elimina del arreglo
+    }, //Método que elimina un articulo de la base de datos local y despues lo elimina del arreglo
     activarArticulo: async function (p_articulo) {
       p_articulo.activo = true;
       await Cloud.actualizarUnArticulo.with(p_articulo);
@@ -213,7 +201,6 @@ parasails.registerPage('inventario', {
     },
     actualizarUnArticulo: async function (p_articulo) {
       this.o_articulo.precio = parseInt(this.o_articulo.precio);
-      //await Cloud.actualizarUnArticulo.with(this.o_articulo);
       this.modelo.articulos = this.modelo.articulos.map(articulo => {
         if (articulo.id === this.o_articulo.id) {
           articulo = this.o_articulo;
@@ -223,7 +210,7 @@ parasails.registerPage('inventario', {
       this.l_actualizar = true;
       this.cerrarModalActualizar();
       this.$forceUpdate();
-    }, //Metodo que actualiza un objeto de la base de datos local
+    }, //Método que actualiza un objeto de la base de datos local
   },
   filters: {
     formatoMoneda: function (cantidad) {
@@ -238,7 +225,7 @@ parasails.registerPage('inventario', {
       });
       return formato.format(cantidad);
     },
-  }, //Metodo que permite darle formato a la moneda del precio del articulo
+  }, //Método que permite darle formato a la moneda del precio del articulo
   computed: {
     filtroCategorias: function () {
       let l_bandera = false;
@@ -260,7 +247,7 @@ parasails.registerPage('inventario', {
         }
       });
       return a_arregloCategoria;
-    }, //Metodo para filtrar por categorías
+    }, //Método para filtrar por categorías
     filtroArticulos: function () {
       /*
        * Función para limpiar el filtro a usar, en caso de que el atributo este vacío
@@ -289,8 +276,8 @@ parasails.registerPage('inventario', {
   },
   watch: {
     l_masDanado(valNew, valOld) {
-      /* Esta variable recibe el filtro del articulo del modelo que es 
-              igual a el que se utiliza en cada actualizar*/
+      // Esta variable recibe el filtro del articulo del modelo que es 
+      // igual a el que se utiliza en cada actualizar
       let l_cantidadLibre = _.find(this.modelo.articulos, {
         id: this.o_articulo.id
       }).cantidadLibre;
@@ -299,7 +286,7 @@ parasails.registerPage('inventario', {
       let l_cantidadDanado = _.find(this.modelo.articulos, {
         id: this.o_articulo.id
       }).cantidadDanado;
-      /* Esta variable parsea el valor del input de el modal actualizar*/
+      /* Esta variable transforma el valor del input de el modal actualizar*/
       let l_numMasDanado = parseInt(this.l_masDanado);
 
       if (this.l_masDanado && l_numMasDanado <= l_cantidadLibre) {
@@ -310,27 +297,27 @@ parasails.registerPage('inventario', {
         this.o_articulo.cantidadDanado = l_cantidadDanado;
       }
     },
-    l_menosDannado(valNew,valOld){
-       /* Esta variable recibe el filtro del articulo del modelo que es 
-              igual a el que se utiliza en cada actualizar*/
-              let l_cantidadLibre = _.find(this.modelo.articulos, {
-                id: this.o_articulo.id
-              }).cantidadLibre;
-              /* esta variable recibe la cantidad danado del articulo del modelo que 
-              es igual aal que utiliza en cada actualizar*/
-              let l_cantidadDanado = _.find(this.modelo.articulos, {
-                id: this.o_articulo.id
-              }).cantidadDanado;
-              /* Esta variable parsea el valor del input de el modal actualizar*/
-              let l_numMenosDanado = parseInt(this.l_menosDannado);
-        
-              if (this.l_menosDannado && l_numMenosDanado <= l_cantidadDanado) {
-                this.o_articulo.cantidadLibre = l_cantidadLibre + l_numMenosDanado;// + parseInt(this.l_masArticulos);
-                this.o_articulo.cantidadDanado = l_cantidadDanado - l_numMenosDanado ;
-              } else {
-                this.o_articulo.cantidadLibre = l_cantidadLibre;
-                this.o_articulo.cantidadDanado = l_cantidadDanado;
-              }
+    l_menosDannado(valNew, valOld) {
+      // Esta variable recibe el filtro del articulo del modelo que es 
+      // igual a el que se utiliza en cada actualizar
+      let l_cantidadLibre = _.find(this.modelo.articulos, {
+        id: this.o_articulo.id
+      }).cantidadLibre;
+      /* esta variable recibe la cantidad danado del articulo del modelo que 
+      es igual aal que utiliza en cada actualizar*/
+      let l_cantidadDanado = _.find(this.modelo.articulos, {
+        id: this.o_articulo.id
+      }).cantidadDanado;
+      /* Esta variable parsea el valor del input de el modal actualizar*/
+      let l_numMenosDanado = parseInt(this.l_menosDannado);
+
+      if (this.l_menosDannado && l_numMenosDanado <= l_cantidadDanado) {
+        this.o_articulo.cantidadLibre = l_cantidadLibre + l_numMenosDanado;
+        this.o_articulo.cantidadDanado = l_cantidadDanado - l_numMenosDanado;
+      } else {
+        this.o_articulo.cantidadLibre = l_cantidadLibre;
+        this.o_articulo.cantidadDanado = l_cantidadDanado;
+      }
 
     },
     l_masArticulos() {
@@ -344,7 +331,7 @@ parasails.registerPage('inventario', {
       let l_cantidadLibre = _.find(this.modelo.articulos, {
         id: this.o_articulo.id
       }).cantidadLibre;
-      /* esta variable recibe la cantidad danado del articulo del modelo que 
+      /* esta variable recibe la cantidad dañado del articulo del modelo que 
       es igual aal que utiliza en cada actualizar*/
       let l_cantidadDanado = _.find(this.modelo.articulos, {
         id: this.o_articulo.id
