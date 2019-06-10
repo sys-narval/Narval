@@ -265,8 +265,11 @@ parasails.registerPage('inventario', {
        * que la barra de búsqueda tenga más de un dígito y coincida con la descripción o ubicación.
        */
       if (this.l_buscarArticulo.length >= 3 && this.l_actualizar === false) {
-        return _.filter(this.modelo.articulos, c_limpiaFiltro(this.l_filtro))
-          .filter(articulo => articulo.descripcion.toUpperCase().match(this.l_buscarArticulo.toUpperCase()) || articulo.categoria.includes(this.l_buscarArticulo) || articulo.id.includes(this.l_buscarArticulo));
+        
+          return _.filter(this.modelo.articulos, c_limpiaFiltro(this.l_filtro))
+            .filter(articulo => articulo.descripcion.toUpperCase().includes(this.l_buscarArticulo.toUpperCase()) || articulo.categoria.includes(this.l_buscarArticulo) || articulo.id.includes(this.l_buscarArticulo));
+        
+
       } else if (this.l_buscarArticulo === "*" && this.l_actualizar === false) {
         return this.modelo.articulos;
       } else {
