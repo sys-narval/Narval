@@ -18,6 +18,7 @@ parasails.registerPage('cotizaciones', {
       encargado: undefined,
       cliente: undefined,
       contacto: undefined,
+      estado: undefined,
       jsonArticulos: {
         articulos: undefined
       }
@@ -135,7 +136,7 @@ parasails.registerPage('cotizaciones', {
       this.o_cotizacion2.encargado = t_cotizacion2.encargado.id;
       this.o_cotizacion2.cliente = t_cotizacion2.cliente.id;
       this.o_cotizacion2.contacto = t_cotizacion2.contacto.id;
-
+      this.o_cotizacion2.estado = t_cotizacion2.estado;
       let articulos = [];
       if (cotizacion.articulos.length !== 0) {
         for (let index = 0; index < cotizacion.articulos.length; index++) {
