@@ -10,7 +10,7 @@ module.exports = {
   inputs: {
     nombre: {
       type: "string",
-      maxLength: 20,
+      maxLength: 40,
       required: true,
       description: "Nombre del contacto de la empresa del cliente"
     },
