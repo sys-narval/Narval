@@ -609,16 +609,16 @@ parasails.registerPage('actualizar-cotizacion', {
        */
       if (this.l_buscarContacto !== undefined) {
 
-        if (this.l_buscarContacto.length > 3 && this.l_actualizar === false) {
+        if (this.l_buscarContacto.length > 2 && this.l_actualizar === false) {
           if (_.filter(this.modelo.contactos, c_limpiaFiltro(this.l_filtro))
-            .filter(contacto => contacto.nombre.match(this.l_buscarContacto))[0] !== undefined) {
+            .filter(contacto => contacto.nombre.toUpperCase().match(this.l_buscarContacto.toUpperCase()))[0] !== undefined) {
 
 
             this.o_cotizacion.contacto = _.filter(this.modelo.contactos, c_limpiaFiltro(this.l_filtro))
-              .filter(contacto => contacto.nombre.match(this.l_buscarContacto))[0].id;
+              .filter(contacto => contacto.nombre.toUpperCase().match(this.l_buscarContacto.toUpperCase()))[0].id;
           }
           return _.filter(this.modelo.contactos, c_limpiaFiltro(this.l_filtro))
-            .filter(contacto => contacto.nombre.match(this.l_buscarContacto));
+            .filter(contacto => contacto.nombre.toUpperCase().match(this.l_buscarContacto.toUpperCase()));
         } else {
           return new Array();
         }
@@ -642,16 +642,16 @@ parasails.registerPage('actualizar-cotizacion', {
 
       if (this.l_buscarCliente !== undefined) {
 
-        if (this.l_buscarCliente.length > 3 && this.l_actualizar === false) {
+        if (this.l_buscarCliente.length > 2 && this.l_actualizar === false) {
           if (_.filter(this.modelo.clientes, c_limpiaFiltro(this.l_filtro))
-            .filter(cliente => cliente.nombre.match(this.l_buscarCliente) || cliente.telefono.includes(this.l_buscarCliente) || cliente.cedula.includes(this.l_buscarCliente))[0] !== undefined) {
+            .filter(cliente => cliente.nombre.toUpperCase().match(this.l_buscarCliente.toUpperCase()) || cliente.telefono.includes(this.l_buscarCliente) || cliente.cedula.includes(this.l_buscarCliente))[0] !== undefined) {
 
 
             this.o_cotizacion.cliente = _.filter(this.modelo.clientes, c_limpiaFiltro(this.l_filtro))
-              .filter(cliente => cliente.nombre.match(this.l_buscarCliente) || cliente.telefono.includes(this.l_buscarCliente) || cliente.cedula.includes(this.l_buscarCliente))[0].id;
+              .filter(cliente => cliente.nombre.toUpperCase().match(this.l_buscarCliente.toUpperCase()) || cliente.telefono.includes(this.l_buscarCliente) || cliente.cedula.includes(this.l_buscarCliente))[0].id;
           }
           return _.filter(this.modelo.clientes, c_limpiaFiltro(this.l_filtro))
-            .filter(cliente => cliente.nombre.match(this.l_buscarCliente) || cliente.telefono.includes(this.l_buscarCliente) || cliente.cedula.includes(this.l_buscarCliente));
+            .filter(cliente => cliente.nombre.toUpperCase().match(this.l_buscarCliente.toUpperCase()) || cliente.telefono.includes(this.l_buscarCliente) || cliente.cedula.includes(this.l_buscarCliente));
         } else {
           return new Array();
         }
@@ -698,11 +698,11 @@ parasails.registerPage('actualizar-cotizacion', {
        * Filtramos las articulos que cumplan con el filtro preestablecido por el usuario y que cumpla con
        * que la barra de búsqueda tenga más de un dígito y coincida con la descripción o ubicación.
        */
-      if (this.l_buscarArticulo.length > 3) {
+      if (this.l_buscarArticulo.length >= 3) {
         let t_arregloSalida = [];
         let t_arregloSalida2 = [];
         t_arregloSalida = _.filter(this.modelo.articulos, c_limpiaFiltro(this.l_filtro))
-          .filter(articulo => articulo.descripcion.includes(this.l_buscarArticulo) || articulo.categoria.includes(this.l_buscarArticulo) || articulo.id.includes(this.l_buscarArticulo));
+          .filter(articulo => articulo.descripcion.toUpperCase().includes(this.l_buscarArticulo.toUpperCase()) || articulo.categoria.toUpperCase().includes(this.l_buscarArticulo.toUpperCase()) || articulo.id.includes(this.l_buscarArticulo));
         for (let index = 0; index < t_arregloSalida.length; index++) {
           if (t_arregloSalida[index].descripcion === this.l_buscarArticulo) {
             t_arregloSalida2.push(t_arregloSalida[index]);

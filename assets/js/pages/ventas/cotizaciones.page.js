@@ -507,7 +507,7 @@ parasails.registerPage('cotizaciones', {
        * que la barra de búsqueda tenga más de un dígito y coincida con la descripción o ubicación.
        */
 
-      if (this.l_busquedaCotizacion.length > 3) {
+      if (this.l_busquedaCotizacion.length >= 2) {
         if (this.l_filtro.cliente.nombre === '') {
           this.l_filtro.cliente = {};
         }
@@ -515,7 +515,7 @@ parasails.registerPage('cotizaciones', {
           this.l_filtro.encargado = {};
         }
         return _.filter(this.modelo.cotizaciones, limpiaFiltro(this.l_filtro))
-          .filter(cotizacion => cotizacion.encargado.fullName.includes(this.l_busquedaCotizacion) || cotizacion.descripcion.includes(this.l_busquedaCotizacion) || cotizacion.lugarEvento.includes(this.l_busquedaCotizacion));
+          .filter(cotizacion => cotizacion.encargado.fullName.toUpperCase().includes(this.l_busquedaCotizacion.toUpperCase()) || cotizacion.descripcion.toUpperCase().includes(this.l_busquedaCotizacion.toUpperCase())||cotizacion.cliente.nombre.toUpperCase().includes(this.l_busquedaCotizacion.toUpperCase()) || cotizacion.lugarEvento.toUpperCase().includes(this.l_busquedaCotizacion.toUpperCase()));
       } else if (this.l_busquedaCotizacion === "*" && (this.l_filtro.misCotizaciones === false || this.l_filtro.misCotizaciones === undefined)) {
         return this.modelo.cotizaciones;
       } else if (this.l_busquedaCotizacion == "/") {

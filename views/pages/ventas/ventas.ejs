@@ -42,7 +42,7 @@
             <br>
 
             <div v-if="l_buscarCliente !== undefined">
-              <div v-if="filteredClientes.length === 0 && l_buscarCliente.length >= 3">
+              <div v-if="filteredClientes.length === 0 && l_buscarCliente.length >= 2">
                 <h5><span class="badge badge-pill badge-warning">
                     No se encuentra ningún cliente con ese nombre</h5>
                 <input class="btn btn-primary" type="button" value="Agregar" @click="clickVerModalAgregar()" />
@@ -51,7 +51,7 @@
 
             <br>
             <ul v-if="filteredClientes.length !== 0" v-for="vEmpresa in filteredClientes">
-              <div v-if="filteredClientes.length === 1 && l_buscarCliente.length > 3 ">
+              <div v-if="filteredClientes.length === 1 && l_buscarCliente.length >= 2 ">
                 <li>
                   <p>Teléfono: {{vEmpresa.telefono}} </p> 
                 </li>
@@ -79,12 +79,12 @@
             <br>
             <div v-if="l_buscarContacto !== undefined">
 
-              <div v-if="filteredContactos.length === 0 && l_buscarContacto.length >= 3 && filteredClientes[0] === undefined">
+              <div v-if="filteredContactos.length === 0 && l_buscarContacto.length >= 2 && filteredClientes[0] === undefined">
                 <h5><span class="badge badge-pill badge-warning">
                     No añadió ningún cliente</h5>
                 
                   </div>
-                  <div v-if="filteredClientes[0] !== undefined && filteredContactos.length === 0 && l_buscarContacto.length >= 3">
+                  <div v-if="filteredClientes[0] !== undefined && filteredContactos.length === 0 && l_buscarContacto.length >= 2">
                       <h5><span class="badge badge-pill badge-warning">
                           No se encuentra ningún contacto con ese nombre</h5>
                     <input class="btn btn-primary" type="button" value="Agregar" @click="clickVerModalAgregarC()" />
@@ -92,7 +92,7 @@
                   </div>
               <br>
               <ul v-if="filteredContactos.length !== 0" v-for="vContacto in filteredContactos">
-                <div v-if="filteredContactos.length === 1 && l_buscarContacto.length > 3">
+                <div v-if="filteredContactos.length === 1 && l_buscarContacto.length >= 2">
                   <li>
                     <p > Teléfono: {{vContacto.telefono}}</p> 
                   </li>
