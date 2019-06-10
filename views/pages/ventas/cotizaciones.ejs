@@ -71,7 +71,8 @@
             <td v-text="cotizacion.contacto.nombre"></td>
             <td v-text="cotizacion.lugarEvento"></td>
             <td v-text="cotizacion.descripcion"></td>
-            <td v-text="cotizacion.estado"></td>
+            <td v-if="cotizacion.estado !== 'Activo'" v-text="cotizacion.estado"></td>
+            <td v-if="cotizacion.estado === 'Activo'">Confirmado</td>
             <td class="text-center">
               <div class="btn-group ">
                 <label for="ver" class="btn btn-primary" @click="verEvento(cotizacion)">
@@ -295,7 +296,7 @@
               <div class="col">
                 <select name="chEstado" id="chEstado" v-model="t_cotizacion.estado">
                   <option value="Pendiente">Pendiente</option>
-                  <option value="Activo">Activo</option>
+                  <option value="Activo">Confirmado</option>
                   <option value="Cancelado">Cancelado</option>
                   <option value="Finalizado">Finalizado</option>
                 </select>
