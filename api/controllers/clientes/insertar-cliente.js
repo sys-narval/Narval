@@ -10,7 +10,7 @@ module.exports = {
   inputs: {
     nombre: {
       type: "string",
-      maxLength: 20,
+      maxLength: 40,
       required: true,
       unique: true,
       description: "Nombre del cliente"
@@ -18,7 +18,7 @@ module.exports = {
 
     nombreReal: {
       type: "string",
-      maxLength: 20,
+      maxLength: 40,
       description: "Nombre real del cliente con respecto a documentos jurídicos"
     },
 

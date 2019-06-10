@@ -11,13 +11,13 @@ module.exports = {
     //Valores que posee un cliente
     nombre: {
       type: 'string',
-      maxLength: 20,
+      maxLength: 40,
       description: 'Nombre del Cliente',
     },
 
     nombreReal: {
       type: 'string',
-      maxLength: 20,
+      maxLength: 40,
       description: "Nombre real del cliente con respecto a documentos jurídicos",
     },
 

@@ -11,7 +11,7 @@ module.exports = {
     //Valores que posee un contacto
     nombre: {
       type: 'string',
-      maxLength: 20,
+      maxLength: 40,
       unique: true,
       description: 'Nombre del Contacto',
     },
