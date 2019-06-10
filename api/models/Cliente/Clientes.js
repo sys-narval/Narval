@@ -14,14 +14,12 @@ module.exports = {
     //  ╩  ╩╚═╩╩ ╩╩ ╩ ╩ ╚╝ ╚═╝╚═╝
     nombre: {
       type: "string",
-      maxLength: 20,
       required: true,
       description: "Nombre del cliente"
     },
 
     nombreReal: {
       type: "string",
-      maxLength: 20,
       description: "Nombre real del cliente con respecto a documentos jurídicos"
     },
 

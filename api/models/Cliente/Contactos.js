@@ -15,7 +15,6 @@ module.exports = {
     nombre: {
       type: "string",
       required: true,
-      maxLength: 20,
       description: "Nombre del contacto de la empresa cliente"
     },
 
