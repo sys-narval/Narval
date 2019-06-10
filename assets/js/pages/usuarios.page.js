@@ -117,7 +117,7 @@ parasails.registerPage('usuarios', {
 
         if (this.busquedaUsuario.length > 3) {
           return _.filter(this.modelo.usuarios, limpiaFiltro(this.filtro))
-            .filter(usuario => usuario.fullName.includes(this.busquedaUsuario) || usuario.emailAddress.includes(this.busquedaUsuario));
+            .filter(usuario => usuario.fullName.toUpperCase().includes(this.busquedaUsuario.toUpperCase()) || usuario.emailAddress.includes(this.busquedaUsuario));
         } else if(this.busquedaUsuario  == "*") 
         {
           return this.modelo.usuarios;
