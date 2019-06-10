@@ -15,7 +15,7 @@
                 <form>
                   <!--Form del Filtro-->
                   <div class="form-group">
-                    <label for="busquedaPorTelefono">Teléfono: </label>
+                    <label for="busquedaPorTelefono">Teléfono: (Ej: 25201672) </label>
                     <input type="text" class="form-control" id="l_Telefono" placeholder="Teléfono" maxlength="9"
                       v-model="l_filtro.telefono">
                   </div>
@@ -128,7 +128,7 @@
             </div>
           </div>
           <div class="form-group col">
-            <label for="cedula">Identificación</label>
+            <label for="cedula">Identificación (Ej: 3101617544)</label>
             <input type="number" name="cedula" max="9999999999" placeholder="Digite la cédula" class="form-control"
             id="cedNuevo" v-model="o_cliente.cedula" :class="[(formErrors.cedula || o_cliente.cedula !== undefined) && !o_cliente.cedula ?
             'is-invalid' : '']" readonly>
@@ -139,7 +139,7 @@
         </div>
         <div class="row">
           <div class="form-group col-6">
-            <label for="telefono">Teléfono: </label>
+            <label for="telefono">Teléfono: (Ej: 25201672) </label>
             <input type="number" max="99999999" class="form-control" id="telCliNuevo"
               placeholder="Digite el número telefónico" v-model="o_cliente.telefono" :class="[(formErrors.telefono || o_cliente.telefono !== undefined) && !o_cliente.telefono ?
               'is-invalid' : '']">
@@ -178,7 +178,7 @@
                   <div class="invalid-feedback" v-text="modelo.l_errorNombre"></div>
                 </div>
                 <div class="form-group col">
-                  <label for="telefono">Teléfono: </label>
+                  <label for="telefono">Teléfono: (Ej: 25201672) </label>
                   <input type="number" max="99999999" class="form-control" id="telCliNuevo"
                     v-model="o_contacto.telefono" :class="[(formErrors.telefono || o_contacto.telefono !== undefined) && !o_contacto.telefono ?
                             'is-invalid' : '']">
@@ -198,7 +198,7 @@
                   </div>
                 </div>
                 <div class="form-group col">
-                  <label for="cedula">Identificación</label>
+                  <label for="cedula">Identificación (Ej: 3101617544)</label>
                   <input type="number" name="cedula" max="9999999999" class="form-control" id="cedNuevo"
                     v-model="o_contacto.cedula" :class="[(formErrors.cedula || o_contacto.cedula !== undefined) && !o_contacto.cedula || cloudError === 'cedulaRepetido' ?
                             'is-invalid' : '']" readonly>
@@ -236,7 +236,7 @@
                   <input type="text" class="form-control" id="nomCliNuevo" :value="empresa.nombre" readonly>
                 </div>
                 <div class="form-group col">
-                  <label for="telefono">Teléfono: </label>
+                  <label for="telefono">Teléfono: (Ej: 25201672) </label>
                   <input type="number" max="99999999" class="form-control" id="telCliNuevo" :value="empresa.telefono"
                     readonly>
                 </div>
@@ -248,7 +248,7 @@
                     readonly>
                 </div>
                 <div class="form-group col">
-                  <label for="cedula">Identificación</label>
+                  <label for="cedula">Identificación (Ej: 3101617544)</label>
                   <input type="number" name="cedula" :value="empresa.cedula" class="form-control" id="cedNuevo"
                     readonly>
                 </div>
@@ -319,7 +319,7 @@
             </div>
           </div>
           <div class="form-group col">
-            <label for="cedula">Identificación</label>
+            <label for="cedula">Identificación (Ej: 3101617544)</label>
             <input type="number" name="cedula" max="9999999999" placeholder="Digite la cédula" class="form-control"
               id="cedNuevo" v-model="o_cliente.cedula" :class="[(formErrors.cedula || o_cliente.cedula !== undefined) && !o_cliente.cedula || cloudError === 'nombreRepetido'  ?
               'is-invalid' : '']">
@@ -330,7 +330,7 @@
           </div>
           <div class="row">
             <div class="form-group col-6">
-              <label for="telefono">Teléfono: </label>
+              <label for="telefono">Teléfono: (Ej: 25201672)</label>
               <input type="number" max="99999999" class="form-control" id="telCliNuevo"
                 placeholder="Digite el número telefónico" v-model="o_cliente.telefono" :class="[(formErrors.telefono || o_cliente.telefono !== undefined) && !o_cliente.telefono  ?
                 'is-invalid' : '']">
@@ -366,7 +366,7 @@
             <div class="invalid-feedback" v-text="modelo.l_errorNombre"></div>
           </div>
           <div class="form-group col">
-            <label for="telefono">Teléfono: </label>
+            <label for="telefono">Teléfono: (Ej: 25201672) </label>
             <input type="number" max="99999999" class="form-control" id="telConNuevo"
               placeholder="Digite el número telefónico" v-model="o_contacto.telefono" :class="[(formErrors.telefono || o_contacto.telefono !== undefined) && !o_contacto.telefono ?
               'is-invalid' : '']">
@@ -387,7 +387,7 @@
             </div>
           </div>
           <div class="form-group col">
-            <label for="cedula">Identificación</label>
+            <label for="cedula">Identificación (Ej: 3101617544)</label>
             <input type="number" name="cedula" max="9999999999" placeholder="Digite la cédula" class="form-control"
               id="cedNuevo" v-model="o_contacto.cedula" :class="[(formErrors.cedula || o_contacto.cedula !== undefined) && !o_contacto.cedula || cloudError === 'cedulaRepetido' ?
               'is-invalid' : '']">
