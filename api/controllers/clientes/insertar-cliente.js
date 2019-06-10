@@ -56,7 +56,6 @@ module.exports = {
     }
   },
 
-
   fn: async function (inputs, exits) {
 
     try {
@@ -66,13 +65,11 @@ module.exports = {
 
     } catch (error) {
 
-      switch (error.code) {
-        case "E_UNIQUE":
-          return exits.nombreRepetido(`El cliente ${inputs.nombre} ya existe`);
-        default:
-          throw exits.error();
+      if (error.code === "E_UNIQUE") {
+        return exits.nombreRepetido(`El cliente ${inputs.nombre} ya existe`);
+      } else {
+        return exits.error();
       }
-
     }
   }
 };
