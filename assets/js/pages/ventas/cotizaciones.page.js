@@ -4,6 +4,24 @@ parasails.registerPage('cotizaciones', {
   //  ╩╝╚╝╩ ╩ ╩╩ ╩╩═╝  ╚═╝ ╩ ╩ ╩ ╩ ╚═╝
   data: {
     //…
+    o_cotizacion2:{
+      id: undefined,
+      lugarEvento: undefined,
+      esDiseno: undefined,
+      esMontaje: undefined,
+      esAlquiler: undefined,
+      descripcion: undefined,
+      fechaEvento: 0,
+      fechaFinEvento: 0,
+      fechaMontaje: 0,
+      fechaDesmontaje: 0,
+      encargado: undefined,
+      cliente: undefined,
+      contacto: undefined,
+      jsonArticulos: {
+        articulos: undefined
+      }
+    },
     o_cotizacion: {
       /* */
     },
@@ -102,7 +120,37 @@ parasails.registerPage('cotizaciones', {
 
     // Método para desplegar el modal y cargar la cotización
     verEvento: async function (cotizacion) {
+      let t_cotizacion2 = await Cloud.extraerCotizacion(cotizacion.id);
       this.o_cotizacion = cotizacion;
+      this.o_cotizacion2.id = t_cotizacion2.id;
+      this.o_cotizacion2.lugarEvento = t_cotizacion2.lugarEvento;
+      this.o_cotizacion2.esDiseno = t_cotizacion2.esDiseno;
+      this.o_cotizacion2.esMontaje = t_cotizacion2.esMontaje;
+      this.o_cotizacion2.esAlquiler = t_cotizacion2.esAlquiler;
+      this.o_cotizacion2.descripcion = t_cotizacion2.descripcion;
+      this.o_cotizacion2.fechaEvento = t_cotizacion2.fechaEvento;
+      this.o_cotizacion2.fechaFinEvento = t_cotizacion2.fechaFinEvento;
+      this.o_cotizacion2.fechaDesmontaje = t_cotizacion2.fechaDesmontaje;
+      this.o_cotizacion2.fechaMontaje = t_cotizacion2.fechaMontaje;
+      this.o_cotizacion2.encargado = t_cotizacion2.encargado.id;
+      this.o_cotizacion2.cliente = t_cotizacion2.cliente.id;
+      this.o_cotizacion2.contacto = t_cotizacion2.contacto.id;
+
+      let articulos = [];
+      if (cotizacion.articulos.length !== 0) {
+        for (let index = 0; index < cotizacion.articulos.length; index++) {
+          articulos.push({
+            id: cotizacion.articulos[index].id,
+            cantidad: cotizacion.articulos[index].cantidad,
+            precio: cotizacion.articulos[index].precio
+          });
+        }
+      }
+      this.o_cotizacion2.jsonArticulos.articulos = articulos;
+
+
+
+
       if (this.o_cotizacion.fechaEvento !== 0) {
         let t_fechaEvento = this.o_cotizacion.fechaEvento;
         t_fechaEvento = new Date(t_fechaEvento);
@@ -354,6 +402,11 @@ parasails.registerPage('cotizaciones', {
       this.o_cotizacion = {
         /* */
       };
+      this.l_verModal = false;
+    },
+    cerrarEventoBodega: async function()
+    {
+      location.href="cotizaciones";
       this.l_verModal = false;
     },
 
