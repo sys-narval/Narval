@@ -32,7 +32,7 @@
           <input type="text" name="buscarArticulo" id="articulo" placeholder="Buscar" list="listaArticulos"
             class="form-control" v-model="l_buscarArticulo">
           <!--Input de Buscador-->
-          <datalist id="listaArticulos">
+          <datalist v-if="l_buscarArticulo.length >= 2" id="listaArticulos">
             <div v-for="l_articulo in modelo.articulos">
               <option v-bind:value="l_articulo.descripcion">
                 <!--Toma el valor del buscador-->
